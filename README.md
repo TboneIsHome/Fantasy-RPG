@@ -46,8 +46,8 @@ Datei: `user://lichtpfad_v1.json`; Godot legt sie im Benutzerordner des Spiels a
 ## Im Editor weiterentwickeln
 
 1. [Godot 4.5.1 Standard](https://godotengine.org/download/archive/4.5.1-stable/) herunterladen und öffnen.
-2. Das [Quellprojekt von GitHub](https://github.com/TboneIsHome/Fantasy-RPG) herunterladen oder klonen.
-3. **Importieren** wählen und dessen `project.godot` auswählen.
+2. Das bereitgestellte Archiv **Lichterhain_0.1_Quellprojekt.zip** entpacken.
+3. **Importieren** wählen und `Lichterhain/project.godot` auswählen.
 4. Den ersten Dateiimport abwarten, dann **F5** drücken.
 
 GDScript wird verwendet; die .NET-Ausgabe ist nicht notwendig. Das Projekt kommt ohne Add-ons aus. Die ausführbaren Tests sind in `TESTING.md` beschrieben.
@@ -63,6 +63,6 @@ GDScript wird verwendet; die .NET-Ausgabe ist nicht notwendig. Das Projekt kommt
 
 ## GitHub
 
-Der Quellcode und die Projektgeschichte liegen im privaten Repository [TboneIsHome/Fantasy-RPG](https://github.com/TboneIsHome/Fantasy-RPG). Die Windows-Anwendung wird separat als Download-Paket bereitgestellt. Binäre Builds und lokale Godot-Caches gehören nicht in den Quellcode-Stand.
+Das private Ziel ist [TboneIsHome/Fantasy-RPG](https://github.com/TboneIsHome/Fantasy-RPG). Dort liegt bisher nur diese Projektbeschreibung. Der Upload des gesamten Quellcodes wartet noch auf die ausdrückliche Freigabe für dieses Ziel. Die vollständige Umsetzung und die lokale Git-Historie sind im Quellprojekt-Download enthalten.
 
-Das neue RPG-Repository war während dieser ersten Umsetzung erreichbar und leer. Es erhält den getesteten Ausgangsstand auf `main`. `MyFire` wurde nicht verändert.
+Das Quellprojekt enthält `Entwicklung/lichterhain-history.bundle`; damit kann die lokale Historie über `git clone lichterhain-history.bundle lichterhain` wiederhergestellt werden. Zum Öffnen in Godot genügt der Ordner `Lichterhain`. Die Windows-Anwendung wird separat bereitgestellt. Binäre Builds und lokale Godot-Caches gehören nicht in den Quellcode-Stand.
