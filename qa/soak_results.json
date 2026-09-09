@@ -1,0 +1,12 @@
+{
+  "bounded_objects": true,
+  "end_nodes": 4529,
+  "frames": 2864,
+  "headless": false,
+  "initial_nodes": 4538,
+  "mean_frame_ms": 20.9560122206703,
+  "p95_frame_ms": 36.375,
+  "peak_nodes": 4542,
+  "renderer": "OpenGL Compatibility; software Mesa llvmpipe",
+  "seconds": 60
+}

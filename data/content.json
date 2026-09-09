@@ -1,0 +1,18 @@
+{
+  "player": {"hp":100,"mana":100,"stamina":100,"speed":85,"dash_speed":260,"dash_duration":0.16,"dash_cost":28,"dash_cooldown":0.62,"mana_regen":8,"stamina_regen":30},
+  "spells": {
+    "bolt":{"name":"Lichtfunke","cost":8,"cooldown":0.32,"damage":19,"speed":265,"range":235},
+    "nova":{"name":"Frostkreis","cost":28,"cooldown":4.5,"damage":16,"radius":48,"range":130,"slow_duration":3.5}
+  },
+  "enemies": {
+    "wolf":{"name":"Dämmerwolf","hp":48,"speed":49,"damage":13,"xp":18,"aggro":130,"leash":195,"windup":0.65,"recovery":1.1,"mode":"lunge"},
+    "wisp":{"name":"Irrlicht","hp":38,"speed":29,"damage":11,"xp":22,"aggro":155,"leash":190,"windup":0.9,"recovery":1.55,"mode":"ranged"}
+  },
+  "skills": {
+    "echo":{"name":"Widerhall","description":"Triff ein verlangsamtes Ziel: Der Lichtfunke springt zu einem zweiten Gegner."},
+    "flow":{"name":"Fließender Schritt","description":"Jeder erfolgreiche Ausweichschritt gibt 12 Mana zurück."},
+    "bloom":{"name":"Quellenkreis","description":"Stehst du im eigenen Frostkreis, heilt er dich um 12 Leben."}
+  },
+  "world":{"width":112,"height":88,"tile_size":16,"generator_version":1,"day_seconds":240},
+  "quest":{"id":"lights","title":"Die verstummten Lichter","goal":3,"reward":"Quellenfokus"}
+}

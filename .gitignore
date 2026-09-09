@@ -1,0 +1,8 @@
+.godot/
+builds/
+test-output/
+*.tmp
+*.log
+*.zip
+*.bundle
+export_credentials.cfg
