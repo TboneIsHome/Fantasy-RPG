@@ -14,6 +14,11 @@ var motes: int = 0
 var quest_accepted: bool = false
 var quest_complete: bool = false
 var time_of_day: float = 0.22
+var region: String = "forest"
+var vault := DungeonProgress.new()
+
+func advance_time(delta: float) -> void:
+	time_of_day=fposmod(time_of_day+delta/float(Content.section("world").day_seconds),1)
 
 func add_xp(amount: int) -> void:
 	xp += maxi(0, amount)
@@ -50,7 +55,7 @@ func serialize() -> Dictionary:
 		"defeated":defeated.duplicate(), "discoveries":discoveries.duplicate(),
 		"learned":learned.duplicate(), "xp":xp, "level":level, "skill_points":skill_points,
 		"motes":motes, "quest_accepted":quest_accepted, "quest_complete":quest_complete,
-		"time_of_day":time_of_day}
+		"time_of_day":time_of_day,"region":region,"vault":vault.serialize()}
 
 static func restore(data: Dictionary) -> RunState:
 	var state := RunState.new()
@@ -66,4 +71,6 @@ static func restore(data: Dictionary) -> RunState:
 	state.quest_accepted = data.quest_accepted
 	state.quest_complete = data.quest_complete
 	state.time_of_day = float(data.time_of_day)
+	state.region=data.get("region","forest")
+	state.vault=DungeonProgress.restore(data.vault) if data.has("vault") else DungeonProgress.new()
 	return state

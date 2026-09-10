@@ -18,21 +18,27 @@
 - [x] Tims ersten Spieltest aufnehmen: Grundprototyp gefällt; Grafik deutlich verbessern.
 - [x] Wald, Boden, Lager, Figuren, Zauber, Beleuchtung und Oberfläche für 0.2 überarbeiten.
 - [x] Originalen 0.1-Spielstand einfrieren und tatsächlich in der neuen Welt laden.
+- [x] Quellengruft mit sechs Haupträumen, Geheimraum, Schleife und Abkürzung integrieren.
+- [x] Dornkobold mit fest angekündigter Dornenfläche und Dungeon-Wegfindung ergänzen.
+- [x] Entdeckungsjournal mit individuellen Fundtexten und verborgenen unbekannten Einträgen.
+- [x] Lichtstaub an einer kostenpflichtigen Sickerquelle nutzbar machen.
+- [x] Sternenkarte, optionalen Fund, Eddas Reaktion und geöffnete Wege dauerhaft speichern.
+- [x] Speicherformat 2, explizite Altstand-Migration und unveränderte Vorversions-Sicherung.
+- [x] Tatsächlichen abgeschlossenen 0.2-Spielstand einfrieren; 100 Dungeon-Seeds und Gebietswechsel prüfen.
+- [x] Wiederholbaren lokalen Prüfaufruf mit Erkennung von Scriptfehlern ergänzen.
 
 ## Als Nächstes
 
 - [ ] Tims Rückmeldung zur neuen Darstellung aufnehmen: Sichtbarkeit, Atmosphäre und Detaildichte.
 - [ ] Nach Spieltest Zauberrhythmus, Gegnergeschwindigkeit und Manaregeneration abstimmen.
-- [ ] Entdeckungsjournal um individuelle kurze Fundtexte ergänzen.
-- [ ] Dungeon-Raumdaten, Türen und einen Erreichbarkeitsvalidator implementieren.
-- [ ] Dritter Gegner mit klar erkennbarer Rolle: Dornkobold.
-- [ ] Quellenhüter und die zwei Questlösungen implementieren.
+- [ ] Quellenhüter mit zwei fair angekündigten Angriffen implementieren.
+- [ ] Untersuchung und Kampf als zwei vollständige Questlösungen mit sichtbaren Folgen verbinden.
 - [ ] Inventar/Ausrüstung vom allgemeinen Fortschrittszustand trennen.
 - [ ] Eingaben frei belegbar machen und Controller schrittweise prüfen.
 
 ## Vor größeren Welt-Erweiterungen
 
 - [ ] Eigenständige Module für Questgraph, NPC-Erinnerungen und Ereigniszustände.
-- [ ] Weltgeneratorversionen und Migration anhand eines eingefrorenen Testspielstands prüfen.
+- [ ] Künftige Generatoränderungen weiterhin an eingefrorenen Spielständen prüfen.
 - [ ] Chunk-Grenzen erst mit tatsächlichem Streaming hinzufügen und prüfen.
-- [ ] Langzeittests, Quellenfokus-Balancing und neue Nutzung für Lichtstaub.
+- [ ] Mehrstündige menschliche Spieltests und Quellenfokus-/Lichtstaub-Balancing.

@@ -1,0 +1,38 @@
+{
+  "camp": {
+    "title": "Laternenrast",
+    "text": "Eddas Laternen brennen auch bei Tageslicht. Sie sagt, ihr Schein zeige den Heimweg nicht nur den Lebenden. Zwischen den Zelten liegt stets ein dritter, unbenutzter Becher."
+  },
+  "light_0": {
+    "title": "Die flüsternden Steine",
+    "text": "Die Kerben im Stein sind keine Schrift. Sie sehen aus wie Abdrücke von Fingern, die von innen gegen den Fels gepresst wurden. Erst mit dem Licht wird das Flüstern leiser."
+  },
+  "light_1": {
+    "title": "Spiegel am Fluss",
+    "text": "Hier spiegelt sich ein Stern im Wasser, lange bevor es Nacht wird. Unterhalb des Ufers führen überwachsene Stufen in eine Strömung, die gegen den Fluss zieht."
+  },
+  "light_2": {
+    "title": "Der alte Sternengarten",
+    "text": "Die Bäume wachsen in Bögen um leere Plätze. Eine zerbrochene Steintreppe führt wenige Schritte südöstlich des Waldlichts hinab. Zwischen ihren Fugen riecht es nach Regen."
+  },
+  "water_memory": {
+    "title": "Stimme im Wasser",
+    "text": "„Wir verschlossen nicht den Weg, sondern die Erinnerung daran. Westlich der Zisterne liegt ein Stein, über den Wasser wie Tränen läuft. Berühre den Stern in seinem Riss; er wird sich erinnern.“\n\nDu erkennst nun das Zeichen an der rissigen Wand im westlichen Seitenkorridor."
+  },
+  "root_memory": {
+    "title": "Brief zwischen Wurzeln",
+    "text": "„Die Samen schlafen, solange ein Stern auf sie achtgibt. Nimm niemals den letzten. Falls ich nicht zurückkehre: Die Winde neben diesem Garten hebt das Gitter zur Eingangshalle.“\n\nDie Schrift endet in einer Zeichnung eines Baumes mit Wurzeln voller kleiner Sterne."
+  },
+  "star_chart": {
+    "title": "Die vergessene Sternenkarte",
+    "text": "Keine Himmelskarte: Ihre Linien folgen Flüssen und verborgenen Wurzeln. Ein Ort jenseits des Lichterhains ist mit Asche eingerieben. Als du die Karte anhebst, leuchten die alten Fassungen der Gruft kurz auf.\n\nDie Karte gehört nun zu deinen Funden. Edda könnte ihre Zeichen kennen."
+  },
+  "amber_seed": {
+    "title": "Der Bernsteinsamen",
+    "text": "Im Bernstein schlägt langsam ein grüner Funke. Die Wurzeln haben eine Mulde um ihn geformt, als hätten sie ihn behütet. Ein zweiter Samen bleibt im Stein zurück.\n\nDu bewahrst den Fund auf. Noch weißt du nicht, wo er Wurzeln schlagen kann."
+  },
+  "vault_entrance": {
+    "title": "Die Treppe unter den Sternen",
+    "text": "Südöstlich des Sternengarten-Lichts führt eine überwachsene Treppe unter die Erde. Drei Zeichen im Bogen antworten auf Eddas Quellenfokus. Unten riecht es nach Wasser, altem Papier und lebenden Wurzeln."
+  }
+}

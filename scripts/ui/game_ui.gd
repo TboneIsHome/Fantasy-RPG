@@ -87,7 +87,7 @@ func title_menu(has_save: bool) -> void:
 	hud.game_visible = false
 	var box := shell("title","Lichterhain","D I E  V E R S T U M M T E N  L I C H T E R",302)
 	box.add_theme_constant_override("separation",7)
-	label(box,"Zwischen Wurzeln und Sternen wartet ein alter Zauber. Wecke die drei Lichter des Waldes.",12)
+	label(box,"Wecke die Lichter des Waldes. Entdecke, was unter ihren Wurzeln verborgen liegt.",12)
 	var field := LineEdit.new()
 	field.text = "LICHTERHAIN"
 	field.placeholder_text = "Welt-Seed"
@@ -103,7 +103,7 @@ func title_menu(has_save: bool) -> void:
 	start.pressed.connect(func(): requested.emit("new",field.text))
 	button(box,"Am Speicherpunkt fortsetzen","load").disabled = not has_save
 	label(box,"WASD bewegen · Maus zielen · E interagieren\nLMT / RMT zaubern · Leertaste ausweichen",10,HudCanvas.MUTED)
-	label(box,"Version 0.2 · Der Wald erwacht\nEin neuer Lauf ersetzt den Speicherpunkt beim Speichern.",9,HudCanvas.MUTED)
+	label(box,"Version 0.3 · Unter den Wurzeln\nEin neuer Lauf ersetzt den Speicherpunkt beim Speichern.",9,HudCanvas.MUTED)
 	start.grab_focus()
 
 func pause_menu() -> void:
@@ -135,27 +135,50 @@ func dialogue(title: String, body: String, choices: Array) -> void:
 	for choice in choices:
 		button(box,choice[0],choice[1])
 
-func journal(run: RunState) -> void:
-	var box := shell("journal","Dein Lichtpfad","Talente, Funde und Erinnerungen",470)
-	label(box,"Stufe %d · %d / %d Erfahrung · %d Talentpunkte" % [run.level,run.xp,run.level*60,run.skill_points],11)
-	for id in Content.section("skills"):
-		var data: Dictionary = Content.section("skills")[id]
-		var row := HBoxContainer.new()
-		box.add_child(row)
-		var copy := VBoxContainer.new()
-		copy.custom_minimum_size.x=320
-		copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-		row.add_child(copy)
-		label(copy,data.name,12,HudCanvas.GOLD)
-		label(copy,data.description,10,HudCanvas.MUTED)
-		var learn := button(row,"Gelernt" if id in run.learned else "Lernen","learn",id)
-		learn.disabled = id in run.learned or run.skill_points<=0
-	label(box,"Beutel: %d Lichtstaub · %d / 3 Waldlichter" % [run.motes,run.active_lights.size()],11)
-	if run.quest_complete:
-		label(box,"Relikt: Quellenfokus — aktive Waldlichter werden zu Rastpunkten.",10,HudCanvas.GOLD)
+func journal(run: RunState, discoveries: bool = false) -> void:
+	var box := shell("journal","Dein Lichtpfad","",480)
+	var tabs := HBoxContainer.new()
+	box.add_child(tabs)
+	button(tabs,"Talente & Beutel","journal").size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	button(tabs,"Entdeckungen","discoveries").size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size=Vector2(0,180)
+	scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
+	box.add_child(scroll)
+	var content := VBoxContainer.new()
+	content.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	content.add_theme_constant_override("separation",9)
+	scroll.add_child(content)
+	if discoveries:
+		var known := DiscoveryBook.known(run)
+		if known.is_empty():
+			label(content,"Entdeckte Orte und gelesene Erinnerungen erscheinen hier.",12)
+		for id in known:
+			var entry: Dictionary=DiscoveryBook.entries()[id]
+			label(content,entry.title,13,HudCanvas.GOLD)
+			label(content,entry.text,11,HudCanvas.MUTED)
 	else:
-		label(box,"Eddas Auftrag: Drei Waldlichter wecken, dann zur Laternenrast zurückkehren.",10,HudCanvas.MUTED)
-	button(box,"Zurück in den Wald · TAB","resume")
+		label(content,"Stufe %d · %d / %d Erfahrung · %d Talentpunkte" % [run.level,run.xp,run.level*60,run.skill_points],11)
+		for id in Content.section("skills"):
+			var data: Dictionary=Content.section("skills")[id]
+			var row := HBoxContainer.new()
+			content.add_child(row)
+			var copy := VBoxContainer.new()
+			copy.custom_minimum_size.x=300
+			copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+			row.add_child(copy)
+			label(copy,data.name,12,HudCanvas.GOLD)
+			label(copy,data.description,10,HudCanvas.MUTED)
+			var learn := button(row,"Gelernt" if id in run.learned else "Lernen","learn",id)
+			learn.disabled=id in run.learned or run.skill_points<=0
+		label(content,"Beutel: %d Lichtstaub · %d / 3 Waldlichter" % [run.motes,run.active_lights.size()],11)
+		if run.quest_complete:
+			label(content,"Quellenfokus: Waldlichter als Rastpunkte; Zugang zur Quellengruft.",10,HudCanvas.GOLD)
+		else:
+			label(content,"Eddas Auftrag: Drei Waldlichter wecken und zu ihr zurückkehren.",10,HudCanvas.MUTED)
+		for id in run.vault.relics:
+			label(content,"Fund: "+str(DiscoveryBook.entries()[id].title),11,HudCanvas.GOLD)
+	button(box,"Zurück in den Wald · TAB" if run.region=="forest" else "Weiter in der Gruft · TAB","resume")
 
 func death_menu() -> void:
 	var box := shell("death","Das Licht trägt dich heim","Du behältst deine Funde. Edda bringt dich zur Laternenrast zurück.",370)

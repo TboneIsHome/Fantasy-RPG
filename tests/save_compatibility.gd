@@ -15,7 +15,7 @@ func check(condition: bool, title: String) -> void:
 func verify() -> void:
 	var original := FileAccess.get_file_as_bytes("res://tests/fixtures/v01_save.json")
 	var loaded := SaveSystem.read("res://tests/fixtures/v01_save.json")
-	check(loaded.error.is_empty(),"0.1 save is accepted without migration")
+	check(loaded.error.is_empty(),"0.1 save is accepted through explicit in-memory migration")
 	if not loaded.error.is_empty():
 		quit(1)
 		return

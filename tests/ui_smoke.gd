@@ -96,6 +96,25 @@ func run_checks() -> void:
 	game.handle_action("journal")
 	await frames()
 	check(fits(game.ui),"Journal still fits with the relic description")
+	game.run.vault.memories.assign(DungeonProgress.MEMORY_IDS)
+	game.run.vault.relics.assign(DungeonProgress.RELIC_IDS)
+	for id in DiscoveryBook.entries():
+		if not id in DungeonProgress.MEMORY_IDS and not id in DungeonProgress.RELIC_IDS:
+			game.run.discoveries.append(id)
+	for item in buttons(game.ui.panel):
+		if item.text=="Entdeckungen":
+			item.pressed.emit()
+			break
+	await frames()
+	check(paused and fits(game.ui),"Discovery tab remains paused and fits with every lore entry")
+	var scroll: ScrollContainer=game.ui.panel.find_children("*","ScrollContainer",true,false)[0]
+	scroll.scroll_vertical=100000
+	await frames()
+	var last_text: Label=scroll.get_child(0).get_child(scroll.get_child(0).get_child_count()-1)
+	check(scroll.scroll_vertical>0 and last_text.get_global_rect().end.y<=scroll.get_global_rect().end.y+1,"Last discovery is reachable by scrolling")
+	key(KEY_TAB)
+	await frames()
+	check(game.ui.page.is_empty() and not paused,"TAB closes the scrolled discovery tab")
 	paused=false
 	game.queue_free()
 	await frames()

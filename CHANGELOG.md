@@ -1,5 +1,21 @@
 # Änderungen
 
+## 0.3.0 — 2026-09-10 · Unter den Wurzeln
+
+Erster Dungeon als nächster Schritt zum vollständigen Vertical Slice.
+
+- Quellengruft mit sechs Haupträumen, optionaler Nische, Schleife, Abkürzung und sieben Begegnungen; Zugang nach Eddas Auftrag.
+- Datenbasierte Raumdefinitionen, begrenzte Seed-Variation, neue originale Pixelobjekte, Wasserbecken, Archiv- und Gartenmotive.
+- Dornkobold mit angekündigter fester Dornenfläche, Verlangsamung und klarer Erholung; Raster-Wegfindung aller Dungeon-Gegner.
+- Entdeckungsjournal mit neun individuellen Texten, zwei Erinnerungen und zwei dauerhaften Funden; Edda reagiert auf die Sternenkarte.
+- Lichtstaub bezahlt Erholung an der Sickerquelle. Entdeckte Dungeonräume werden auf der Karte ergänzt.
+- Gemeinsame Weltzeit über Gebietswechsel hinweg; Rückkehr zum Waldlager bei Dungeon-Tod.
+- Speicherformat 2 mit validiertem Dungeonzustand, expliziter Migration von 0.1/0.2 und einmaliger unveränderter `.pre-v03`-Sicherung.
+- 132 automatisierte Prüfungen, darunter 100 Dungeon-Seeds und echte Altstände; gerenderter 60-Sekunden-Kampf mit wiederholtem Regionsabbau.
+- Lokaler Prüfaufruf erkennt Scriptfehler auch dann, wenn Godot mit Exitcode 0 beendet wird.
+
+Waldgeneratorversion 1 bleibt unverändert. Quellenhüter, verzweigte Questlösungen, Ausrüstung und mehrstündige Weltinhalte folgen später.
+
 ## 0.2.0 — 2026-09-10 · Der Wald erwacht
 
 Grafikiteration nach Tims positivem ersten Spieltest und seinem Wunsch nach einer deutlich schöneren Welt.

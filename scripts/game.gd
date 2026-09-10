@@ -28,27 +28,45 @@ func _ready() -> void:
 	show_title()
 
 func build_run(seed_text: String, saved: Dictionary = {}) -> void:
+	run=RunState.new() if saved.is_empty() else RunState.restore(saved.run)
+	run.world_seed=seed_text.strip_edges().substr(0,64)
+	if run.world_seed.is_empty():
+		run.world_seed="LICHTERHAIN"
+	if not saved.is_empty():
+		settings=saved.settings.duplicate()
+	last_level=run.level
+	run.changed.connect(_progress_changed)
+	_build_region(saved.get("player",{}))
+
+func _build_region(saved_player: Dictionary = {}, spawn_override: Vector2 = Vector2(INF,INF)) -> void:
 	get_tree().paused=false
 	if is_instance_valid(world):
 		remove_child(world)
 		world.queue_free()
 	nearest=null
-	run=RunState.new() if saved.is_empty() else RunState.restore(saved.run)
-	run.world_seed=seed_text.strip_edges().substr(0,64)
-	if run.world_seed.is_empty():
-		run.world_seed="LICHTERHAIN"
 	world=Node2D.new()
 	world.name="CurrentRun"
 	add_child(world)
-	var generated := WorldGenerator.generate(run.world_seed)
-	terrain=WorldView.new()
+	var generated: Dictionary=DungeonGenerator.generate(run.world_seed) if run.region=="vault" else WorldGenerator.generate(run.world_seed)
+	if run.region=="vault":
+		var vault_view := DungeonView.new()
+		vault_view.progress=run.vault
+		terrain=vault_view
+	else:
+		terrain=WorldView.new()
 	world.add_child(terrain)
 	terrain.build(generated)
 	player=MagePlayer.new()
 	player.run=run
-	player.position=generated.spawn
+	player.position=generated.spawn if not is_finite(spawn_override.x) else spawn_override
+	player.position=Vector2(saved_player.get("x",player.position.x),saved_player.get("y",player.position.y))
 	player.shake_enabled=settings.shake
 	terrain.actors.add_child(player)
+	player.camera.limit_right=int(generated.get("width",WorldGenerator.WIDTH))*16
+	player.camera.limit_bottom=int(generated.get("height",WorldGenerator.HEIGHT))*16
+	player.vitals.hp=float(saved_player.get("hp",100))
+	player.vitals.mana=float(saved_player.get("mana",100))
+	player.vitals.stamina=float(saved_player.get("stamina",100))
 	combat=CombatSystem.new()
 	combat.run=run
 	combat.player=player
@@ -58,47 +76,73 @@ func build_run(seed_text: String, saved: Dictionary = {}) -> void:
 	player.dash_performed.connect(func(): audio.play("dash"))
 	player.was_hit.connect(func(): audio.play("hurt"))
 	player.died.connect(func(): get_tree().paused=true; ui.death_menu())
-	var camp: Vector2=WorldGenerator.center(generated.points[0].tile)
+	var camp: Vector2=generated.spawn if run.region=="vault" else WorldGenerator.center(generated.points[0].tile)
 	for definition in generated.enemies:
 		if definition.id in run.defeated:
 			continue
 		var enemy := WildEnemy.new()
 		enemy.configure(definition,player,camp)
+		if terrain is DungeonView:
+			enemy.pathfinder=terrain.navigation
 		terrain.actors.add_child(enemy)
 		combat.connect_enemy(enemy)
 	for point in generated.points:
-		var landmark := Landmark.new()
-		landmark.configure(point,point.id in run.active_lights)
+		var landmark: Landmark
+		if run.region=="vault":
+			landmark=DungeonObject.new()
+			landmark.configure(point,dungeon_object_active(point.id))
+		else:
+			landmark=Landmark.new()
+			landmark.configure(point,point.id in run.active_lights)
 		terrain.actors.add_child(landmark)
-	var npc := Landmark.new()
-	npc.configure({"id":"edda","kind":"npc","name":"Edda, Hüterin der Quelle","tile":generated.points[0].tile+Vector2i(0,-3)},false)
-	terrain.actors.add_child(npc)
-	var atmosphere := ForestAtmosphere.new()
-	atmosphere.player=player
-	atmosphere.run=run
-	world.add_child(atmosphere)
-	if not saved.is_empty():
-		player.position=Vector2(saved.player.x,saved.player.y)
-		player.vitals.hp=float(saved.player.hp)
-		player.vitals.mana=float(saved.player.mana)
-		player.vitals.stamina=float(saved.player.stamina)
-		settings=saved.settings.duplicate()
-		player.shake_enabled=settings.shake
-		audio.volume=settings.volume
+	if run.region=="forest":
+		var npc := Landmark.new()
+		npc.configure({"id":"edda","kind":"npc","name":"Edda, Hüterin der Quelle","tile":generated.points[0].tile+Vector2i(0,-3)},false)
+		terrain.actors.add_child(npc)
+		var entrance := DungeonObject.new()
+		entrance.configure({"id":"vault_entrance","kind":"entrance","name":"Eingang zur Quellengruft","tile":generated.points[3].tile+Vector2i(2,2)},run.quest_complete)
+		terrain.actors.add_child(entrance)
+		var atmosphere := ForestAtmosphere.new()
+		atmosphere.player=player
+		atmosphere.run=run
+		world.add_child(atmosphere)
+		run.discover("camp")
+	audio.volume=settings.volume
 	ui.settings=settings.duplicate()
 	ui.hud.player=player
 	ui.hud.run=run
 	ui.hud.map_data=generated
-	ui.hud.location_name="Laternenrast"
+	ui.hud.location_name="Quellengruft" if run.region=="vault" else "Laternenrast"
 	ui.hud.prompt=""
 	ui.hud.game_visible=true
 	ui.clear()
 	player.input_enabled=true
-	run.discover("camp")
-	last_level=run.level
-	run.changed.connect(_progress_changed)
+	player.cast_armed=false
 	scan_time=0
 	player.camera.reset_smoothing()
+
+func dungeon_object_active(id: String) -> bool:
+	if id in ["shortcut_gate","shortcut_lever"]:
+		return run.vault.shortcut_open
+	if id=="secret_gate":
+		return run.vault.secret_open
+	return id in run.vault.memories or id in run.vault.relics
+
+func travel_to(region: String) -> void:
+	if region not in ["forest","vault"] or region==run.region or player.vitals.hp<=0:
+		return
+	if region=="vault" and not run.quest_complete:
+		return
+	var stats := {"hp":player.vitals.hp,"mana":player.vitals.mana,"stamina":player.vitals.stamina}
+	run.region=region
+	var spawn := Vector2(INF,INF)
+	if region=="forest":
+		var forest := WorldGenerator.generate(run.world_seed)
+		spawn=WorldGenerator.center(forest.points[3].tile+Vector2i(2,3))
+	_build_region(stats,spawn)
+	player.vitals.invulnerable=0.8
+	save_game()
+	ui.toast("Die Quellengruft · M zeichnet entdeckte Räume auf." if region=="vault" else "Zurück im Sternengarten.")
 
 func show_title() -> void:
 	player.input_enabled=false
@@ -123,6 +167,9 @@ func handle_action(action: String, argument: String = "") -> void:
 		"map":
 			get_tree().paused=true
 			ui.map_menu()
+		"discoveries":
+			get_tree().paused=true
+			ui.journal(run,true)
 		"journal":
 			get_tree().paused=true
 			ui.journal(run)
@@ -138,6 +185,9 @@ func handle_action(action: String, argument: String = "") -> void:
 			if save_game():
 				show_title()
 		"respawn":
+			if run.region=="vault":
+				run.region="forest"
+				_build_region()
 			player.position=terrain.data.spawn
 			player.vitals.refill()
 			player.reset_transient()
@@ -158,11 +208,12 @@ func handle_action(action: String, argument: String = "") -> void:
 				player.vitals.refill()
 				audio.play("light")
 				save_game()
-				ui.dialogue("Die Quelle singt wieder","Du erhältst den Quellenfokus. Aktive Waldlichter sind jetzt Rastpunkte.\n\nDie erste Erkundungsrunde ist abgeschlossen. Verbliebene Gegner und deine Talente kannst du weiter ausprobieren.",[["Weiter erkunden","resume"],["Talente und Beutel ansehen","journal"]])
+				ui.dialogue("Die Quelle singt wieder","Du erhältst den Quellenfokus. Aktive Waldlichter sind jetzt Rastpunkte.\n\nDein Fokus öffnet nun die Quellengruft südöstlich des Waldlichts im alten Sternengarten.",[["Weiter erkunden","resume"],["Talente und Beutel ansehen","journal"]])
 
 func _process(delta: float) -> void:
 	if not is_instance_valid(player) or not ui.page.is_empty():
 		return
+	run.advance_time(delta)
 	scan_time-=delta
 	if scan_time<=0:
 		scan_time=0.12
@@ -174,20 +225,31 @@ func _process(delta: float) -> void:
 func _scan_landmarks() -> void:
 	nearest=null
 	var closest_distance: float=36
-	var region := "Die Lichterhaine"
+	var region := "Die Quellengruft" if run.region=="vault" else "Die Lichterhaine"
+	if run.region=="vault":
+		for room in terrain.data.rooms:
+			if room.rect.has_point(Vector2i(player.position/16)):
+				region=room.name
+				if not room.id in run.vault.visited:
+					run.vault.visited.append(room.id)
+					ui.toast("Entdeckt: "+room.name)
 	for landmark in get_tree().get_nodes_in_group("landmarks"):
 		var distance := player.global_position.distance_to(landmark.global_position)
 		if distance<closest_distance:
-			closest_distance=distance
-			nearest=landmark
-		if landmark.kind!="npc" and distance<98:
+			var hit := get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(player.position,landmark.position,1))
+			if hit.is_empty() or hit.collider.get_parent()==landmark:
+				closest_distance=distance
+				nearest=landmark
+		if run.region=="forest" and landmark.kind in ["camp","shrine","entrance"] and distance<98:
 			region=landmark.title
-			if run.discover(landmark.id) and landmark.kind=="shrine":
+			if run.discover(landmark.id) and landmark.kind in ["shrine","entrance"]:
 				ui.toast("Entdeckt: "+landmark.title)
 	ui.hud.location_name=region
 	ui.hud.prompt=""
 	if nearest:
-		if nearest.kind=="npc":
+		if nearest is DungeonObject:
+			ui.hud.prompt=dungeon_prompt(nearest)
+		elif nearest.kind=="npc":
 			ui.hud.prompt="E · Mit Edda sprechen"
 		elif nearest.kind=="camp":
 			ui.hud.prompt="E · Rasten und speichern"
@@ -196,11 +258,94 @@ func _scan_landmarks() -> void:
 		else:
 			ui.hud.prompt="E · Am Waldlicht rasten" if run.quest_complete else "Dieses Waldlicht leuchtet wieder."
 
+func dungeon_prompt(object: DungeonObject) -> String:
+	match object.kind:
+		"entrance": return "E · Quellengruft betreten" if run.quest_complete else "E · Die versiegelte Treppe untersuchen"
+		"exit": return "E · In den Sternengarten zurückkehren"
+		"font": return "E · Rasten für %d Lichtstaub" % DungeonGenerator.content().fountain_cost
+		"memory": return "E · Erinnerung lesen"
+		"chest": return "Der Fund liegt in deinem Journal." if object.active else "E · Behältnis öffnen"
+		"lever": return "Die Abkürzung ist geöffnet." if object.active else "E · Wurzelwinde drehen"
+		"gate": return "Das Gitter steht offen." if object.active else "E · Das Gitter untersuchen"
+		"secret_gate": return "Der Stein hat den Weg freigegeben." if object.active else "E · Wasserspuren untersuchen"
+	return ""
+
+func interact_dungeon(object: DungeonObject) -> void:
+	match object.kind:
+		"entrance":
+			if run.quest_complete:
+				travel_to("vault")
+			else:
+				get_tree().paused=true
+				ui.dialogue("Die versiegelte Treppe","Drei erloschene Zeichen liegen im Stein. Wecke die drei Waldlichter und kehre zu Edda zurück. Ihr Quellenfokus könnte die Treppe öffnen.",[["Zurück","resume"]])
+		"exit": travel_to("forest")
+		"font":
+			var cost: int=int(DungeonGenerator.content().fountain_cost)
+			if run.motes<cost:
+				ui.toast("Die Sickerquelle benötigt %d Lichtstaub." % cost)
+			elif player.vitals.hp>=100 and player.vitals.mana>=100 and player.vitals.stamina>=100:
+				ui.toast("Du bist bereits vollständig erholt.")
+			else:
+				run.motes-=cost
+				player.vitals.refill()
+				combat.effects.ring(player.position,28,Color("b7e5d3"))
+				save_game()
+		"memory":
+			if not object.id in run.vault.memories:
+				run.vault.memories.append(object.id)
+				run.add_xp(int(DungeonGenerator.content().memory_xp))
+				object.activate()
+			show_discovery(object.id)
+		"chest":
+			if object.active or (object.id=="amber_seed" and not run.vault.secret_open):
+				return
+			run.vault.relics.append(object.id)
+			run.add_xp(int(DungeonGenerator.content().chart_xp if object.id=="star_chart" else DungeonGenerator.content().seed_xp))
+			object.activate()
+			audio.play("light")
+			save_game()
+			show_discovery(object.id)
+		"lever":
+			run.vault.shortcut_open=true
+			open_dungeon_gates()
+			save_game()
+			ui.toast("Ein Gitter hebt sich. Der kurze Weg zum Eingang ist frei.")
+		"gate":
+			if not object.active:
+				ui.toast("Die Winde liegt auf der anderen Seite, im Garten ohne Sonne.")
+		"secret_gate":
+			if "water_memory" in run.vault.memories:
+				run.vault.secret_open=true
+				open_dungeon_gates()
+				save_game()
+				ui.toast("Der Stern im Stein antwortet. Ein verborgener Weg öffnet sich.")
+			else:
+				ui.toast("Ein kaum erkennbares Zeichen. Vielleicht kennt das Wasser seine Bedeutung.")
+
+func open_dungeon_gates() -> void:
+	for object in get_tree().get_nodes_in_group("landmarks"):
+		if object is DungeonObject and dungeon_object_active(object.id):
+			object.activate()
+	if terrain is DungeonView:
+		terrain.refresh_gates()
+
+func show_discovery(id: String) -> void:
+	var entry: Dictionary=DiscoveryBook.entries()[id]
+	get_tree().paused=true
+	ui.dialogue(entry.title,entry.text,[["Im Journal nachlesen","discoveries"],["Weitergehen","resume"]])
+
 func interact(landmark: Landmark) -> void:
+	if landmark is DungeonObject:
+		interact_dungeon(landmark)
+		return
 	if landmark.kind=="npc":
 		get_tree().paused=true
-		if run.quest_complete:
-			ui.dialogue("Edda","Hörst du das Wasser? Die Quelle erinnert sich wieder. Dein Quellenfokus lässt dich an jedem geweckten Waldlicht rasten.",[["Talente ansehen","journal"],["Aufbrechen","resume"]])
+		if "star_chart" in run.vault.relics:
+			run.vault.reported=true
+			save_game()
+			ui.dialogue("Edda · Eine Karte unter Wurzeln","Diese Linien gehören nicht an den Himmel. Meine Lehrerin suchte ihr Ende im Aschemoor. Ich dachte, die Karte sei mit ihr verloren gegangen.\n\nBewahre sie. Manchmal ist ein Fund der Anfang einer Frage.",[["Entdeckungen lesen","discoveries"],["Weiter erkunden","resume"]])
+		elif run.quest_complete:
+			ui.dialogue("Edda","Hörst du das Wasser? Die Quelle erinnert sich wieder. Dein Quellenfokus lässt dich an jedem geweckten Waldlicht rasten. Im alten Sternengarten öffnet er außerdem die Treppe zur Quellengruft.",[["Talente ansehen","journal"],["Aufbrechen","resume"]])
 		elif run.active_lights.size()==3:
 			ui.dialogue("Edda","Drei Lichter. Ich hätte nicht gedacht, dass ich sie noch einmal sehen würde. Nimm diesen Fokus; die Quelle wird dich auf deinen Wegen begleiten.",[["Quellenfokus annehmen","reward"],["Noch einen Moment","resume"]])
 		elif not run.quest_accepted:

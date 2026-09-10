@@ -1,0 +1,32 @@
+[
+  {
+    "stage": "import",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "test_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "ui_smoke",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "save_compatibility",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "dungeon_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "migration_suite",
+    "passed": true,
+    "exit_code": 0
+  }
+]

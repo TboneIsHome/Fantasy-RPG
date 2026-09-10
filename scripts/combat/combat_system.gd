@@ -63,6 +63,20 @@ func connect_enemy(enemy: WildEnemy) -> void:
 		effects.burst(target.global_position+Vector2(0,-9),Color("aed8c5"),8)
 		sound_requested.emit("hit"))
 	enemy.projectile_requested.connect(_enemy_bolt)
+	enemy.thorns_requested.connect(_thorns)
+
+func _thorns(point: Vector2) -> void:
+	var definition: Dictionary=Content.section("enemies").kobold
+	var patch := ThornPatch.new()
+	patch.position=point
+	patch.player=player
+	patch.radius=float(definition.thorn_radius)
+	patch.remaining=float(definition.thorn_duration)
+	patch.damage=float(definition.damage)
+	patch.slow_seconds=float(definition.thorn_slow)
+	patch.interval=float(definition.thorn_interval)
+	add_child(patch)
+	sound_requested.emit("hit")
 
 func _enemy_bolt(origin: Vector2, direction: Vector2, amount: float) -> void:
 	var projectile := MagicProjectile.new()

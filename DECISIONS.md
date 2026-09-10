@@ -16,12 +16,17 @@
 | 2026-09-08 | Lokaler Git-Stand und übertragbares Quellprojekt | Arbeit ist versioniert und überprüfbar, bis das Ziel-Repository feststeht |
 | 2026-09-08 | Neues privates Repository TboneIsHome/Fantasy-RPG verwenden | Im Verlauf der Umsetzung erreichbar geworden und als leer bestätigt; getesteten Ausgangsstand hier versionieren |
 | 2026-09-09 | Vollständigen Quellstand zusätzlich als prüfbares Download-Archiv bereitstellen | README auf GitHub angelegt; automatische Freigabeprüfung verlangt für den vollständigen Code-Upload eine ausdrückliche Zustimmung zu Inhalt und Ziel |
-
 | 2026-09-09 | Vollständigen Quellcode nach ausdrücklicher Zustimmung hochladen | Tim hat den Upload in sein privates Fantasy-RPG-Repository freigegeben; Ausgangsstand 0.1 ist gesichert |
 | 2026-09-10 | Grafikiteration 0.2 vor neuen Spielsystemen | Tim gefällt der erste Spieltest; er wünscht eine deutlich schönere Darstellung |
 | 2026-09-10 | Generator und Speicherformat in 0.2 beibehalten | Bestehende Spielstände, Routen und Kampfbalance bleiben erhalten; nur der eigene Darstellungs-Zufallsstrom ändert sich |
 | 2026-09-10 | Pixelgrafik weiter direkt im Projekt definieren | Originale, editierbare Formen und kleine Dateigröße; keine Abhängigkeit von externen Grafikpaketen |
 | 2026-09-10 | DejaVu Serif für Überschriften | Ruhigere Fantasy-Typografie; lateinischer Zeichensatz reduziert, Lizenz liegt bei |
+
+| 2026-09-10 | 0.3 vertieft die erste Region mit Quellengruft und Entdeckungsjournal | Nächster begrenzter Roadmap-Meilenstein; dauerhafte Funde vor zusätzlicher Kartenmasse |
+| 2026-09-10 | Sechs Haupträume plus optionale Nische; fester Raumgraph mit begrenzter Seed-Variation | Wiedererkennbare Orte und überprüfbare Wege, ohne ungedeckte Versprechen endloser Inhalte |
+| 2026-09-10 | Dornkobold mit fest angekündigter Dornenfläche; Raster-Wegfindung in der Gruft | Dritte Gegnerrolle fordert Positionierung und respektiert Wände |
+| 2026-09-10 | Format 2 migriert Altstände explizit, Dateiname bleibt erhalten | Neue Ortszustände ohne Neustart; Originalstand vor dem ersten Schreiben separat aufbewahren, auch beim Laden aus Sicherung |
+| 2026-09-10 | Quellenhüter, zwei Questlösungen und Ausrüstung als nächster Inhaltsmeilenstein | 0.3 zuerst als zusammenhängenden Erkundungsabschnitt abnehmen |
 
 ## Noch nicht endgültig entschieden
 

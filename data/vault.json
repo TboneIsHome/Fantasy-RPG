@@ -1,0 +1,275 @@
+{
+  "name": "Die Quellengruft",
+  "rooms": [
+    {
+      "id": "threshold",
+      "name": "Die Wurzelschwelle",
+      "center": [
+        14,
+        14
+      ],
+      "size": [
+        19,
+        13
+      ],
+      "style": "roots"
+    },
+    {
+      "id": "cistern",
+      "name": "Die lauschende Zisterne",
+      "center": [
+        46,
+        14
+      ],
+      "size": [
+        23,
+        15
+      ],
+      "style": "water"
+    },
+    {
+      "id": "observatory",
+      "name": "Der blinde Sternensaal",
+      "center": [
+        78,
+        14
+      ],
+      "size": [
+        23,
+        15
+      ],
+      "style": "stars"
+    },
+    {
+      "id": "garden",
+      "name": "Der Garten ohne Sonne",
+      "center": [
+        14,
+        48
+      ],
+      "size": [
+        21,
+        15
+      ],
+      "style": "garden"
+    },
+    {
+      "id": "archive",
+      "name": "Das Wurzelarchiv",
+      "center": [
+        46,
+        48
+      ],
+      "size": [
+        23,
+        15
+      ],
+      "style": "archive"
+    },
+    {
+      "id": "sanctum",
+      "name": "Die schlafende Fassung",
+      "center": [
+        78,
+        48
+      ],
+      "size": [
+        23,
+        17
+      ],
+      "style": "sanctum"
+    },
+    {
+      "id": "secret",
+      "name": "Die Bernsteinnische",
+      "center": [
+        30,
+        31
+      ],
+      "size": [
+        11,
+        9
+      ],
+      "style": "amber"
+    }
+  ],
+  "links": [
+    [
+      "threshold",
+      "cistern"
+    ],
+    [
+      "cistern",
+      "observatory"
+    ],
+    [
+      "observatory",
+      "sanctum"
+    ],
+    [
+      "sanctum",
+      "archive"
+    ],
+    [
+      "archive",
+      "garden"
+    ],
+    [
+      "cistern",
+      "archive"
+    ],
+    [
+      "threshold",
+      "garden"
+    ],
+    [
+      "cistern",
+      "secret"
+    ]
+  ],
+  "points": [
+    {
+      "id": "vault_exit",
+      "kind": "exit",
+      "name": "Zurück in den Sternengarten",
+      "tile": [
+        14,
+        11
+      ]
+    },
+    {
+      "id": "vault_font",
+      "kind": "font",
+      "name": "Sickerquelle",
+      "tile": [
+        19,
+        16
+      ]
+    },
+    {
+      "id": "water_memory",
+      "kind": "memory",
+      "name": "Stimme im Wasser",
+      "tile": [
+        44,
+        9
+      ]
+    },
+    {
+      "id": "root_memory",
+      "kind": "memory",
+      "name": "Brief zwischen Wurzeln",
+      "tile": [
+        12,
+        43
+      ]
+    },
+    {
+      "id": "star_chart",
+      "kind": "chest",
+      "name": "Die vergessene Sternenkarte",
+      "tile": [
+        78,
+        46
+      ]
+    },
+    {
+      "id": "amber_seed",
+      "kind": "chest",
+      "name": "Der Bernsteinsamen",
+      "tile": [
+        28,
+        31
+      ]
+    },
+    {
+      "id": "shortcut_lever",
+      "kind": "lever",
+      "name": "Wurzelwinde",
+      "tile": [
+        19,
+        43
+      ]
+    },
+    {
+      "id": "shortcut_gate",
+      "kind": "gate",
+      "name": "Verwachsenes Gitter",
+      "tile": [
+        14,
+        31
+      ]
+    },
+    {
+      "id": "secret_gate",
+      "kind": "secret_gate",
+      "name": "Stein mit Wasserspuren",
+      "tile": [
+        38,
+        31
+      ]
+    }
+  ],
+  "encounters": [
+    {
+      "id": "vault_guard_0",
+      "kind": "kobold",
+      "tile": [
+        47,
+        18
+      ]
+    },
+    {
+      "id": "vault_guard_1",
+      "kind": "wisp",
+      "tile": [
+        76,
+        17
+      ]
+    },
+    {
+      "id": "vault_guard_2",
+      "kind": "kobold",
+      "tile": [
+        81,
+        13
+      ]
+    },
+    {
+      "id": "vault_guard_3",
+      "kind": "wolf",
+      "tile": [
+        43,
+        48
+      ]
+    },
+    {
+      "id": "vault_guard_4",
+      "kind": "kobold",
+      "tile": [
+        50,
+        46
+      ]
+    },
+    {
+      "id": "vault_guard_5",
+      "kind": "wisp",
+      "tile": [
+        75,
+        50
+      ]
+    },
+    {
+      "id": "vault_guard_6",
+      "kind": "kobold",
+      "tile": [
+        82,
+        49
+      ]
+    }
+  ],
+  "fountain_cost": 2,
+  "chart_xp": 40,
+  "seed_xp": 25,
+  "memory_xp": 10
+}

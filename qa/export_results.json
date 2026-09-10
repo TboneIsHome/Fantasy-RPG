@@ -1,0 +1,16 @@
+{
+  "version": "0.3.0",
+  "native_windows_tested": false,
+  "tests": [
+    {
+      "test": "linux_native",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "test": "windows_pack_on_linux",
+      "passed": true,
+      "exit_code": 0
+    }
+  ]
+}

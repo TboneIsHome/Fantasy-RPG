@@ -15,7 +15,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	phase += delta
 	if run:
-		run.time_of_day = fposmod(run.time_of_day+delta/float(Content.section("world").day_seconds),1)
 		darkness = smoothstep(0.43,0.70,run.time_of_day)*(1-smoothstep(0.90,1.0,run.time_of_day))
 		tint.color = Color("fff1d7").lerp(Color("7387b4"),darkness*0.70)
 	queue_redraw()

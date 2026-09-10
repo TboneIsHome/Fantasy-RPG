@@ -1,90 +1,62 @@
 # Prüfungen und bekannte Grenzen
 
-Stand: Version 0.2, Godot 4.5.1.stable.official.f62fdbde1, Linux x86_64; 2026-09-10.
+Stand: Version 0.3, Godot 4.5.1.stable.official.f62fdbde1, Linux x86_64; 2026-09-10.
 
-**69/69 Prüfungen bestanden:** 50 Spiel-/Speicherprüfungen, 11 UI-Prüfungen und 8 Prüfungen eines originalen 0.1-Spielstands. Keine Scriptfehler im abschließenden Funktions- und UI-Durchlauf. Der Funktionstest dauerte rund 8,2 Sekunden.
+**132/132 Prüfungen bestanden:** 50 Spiel-/Speicherprüfungen, 14 UI-Prüfungen, 8 Prüfungen eines originalen 0.1-Spielstands, 48 Dungeon-Prüfungen und 12 Migrationsprüfungen mit einem originalen abgeschlossenen 0.2-Spielstand. Der abschließende lokale Prüfablauf meldet keine Scriptfehler. Die 100 Wald-Seeds und die 100 Dungeon-Seeds sind jeweils in diesen Prüfgruppen enthalten, keine zusätzlichen Spielstunden.
 
-Acht echte Spielansichten wurden gerendert: Titel, Lager tagsüber und abends, Wald mit Frostkreis, Fluss, Journal, Pause und Karte. Kontrolliert wurden Sichtbarkeit, lesbare Texte, die Kontur der Figur, der Umfang der neuen Beleuchtung sowie die Grenzen der Menüs. Das sind direkte Godot-Aufnahmen, keine Konzeptbilder.
+15 tatsächliche Godot-Spielansichten wurden gerendert: Titel, Lager tagsüber/abends, Waldkampf, Fluss, Journal, Pause, Waldkarte sowie Dungeonzugang, Wurzelschwelle, Zisterne, Dungeonkampf, Geheimraum, Entdeckungsjournal und Dungeonkarte. Kontrolliert wurden Texte, Menüränder, Figurenkontrast, Raumgestaltung und Kampfmarkierungen. Es handelt sich um Spielaufnahmen, nicht um Konzeptbilder.
 
-Im 60-Sekunden-Kampflauf mit rein softwarebasiertem OpenGL wurden 3.569 Frames gezeichnet: Mittel 16,81 ms, 95. Perzentil 16,99 ms. Objektzahlen: anfangs 4.554, maximal 4.558, am Ende 4.546. Der Test ist auf maximal 60 FPS begrenzt und belegt keine konkrete Leistung auf anderen Geräten oder mehrstündige Stabilität. In diesem Lauf trat keine wachsende Objektzahl auf. Der virtuelle Grafiktreiber meldet beim Start, dass eine VSync-Umschaltung nicht unterstützt wird.
+Der gerenderte 60-Sekunden-Kampf in der Gruft lief mit aktiven Dornkobold- und Irrlichtangriffen sowie wiederholten Magierzaubern: 3.591 Frames, Mittel 16,71 ms, 95. Perzentil 16,98 ms. Objektzahlen: anfangs 359, maximal 366, am Ende 362. Nach drei Hin- und Rückreisen waren jeweils 4.557 Nodes im Wald und 359 in der Gruft aktiv. Keine anwachsende Objektzahl in diesem geprüften Umfang. Software-OpenGL über Mesa llvmpipe, Obergrenze 60 FPS; keine Aussage zur Leistung auf anderen Geräten oder mehrstündiger Stabilität. Der virtuelle Treiber meldet erwartungsgemäß keine Unterstützung für das Umschalten von VSync.
 
-Die Windows- und Linux-Release-Exporte wurden mit den offiziellen 4.5.1-Vorlagen erstellt. Der native Linux-Export wurde zusätzlich gestartet. Die im Windows-Programm enthaltenen Spielressourcen wurden mit derselben Godot-Version unter Linux geladen; das ist kein nativer Windows-Test.
+Windows- und Linux-Release wurden mit offiziellen 4.5.1-Vorlagen exportiert. Der native Linux-Export und das eingebettete Ressourcenpaket des Windows-Exports wurden unter Linux gestartet und haben die Gruft tatsächlich betreten. Geprüft wurden Version, Raum-/Gegnerzahl, Fundtexte und Speicherung aus den exportierten Ressourcen. Das ersetzt keinen nativen Windows-Test. Das Windows-Archiv besteht zusätzlich die ZIP-Prüfsummenprüfung; PE-Header und x86_64-Architektur wurden geprüft.
 
-**Menschlicher Spieltest:** Tim hat Version 0.1 getestet, den ersten Prototyp positiv beurteilt und deutlich schönere Grafik als nächste Priorität genannt. Eine menschliche Beurteilung von 0.2 steht noch aus.
+**Menschlicher Spieltest:** Tim hat 0.1 gespielt, den Prototyp positiv beurteilt und deutlich schönere Grafik gewünscht. Eine menschliche Beurteilung von 0.2 und 0.3 steht noch aus. Die Ergebnisse unter `qa/` belegen automatisierte Prüfungen, kein Urteil über mehrstündigen Spielspaß.
 
-Die maschinenlesbaren Ergebnisse liegen unter `qa/`.
+## Geprüfter Umfang
 
-## Automatisch geprüft
+| Prüfung | Wesentliche Abdeckung |
+|---|---|
+| `test_suite.gd` | Reproduzierbarer Wald, 100 Seeds, echte Bewegung/Kollision, Zauber/Ressourcen, drei Talente, Gegnerankündigung, erster Auftrag, Tod, Speicherung, beschädigte Daten und Versionsgrenzen |
+| `ui_smoke.gd` | Echte Tasten und Menüaktionen, Pause, Dialogannahme, Menügrenzen bei 640 × 360, Entdeckungstab mit allen Texten, Scrollen bis zum letzten Fund, Tab zum Schließen |
+| `save_compatibility.gd` | Originales 0.1-JSON, Terrain-SHA über alle Waldzellen, genaue Position/Ressourcen, Talent, Beutel, Quest, Tageszeit, Einstellungen und dauerhafte Gegner-/Lichtänderungen; Originalbytes unverändert |
+| `dungeon_suite.gd` | 100 Seeds mit Ein-/Ausgang, Hauptorten, Gegnern und geheimem Zugang; physische Torsperre und kürzerer Rückweg; echte Navigation um eine Ecke; Übergänge ohne Heilung/Doppelspieler; einmalige Funde, Quelle, Eddas Reaktion, Speichern/Laden/Tod; Kobold-Ankündigung, festes Ziel, Ausweichen, Schaden, Verlangsamung und Effektabbau |
+| `migration_suite.gd` | Tatsächlicher abgeschlossener 0.2-Stand, genauer Fortschritt, erster Dungeonzugang, Schema 2, unveränderte permanente Sicherung auch bei beschädigter Hauptdatei und Wiederherstellung aus `.bak`; Weltzeit unter Tage und Pause; Ablehnung zukünftiger Dungeonversionen |
+| `soak_vault.gd` | Gerenderter 60-Sekunden-Kampf, aktive Dornenflächen, Framezeiten und Objektzahlen, drei Regions-Rundreisen mit vollständigem Szenenabbau |
+| `export_smoke.gd` | Zusätzlich als externes Skript gegen beide Release-Pakete ausgeführt: Dungeonaufbau, enthaltene JSON-Daten, richtige Version und Speicherbarkeit |
 
-`tests/test_suite.gd` prüft 50 Bedingungen, darunter:
+Die Tests verwenden eigene Dateinamen und löschen ihre Testspielstände. Sie überschreiben keinen normalen Spielstand. Das aktuelle Paket enthält keine Testskripte.
 
-- identische Welt bei identischem Seed; Unterschiede bei anderem Seed; Unicode;
-- 100 verschiedene Seeds: sämtliche Landmarken und Gegnerlichtungen erreichbar;
-- Kartenrand, Bewegung über echte Eingaben und physische Kollisionen;
-- Mana, Abklingzeiten, Ausdauer, Ausweichschutz und Schutz gegen Mehrfachtreffer;
-- bewegte Projektile, Hindernisse, Flächenzauber, Verlangsamung und Splitterschaden;
-- alle drei Talente mit ihren tatsächlichen Kampfauswirkungen;
-- Ankündigung, Ausweichen und Schaden beim Wolf; Fernprojektil des Irrlichts;
-- einmalige Ortsbelohnungen, Aufstieg, Talentregeln und vollständiger Erkundungsauftrag;
-- Speichern/Laden, persistente besiegte Gegner, Tod und Rückkehr zum Lager;
-- ungültige Datentypen, NaN, doppelte IDs, inkompatible Versionen und beschädigte JSON-Dateien;
-- Sicherungsrückfall ohne stilles Downgrade eines Spielstands aus einer neueren Generatorversion.
+## Wiederholen
 
-Die Tests verwenden eigene Dateinamen und löschen ihre Testspielstände. Sie überschreiben keinen normalen Spielstand.
-
-`tests/ui_smoke.gd` prüft Menü-Buttons, Tab/M/Esc-Eingaben, Dialogannahme, Pausenzustände sowie die Grenzen der Menüs bei 640 × 360 Pixeln.
-
-`tests/save_compatibility.gd` lädt einen eingefrorenen, vom tatsächlichen 0.1-Code erzeugten Spielstand. Geprüft werden alle Terrain-Zellen per SHA-256, genaue Position/Ressourcen, Talente, Inventar, Queststatus, Tageszeit, Einstellungen, das leuchtende Weltobjekt und das dauerhafte Entfernen des besiegten Gegners. Die ursprünglichen Spielstandbytes werden nicht verändert. Herkunft und Werte stehen unter `tests/fixtures/README.md`.
-
-`tests/capture.gd` rendert die acht oben genannten Ansichten der tatsächlichen Godot-Szene.
-
-`tests/soak.gd` führt einen kurzen 60-Sekunden-Lauf mit aktiven Gegnern und Zaubern im gerenderten Spiel aus. Er misst Frame-Zeiten und die Anzahl lebender Objekte. Der Spieler ist nur in diesem Test unverwundbar. Der Lauf ersetzt keine mehrstündigen Spieltests und sagt keine konkrete Leistung auf Tims PC voraus.
-
-## Tests wiederholen
-
-Zuerst den Projektimport durchführen. `godot` steht hier für die ausführbare Datei von Godot 4.5.1:
+`godot` steht für die ausführbare Datei von Godot 4.5.1. Der lokale Prüfablauf importiert das Projekt und führt alle fünf Testgruppen nacheinander aus. Er wertet zusätzlich Fehlermeldungen im Log aus, da Godot bei manchen Scriptfehlern Exitcode 0 zurückgeben kann.
 
 ```bash
-godot --headless --path . --editor --import --quit
-godot --headless --audio-driver Dummy --path . --script res://tests/test_suite.gd
-godot --headless --audio-driver Dummy --path . --script res://tests/ui_smoke.gd
-godot --headless --audio-driver Dummy --path . --script res://tests/save_compatibility.gd
-godot --path . --script res://tests/capture.gd
-godot --path . --script res://tests/soak.gd
+python3 tools/verify.py /absoluter/pfad/zu/godot
+godot --audio-driver Dummy --path . --script res://tests/capture.gd
+godot --audio-driver Dummy --path . --script res://tests/capture_vault.gd
+godot --audio-driver Dummy --path . --script res://tests/soak_vault.gd
 ```
 
-Die letzten zwei Befehle benötigen eine grafische Sitzung. Ergebnisse liegen anschließend in `test-output/`; dieser Ordner wird nicht in den Spiel-Export übernommen.
+Die letzten drei Befehle benötigen eine grafische Sitzung. `tests/soak.gd` bleibt als optionaler Wald-Kampflauf aus 0.2 erhalten. Neue Ergebnisse landen in `test-output/`, freigegebene maschinenlesbare Berichte in `qa/`. Herkunft der eingefrorenen Spielstände: `tests/fixtures/README.md`. Vorversions-Fixtures niemals mit neuem Code regenerieren.
 
-## Für Tims nächsten Spieltest
+## Nächster menschlicher Spieltest
 
-1. Eine Runde mit dem Standard-Seed beginnen, Edda ansprechen und einen Pfad wählen.
-2. Im ersten Kampf erst nur Lichtfunken, dann Frost + Lichtfunken verwenden.
-3. Einen Wolf bewusst ins Leere springen lassen und Ausweichen ausprobieren.
-4. Ein Waldlicht entzünden, speichern, neu laden und die Veränderung prüfen.
-5. Einen Talentpunkt ausgeben und die Wirkung im nächsten Kampf beobachten.
-6. Die drei Lichter wecken, Eddas Belohnung erhalten und an einem Waldlicht rasten.
-
-Besonders für 0.2: Ist der Magier auch im dichten Wald sichtbar? Bleiben Angriffsankündigungen zwischen Pflanzen und Effekten klar? Wirken Lager, Wald und Abendlicht stimmig? Anschließend den vorhandenen 0.1-Spielstand fortsetzen und bekannte Talente/Funde kontrollieren.
+1. Den bisherigen Spielstand fortsetzen und bekannte Talente, Waldlichter und Funde kontrollieren.
+2. Falls nötig Eddas ersten Auftrag abschließen; danach zum Eingang südöstlich des Waldlichts im alten Sternengarten gehen.
+3. Die Gruft ohne Lösungshinweise erkunden: Sind Raumrollen, Türen, Erinnerungen und die nächste Richtung verständlich?
+4. Beim Dornkobold den markierten Bereich verlassen, danach bewusst einen Angriff abwarten: Sind Ankündigung und Gefahrenfläche gut lesbar?
+5. Abkürzung öffnen, speichern, neu laden und die Veränderung kontrollieren. Die Sternenkarte zu Edda bringen.
+6. Einschätzen, ob Lichtstaubkosten, Gegnermischung und Raumgröße spannende Entscheidungen ergeben. Optional nach übersehenen Hinweisen suchen.
 
 ## Bekannte Grenzen
 
-- Der Windows-Export wurde erstellt, aber hier nicht nativ unter Windows ausgeführt. Die Laufzeitprüfung erfolgt unter Linux.
-- Eigene Pixelgrafik mit begrenzten Animationen; noch keine vollständigen Animationssätze für alle Richtungen, dynamischen Schatten oder umfangreiche Musik.
-- Eine begrenzte Region, zwei normale Gegnertypen, ein handgeschriebener NPC und ein einfacher Erkundungsauftrag. Dungeon, Boss und zwei ausgearbeitete Questlösungen fehlen.
-- Lokale Gegnersteuerung kann an komplexen Hindernissen hängen bleiben; systematische Wegfindung kommt mit dem Dungeon.
-- Der Spieler wird bei Frostkreisen bislang nicht durch eine Reichweitenvorschau vor dem Auslösen unterstützt.
-- Ein Beutel mit Lichtstaub und Relikt, noch kein Ausrüstungs-/Händlersystem. Lichtstaub hat vorerst keine Verwendung.
-- Drei Talente sind noch kein großer Skill Tree. Keine anderen spielbaren Klassen.
-- Die Karte zeigt das Gelände von Beginn an; unbekannte Orte sind mit Fragezeichen markiert. Keine vollständige Sichtnebelkarte.
-- Keine frei belegbaren Tasten, Controller-Unterstützung, Textskalierung oder mobile Oberfläche in 0.2.
-- Lebende Gegner und Abklingzeiten werden beim Laden zurückgesetzt. Kein Chunk-Streaming und keine langfristige Regionssimulation.
-
-## Bereits im Grundprototyp behobene Fehler
-
-- GDScript-Typableitung an dynamischen Schleifenvariablen explizit gemacht.
-- Tab-Tastendruck wird im Journal nicht mehr von der Schaltflächen-Fokusnavigation abgefangen.
-- Menüklick löst beim Zurückkehren ins Spiel keinen ungewollten Zauber aus.
-- Beschädigte Spielstände erzeugen eine verständliche Meldung statt eines technischen JSON-Fehlers.
-- Irrlicht-Projektile zielen vom tatsächlichen Abschusspunkt auf die angekündigte Zielposition.
-- Audio-Stimmen werden beim Szenenabbau freigegeben.
-- Magierkontrast, Verdeckung durch Baumkronen und Lesbarkeit der Steuerungshinweise verbessert.
+- Windows-Export hier nicht nativ unter Windows ausgeführt; Laufzeitprüfung unter Linux.
+- Eine begrenzte Waldregion und eine kleine Gruft, drei Gegnertypen, ein NPC. Boss, zwei vollständige Questlösungen und allgemeine NPC-Erinnerungen folgen später.
+- Dungeon-Raumgraph und Geschichten bleiben gleich; der Seed variiert Größen und Begegnungspositionen. Keine unendlichen oder mehrstündig validierten Inhalte.
+- Eigene Pixelgrafik mit begrenzten Animationen, ohne vollständige Richtungsatlanten, dynamische Schatten oder umfangreiche Musik.
+- Raster-Wegfindung gilt für die Gruft. Waldgegner können an komplexen Hindernissen hängen bleiben.
+- Beutel und drei Talente, noch kein Ausrüstungs-/Händlersystem oder großer Talentbaum. Neue Funde haben noch keine Ausrüstungswerte.
+- Die Waldkarte zeigt Gelände von Beginn an; unbekannte Orte sind markiert. Die Dungeonkarte zeigt besuchte Räume, keinen vollständigen Sichtnebel.
+- Lebende Gegner und Abklingzeiten werden beim Laden oder erneuten Betreten einer Region zurückgesetzt. Die Region wird komplett ausgetauscht; kein Streaming oder langfristige Weltsimulation.
+- Keine frei belegbaren Tasten, Controller-Unterstützung, Textskalierung oder Frostkreis-Reichweitenvorschau.
+- Nach dem ersten Speichern in 0.3 können ältere Builds die neue Hauptdatei nicht lesen. Der unveränderte Altstand bleibt zusätzlich als `.pre-v03` erhalten.

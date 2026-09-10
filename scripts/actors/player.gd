@@ -23,6 +23,7 @@ var last_movement := Vector2.DOWN
 var cast_armed: bool = false
 var cast_flash: float = 0
 var staff_light: PointLight2D
+var hindered: float = 0
 
 func _ready() -> void:
 	add_to_group("player")
@@ -51,6 +52,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	phase += delta
+	hindered=maxf(0,hindered-delta)
 	cast_flash = maxf(0,cast_flash-delta)
 	vitals.tick(delta)
 	abilities.tick(delta)
@@ -76,7 +78,7 @@ func _physics_process(delta: float) -> void:
 			request_cast("bolt",get_global_mouse_position())
 		if Input.is_action_just_pressed("nova"):
 			request_cast("nova",get_global_mouse_position())
-	velocity = dash_direction*float(Content.section("player").dash_speed) if dash_remaining>0 else movement*float(Content.section("player").speed)
+	velocity = dash_direction*float(Content.section("player").dash_speed) if dash_remaining>0 else movement*float(Content.section("player").speed)*(0.55 if hindered>0 else 1.0)
 	velocity += knockback
 	knockback = knockback.move_toward(Vector2.ZERO,500*delta)
 	move_and_slide()
@@ -107,6 +109,7 @@ func take_damage(amount: float, direction: Vector2 = Vector2.ZERO) -> bool:
 
 func reset_transient() -> void:
 	dash_remaining = 0
+	hindered = 0
 	knockback = Vector2.ZERO
 	velocity = Vector2.ZERO
 	abilities = MageAbilities.new()
@@ -128,6 +131,8 @@ func update_visual() -> void:
 func _draw() -> void:
 	if vitals.hp<=0:
 		return
+	if hindered>0:
+		draw_arc(Vector2.ZERO,9,0,TAU,16,Color("d8ae78"),1)
 	if cast_flash>0:
 		var point := Vector2(-13 if aim.x<0 else 13,-28)
 		draw_line(point-aim*3,point+aim*(6+cast_flash*40),Color("efffcd"),2)

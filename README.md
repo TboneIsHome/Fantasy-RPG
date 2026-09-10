@@ -1,6 +1,6 @@
-# Lichterhain · Version 0.2 — Der Wald erwacht
+# Lichterhain · Version 0.3 — Unter den Wurzeln
 
-Ein kleines, offline spielbares Fantasy-RPG mit einem Magier und einer seed-basierten Pixelwaldregion. Diese Version verfeinert nach Tims erstem Spieltest das Erscheinungsbild der ersten Erkundungsrunde. Er ist noch nicht der vollständige Vertical Slice.
+Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelwaldregion und der ersten Quellengruft. Auf die Grafikiteration 0.2 folgt ein neuer Erkundungsabschnitt mit Erinnerungen, dauerhaften Funden und einem dritten Gegner. Der Prototyp ist noch nicht der vollständige Vertical Slice oder eine mehrstündige Spielwelt.
 
 ## Direkt spielen unter Windows
 
@@ -9,19 +9,21 @@ Ein kleines, offline spielbares Fantasy-RPG mit einem Magier und einer seed-basi
 3. **Neuen Lichtpfad beginnen** wählen. Der voreingestellte Seed eignet sich für die erste Runde.
 4. Mit **WASD** zu Edda nördlich des Lagerfeuers gehen und **E** drücken.
 
-Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen erforderlich. Die beigefügte Anwendung ist ein Windows-x86_64-Export. Version 0.1 wurde von Tim gespielt und positiv beurteilt. Version 0.2 wurde unter Linux automatisiert und visuell geprüft; der neue Windows-Export ist erstellt, hier aber nicht nativ unter Windows ausgeführt.
+Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen erforderlich. Die beigefügte Anwendung ist ein Windows-x86_64-Export. Version 0.1 wurde von Tim gespielt und positiv beurteilt. Version 0.3 wurde unter Linux automatisiert und visuell geprüft; der neue Windows-Export ist hier nicht nativ unter Windows ausgeführt.
 
-## Neu in Version 0.2
+## Neu in Version 0.3
 
-- 32 Baumvarianten mit Laubkronen, Tannen, Birken, Jungwuchs und alten Stümpfen.
-- Zusammenhängender Moosboden, unregelmäßige Pfadränder, Farne, Blumen und Pilze.
-- Lager mit Teppichen, Vorräten, Laternen und flackerndem Feuer.
-- Überarbeitete Figuren, Gehschritte, Magier-Rückenansicht und dezente Kontur für bessere Sichtbarkeit.
-- Bewegtes Wasser, örtliche Lichtquellen, schwebende Lichtteilchen und warme Tagesfarben.
-- Frostkreis mit Runen und Kristallen, feinere Geschossspuren und lesbarere Trefferzahlen.
-- Neue Zaubersymbole, Charakterporträt, Abklinganzeigen und überarbeitetes Hauptmenü.
+- Die Quellengruft: sechs Haupträume, eine versteckte Nische, eine Schleife und eine freischaltbare Abkürzung.
+- Zisterne, Wurzelarchiv, unterirdischer Garten und Sternensäle mit eigener Pixelgrafik, Wasserbecken und Lichtstimmung.
+- Dornkobolde: Ihr angekündigter Angriff hinterlässt eine zeitlich begrenzte Dornenfläche. In der Gruft finden Gegner Wege um Wände.
+- Entdeckungsjournal mit neun kurzen Orts- und Fundtexten. Unbekannte Inhalte bleiben verborgen.
+- Sternenkarte, optionaler Fund, gelesene Hinweise und geöffnete Wege bleiben gespeichert. Edda reagiert auf die zurückgebrachte Karte.
+- Lichtstaub erhält eine Verwendung: Zwei Einheiten füllen an der Sickerquelle Leben, Mana und Ausdauer auf.
+- Die Dungeonkarte zeichnet besuchte Räume auf; die Weltzeit läuft auch unter der Erde weiter.
 
-**Dein Spielstand aus 0.1 bleibt verwendbar.** Starte die neue EXE und wähle „Am Speicherpunkt fortsetzen“. Ein mit dem alten Code erstellter Spielstand wurde tatsächlich geladen und geprüft. Weltaufbau, Kämpfe, Quest und Speicherformat wurden nicht verändert.
+**Spielstände aus 0.1 und 0.2 bleiben verwendbar.** Starte die neue EXE und wähle „Am Speicherpunkt fortsetzen“. Originale Spielstände beider Versionen wurden tatsächlich geladen. Beim ersten Speichern wird das erweiterte Format 2 geschrieben und der bisherige gültige Stand zusätzlich als `.pre-v03` aufbewahrt. Ältere Spielversionen können Format 2 nicht lesen.
+
+**So erreichst du die neuen Inhalte:** Drei Waldlichter wecken, bei Edda den Quellenfokus abholen und zum alten Sternengarten gehen. Wenige Schritte südöstlich seines Waldlichts führt ein Tor in die Quellengruft. Wer Eddas Auftrag schon abgeschlossen hat, kann direkt dorthin gehen.
 
 ## Steuerung
 
@@ -32,8 +34,8 @@ Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen 
 | Linke Maustaste / 1 | Lichtfunke; gedrückt halten ist möglich |
 | Rechte Maustaste / 2 | Frostkreis am Zielpunkt innerhalb der Reichweite |
 | Leertaste | Ausweichen in Bewegungsrichtung; im Stand in die letzte Bewegungsrichtung |
-| E | Sprechen, Waldlicht entzünden, am Lager rasten |
-| Tab | Journal, Talente und Beutel öffnen/schließen |
+| E | Sprechen, rasten, Hinweise lesen, Funde aufnehmen und Übergänge benutzen |
+| Tab | Journal mit Talenten, Beutel und Entdeckungen öffnen/schließen |
 | M | Karte öffnen/schließen |
 | Esc | Pause / Fenster schließen |
 | F5 / F9 | Speichern / letzten Speicherpunkt laden |
@@ -45,15 +47,15 @@ Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen 
 
 Eddas Auftrag annehmen, drei Waldlichter in beliebiger Reihenfolge finden und mit E entzünden. Gegner geben Erfahrung und Lichtstaub. Im Journal kannst du Talentpunkte ausgeben. Wenn alle Lichter erwacht sind, zu Edda zurückkehren und den Quellenfokus annehmen. Danach kannst du auch an Waldlichtern rasten.
 
-Die erste Runde hat ein Ende, die kleine Region bleibt danach begehbar. Gegner und Lichter werden innerhalb einer Sitzung nicht automatisch neu ausgewürfelt. Ein neuer Seed beginnt einen neuen Lauf.
+Danach die Quellengruft erkunden, ihre Hinweise lesen und die Sternenkarte zu Edda bringen. Eine Abkürzung erleichtert die Rückkehr; aufmerksames Lesen kann einen weiteren Ort erschließen. Die kleine Welt bleibt nach Abschluss begehbar. Ein neuer Seed beginnt einen neuen Lauf.
 
 ## Speichern
 
-Rasten, F5 und die Rückgabe des Auftrags speichern. Beim regulären Schließen des laufenden Spiels wird ein lebender Charakter ebenfalls gespeichert. Der Menüpunkt „Speichern und zum Titel“ speichert zuerst. Es gibt **einen Speicherpunkt plus die vorherige Sicherung**.
+Rasten, F5, Gebietswechsel, neue Dungeonhinweise/Funde, geöffnete Wege und die Rückgabe des Auftrags speichern. Beim regulären Schließen des laufenden Spiels wird ein lebender Charakter ebenfalls gespeichert. Der Menüpunkt „Speichern und zum Titel“ speichert zuerst. Es gibt **einen Speicherpunkt plus die vorherige Sicherung** und bei der Umstellung die unveränderte Altstand-Sicherung.
 
-Ein neuer Lauf ersetzt diesen Speicherpunkt, sobald du speicherst. Beim Tod kannst du ohne Fundverlust am Lager zurückkehren. Noch lebende Gegner kehren beim Laden gesund an ihre Ausgangsorte zurück; besiegte bleiben verschwunden.
+Ein neuer Lauf ersetzt diesen Speicherpunkt, sobald du speicherst. Beim Tod, auch in der Gruft, kannst du ohne Fundverlust am Lager zurückkehren. Noch lebende Gegner kehren beim Laden oder erneuten Betreten einer Region gesund an ihre Ausgangsorte zurück; besiegte bleiben verschwunden. Kurze Effekte und Abklingzeiten werden dabei zurückgesetzt.
 
-Datei: `user://lichtpfad_v1.json`; Godot legt sie im Benutzerordner des Spiels ab, nicht neben der EXE. Unter Windows ist das normalerweise `%APPDATA%\Godot\app_userdata\Lichterhain\`. Die Sicherung endet auf `.bak`.
+Datei: `user://lichtpfad_v1.json`; der etablierte Dateiname bleibt trotz Format 2 erhalten. Godot legt sie im Benutzerordner des Spiels ab, nicht neben der EXE. Unter Windows ist das normalerweise `%APPDATA%\Godot\app_userdata\Lichterhain\`. Die rotierende Sicherung endet auf `.bak`, die einmalige alte Sicherung auf `.pre-v03`.
 
 ## Im Editor weiterentwickeln
 
@@ -75,6 +77,6 @@ GDScript wird verwendet; die .NET-Ausgabe ist nicht notwendig. Das Projekt kommt
 
 ## GitHub
 
-Der vollständige Quellcode, die Tests und die Projektdokumentation liegen in [TboneIsHome/Fantasy-RPG](https://github.com/TboneIsHome/Fantasy-RPG). Der Ausgangsstand 0.1 wurde separat gesichert; die Grafiküberarbeitung folgt als eigener Commit. Binäre Builds und lokale Godot-Caches gehören nicht in den Quellcode-Stand.
+Der vollständige Quellcode, die Tests und die Projektdokumentation liegen in [TboneIsHome/Fantasy-RPG](https://github.com/TboneIsHome/Fantasy-RPG). Jede Iteration erhält einen eigenen Commit. Binäre Builds und lokale Godot-Caches gehören nicht in den Quellcode-Stand.
 
-Die spielbare Windows-Version wird als separates Download-Paket **Lichterhain_0.2_Windows.zip** bereitgestellt.
+Die spielbare Windows-Version wird als separates Download-Paket **Lichterhain_0.3_Windows.zip** bereitgestellt.

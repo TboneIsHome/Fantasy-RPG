@@ -94,12 +94,16 @@ func _draw() -> void:
 		draw_rect(Rect2(16,69,160,1),Color("30484c"))
 		draw_rect(Rect2(16,69,160*run.xp/(run.level*60.0),1),GOLD)
 		card(Rect2(455,10,175,52))
-		text(Vector2(467,25),"DIE VERSTUMMTEN LICHTER",9,GOLD)
-		text(Vector2(467,42),"Zurück zu Edda" if run.active_lights.size()==3 and not run.quest_complete else "Quelle wieder erwacht" if run.quest_complete else "Waldlichter",11)
-		for i in 3:
-			diamond(Vector2(593+i*10,51),2.5,GOLD if i<run.active_lights.size() else Color("496268"))
-		if not run.quest_complete and run.active_lights.size()<3:
-			text(Vector2(594,41),"%d / 3" % run.active_lights.size(),10,GOLD)
+		if run.quest_complete:
+			text(Vector2(467,25),"UNTER DEN WURZELN",9,GOLD)
+			text(Vector2(467,42),"Die Karte ist geborgen" if run.vault.reported else "Sternenkarte zu Edda bringen" if "star_chart" in run.vault.relics else "Die Sternenkarte finden" if run.region=="vault" else "Gruft im Sternengarten finden",9)
+		else:
+			text(Vector2(467,25),"DIE VERSTUMMTEN LICHTER",9,GOLD)
+			text(Vector2(467,42),"Zurück zu Edda" if run.active_lights.size()==3 else "Waldlichter",11)
+			for i in 3:
+				diamond(Vector2(593+i*10,51),2.5,GOLD if i<run.active_lights.size() else Color("496268"))
+			if run.active_lights.size()<3:
+				text(Vector2(594,41),"%d / 3" % run.active_lights.size(),10,GOLD)
 		var label_width: float = ThemeDB.fallback_font.get_string_size(location_name,HORIZONTAL_ALIGNMENT_LEFT,-1,11).x
 		card(Rect2(320-label_width/2-14,12,label_width+28,23),0.86)
 		text(Vector2(320-label_width/2,27),location_name,11,CREAM)
@@ -146,6 +150,9 @@ func _draw() -> void:
 		text(Vector2(320-w/2,96),toast_text,11,GOLD)
 
 func _draw_map() -> void:
+	if run.region=="vault":
+		_draw_vault_map()
+		return
 	draw_rect(Rect2(0,0,640,360),Color(0.03,0.08,0.10,0.85))
 	card(Rect2(126,29,388,302))
 	text(Vector2(143,49),"DIE LICHTERHAINE",15,GOLD)
@@ -160,7 +167,47 @@ func _draw_map() -> void:
 		var known: bool = point.id in run.discoveries
 		draw_circle(p,4,GOLD if point.id in run.active_lights else CREAM if known else Color("8faaa1"))
 		text(p+Vector2(6,3),"Lager" if point.kind=="camp" else str(map_data.points.find(point)) if known else "?",9,CREAM)
+	if "vault_entrance" in run.discoveries:
+		var entrance: Vector2=origin+Vector2(map_data.points[3].tile+Vector2i(2,2))*2.5
+		diamond(entrance,4,Color("c6cced"))
 	var p := origin+player.global_position/16*2.5
 	draw_circle(p,3,Color("c3ffed"))
 	draw_arc(p,5,0,TAU,12,Color("c3ffed"),1)
 	text(Vector2(143,315),"Du: türkis   ·   Lichter: Kreise   ·   M / ESC schließen",9,MUTED)
+
+func _draw_vault_map() -> void:
+	draw_rect(Rect2(0,0,640,360),Color(0.03,0.07,0.11,0.9))
+	card(Rect2(126,29,388,302))
+	text(Vector2(143,49),"DIE QUELLENGRUFT",15,GOLD)
+	text(Vector2(143,66),"Deine Erinnerung zeichnet den Weg.",10,MUTED)
+	var origin := Vector2(176,82)
+	for room in map_data.rooms:
+		if not room.id in run.vault.visited:
+			continue
+		var bounds: Rect2i=room.rect
+		draw_rect(Rect2(origin+Vector2(bounds.position)*3,Vector2(bounds.size)*3),Color("415c6a"))
+		draw_rect(Rect2(origin+Vector2(bounds.position)*3,Vector2(bounds.size)*3),Color("799a97"),false,1)
+		var center: Vector2=origin+Vector2(room.center)*3
+		diamond(center,2,GOLD)
+		var name: String={"threshold":"Eingang","cistern":"Zisterne","observatory":"Sternensaal","garden":"Garten","archive":"Archiv","sanctum":"Fassung","secret":"Nische"}[room.id]
+		text(center+Vector2(-23,14),name,8)
+	for link in DungeonGenerator.content().links:
+		if not link[0] in run.vault.visited or not link[1] in run.vault.visited:
+			continue
+		if link[0]=="threshold" and link[1]=="garden" and not run.vault.shortcut_open:
+			continue
+		var a := Vector2.ZERO
+		var b := Vector2.ZERO
+		for room in map_data.rooms:
+			if room.id==link[0]: a=Vector2(room.center)
+			if room.id==link[1]: b=Vector2(room.center)
+		if link[1]=="secret": a=Vector2(46,31)
+		var from := origin+a*3
+		var to := origin+b*3
+		draw_line(from,Vector2(to.x,from.y),Color("829c8c"),1)
+		draw_line(Vector2(to.x,from.y),to,Color("829c8c"),1)
+	var p := origin+player.position/16*3
+	draw_circle(p,3,Color("cfffe1"))
+	draw_arc(p,5,0,TAU,16,Color("cfffe1"),1)
+	text(Vector2(143,291),"Abkürzung geöffnet" if run.vault.shortcut_open else "Eine Winde könnte den Rückweg verkürzen.",10,GOLD)
+	text(Vector2(143,315),"Nur entdeckte Räume · M / ESC schließen",9,MUTED)
