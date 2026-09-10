@@ -245,7 +245,8 @@ func run_tests() -> void:
 	check(game.run.quest_complete,"Death retains earned discoveries and quest progress")
 	paused=false
 	game.queue_free()
-	await process_frame
+	for i in 5:
+		await process_frame
 	for suffix in ["",".bak",".tmp"]:
 		if FileAccess.file_exists(TEST_SAVE+suffix):
 			DirAccess.remove_absolute(TEST_SAVE+suffix)

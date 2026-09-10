@@ -14,9 +14,14 @@
 - [x] Automatisierte Tests für Welt, Kampf, Fortschritt und Speicherung.
 - [x] Privates Ziel-Repository TboneIsHome/Fantasy-RPG identifizieren und Projektbeschreibung anlegen.
 
+- [x] Vollständigen Quellcode nach ausdrücklicher Zustimmung in Fantasy-RPG sichern.
+- [x] Tims ersten Spieltest aufnehmen: Grundprototyp gefällt; Grafik deutlich verbessern.
+- [x] Wald, Boden, Lager, Figuren, Zauber, Beleuchtung und Oberfläche für 0.2 überarbeiten.
+- [x] Originalen 0.1-Spielstand einfrieren und tatsächlich in der neuen Welt laden.
+
 ## Als Nächstes
 
-- [ ] Mit Tim klären: Fühlen sich Bewegung, Magierreichweite und Pixelgröße gut an?
+- [ ] Tims Rückmeldung zur neuen Darstellung aufnehmen: Sichtbarkeit, Atmosphäre und Detaildichte.
 - [ ] Nach Spieltest Zauberrhythmus, Gegnergeschwindigkeit und Manaregeneration abstimmen.
 - [ ] Entdeckungsjournal um individuelle kurze Fundtexte ergänzen.
 - [ ] Dungeon-Raumdaten, Türen und einen Erreichbarkeitsvalidator implementieren.
@@ -31,4 +36,3 @@
 - [ ] Weltgeneratorversionen und Migration anhand eines eingefrorenen Testspielstands prüfen.
 - [ ] Chunk-Grenzen erst mit tatsächlichem Streaming hinzufügen und prüfen.
 - [ ] Langzeittests, Quellenfokus-Balancing und neue Nutzung für Lichtstaub.
-- [ ] Nach ausdrücklicher Freigabe den vollständigen Quellcode nach TboneIsHome/Fantasy-RPG übertragen; automatische Freigabeprüfung blockierte diesen Schritt.

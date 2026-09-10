@@ -14,6 +14,10 @@ func capture() -> void:
 	await rendered_frames(8)
 	game.ui.hud.toast_left=0
 	await screenshot("camp")
+	game.run.time_of_day=0.74
+	await rendered_frames(8)
+	await screenshot("camp_night")
+	game.run.time_of_day=0.15
 	game.handle_action("journal")
 	await rendered_frames(4)
 	await screenshot("journal")
@@ -33,9 +37,24 @@ func capture() -> void:
 	game.handle_action("map")
 	await rendered_frames(4)
 	await screenshot("map")
+	game.handle_action("resume")
+	var bridge := Vector2i.ZERO
+	var bridge_distance: float = INF
+	for y in WorldGenerator.HEIGHT:
+		for x in WorldGenerator.WIDTH:
+			if game.terrain.data.tiles[y*WorldGenerator.WIDTH+x]==WorldGenerator.Tile.BRIDGE:
+				var distance := Vector2(x-56,y-58).length_squared()
+				if distance<bridge_distance:
+					bridge_distance=distance
+					bridge=Vector2i(x,y)
+	game.player.position=WorldGenerator.center(bridge)
+	await rendered_frames(10)
+	game.ui.hud.toast_left=0
+	await screenshot("river")
 	paused=false
 	game.queue_free()
-	await process_frame
+	for i in 5:
+		await process_frame
 	quit()
 
 func rendered_frames(count: int) -> void:

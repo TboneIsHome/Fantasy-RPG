@@ -45,6 +45,8 @@ func _ready() -> void:
 	add_child(collision)
 	icon = PixelArt.sprite(kind)
 	add_child(icon)
+	if kind=="wisp":
+		WorldView.add_glow(self,Vector2(0,-20),Color("99cddd"),0.6,0.6)
 
 func _physics_process(delta: float) -> void:
 	if hp <= 0 or not is_instance_valid(target):
@@ -108,6 +110,8 @@ func _physics_process(delta: float) -> void:
 	knockback = knockback.move_toward(Vector2.ZERO,230*delta)
 	move_and_slide()
 	icon.flip_h = direction.x<0
+	if kind=="wolf":
+		icon.texture = PixelArt.texture("wolf",int(phase*10)%4 if velocity.length()>2 else 0)
 	icon.position.y = sin(phase*4)*2 if kind=="wisp" else (-1 if velocity.length()>2 and sin(phase*12)>0 else 0)
 	icon.modulate = Color("98ddf4") if slowed>0 else Color.WHITE
 	queue_redraw()

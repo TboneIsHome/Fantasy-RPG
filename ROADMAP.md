@@ -1,12 +1,13 @@
 # Roadmap
 
-Stand: 0.1. Reihenfolge nach Spielbarkeit und technischen Risiken; keine festen Zeitversprechen.
+Stand: 0.2. Reihenfolge nach Spielbarkeit und technischen Risiken; keine festen Zeitversprechen.
 
 | Priorität / Meilenstein | Inhalt | Abnahme | Status |
 |---|---|---|---|
 | P0 · Richtung und Basis | Vision, Magier, Godot, Pixelregeln, modulare Struktur | Projekt startet reproduzierbar | Fertig |
 | P0 · Erster Spielkern | Bewegung, Kamera, Lichtfunke, Frostkreis, Ausweichen, Gegnerfeedback | Bedienen, kämpfen, sterben und wieder einsteigen funktioniert | Fertig |
-| P0 · Kleine Erkundungsrunde | Seed-Wald, Lager, zwei Gegnertypen, Edda, drei Waldlichter, Karte, Talente, Speicherstand | Runde integrierbar abgeschlossen; Generator- und Speichertests grün | Implementiert und automatisiert geprüft; menschliches Spielgefühl offen |
+| P0 · Kleine Erkundungsrunde | Seed-Wald, Lager, zwei Gegnertypen, Edda, drei Waldlichter, Karte, Talente, Speicherstand | Runde integrierbar abgeschlossen; Generator- und Speichertests grün | Automatisiert geprüft; erster Spieltest von Tim positiv |
+| P0 · Der Wald erwacht | Eigene Pixelgrafik, Vegetation, Lagerdetails, Licht, Zauber und Oberfläche | Spielbilder geprüft, Kampftests bestehen, 0.1-Spielstand ladbar | Fertig in 0.2 |
 | P1 · Kampf und Orientierung prüfen | Tim spielt die Runde; Reichweiten, Tempo, Sichtbarkeit und Ressourcen abstimmen | Angriffe wirken fair; Wege sind lesbar; Magier macht Spaß | Nächster Schritt |
 | P1 · Dungeon und dritter Gegner | 5–7 Raumteile, optionale Schleife, ein Zugang, eine Abkürzung | 100 Seeds: Eingang, Ziel und Ausgang erreichbar | Offen |
 | P1 · Vollständiger Vertical Slice | Quellenhüter, Untersuchung oder Kampf, Relikt/Ausrüstung, sichtbare Konsequenz | Beide Questwege vom neuen Spiel bis Belohnung spielbar; Speichern in jedem Abschnitt | Offen |

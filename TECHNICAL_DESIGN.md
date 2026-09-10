@@ -39,7 +39,7 @@ Mit dem Slice werden Inventar/Ausrüstung, Questgraph, NPC-Erinnerungen, Loot un
 5. Sichere Lichtungen und Gegnergebiete erhalten garantierte Anschlüsse.
 6. Persistente IDs entfernen besiegte Gegner und aktivieren zuvor geweckte Lichter.
 
-Alle Schleifen sind begrenzt. Ein Breitensuchtest prüft Erreichbarkeit auf dem begehbaren Raster. Das Rendering nutzt eine gebackene Bodentextur; Sprite-Texturen sind gecacht. Die Karte bleibt in 0.1 vollständig geladen (112 × 88 Tiles). Chunk-Streaming und langfristige Weltsimulation sind nicht implementiert.
+Alle Schleifen sind begrenzt. Ein Breitensuchtest prüft Erreichbarkeit auf dem begehbaren Raster. Das Rendering nutzt eine gebackene Bodentextur; Sprite-Texturen sind gecacht. Die Karte bleibt in 0.2 vollständig geladen (112 × 88 Tiles). Chunk-Streaming und langfristige Weltsimulation sind nicht implementiert.
 
 ## Speicherung und Kompatibilität
 
@@ -57,7 +57,12 @@ Lebende Gegner starten beim Laden wieder gesund an ihren Ausgangsorten; laufende
 - Smaragd, Türkis und gedämpftes Gold für Natur; Elfenbein für Hinweise und Runen; dunkles Blaugrau für Gefahr.
 - Oben links hellere Kanten, farbige Konturen, kurze transparente Bodenschatten; keine schwarzen Vollumrisse überall.
 - Boden → nach Fußpunkt sortierte Objekte/Figuren → Kampfpartikel → atmosphärische Ebene → unabhängige UI.
-- Erste Animationen: Schrittversatz, schwebende Irrlichter, Dash-Spur, Trefferblitz. Umfangreiche richtungsabhängige Animationsatlanten folgen später.
+- Vier Gehphasen für Magier und Wolf, Magier-Rückenansicht, schwebende Irrlichter, Feuerphasen, Dash-Spur und Trefferblitz. Vollständige Animationsatlanten für alle Richtungen folgen später.
+- Baumtexturen: 96 × 112 Pixel, Fußanker (48, 105); andere Sprites: 64 × 72 Pixel, Fußanker (32, 65).
+- Bodenfarbe und Vegetation werden einmalig in eine RGBA-Textur gebacken. Wasserreflexe werden nur im sichtbaren Kameraausschnitt gezeichnet.
+- Kleine additive PointLight2D-Quellen nutzen eine gecachte Falloff-Textur. Kein dynamisches Schattennetz und kein notwendiger Forward+-Renderer.
+- Generator 1 und dessen Zufallsstrom sind unverändert. Der separate Darstellungsstrom `/art/v2` beeinflusst keine Kollisionen oder IDs.
+- `tests/fixtures/v01_save.json` und der vollständige Terrain-Hash stammen vom unveränderten 0.1-Code. Der Kompatibilitätstest lädt diese Dateien tatsächlich in die Szene.
 
 ## Technische Referenzen
 

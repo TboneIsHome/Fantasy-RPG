@@ -1,6 +1,6 @@
-# Lichterhain · Prototyp 0.1
+# Lichterhain · Version 0.2 — Der Wald erwacht
 
-Ein kleines, offline spielbares Fantasy-RPG mit einem Magier und einer seed-basierten Pixelwaldregion. Dieser Stand erprobt den Kampf und die erste Erkundungsrunde. Er ist noch nicht der vollständige Vertical Slice.
+Ein kleines, offline spielbares Fantasy-RPG mit einem Magier und einer seed-basierten Pixelwaldregion. Diese Version verfeinert nach Tims erstem Spieltest das Erscheinungsbild der ersten Erkundungsrunde. Er ist noch nicht der vollständige Vertical Slice.
 
 ## Direkt spielen unter Windows
 
@@ -9,7 +9,19 @@ Ein kleines, offline spielbares Fantasy-RPG mit einem Magier und einer seed-basi
 3. **Neuen Lichtpfad beginnen** wählen. Der voreingestellte Seed eignet sich für die erste Runde.
 4. Mit **WASD** zu Edda nördlich des Lagerfeuers gehen und **E** drücken.
 
-Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen erforderlich. Die beigefügte Anwendung ist ein Windows-x86_64-Export. Sie wurde hier erstellt; ein nativer Windows-Test steht noch aus. Der identische Spielcode wurde unter Linux ausgeführt und geprüft.
+Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen erforderlich. Die beigefügte Anwendung ist ein Windows-x86_64-Export. Version 0.1 wurde von Tim gespielt und positiv beurteilt. Version 0.2 wurde unter Linux automatisiert und visuell geprüft; der neue Windows-Export ist erstellt, hier aber nicht nativ unter Windows ausgeführt.
+
+## Neu in Version 0.2
+
+- 32 Baumvarianten mit Laubkronen, Tannen, Birken, Jungwuchs und alten Stümpfen.
+- Zusammenhängender Moosboden, unregelmäßige Pfadränder, Farne, Blumen und Pilze.
+- Lager mit Teppichen, Vorräten, Laternen und flackerndem Feuer.
+- Überarbeitete Figuren, Gehschritte, Magier-Rückenansicht und dezente Kontur für bessere Sichtbarkeit.
+- Bewegtes Wasser, örtliche Lichtquellen, schwebende Lichtteilchen und warme Tagesfarben.
+- Frostkreis mit Runen und Kristallen, feinere Geschossspuren und lesbarere Trefferzahlen.
+- Neue Zaubersymbole, Charakterporträt, Abklinganzeigen und überarbeitetes Hauptmenü.
+
+**Dein Spielstand aus 0.1 bleibt verwendbar.** Starte die neue EXE und wähle „Am Speicherpunkt fortsetzen“. Ein mit dem alten Code erstellter Spielstand wurde tatsächlich geladen und geprüft. Weltaufbau, Kämpfe, Quest und Speicherformat wurden nicht verändert.
 
 ## Steuerung
 
@@ -46,8 +58,8 @@ Datei: `user://lichtpfad_v1.json`; Godot legt sie im Benutzerordner des Spiels a
 ## Im Editor weiterentwickeln
 
 1. [Godot 4.5.1 Standard](https://godotengine.org/download/archive/4.5.1-stable/) herunterladen und öffnen.
-2. Das bereitgestellte Archiv **Lichterhain_0.1_Quellprojekt.zip** entpacken.
-3. **Importieren** wählen und `Lichterhain/project.godot` auswählen.
+2. Dieses Repository klonen oder auf GitHub über **Code → Download ZIP** herunterladen und entpacken.
+3. **Importieren** wählen und die Datei `project.godot` im Projektordner auswählen.
 4. Den ersten Dateiimport abwarten, dann **F5** drücken.
 
 GDScript wird verwendet; die .NET-Ausgabe ist nicht notwendig. Das Projekt kommt ohne Add-ons aus. Die ausführbaren Tests sind in `TESTING.md` beschrieben.
@@ -63,6 +75,6 @@ GDScript wird verwendet; die .NET-Ausgabe ist nicht notwendig. Das Projekt kommt
 
 ## GitHub
 
-Das private Ziel ist [TboneIsHome/Fantasy-RPG](https://github.com/TboneIsHome/Fantasy-RPG). Dort liegt bisher nur diese Projektbeschreibung. Der Upload des gesamten Quellcodes wartet noch auf die ausdrückliche Freigabe für dieses Ziel. Die vollständige Umsetzung und die lokale Git-Historie sind im Quellprojekt-Download enthalten.
+Der vollständige Quellcode, die Tests und die Projektdokumentation liegen in [TboneIsHome/Fantasy-RPG](https://github.com/TboneIsHome/Fantasy-RPG). Der Ausgangsstand 0.1 wurde separat gesichert; die Grafiküberarbeitung folgt als eigener Commit. Binäre Builds und lokale Godot-Caches gehören nicht in den Quellcode-Stand.
 
-Das Quellprojekt enthält `Entwicklung/lichterhain-history.bundle`; damit kann die lokale Historie über `git clone lichterhain-history.bundle lichterhain` wiederhergestellt werden. Zum Öffnen in Godot genügt der Ordner `Lichterhain`. Die Windows-Anwendung wird separat bereitgestellt. Binäre Builds und lokale Godot-Caches gehören nicht in den Quellcode-Stand.
+Die spielbare Windows-Version wird als separates Download-Paket **Lichterhain_0.2_Windows.zip** bereitgestellt.

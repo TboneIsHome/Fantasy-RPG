@@ -8,6 +8,7 @@ var hud: HudCanvas
 var root: Control
 var panel: Control
 var page: String = "title"
+var heading_font: Font = preload("res://assets/fonts/DejaVuSerif.ttf")
 var settings: Dictionary = {"volume":0.4,"shake":true}
 
 func _ready() -> void:
@@ -42,18 +43,19 @@ func shell(kind: String, title: String, subtitle: String, width: float = 360) ->
 	root.add_child(panel)
 	var shade := ColorRect.new()
 	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	shade.color = Color(0.025,0.065,0.082,0.72)
+	shade.color = Color(0.025,0.065,0.082,0.27 if kind=="title" else 0.65)
 	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(shade)
 	var container := PanelContainer.new()
-	container.position = Vector2((640-width)/2,27)
+	container.position = Vector2(25 if kind=="title" else (640-width)/2,27)
 	container.size = Vector2(width,0)
-	container.add_theme_stylebox_override("panel",HudCanvas.box_style(Color("142e37"),Color("78836a")))
+	container.add_theme_stylebox_override("panel",HudCanvas.box_style(Color("142b33f5"),Color("92977a")))
 	panel.add_child(container)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation",8)
 	container.add_child(box)
-	label(box,title,21,HudCanvas.GOLD)
+	var heading := label(box,title,22,HudCanvas.GOLD)
+	heading.add_theme_font_override("font",heading_font)
 	if not subtitle.is_empty():
 		label(box,subtitle,11,HudCanvas.MUTED)
 	return box
@@ -83,21 +85,25 @@ func button(parent: Node, title: String, action: String, argument: String = "") 
 
 func title_menu(has_save: bool) -> void:
 	hud.game_visible = false
-	var box := shell("title","L I C H T E R H A I N","Ein Licht erlischt. Ein Weg beginnt.",354)
-	label(box,"Erkunde einen alten Wald als Magier. Finde drei verlorene Lichter und bringe ihre Kraft zur Quelle zurück.",12)
+	var box := shell("title","Lichterhain","D I E  V E R S T U M M T E N  L I C H T E R",302)
+	box.add_theme_constant_override("separation",7)
+	label(box,"Zwischen Wurzeln und Sternen wartet ein alter Zauber. Wecke die drei Lichter des Waldes.",12)
 	var field := LineEdit.new()
 	field.text = "LICHTERHAIN"
 	field.placeholder_text = "Welt-Seed"
 	field.max_length = 64
 	field.add_theme_font_size_override("font_size",12)
+	field.add_theme_stylebox_override("normal",HudCanvas.box_style(Color("0d232b"),Color("50645e")))
+	field.add_theme_stylebox_override("focus",HudCanvas.box_style(Color("17333a"),HudCanvas.GOLD))
+	field.add_theme_color_override("font_color",HudCanvas.CREAM)
 	box.add_child(field)
 	var start := button(box,"Neuen Lichtpfad beginnen","unused")
 	for connection in start.pressed.get_connections():
 		start.pressed.disconnect(connection.callable)
 	start.pressed.connect(func(): requested.emit("new",field.text))
 	button(box,"Am Speicherpunkt fortsetzen","load").disabled = not has_save
-	label(box,"WASD bewegen · Maus zielen · E interagieren\nLinksklick Lichtfunke · Rechtsklick Frostkreis · Leertaste ausweichen",10,HudCanvas.MUTED)
-	label(box,"Prototyp 0.1 · Magier und erste Erkundungsrunde\nEin neuer Lauf ersetzt den Speicherpunkt beim Speichern.",9,HudCanvas.MUTED)
+	label(box,"WASD bewegen · Maus zielen · E interagieren\nLMT / RMT zaubern · Leertaste ausweichen",10,HudCanvas.MUTED)
+	label(box,"Version 0.2 · Der Wald erwacht\nEin neuer Lauf ersetzt den Speicherpunkt beim Speichern.",9,HudCanvas.MUTED)
 	start.grab_focus()
 
 func pause_menu() -> void:

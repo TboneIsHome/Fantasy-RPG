@@ -31,11 +31,14 @@ func _physics_process(delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	var color := Color("edb396") if hostile else Color("baf8dd")
-	for i in 5:
-		var p := -direction*(i*3)
-		var tint := color
-		tint.a = 0.7-i*0.12
-		draw_rect(Rect2(p-Vector2.ONE*2,Vector2.ONE*4),tint)
-	draw_circle(Vector2.ZERO,3,color)
-	draw_rect(Rect2(-1,-1,2,2),Color("fff9d4"))
+	var color := Color("f4aa8c") if hostile else Color("a9f2d8")
+	for i in range(7,0,-1):
+		var at := -direction*(i*3)
+		var tint := Color(color,0.65-i*0.07)
+		draw_line(at-direction*4,at,tint,3 if i<3 else 1)
+		var spark := at+direction.orthogonal()*sin(elapsed*25-i)*i*0.3
+		draw_rect(Rect2(spark.floor(),Vector2.ONE),Color(color,0.8-i*0.08))
+	draw_circle(Vector2.ZERO,7,Color(color,0.12))
+	draw_colored_polygon(PackedVector2Array([direction*6,direction.orthogonal()*3,-direction*6,-direction.orthogonal()*3]),color)
+	draw_line(-direction*3,direction*3,Color("fff7d7"),2)
+	draw_line(-direction.orthogonal()*5,direction.orthogonal()*5,Color(color,0.45),1)

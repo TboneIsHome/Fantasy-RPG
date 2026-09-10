@@ -102,6 +102,8 @@ func build_run(seed_text: String, saved: Dictionary = {}) -> void:
 
 func show_title() -> void:
 	player.input_enabled=false
+	player.camera.position=WorldGenerator.center(terrain.data.points[3].tile)-player.position+Vector2(-100,35)
+	player.camera.reset_smoothing()
 	get_tree().paused=true
 	ui.title_menu(FileAccess.file_exists(save_path) or FileAccess.file_exists(save_path+".bak"))
 

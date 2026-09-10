@@ -17,6 +17,12 @@
 | 2026-09-08 | Neues privates Repository TboneIsHome/Fantasy-RPG verwenden | Im Verlauf der Umsetzung erreichbar geworden und als leer bestätigt; getesteten Ausgangsstand hier versionieren |
 | 2026-09-09 | Vollständigen Quellstand zusätzlich als prüfbares Download-Archiv bereitstellen | README auf GitHub angelegt; automatische Freigabeprüfung verlangt für den vollständigen Code-Upload eine ausdrückliche Zustimmung zu Inhalt und Ziel |
 
+| 2026-09-09 | Vollständigen Quellcode nach ausdrücklicher Zustimmung hochladen | Tim hat den Upload in sein privates Fantasy-RPG-Repository freigegeben; Ausgangsstand 0.1 ist gesichert |
+| 2026-09-10 | Grafikiteration 0.2 vor neuen Spielsystemen | Tim gefällt der erste Spieltest; er wünscht eine deutlich schönere Darstellung |
+| 2026-09-10 | Generator und Speicherformat in 0.2 beibehalten | Bestehende Spielstände, Routen und Kampfbalance bleiben erhalten; nur der eigene Darstellungs-Zufallsstrom ändert sich |
+| 2026-09-10 | Pixelgrafik weiter direkt im Projekt definieren | Originale, editierbare Formen und kleine Dateigröße; keine Abhängigkeit von externen Grafikpaketen |
+| 2026-09-10 | DejaVu Serif für Überschriften | Ruhigere Fantasy-Typografie; lateinischer Zeichensatz reduziert, Lizenz liegt bei |
+
 ## Noch nicht endgültig entschieden
 
 Name der Gesamtwelt, endgültiger Spieltitel, finale Figurenanimationen, vollständiges Klassennetz, Schwierigkeit und Todessanktionen. Die derzeit milde Rückkehr zum Lager dient dem schnellen Testen des Spielgefühls.

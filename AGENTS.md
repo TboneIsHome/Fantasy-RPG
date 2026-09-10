@@ -10,4 +10,5 @@ Read README.md, DECISIONS.md, TASKS.md, and TESTING.md before extending this pro
 - Preserve stable world IDs and save compatibility; a generator/schema change needs a deliberate migration or version policy.
 - Update the short project documents when behavior or priorities change. Distinguish implementation, automated validation, and human playtesting.
 - Work only in the RPG repository selected by the user. MyFire belongs to another project.
-- Assets in this version are original code-generated placeholders. Track provenance for new external assets.
+- Pixel graphics are original code-defined assets. The DejaVu heading font is bundled with its license. Track provenance for new external assets.
+- Preserve the frozen 0.1 fixture: never regenerate it with current code just to pass the compatibility test.
