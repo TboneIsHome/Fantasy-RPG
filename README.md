@@ -1,6 +1,8 @@
 # Lichterhain · Version 0.4 — Das Gedächtnis der Quelle
 
-Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelwaldregion und der ersten Quellengruft. Der erste zusammenhängende Spielabschnitt führt nun bis zum Quellenhüter, zwei Questlösungen und einem ausrüstbaren Relikt. Sein Inhalt ist implementiert und automatisiert geprüft; menschliche Abnahme und mehrstündige Weltinhalte stehen noch aus.
+Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelwaldregion und der ersten Quellengruft. Der erste zusammenhängende Spielabschnitt führt nun bis zum Quellenhüter, zwei Questlösungen und einem ausrüstbaren Relikt. Tim hat die neue Version positiv getestet; strukturierte Plattformabnahme und mehrstündige Weltinhalte stehen noch aus.
+
+**Aktuelle Entwicklungsphase: Foundation M00.** Der unveränderte 0.4-Quellstand ist seit 15.09.2026 vollständig auf GitHub und zusätzlich unter `reference/v0.4-original` festgehalten. Der [M00-Audit](docs/FOUNDATION_M00.md) beschreibt den tatsächlichen Stand und die geplanten kleinen Stabilisierungsschritte. Neue Inhalte haben derzeit keine Priorität. M00 verändert kein Gameplay und kein Saveformat.
 
 ## Direkt spielen unter Windows
 

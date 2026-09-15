@@ -1,0 +1,13 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+SCREENSHOT title (640, 360) result=0
+SCREENSHOT camp (640, 360) result=0
+SCREENSHOT camp_night (640, 360) result=0
+SCREENSHOT journal (640, 360) result=0
+SCREENSHOT forest (640, 360) result=0
+SCREENSHOT pause (640, 360) result=0
+SCREENSHOT map (640, 360) result=0
+SCREENSHOT river (640, 360) result=0
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)

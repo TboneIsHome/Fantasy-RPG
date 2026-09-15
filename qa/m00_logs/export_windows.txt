@@ -1,0 +1,98 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1msavepack[22m | Started Packing (102 steps)[39m[0m
+[   1% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/DejaVuSerif.ttf-3818d4af52a2476b3ed8d3e1729c27b5.fontdata[39m[0m
+[   1% ] [90m[1msavepack[22m | Storing File: res://assets/fonts/DejaVuSerif.ttf.import[39m[0m
+[   3% ] [90m[1msavepack[22m | Storing File: res://data/content.json[39m[0m
+[   5% ] [90m[1msavepack[22m | Storing File: res://data/discoveries.json[39m[0m
+[   8% ] [90m[1msavepack[22m | Storing File: res://data/vault.json[39m[0m
+[  10% ] [90m[1msavepack[22m | Storing File: res://scripts/world/world_generator.gdc[39m[0m
+[  12% ] [90m[1msavepack[22m | Storing File: res://scripts/progression/source_quest.gdc[39m[0m
+[  15% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/hud_canvas.gdc[39m[0m
+[  17% ] [90m[1msavepack[22m | Storing File: res://scripts/world/landmark.gdc[39m[0m
+[  20% ] [90m[1msavepack[22m | Storing File: res://scripts/game.gdc[39m[0m
+[  22% ] [90m[1msavepack[22m | Storing File: res://scripts/world/world_view.gdc[39m[0m
+[  24% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex[39m[0m
+[  24% ] [90m[1msavepack[22m | Storing File: res://icon.svg.import[39m[0m
+[  27% ] [90m[1msavepack[22m | Storing File: res://scripts/world/atmosphere.gdc[39m[0m
+[  29% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/game_ui.gdc[39m[0m
+[  31% ] [90m[1msavepack[22m | Storing File: res://scripts/progression/source_story.gdc[39m[0m
+[  33% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-c2a7af834e91ff64325daddf58e45dc0-game.scn[39m[0m
+[  35% ] [90m[1msavepack[22m | Storing File: res://scripts/actors/enemy.gdc[39m[0m
+[  38% ] [90m[1msavepack[22m | Storing File: res://scripts/actors/mage_abilities.gdc[39m[0m
+[  40% ] [90m[1msavepack[22m | Storing File: res://scripts/actors/player.gdc[39m[0m
+[  42% ] [90m[1msavepack[22m | Storing File: res://scripts/actors/source_guardian.gdc[39m[0m
+[  45% ] [90m[1msavepack[22m | Storing File: res://scripts/actors/vitals.gdc[39m[0m
+[  47% ] [90m[1msavepack[22m | Storing File: res://scripts/art/dungeon_art.gdc[39m[0m
+[  50% ] [90m[1msavepack[22m | Storing File: res://scripts/art/pixel_art.gdc[39m[0m
+[  52% ] [90m[1msavepack[22m | Storing File: res://scripts/art/player_outline.gdshader[39m[0m
+[  54% ] [90m[1msavepack[22m | Storing File: res://scripts/art/source_art.gdc[39m[0m
+[  57% ] [90m[1msavepack[22m | Storing File: res://scripts/audio/audio_controller.gdc[39m[0m
+[  59% ] [90m[1msavepack[22m | Storing File: res://scripts/combat/combat_system.gdc[39m[0m
+[  61% ] [90m[1msavepack[22m | Storing File: res://scripts/combat/feedback.gdc[39m[0m
+[  64% ] [90m[1msavepack[22m | Storing File: res://scripts/combat/projectile.gdc[39m[0m
+[  66% ] [90m[1msavepack[22m | Storing File: res://scripts/combat/source_impact.gdc[39m[0m
+[  68% ] [90m[1msavepack[22m | Storing File: res://scripts/combat/thorn_patch.gdc[39m[0m
+[  70% ] [90m[1msavepack[22m | Storing File: res://scripts/core/content.gdc[39m[0m
+[  72% ] [90m[1msavepack[22m | Storing File: res://scripts/core/discovery_book.gdc[39m[0m
+[  75% ] [90m[1msavepack[22m | Storing File: res://scripts/core/input_setup.gdc[39m[0m
+[  77% ] [90m[1msavepack[22m | Storing File: res://scripts/core/run_state.gdc[39m[0m
+[  79% ] [90m[1msavepack[22m | Storing File: res://scripts/dungeon/dungeon_generator.gdc[39m[0m
+[  82% ] [90m[1msavepack[22m | Storing File: res://scripts/dungeon/dungeon_object.gdc[39m[0m
+[  84% ] [90m[1msavepack[22m | Storing File: res://scripts/dungeon/dungeon_progress.gdc[39m[0m
+[  87% ] [90m[1msavepack[22m | Storing File: res://scripts/dungeon/dungeon_view.gdc[39m[0m
+[  89% ] [90m[1msavepack[22m | Storing File: res://scripts/dungeon/source_grove.gdc[39m[0m
+[  91% ] [90m[1msavepack[22m | Storing File: res://scripts/dungeon/source_site.gdc[39m[0m
+[  94% ] [90m[1msavepack[22m | Storing File: res://scripts/persistence/save_system.gdc[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/progression/relic_inventory.gdc[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/world/world_generator.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/progression/source_quest.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/hud_canvas.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/world/landmark.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/game.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/world/world_view.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/world/atmosphere.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/game_ui.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/progression/source_story.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scenes/game.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/actors/enemy.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/actors/mage_abilities.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/actors/player.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/actors/source_guardian.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/actors/vitals.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/art/dungeon_art.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/art/pixel_art.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/art/source_art.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/audio/audio_controller.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/combat/combat_system.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/combat/feedback.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/combat/projectile.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/combat/source_impact.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/combat/thorn_patch.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/core/content.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/core/discovery_book.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/core/input_setup.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/core/run_state.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/dungeon/dungeon_generator.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/dungeon/dungeon_object.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/dungeon/dungeon_progress.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/dungeon/dungeon_view.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/dungeon/source_grove.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/dungeon/source_site.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/persistence/save_system.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://scripts/progression/relic_inventory.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://.godot/global_script_class_cache.cfg[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://icon.svg[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://.godot/uid_cache.bin[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://project.binary[39m[0m
+[92m[ DONE ][39m [1msavepack[22m
+[0m

@@ -1,9 +1,10 @@
 # Working on Lichterhain
 
-Read README.md, DECISIONS.md, TASKS.md, and TESTING.md before extending this project.
+Read README.md, DECISIONS.md, TASKS.md, TESTING.md, and docs/FOUNDATION_M00.md before extending this project.
 
 - Preserve Tim's choices: mysterious, colorful fantasy; slightly angled top-down pixel art; mage first; Godot 4 and GDScript; offline singleplayer.
-- Target the next small playable milestone in ROADMAP.md. Version 0.4 implements the guardian, both source-quest paths and an equipable relic. Human acceptance of the full slice is still pending.
+- Follow the foundation sequence in ROADMAP.md: M00 audit/reference baseline, then M01 save safety, M02 state ownership, M03 region lifecycle, M04 content validation. Stop after presenting M00; do not start M01 or add gameplay systems without the next user instruction. Tim has reported a positive test of the new version; structured native Windows acceptance remains unrecorded.
+- Preserve the original 0.4 release at GitHub reference/v0.4-original. M00 only adds documentation, baseline evidence and frozen reference saves. Do not regenerate or overwrite any frozen fixture to make a later test pass.
 - Keep balance definitions in data/content.json and actor/state/UI responsibilities separated.
 - Pin development and export to Godot 4.5.1 for this baseline. Investigate and document any deliberate upgrade.
 - Run the relevant Godot tests after gameplay changes. Tests write only their dedicated test save paths. Render affected UI before shipping layout changes.

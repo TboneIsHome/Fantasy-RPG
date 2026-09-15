@@ -1,0 +1,51 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS VAULT: Same seed reproduces rooms, passages, landmarks and encounters
+PASS VAULT: Other seeds change room dimensions
+PASS VAULT: 100 seeds: main rooms, rewards and all encounters reachable; opened secret also reachable
+PASS VAULT: 100 seeds: closed secret cannot be bypassed around the wall
+PASS VAULT: 100 seeds: exit, fountain, memories and shortcut lever accessible before opening gates
+PASS VAULT: Dungeon supports Unicode seeds
+PASS VAULT: Version 1 migrates to the current schema with an untouched, undiscovered dungeon
+PASS VAULT: Migration does not overwrite the original save
+PASS VAULT: Dungeon entry explains the missing focus without teleporting
+PASS VAULT: Crossing the entrance preserves all player resources
+PASS VAULT: Region switch leaves exactly one player and only the dungeon encounters
+PASS VAULT: Dungeon uses its own scene, bounds and camera
+PASS VAULT: The closed shortcut blocks a real moving player
+PASS VAULT: Lever opens the physical gate and enemy navigation together
+PASS VAULT: Opening the shortcut measurably shortens the return route
+PASS VAULT: The opened shortcut can actually be crossed
+PASS VAULT: Secret wall needs its actual clue
+PASS VAULT: Reading the tablet records the clue and shows its story
+PASS VAULT: Repeated reading never grants repeated experience
+PASS VAULT: The learned sign opens the hidden passage
+PASS VAULT: Hidden treasure is persistent and can be collected only once
+PASS VAULT: Main exploration reward is a recorded find with its own story
+PASS VAULT: Fountain cannot be used without sufficient light dust
+PASS VAULT: Fountain spends light dust and restores resources
+PASS VAULT: Full resources never waste light dust
+PASS VAULT: Dungeon position and progress survive a real save/load
+PASS VAULT: Reload restores gates, treasure art and defeated dungeon enemies
+PASS VAULT: Unknown region rejected
+PASS VAULT: Unknown dungeon relic rejected
+PASS VAULT: Wrong gate data types rejected
+PASS VAULT: Secret progress without its clue rejected
+PASS VAULT: Dungeon saves cannot place the player in a wall
+PASS VAULT: Unknown dungeon version rejected
+PASS VAULT: Future save format rejected
+PASS VAULT: Navigation scenario starts with a solid corner between actor and target
+PASS VAULT: Enemy navigates around the corner while remaining on walkable floor
+PASS VAULT: Dornkobold starts with a visible windup
+PASS VAULT: Telegraph itself deals no damage
+PASS VAULT: Leaving the fixed marked area avoids the attack
+PASS VAULT: Remaining in active roots causes damage and temporary slowing
+PASS VAULT: Dash immunity protects against the thorn pulse
+PASS VAULT: Temporary control zones are removed after their lifetime
+PASS VAULT: Dying in the dungeon returns the mage safely to Edda's camp
+PASS VAULT: Dungeon discoveries survive death
+PASS VAULT: Edda responds specifically to the recovered star chart
+PASS VAULT: Discovery journal contains only actual discoveries and finds
+PASS VAULT: Returning to the dungeon retains world changes
+PASS VAULT: Exit returns the player beside the forest entrance
+DUNGEON RESULT 48/48

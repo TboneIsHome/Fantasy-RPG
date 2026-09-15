@@ -1,0 +1,159 @@
+{
+  "date_utc": "2026-09-15",
+  "source_commit_github": "766f16e681fb715f6c56638ab38077ec3fca7c66",
+  "source_tree": "f3d164d24ca71a4f2f71883d1d93689516e9c2a7",
+  "engine": "4.5.1.stable.official.f62fdbde1",
+  "test_environment": "Linux x86_64; pristine git archive; isolated XDG data/config directories",
+  "regression": {
+    "status": "TESTED",
+    "checks": 197,
+    "failures": [],
+    "groups": {
+      "results": {
+        "checks": 50,
+        "duration_ms": 8580,
+        "failures": [],
+        "godot": "4.5.1-stable (official)"
+      },
+      "ui_results": {
+        "checks": 14,
+        "failures": []
+      },
+      "compatibility_results": {
+        "checks": 8,
+        "failures": [],
+        "fixture_source": "0.1 e646cf2"
+      },
+      "dungeon_results": {
+        "checks": 48,
+        "duration_ms": 12263,
+        "failures": [],
+        "seeds": 100
+      },
+      "migration_results": {
+        "checks": 12,
+        "failures": []
+      },
+      "source_results": {
+        "checks": 65,
+        "duration_ms": 26038,
+        "failures": []
+      }
+    },
+    "stages": [
+      {
+        "stage": "import",
+        "passed": true,
+        "exit_code": 0
+      },
+      {
+        "stage": "test_suite",
+        "passed": true,
+        "exit_code": 0
+      },
+      {
+        "stage": "ui_smoke",
+        "passed": true,
+        "exit_code": 0
+      },
+      {
+        "stage": "save_compatibility",
+        "passed": true,
+        "exit_code": 0
+      },
+      {
+        "stage": "dungeon_suite",
+        "passed": true,
+        "exit_code": 0
+      },
+      {
+        "stage": "migration_suite",
+        "passed": true,
+        "exit_code": 0
+      },
+      {
+        "stage": "source_suite",
+        "passed": true,
+        "exit_code": 0
+      }
+    ]
+  },
+  "release_checks": [
+    {
+      "stage": "capture_v04_references",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "export_windows",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "export_linux",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "smoke_linux_native",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "smoke_windows_pack_on_linux",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    }
+  ],
+  "render_checks": [
+    {
+      "stage": "capture",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "capture_source",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    }
+  ],
+  "rendered_png_count": 16,
+  "visually_inspected": [
+    "title.png",
+    "camp.png",
+    "source_choices.png",
+    "source_guardian.png",
+    "source_equipment.png"
+  ],
+  "visual_scope": "Five actual captures inspected for layout/readability and visible scene contents; no manual gameplay session.",
+  "render_setup_note": "Initial display setup failed on Unix sockets and missing xkbcomp; authenticated TCP display with a temporary compiler link succeeded. Temporary link and authentication file removed. No game changes.",
+  "native_windows_execution": "NOT TESTED",
+  "personal_windows_saves": "NOT TESTED — not supplied",
+  "human_feedback": "Tim reported that the new version works; no structured platform checklist supplied.",
+  "save_io_fault_reproduction": "PLANNED / NOT TESTED — M01 has not started",
+  "milestones_m01_m04": "PLANNED",
+  "fixture_sha256": {
+    "v01_save.json": "93609e9bd9b94ce0697b1276045f60ebe823bea5682d30dd2986c50c0f87ec4f",
+    "v02_completed_save.json": "3e34df15aae6c627c6d9b477b1a2aa18c453f7291da32f71475a085abfffcfc6",
+    "v03_completed_save.json": "7ce6e1631ab3de884a98ac946b9b271b762635de000dba3d16b37d1eb0342d3d",
+    "v04_alignment_started.json": "ced7c76f1472df52f46b66ebabd65fbb265a0e263cd934ead9fedbbc085a95ff",
+    "v04_broken_ore_unequipped.json": "0668b9c7fe0a46bea99fc7a4ed3fa9ed3f1bdf351620e39390c2ef7abb596c49",
+    "v04_restored_equipped.json": "953587e0486e78f7cba095dd1c0afb102984b72e6d5525b92dd9f11f53352c3c"
+  },
+  "original_non_markdown_files_unchanged": 128,
+  "original_windows_zip_sha256": "c00c4e4a618e3908c6701bb0957580ee8392624a2edd52a7bd2b61a84bc2025b",
+  "reference_artifact": {
+    "bytes": 62971157,
+    "sha256": "0a8519c96f3024e8833526445bc6855a8ac461f134afbe196dd6362ef16dfb66",
+    "entries": 83,
+    "crc_and_all_member_hashes_verified": true,
+    "filename": "Lichterhain_0.4_Referenzartefakte_M00.zip"
+  }
+}

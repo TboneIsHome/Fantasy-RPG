@@ -1,0 +1,53 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS: Identical seeds reproduce terrain, landmarks and enemies
+PASS: Different seeds change the world
+PASS: 100 generated seeds: all landmarks and enemy clearings reachable
+PASS: Unicode seed stays valid and connected
+PASS: Map boundary rejects out-of-range coordinates
+PASS: Spell cooldown prevents repeated casts in one frame
+PASS: Insufficient mana cancels a spell without spending mana
+PASS: Dash spends stamina and provides invulnerability
+PASS: Dash cooldown cannot be bypassed
+PASS: Damage immunity prevents overlapping hits
+PASS: Regeneration is capped
+PASS: Landmark rewards are granted exactly once
+PASS: Experience grants a level and one talent point
+PASS: Talent points and duplicate/unknown skill rules enforced
+PASS: Valid save schema accepted
+PASS: Save written to dedicated test file
+PASS: Save round-trip retains seed, skills and world changes
+PASS: Unknown generator version rejected
+PASS: Wrong data types rejected
+PASS: Duplicate persistent world IDs rejected
+PASS: Non-finite numeric save values rejected
+PASS: Corrupt primary save recovers from previous backup
+PASS: Future generator saves never silently fall back to an older backup
+PASS: Game boots into a paused, usable title menu
+PASS: New game enables player control
+PASS: Movement input moves the real CharacterBody2D
+PASS: Solid map edge stops the player
+PASS: Pause stops movement and the world clock
+PASS: Player casts the integrated area spell
+PASS: Frost circle damages and slows enemies in range
+PASS: Light bolt on a slowed enemy adds shatter damage
+PASS: Real moving projectile collides with and damages an enemy
+PASS: Solid cover blocks projectiles before they reach an enemy
+PASS: Frost targeting and its area damage respect solid cover
+PASS: Flow talent converts a successful dash into mana
+PASS: Bloom talent heals a mage standing in their own frost circle
+PASS: Echo talent damages a second nearby enemy after a frost combo
+PASS: Wolf telegraphs before dealing damage
+PASS: Moving away from a telegraphed wolf attack avoids the hit
+PASS: Wolf attack damages a player who stays in its path
+PASS: Wisp has a distinct ranged attack windup
+PASS: Wisp spawns a real hostile projectile that can hit the player
+PASS: Three world interactions advance the exploration objective
+PASS: Returning reward completes the objective and grants the relic
+PASS: Enemy death grants persistent removal and experience
+PASS: Integrated save reload succeeds
+PASS: Reload restores progression and keeps defeated enemies absent
+PASS: Death opens the recovery menu and pauses
+PASS: Respawn restores a playable mage at the safe camp
+PASS: Death retains earned discoveries and quest progress
+RESULT: 50/50 checks passed; 8580 ms

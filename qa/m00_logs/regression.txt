@@ -1,0 +1,7 @@
+import PASS
+test_suite PASS
+ui_smoke PASS
+save_compatibility PASS
+dungeon_suite PASS
+migration_suite PASS
+source_suite PASS

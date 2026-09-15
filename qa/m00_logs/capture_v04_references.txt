@@ -1,0 +1,5 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+CAPTURED ORIGINAL V04 v04_alignment_started
+CAPTURED ORIGINAL V04 v04_restored_equipped
+CAPTURED ORIGINAL V04 v04_broken_ore_unequipped

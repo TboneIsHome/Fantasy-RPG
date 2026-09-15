@@ -34,4 +34,12 @@
 
 ## Noch nicht endgültig entschieden
 
+Nachtrag 2026-09-15:
+
+- Tim priorisiert eine kleine, erweiterbare Weltsimulation und robuste Kernsysteme. Die nächste Inhalts-/Bedieniteration wird durch die verbindliche Reihenfolge M00–M04 ersetzt; Stop nach M00.
+- Der ursprüngliche lokale 0.4-Quellstand ist wieder zugänglich und wurde unverändert nach `TboneIsHome/Fantasy-RPG` übertragen. Der Referenzzweig `reference/v0.4-original` hält dieses Release fest. Ein Rückgriff auf 0.3 ist deshalb nicht erforderlich.
+- JSON, bestehende Zustandsmodelle, Generatorversionen und funktionierende Mechaniken bleiben erhalten. Der mögliche Save-I/O-Fehlerpfad wird in M01 zuerst reproduziert; M00 behebt ihn nicht vorsorglich.
+- Neue Baseline-Prüfungen erfolgen in einer getrennten Kopie mit eigenem Benutzerverzeichnis. Originale Reports, Exporte und Legacy-Fixtures werden vorher gesichert. Persönliche Windows-Spielstände wurden nicht bereitgestellt.
+- Tims positiver Testbericht zur neuen Version ist aufgenommen. Er ersetzt keine protokollierte native Windows-Abnahme oder mehrstündige Stabilitätsprüfung.
+
 Name der Gesamtwelt, endgültiger Spieltitel, finale Figurenanimationen, vollständiges Klassennetz, Schwierigkeit und Todessanktionen. Die derzeit milde Rückkehr zum Lager dient dem schnellen Testen des Spielgefühls.

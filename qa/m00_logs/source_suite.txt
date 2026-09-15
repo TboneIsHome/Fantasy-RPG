@@ -1,0 +1,69 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS SOURCE: 100 seeds keep the binding and guardian positions reachable through existing dungeon routes
+PASS SOURCE: Genuine 0.3 save explicitly migrates to schema 3
+PASS SOURCE: Old dungeon progress starts with an undecided source and empty equipment slot
+PASS SOURCE: Actual old dungeon save preserves exact location and resources
+PASS SOURCE: Existing 0.3 memories and chart already qualify for investigation
+PASS SOURCE: Upgrade preserves both the exact 0.3 save and an existing older backup
+PASS SOURCE: Later saves never replace the original 0.3 backup
+PASS SOURCE: The frozen original fixture remains unchanged
+PASS SOURCE: Damaged primary recovers and migrates a genuine 0.3 backup
+PASS SOURCE: Recovered 0.3 backup is permanently preserved before rotating files
+PASS SOURCE: First quest connects to the source story through real dialogue and landmark actions
+PASS SOURCE: Dormant guardian does not attack or take accidental spell damage
+PASS SOURCE: First binding interaction records the discovery and offers both paths in the viewport
+PASS SOURCE: Missing evidence cannot repair the binding and is explained in a readable dialogue
+PASS SOURCE: Missing-clue screen returns to the actual path choice
+PASS SOURCE: New clue is immediately saved: water_memory
+PASS SOURCE: New clue is immediately saved: root_memory
+PASS SOURCE: New clue is immediately saved: star_chart
+PASS SOURCE: Three sign choices and a return button fit at 640 x 360
+PASS SOURCE: Wrong sign order resets the attempt without damage or a duplicated reward
+PASS SOURCE: First correct sign is a persistent checkpoint
+PASS SOURCE: Reload resumes the investigation checkpoint with a dormant guardian
+PASS SOURCE: Investigation completes without defeating the guardian
+PASS SOURCE: Investigation grants and equips its one-time relic and experience
+PASS SOURCE: Completion dialogue fits and the actual source becomes a garden
+PASS SOURCE: Garden quiets its two sentries and becomes a protected area
+PASS SOURCE: Repeated actions cannot change the completed path or duplicate its reward
+PASS SOURCE: Restored source provides free full recovery
+PASS SOURCE: Stray enemy projectiles and thorn zones cannot damage the player inside the garden
+PASS SOURCE: Relic equipment view fits and pauses play
+PASS SOURCE: Unequipping updates the actual slot and save
+PASS SOURCE: Unequipped relic gives no refund on a real Frostkreis hit
+PASS SOURCE: Equipped relic refunds exactly six mana once even when Frostkreis hits two enemies
+PASS SOURCE: A Frostkreis miss never triggers a relic refund
+PASS SOURCE: Reload keeps the garden, quiet sentries and equipped relic
+PASS SOURCE: Edda remembers and acknowledges the restored source in a readable dialogue
+PASS SOURCE: Death and camp return preserve the source outcome and equipment
+PASS SOURCE: Combat path is available without the investigation clues
+PASS SOURCE: Pause freezes the guardian's attack timing
+PASS SOURCE: Quellenschlag locks its warning position and causes no early damage
+PASS SOURCE: Moving out of the announced Quellenschlag avoids its impact
+PASS SOURCE: Guardian alternates its slam with the projectile fan
+PASS SOURCE: The announced fan releases five actual hostile projectiles
+PASS SOURCE: Remaining on the next Quellenschlag causes its configured damage
+PASS SOURCE: The normal dodge protects against the guardian's actual impact
+PASS SOURCE: Normal player projectiles damage the awake guardian after the dodge ends
+MID-ENCOUNTER RESOURCE DELTA 0.0 / 0.00000000000001
+PASS SOURCE: Mid-encounter load resets the guardian without healing the player or resolving the quest
+PASS SOURCE: Leaving the room safely resets the encounter
+PASS SOURCE: Retreat clears guardian hazards and leaves both quest paths available
+PASS SOURCE: Real projectiles and ordinary mana rules can complete the full combat path
+PASS SOURCE: Combat gives the same single relic and quest experience as investigation
+PASS SOURCE: Combat produces the distinct fractured source and ore artwork
+PASS SOURCE: Exposed ore gives its light dust exactly once
+PASS SOURCE: Reload preserves harvested ore and keeps the defeated guardian absent
+PASS SOURCE: Edda also remembers the combat outcome
+PASS SOURCE: Complete combat-path snapshot is valid
+PASS SOURCE: Contradictory source save rejected: source.resolution
+PASS SOURCE: Contradictory source save rejected: source.alignment
+PASS SOURCE: Contradictory source save rejected: source.alignment
+PASS SOURCE: Contradictory source save rejected: source.guardian_defeated
+PASS SOURCE: Contradictory source save rejected: source.seen
+PASS SOURCE: Contradictory source save rejected: inventory.equipped
+PASS SOURCE: Contradictory source save rejected: inventory.owned
+PASS SOURCE: Contradictory source save rejected: inventory.owned
+PASS SOURCE: Repaired outcome cannot be forged without its investigation clues
+SOURCE RESULT 65/65

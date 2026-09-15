@@ -13,3 +13,17 @@ The digest is SHA-256 of `generated.tiles.to_byte_array()`, covering every logic
 # Frozen completed 0.3 dungeon save
 
 `v03_completed_save.json` was produced before any 0.4 changes by an isolated checkout of local commit `fdfac23e1c3287690aea73c08dfbb29598d0f0d9` (same source tree as GitHub `24b66a914827f11bb7da39c245e9da3a19d14731`), using Godot 4.5.1. It uses save format 2. The player is at the dungeon entrance (232, 264), with resources 77 / 43 / 67, level 3 / 10 XP, bloom, one unspent point and seven motes. Both memories and treasures, all rooms, both opened gates and Edda's chart reaction are recorded. Two enemies are defeated. No source-quest or equipment fields existed in that code.
+
+# Frozen original 0.4 references — M00, 2026-09-15
+
+These three format-3 saves were captured with **unchanged** original 0.4 runtime code from local commit `dcf9a2a79111b2249f7ea5e28f1088f4dfc28a1f`, GitHub release `766f16e681fb715f6c56638ab38077ec3fca7c66`, tree `f3d164d24ca71a4f2f71883d1d93689516e9c2a7`. The runtime was Godot `4.5.1.stable.official.f62fdbde1` on Linux. The frozen 0.3 fixture was loaded as the initial state in an isolated project and separate user-data directory. No existing fixture or personal save was overwritten.
+
+| File | Captured state | SHA-256 |
+| --- | --- | --- |
+| `v04_alignment_started.json` | Binding inspected through the actual interaction; first correct water sign persisted; no reward | `ced7c76f1472df52f46b66ebabd65fbb265a0e263cd934ead9fedbbc085a95ff` |
+| `v04_restored_equipped.json` | Actual water→roots→star dialogue actions completed the investigation; restored garden and equipped source heart | `953587e0486e78f7cba095dd1c0afb102984b72e6d5525b92dd9f11f53352c3c` |
+| `v04_broken_ore_unequipped.json` | Guardian challenged and defeated through its damage/defeat callback; ore harvested through interaction; relic then unequipped | `0668b9c7fe0a46bea99fc7a4ed3fa9ed3f1bdf351620e39390c2ef7abb596c49` |
+
+The combat reference uses a controlled lethal hit to capture its final state. This is **not** a full ordinary battle, a historical human playthrough, or a Windows save. The existing 65-check source suite separately exercises a full battle with real projectiles, mana costs and cooldowns. Each reference was written and read back with the original `SaveSystem` and validated as format 3.
+
+Never regenerate these files with changed gameplay or SaveSystem code to make a test pass. Their immutable bytes are the baseline for subsequent M01–M04 compatibility checks. Personal Windows 0.4 saves were not supplied and are not represented by these fixtures.

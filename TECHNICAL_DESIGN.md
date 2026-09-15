@@ -1,5 +1,7 @@
 # Technische Architektur
 
+Diese Beschreibung gehört zum tatsächlichen 0.4-Code. M00 ändert die Laufzeitarchitektur nicht. Der datierte [Foundation-M00-Abgleich](docs/FOUNDATION_M00.md) benennt verbleibende Risiken, insbesondere die noch nicht reproduzierten Save-I/O-Fehlerpfade, und die verbindliche schrittweise Migration. Erweiterungen in den folgenden Abschnitten sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
+
 ## Laufzeit
 
 Godot **4.5.1 Standard**, GDScript, Compatibility-Renderer, 60 Physikschritte/Sekunde. Keine Add-ons, externen Bibliotheken, Online-Abfragen oder Laufzeit-KI. Der Editor ist nur zur Weiterentwicklung nötig; Exporte laufen eigenständig.

@@ -1,5 +1,23 @@
 # Prüfungen und bekannte Grenzen
 
+## Foundation M00 — aktueller Nachweis vom 15.09.2026
+
+Der vollständige ursprüngliche 0.4-Quellstand wurde unverändert nach GitHub übertragen und unter `reference/v0.4-original` gesichert. In einer aus diesem Commit extrahierten Kopie mit eigenem Benutzerverzeichnis wurden **197/197 bestehende Checks erneut bestanden**. Beide Release-Exporte wurden neu erstellt; der Linux-Export lief nativ, das Windows-Ressourcenpaket unter Linux. 16 Spielansichten wurden gerendert, davon fünf tatsächlich visuell kontrolliert. Eine native Windows-Smoke-Runde und persönliche Windows-Spielstände sind **NOT TESTED**. Tims positiver Testbericht ist aufgenommen, ohne daraus eine protokollierte Plattformabnahme abzuleiten.
+
+Aktuelle Ergebnisse: [qa/m00_results.json](qa/m00_results.json); aktuelle Rohlogs: [qa/m00_logs/](qa/m00_logs/); Referenzprüfsummen: [qa/m00_reference_manifest.json](qa/m00_reference_manifest.json). Die ursprünglichen Berichte unten und am 0.4-Referenzcommit bleiben historische Messungen. Der [M00-Bericht](docs/FOUNDATION_M00.md) besitzt die Befund-/Risikomatrix und die noch offenen Prüfgrenzen.
+
+Die drei zusätzlichen `v04_*.json`-Fixtures stammen aus dem unveränderten Originalrelease. Herkunft, Ablauf und unveränderliche SHA-256-Werte stehen ausschließlich in [tests/fixtures/README.md](tests/fixtures/README.md). Sie ergänzen die alten Fixtures; sie ersetzen keine davon.
+
+### Reproduzierbar prüfen, ohne Originalreports zu überschreiben
+
+Eine getrennte Kopie des Referenzcommits verwenden. Den eigenen Godot-4.5.1-Pfad als Argument übergeben; `XDG_DATA_HOME` und `XDG_CONFIG_HOME` auf eigens angelegte Prüfverzeichnisse setzen. Den vorhandenen Aufruf `python3 tools/verify.py /absoluter/pfad/zu/godot` in dieser Kopie ausführen. Die sechs Gruppen bleiben dieselben, und ihre Logs landen nur unter dem dortigen `test-output/`.
+
+Exportprüfung: in der Kopie die Presets `Windows Desktop` und `Linux Desktop` mit `--export-release` in neue Ausgabepfade exportieren. `tests/export_smoke.gd` als externes Script gegen den Linux-Build und mit dem Godot-Linux-Binary über `--main-pack` gegen die eingebetteten Ressourcen der Windows-EXE ausführen. Exportvorlagen derselben Engine-Version müssen im Prüfprofil verfügbar sein. Native Windows-Ausführung separat dokumentieren.
+
+Für M01 werden erst anschließend gezielte Schreib-/Flush-/Renamefehler, gültige Format-3-Sicherungen bei beschädigter Hauptdatei und fehlgeschlagene Rückbenennungen reproduziert. Diese Tests und ein Fix sind **PLANNED**, nicht durch die 197 vorhandenen Checks belegt. Nach M00 gilt der vereinbarte Stop-Punkt.
+
+## Historische Releaseprüfung 0.4
+
 Stand: Version 0.4, Godot 4.5.1.stable.official.f62fdbde1, Linux x86_64; 2026-09-13.
 
 **197/197 Prüfungen bestanden:** 50 Spiel-/Speicherprüfungen, 14 UI-Prüfungen, 8 Prüfungen eines originalen 0.1-Spielstands, 48 Dungeon-Prüfungen, 12 Migrationsprüfungen mit einem originalen abgeschlossenen 0.2-Spielstand und 65 Quellenprüfungen einschließlich eines originalen 0.3-Spielstands. Der abschließende lokale Prüfablauf meldet keine Scriptfehler. Die jeweils 100 Seeds in Wald-, Dungeon- und Quellenprüfungen zählen innerhalb dieser Gruppen, nicht als zusätzliche Spielstunden.
@@ -10,7 +28,7 @@ Der gerenderte 60-Sekunden-Hüterkampf lief mit aktiven Schlägen, Projektilfäc
 
 Windows- und Linux-Release wurden mit offiziellen 4.5.1-Vorlagen exportiert. Der native Linux-Export und das eingebettete Ressourcenpaket des Windows-Exports wurden unter Linux gestartet. Geprüft wurden Version, Raum-/Gegnerzahl, enthaltene Fundtexte, Hüteraufbau und der vollständige Untersuchungsabschluss einschließlich Quellengarten, ausgerüstetem Quellenherz und gespeichertem Format 3. Das ersetzt keinen nativen Windows-Test. Das Windows-Archiv besteht zusätzlich die ZIP-Prüfsummenprüfung; PE-Header und x86_64-Architektur wurden geprüft.
 
-**Menschlicher Spieltest:** Tim hat 0.1 gespielt, den Prototyp positiv beurteilt und deutlich schönere Grafik gewünscht. Eine menschliche Beurteilung von 0.2–0.4 steht noch aus. Die Ergebnisse unter `qa/` belegen automatisierte Prüfungen, kein Urteil über mehrstündigen Spielspaß.
+**Menschlicher Spieltest zum damaligen Bericht:** Tim hatte 0.1 gespielt, den Prototyp positiv beurteilt und deutlich schönere Grafik gewünscht. Die spätere positive Rückmeldung zur neuen Version ist im M00-Nachtrag oben aufgenommen. Die Ergebnisse unter `qa/` belegen automatisierte Prüfungen, kein Urteil über mehrstündigen Spielspaß.
 
 ## Geprüfter Umfang
 

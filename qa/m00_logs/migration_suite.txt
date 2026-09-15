@@ -1,0 +1,15 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS MIGRATION: Completed 0.2 save migrates to both explicit current version fields
+PASS MIGRATION: Completed quest, talent and defeated foes remain intact
+PASS MIGRATION: Old completed games begin with a genuinely undiscovered dungeon
+PASS MIGRATION: Actual old save loads into the new playable scene without healing or progress reset
+PASS MIGRATION: First new-format write preserves an exact permanent copy of the original
+PASS MIGRATION: Later saves never overwrite the pre-update copy
+PASS MIGRATION: Old quest completion unlocks the new entrance immediately
+PASS MIGRATION: World time continues while exploring underground
+PASS MIGRATION: Pausing also pauses the shared world clock
+PASS MIGRATION: Future dungeon versions never silently fall back to an older backup
+PASS MIGRATION: Damaged primary can recover and migrate a genuine legacy backup
+PASS MIGRATION: Backup recovery also preserves the exact legacy bytes before rotating files
+MIGRATION RESULT 12/12

@@ -1,0 +1,11 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS COMPAT: 0.1 save is accepted through explicit in-memory migration
+PASS COMPAT: Full terrain and collision raster matches the 0.1 world
+PASS COMPAT: Old position and all three resources restored exactly
+PASS COMPAT: Old talents, experience and inventory retained
+PASS COMPAT: Old light and quest progress retained
+PASS COMPAT: Old settings and time retained
+PASS COMPAT: Loaded world displays the activated shrine and keeps the defeated enemy absent
+PASS COMPAT: Loading leaves the original save bytes unchanged
+COMPAT RESULT: 8/8
