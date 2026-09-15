@@ -27,14 +27,16 @@
 - [x] Tatsächlichen abgeschlossenen 0.2-Spielstand einfrieren; 100 Dungeon-Seeds und Gebietswechsel prüfen.
 - [x] Wiederholbaren lokalen Prüfaufruf mit Erkennung von Scriptfehlern ergänzen.
 
+- [x] Quellenhüter, beide Questwege, Ausrüstung und Zustandserhalt in 0.4 prüfen.
+- [x] Originalen 0.3-Dungeonspielstand einfrieren und auf Format 3 migrieren.
+
 ## Als Nächstes
 
 - [ ] Tims Rückmeldung zur neuen Darstellung aufnehmen: Sichtbarkeit, Atmosphäre und Detaildichte.
 - [ ] Nach Spieltest Zauberrhythmus, Gegnergeschwindigkeit und Manaregeneration abstimmen.
-- [ ] Quellenhüter mit zwei fair angekündigten Angriffen implementieren.
-- [ ] Untersuchung und Kampf als zwei vollständige Questlösungen mit sichtbaren Folgen verbinden.
-- [ ] Inventar/Ausrüstung vom allgemeinen Fortschrittszustand trennen.
 - [ ] Eingaben frei belegbar machen und Controller schrittweise prüfen.
+- [ ] Orientierung, Reichweitenvorschau und lesbares Kampf-/Ressourcenfeedback weiter verbessern.
+- [ ] Den ersten vollständigen Abschnitt im menschlichen Spieltest abnehmen; danach Inhalte erweitern.
 
 ## Vor größeren Welt-Erweiterungen
 

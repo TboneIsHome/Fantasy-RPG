@@ -1,0 +1,26 @@
+{
+  "bounded_objects": true,
+  "end_nodes": 379,
+  "forest_nodes_after_roundtrips": [
+    4558,
+    4558,
+    4558
+  ],
+  "frames": 3559,
+  "headless": false,
+  "initial_nodes": 368,
+  "mean_frame_ms": 16.8603391402079,
+  "p95_frame_ms": 17.67,
+  "passed": true,
+  "peak_guardian_projectiles": 5,
+  "peak_nodes": 383,
+  "renderer": "OpenGL Compatibility; software Mesa llvmpipe",
+  "saw_source_impact": true,
+  "scenario": "source_guardian",
+  "seconds": 60,
+  "vault_nodes_after_roundtrips": [
+    368,
+    368,
+    368
+  ]
+}

@@ -8,6 +8,7 @@ var radius: float = 25
 var damage: float = 9
 var slow_seconds: float = 0.75
 var interval: float = 0.9
+var peaceful_area: Rect2
 
 func _ready() -> void:
 	z_index=5
@@ -20,7 +21,7 @@ func _physics_process(delta: float) -> void:
 		return
 	if pulse<=0:
 		pulse=interval
-		if is_instance_valid(player) and player.position.distance_to(global_position)<=radius:
+		if is_instance_valid(player) and not peaceful_area.has_point(player.global_position) and player.position.distance_to(global_position)<=radius:
 			var wall := get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(global_position,player.position,1))
 			if wall.is_empty() and player.take_damage(damage):
 				player.hindered=maxf(player.hindered,slow_seconds)

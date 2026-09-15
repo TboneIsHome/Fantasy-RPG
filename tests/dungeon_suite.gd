@@ -57,7 +57,7 @@ func verify() -> void:
 	check(DungeonGenerator.reachable(DungeonGenerator.generate("Österreich ✨")).size()>0,"Dungeon supports Unicode seeds")
 	var old_bytes := FileAccess.get_file_as_bytes("res://tests/fixtures/v01_save.json")
 	var legacy := SaveSystem.read("res://tests/fixtures/v01_save.json")
-	check(legacy.error.is_empty() and legacy.data.save_version==2 and legacy.data.run.region=="forest" and legacy.data.run.vault.relics.is_empty(),"Version 1 migrates to version 2 with an untouched, undiscovered dungeon")
+	check(legacy.error.is_empty() and legacy.data.save_version==SaveSystem.VERSION and legacy.data.run.region=="forest" and legacy.data.run.vault.relics.is_empty(),"Version 1 migrates to the current schema with an untouched, undiscovered dungeon")
 	check(FileAccess.get_file_as_bytes("res://tests/fixtures/v01_save.json")==old_bytes,"Migration does not overwrite the original save")
 	game=load("res://scenes/game.tscn").instantiate()
 	root.add_child(game)

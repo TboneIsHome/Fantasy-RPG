@@ -10,7 +10,7 @@ engine = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else 'godot'
 output = project / 'test-output'
 output.mkdir(exist_ok=True)
 stages = [('import', ['--editor', '--import', '--quit'])]
-for script in ['test_suite', 'ui_smoke', 'save_compatibility', 'dungeon_suite', 'migration_suite']:
+for script in ['test_suite', 'ui_smoke', 'save_compatibility', 'dungeon_suite', 'migration_suite', 'source_suite']:
     stages.append((script, ['--script', f'res://tests/{script}.gd']))
 results = []
 for name, args in stages:

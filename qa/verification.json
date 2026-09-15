@@ -28,5 +28,10 @@
     "stage": "migration_suite",
     "passed": true,
     "exit_code": 0
+  },
+  {
+    "stage": "source_suite",
+    "passed": true,
+    "exit_code": 0
   }
 ]

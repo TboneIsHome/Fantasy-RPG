@@ -1,5 +1,18 @@
 # Änderungen
 
+## 0.4.0 — 2026-09-13 · Das Gedächtnis der Quelle
+
+- Gebundener Quellenhüter mit angekündigtem Quellenschlag, fünfteiligen Projektilfächern, Rückzug und eigenen Pixelgrafiken.
+- Vollständiger Untersuchungsweg mit drei Zeichen und gespeicherten Zwischenschritten; vollständiger Kampfweg bis zu Eddas Reaktion.
+- Dauerhafte unterschiedliche Folgen: geschützter Quellengarten mit kostenloser Rast oder einmalig nutzbare Erzader.
+- Quellenherz als an-/ablegbares Relikt: sechs Mana für einen Frostkreis mit Treffer, einmal pro Zauber. Beide Wege geben dieselbe Hauptbelohnung.
+- Eigene Quest-/Reliktmodule, Bossanzeige, Ausrüstungsreiter und drei weitere Journaltexte.
+- Format 3 mit expliziter Migration von 0.1–0.3 und unveränderter Vorversions-Sicherung, auch bei Backup-Wiederherstellung.
+- Fehlenden automatischen Speicheraufruf beim ersten Lesen einer Dungeon-Erinnerung behoben.
+- 197 automatisierte Prüfungen, echter 0.3-Altstand, gerenderte Spielansichten und ein 60-Sekunden-Kampf mit aktivem Hüter.
+
+Der erste vollständige Abschnitt ist inhaltlich implementiert. Menschliche Abnahme, mehrstündige Inhalte und allgemeine Welt-/NPC-Simulation bleiben offen.
+
 ## 0.3.0 — 2026-09-10 · Unter den Wurzeln
 
 Erster Dungeon als nächster Schritt zum vollständigen Vertical Slice.

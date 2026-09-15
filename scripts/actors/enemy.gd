@@ -27,6 +27,7 @@ var icon: Sprite2D
 var pathfinder: AStarGrid2D
 var route_timer: float = 0
 var route_next := Vector2.ZERO
+var peaceful_area: Rect2
 
 func configure(data: Dictionary, player: MagePlayer, camp_position: Vector2) -> void:
 	id = data.id
@@ -64,7 +65,7 @@ func _physics_process(delta: float) -> void:
 	var direction := global_position.direction_to(target.global_position)
 	var speed := float(definition.speed)*(0.4 if slowed>0 else 1.0)
 	velocity = Vector2.ZERO
-	if target.vitals.hp <= 0 or target.global_position.distance_to(camp)<110 or global_position.distance_to(home)>float(definition.leash):
+	if target.vitals.hp <= 0 or target_is_safe() or global_position.distance_to(home)>float(definition.leash):
 		if state != Mode.RETURN:
 			state = Mode.RETURN
 	if hit_stop>0:
@@ -72,7 +73,7 @@ func _physics_process(delta: float) -> void:
 		return
 	match state:
 		Mode.IDLE:
-			if distance<float(definition.aggro) and target.global_position.distance_to(camp)>110 and target.vitals.hp>0:
+			if distance<float(definition.aggro) and not target_is_safe() and target.vitals.hp>0:
 				state = Mode.CHASE
 		Mode.CHASE:
 			var attack_range: float = float(definition.get("attack_range",53.0 if kind=="wolf" else 112.0))
@@ -128,6 +129,9 @@ func _physics_process(delta: float) -> void:
 
 func clear_shot(point: Vector2) -> bool:
 	return get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(global_position,point,1)).is_empty()
+
+func target_is_safe() -> bool:
+	return target.global_position.distance_to(camp)<110 or peaceful_area.has_point(target.global_position)
 
 func approach(point: Vector2) -> Vector2:
 	if not pathfinder or clear_shot(point):

@@ -16,6 +16,8 @@ var quest_complete: bool = false
 var time_of_day: float = 0.22
 var region: String = "forest"
 var vault := DungeonProgress.new()
+var source := SourceQuest.new()
+var inventory := RelicInventory.new()
 
 func advance_time(delta: float) -> void:
 	time_of_day=fposmod(time_of_day+delta/float(Content.section("world").day_seconds),1)
@@ -55,7 +57,8 @@ func serialize() -> Dictionary:
 		"defeated":defeated.duplicate(), "discoveries":discoveries.duplicate(),
 		"learned":learned.duplicate(), "xp":xp, "level":level, "skill_points":skill_points,
 		"motes":motes, "quest_accepted":quest_accepted, "quest_complete":quest_complete,
-		"time_of_day":time_of_day,"region":region,"vault":vault.serialize()}
+		"time_of_day":time_of_day,"region":region,"vault":vault.serialize(),
+		"source":source.serialize(),"inventory":inventory.serialize()}
 
 static func restore(data: Dictionary) -> RunState:
 	var state := RunState.new()
@@ -73,4 +76,6 @@ static func restore(data: Dictionary) -> RunState:
 	state.time_of_day = float(data.time_of_day)
 	state.region=data.get("region","forest")
 	state.vault=DungeonProgress.restore(data.vault) if data.has("vault") else DungeonProgress.new()
+	state.source=SourceQuest.restore(data.source) if data.has("source") else SourceQuest.new()
+	state.inventory=RelicInventory.restore(data.inventory) if data.has("inventory") else RelicInventory.new()
 	return state

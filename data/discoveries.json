@@ -17,11 +17,11 @@
   },
   "water_memory": {
     "title": "Stimme im Wasser",
-    "text": "„Wir verschlossen nicht den Weg, sondern die Erinnerung daran. Westlich der Zisterne liegt ein Stein, über den Wasser wie Tränen läuft. Berühre den Stern in seinem Riss; er wird sich erinnern.“\n\nDu erkennst nun das Zeichen an der rissigen Wand im westlichen Seitenkorridor."
+    "text": "„Wir verschlossen nicht den Weg, sondern die Erinnerung daran. Westlich der Zisterne liegt ein Stein, über den Wasser wie Tränen läuft. Berühre den Stern in seinem Riss; er wird sich erinnern.“\n\nDu erkennst nun das Zeichen an der rissigen Wand im westlichen Seitenkorridor.\n\nUnter dem Zeichen steht: „Eine Bindung beginnt mit fließendem Wasser. Wurzeln und Stern folgen, wenn die Quelle wieder atmet.“"
   },
   "root_memory": {
     "title": "Brief zwischen Wurzeln",
-    "text": "„Die Samen schlafen, solange ein Stern auf sie achtgibt. Nimm niemals den letzten. Falls ich nicht zurückkehre: Die Winde neben diesem Garten hebt das Gitter zur Eingangshalle.“\n\nDie Schrift endet in einer Zeichnung eines Baumes mit Wurzeln voller kleiner Sterne."
+    "text": "„Die Samen schlafen, solange ein Stern auf sie achtgibt. Nimm niemals den letzten. Falls ich nicht zurückkehre: Die Winde neben diesem Garten hebt das Gitter zur Eingangshalle.“\n\nDie Schrift endet in einer Zeichnung eines Baumes mit Wurzeln voller kleiner Sterne.\n\nAm Rand ergänzt eine zweite Hand: „Führe die Wurzeln nach dem Wasser. Setze den Stern zuletzt, dann dient die Bindung dem Leben.“"
   },
   "star_chart": {
     "title": "Die vergessene Sternenkarte",
@@ -34,5 +34,17 @@
   "vault_entrance": {
     "title": "Die Treppe unter den Sternen",
     "text": "Südöstlich des Sternengarten-Lichts führt eine überwachsene Treppe unter die Erde. Drei Zeichen im Bogen antworten auf Eddas Quellenfokus. Unten riecht es nach Wasser, altem Papier und lebenden Wurzeln."
+  },
+  "source_binding": {
+    "title": "Die gebrochene Bindung",
+    "text": "Der Hüter trägt den Riss wie eine zweite Wirbelsäule. Wasser, Wurzeln und ein Stern liegen ungeordnet in seiner Fassung. Die beiden Erinnerungen und die Sternenkarte erklären ihre Verbindung. Eine neue Bindung könnte einen Quellengarten nähren; ein besiegter Hüter würde sie zerbrechen und das Erz darunter freilegen."
+  },
+  "source_restored": {
+    "title": "Ein Garten unter der Erde",
+    "text": "Wasser fließt durch die Wurzeln, der Stern hält ihren Kreis. Der Hüter legt seine steinernen Hände nieder. Wo der Riss war, wachsen erste Blätter. Du kannst hier kostenlos rasten. Das Quellenherz begleitet dich als ausrüstbares Relikt; Edda sollte von diesem Ort erfahren."
+  },
+  "source_broken": {
+    "title": "Das Erz unter der Quelle",
+    "text": "Mit dem Hüter zerbricht die alte Fassung. Warmes Sternenerz tritt aus dem Spalt; seine helle Kruste lässt sich einmal als Lichtstaub bergen. Im verbleibenden Stein hörst du einen fremden Takt. Das Quellenherz gehört dir. Edda sollte erfahren, wie du die Bindung gelöst hast."
   }
 }

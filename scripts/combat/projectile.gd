@@ -7,6 +7,7 @@ var speed: float = 265
 var remaining: float = 235
 var hostile: bool = false
 var elapsed: float = 0
+var source_id: String = ""
 
 func _ready() -> void:
 	collision_layer = 0

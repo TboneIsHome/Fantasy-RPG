@@ -6,6 +6,7 @@ signal enemy_defeated
 var player: MagePlayer
 var run: RunState
 var effects: CombatFeedback
+var peaceful_area: Rect2
 
 func _ready() -> void:
 	effects = CombatFeedback.new()
@@ -31,10 +32,15 @@ func cast(id: String, origin: Vector2, target: Vector2) -> void:
 			center = obstacle.position+(origin-center).normalized()*5
 		effects.ring(center,float(data.radius),Color("91dfed"))
 		effects.burst(center,Color("b3edeb"),25)
+		var hit_any := false
 		for enemy in get_tree().get_nodes_in_group("enemies"):
 			if enemy.global_position.distance_to(center)<=float(data.radius) and _clear_line(center,enemy.global_position):
 				enemy.slowed = float(data.slow_duration)
-				enemy.take_damage(float(data.damage),center.direction_to(enemy.global_position))
+				hit_any=enemy.take_damage(float(data.damage),center.direction_to(enemy.global_position)) or hit_any
+		var refund := run.inventory.frost_refund()
+		if hit_any and refund>0:
+			player.vitals.mana=minf(100,player.vitals.mana+refund)
+			effects.number(player.global_position,"+%d MP" % int(refund),Color("a7e9da"))
 		if "bloom" in run.learned and player.global_position.distance_to(center)<=float(data.radius):
 			player.vitals.hp = minf(100,player.vitals.hp+12)
 			effects.number(player.global_position,"+12",Color("b6edb3"))
@@ -62,8 +68,25 @@ func connect_enemy(enemy: WildEnemy) -> void:
 		effects.number(target.global_position,str(int(amount))+("!" if shatter else ""),Color("c4f1ee") if shatter else Color("f0d9ab"))
 		effects.burst(target.global_position+Vector2(0,-9),Color("aed8c5"),8)
 		sound_requested.emit("hit"))
-	enemy.projectile_requested.connect(_enemy_bolt)
+	var caster_id: String=enemy.id
+	enemy.projectile_requested.connect(func(origin,direction,amount): _enemy_bolt(origin,direction,amount,caster_id))
 	enemy.thorns_requested.connect(_thorns)
+	if enemy is SourceGuardian:
+		enemy.slam_requested.connect(_source_slam)
+
+func _source_slam(point: Vector2, radius: float, amount: float) -> void:
+	var impact := SourceImpact.new()
+	impact.position=point
+	impact.player=player
+	impact.radius=radius
+	impact.damage=amount
+	add_child(impact)
+	sound_requested.emit("nova")
+
+func clear_guardian_effects() -> void:
+	for child in get_children():
+		if child is SourceImpact or (child is MagicProjectile and child.source_id==SourceQuest.GUARDIAN_ID):
+			child.queue_free()
 
 func _thorns(point: Vector2) -> void:
 	var definition: Dictionary=Content.section("enemies").kobold
@@ -75,23 +98,27 @@ func _thorns(point: Vector2) -> void:
 	patch.damage=float(definition.damage)
 	patch.slow_seconds=float(definition.thorn_slow)
 	patch.interval=float(definition.thorn_interval)
+	patch.peaceful_area=peaceful_area
 	add_child(patch)
 	sound_requested.emit("hit")
 
-func _enemy_bolt(origin: Vector2, direction: Vector2, amount: float) -> void:
+func _enemy_bolt(origin: Vector2, direction: Vector2, amount: float, source_id: String = "") -> void:
 	var projectile := MagicProjectile.new()
 	projectile.position = origin
 	projectile.direction = direction
 	projectile.speed = 115
 	projectile.remaining = 210
 	projectile.hostile = true
+	projectile.source_id=source_id
 	projectile.struck.connect(func(body,point,heading):
-		if body is MagePlayer:
+		if body is MagePlayer and not peaceful_area.has_point(body.global_position):
 			body.take_damage(amount,heading)
 		effects.burst(point,Color("e9b192"),7))
 	add_child(projectile)
 
 func _defeated(enemy: WildEnemy) -> void:
+	if enemy is SourceGuardian:
+		return
 	if enemy.id in run.defeated:
 		return
 	run.defeated.append(enemy.id)

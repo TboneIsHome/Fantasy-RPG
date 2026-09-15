@@ -1,6 +1,6 @@
 # Aktueller Spielentwurf
 
-## Spielbar in 0.3
+## Spielbar in 0.4
 
 Eine begrenzte Waldregion mit Lager, Fluss, Brücken, drei Waldlichtern und neun Gegnern. Ein Seed verändert Gelände, Landmarkpositionen und Vegetation. Pfade und sichere Lichtungen sind nachgelagerte Regeln. Größere Regionen, Klimazonen und Chunk-Streaming sind noch nicht umgesetzt.
 
@@ -45,18 +45,25 @@ Lichtstaub aus Kämpfen wird im Beutel gezählt. Die Sickerquelle am Dungeon-Ein
 
 Die Quellengruft führt über Zisterne und Sternensaal zur schlafenden Fassung. Ein zweiter Rückweg verbindet Archiv und unterirdischen Garten; von dort lässt sich eine kürzere Verbindung zum Eingang öffnen. Ein gelesener Hinweis erschließt eine freiwillige Nische. Eingang und Ausgang bleiben unabhängig von Talenten erreichbar.
 
-Erinnerungen geben beim ersten Lesen je 10 Erfahrung, die Sternenkarte 40 und der optionale Bernsteinsamen 25. Wiederholtes Lesen oder Laden dupliziert keine Belohnung. Edda reagiert auf die zurückgebrachte Karte. Diese Funde haben noch keine ausrüstbaren Werte und lösen die geplante Quellenhüter-Quest nicht vorzeitig.
+Erinnerungen geben beim ersten Lesen je 10 Erfahrung, die Sternenkarte 40 und der optionale Bernsteinsamen 25. Wiederholtes Lesen oder Laden dupliziert keine Belohnung. Edda reagiert auf die zurückgebrachte Karte. Sternenkarte und Bernsteinsamen bleiben Entdeckungsfunde. Das neue Quellenherz ist davon getrennte, ausrüstbare Beute.
 
 Tab bietet Talente/Beutel und Entdeckungen als getrennte Ansichten. Neun kurze Texte werden erst nach der jeweiligen Entdeckung sichtbar. M zeigt in der Gruft nur besuchte Räume; die geheime Nische wird vorher nicht aufgedeckt. Offene Wege, Funde, Erinnerungen und besiegte Gegner bleiben bei Rückkehr und Tod erhalten.
 
-## Vollständiger Vertical Slice als nächstes Ziel
+## Die Quelle — beide Wege seit 0.4
 
-- Grundlage seit 0.3: Quellengruft aus sieben Raumteilen und Dornkobold mit Kontrollangriff.
-- Elite: gebundener Quellenhüter mit zwei deutlich angekündigten Angriffen.
-- Quest: Die Quelle wird durch eine beschädigte Bindung gestört. **Kampfweg:** Hüter brechen, Bindung entfernen. **Untersuchungsweg:** zwei Gedächtnissteine lesen und die Bindung im Dungeon reparieren.
-- Beide Lösungen geben ein Relikt. Reparieren schafft einen sicheren Quellengarten; Brechen öffnet einen Abbauort, der später eine andere Gefahr anzieht.
-- Dungeonzugang und beide Lösungen müssen ohne verpflichtende Talentwahl möglich bleiben. Talente verkürzen oder verändern Wege, sperren die Hauptlösung nicht.
-- Erst nach spielerischer Prüfung dieses Ablaufs kommen weitere Biome und Klassen hinzu.
+Die Fassung nördlich des ruhenden Hüters eröffnet die Entscheidung. Der Hüter wird erst durch „Herausfordern“ aktiv; ein zufälliger Zauber startet den Kampf nicht.
+
+**Untersuchung:** Stimme im Wasser, Brief zwischen Wurzeln und Sternenkarte erklären drei Zeichen. Wasser → Wurzeln → Stern stellt die Bindung wieder her. Jeder richtige Zwischenschritt wird gespeichert. Eine falsche Reihenfolge setzt nur den Versuch zurück; Hinweise und Ressourcen bleiben erhalten. Keine Talentwahl und kein Sieg über einen Gegner sind für diese Lösung vorgeschrieben.
+
+**Kampf:** Der Quellenhüter hat 280 Leben. Ein 1,1 Sekunden angekündigter Quellenschlag trifft eine feste Stelle mit 34 Pixel Radius für 21 Schaden. Darauf folgt nach Erholung ein 1,25 Sekunden angekündigter Fächer aus fünf langsamen Geschossen mit je 17 Schaden. Die bestehenden Ausweich- und Schadensschutzregeln gelten. Verlässt die Figur den Raum, ruht der Hüter wieder mit voller Gesundheit und seine verbleibenden Angriffe verschwinden. Der abgeschlossene Sieg zerbricht die Bindung.
+
+**Folgen:** Reparieren schafft einen geschützten Quellengarten, beruhigt dessen zwei normalen Wächter und ermöglicht kostenlose Erholung. Auch verirrte Geschosse und Dornen verletzen die Figur in diesem Bereich nicht. Brechen legt eine Erzader frei, die einmalig vier Lichtstaub gibt. Der Ort erhält je nach Lösung andere Grafik und Kartenhinweise. Edda erinnert sich an den gewählten Weg. Eine spätere regionale Bedrohung ist weiterhin Entwurf, noch kein simuliertes Ereignis.
+
+**Gleiche Hauptbelohnung:** Beide Wege geben einmalig 90 Erfahrung und das Quellenherz. Es wird zunächst angelegt und kann im Reliktreiter des Journals abgenommen werden. Trifft ein Frostkreis mindestens einen Gegner, gibt das getragene Relikt einmal sechs Mana zurück; Fehlschüsse und zusätzliche Ziele vervielfachen die Erstattung nicht. Es gibt einen Reliktplatz und einen ausrüstbaren Gegenstand, noch kein allgemeines Ausrüstungssystem mit vielen Slots.
+
+Der Ausgang bleibt endgültig, sobald die Bindung vollständig repariert oder der Hüter besiegt ist. Vorher darf der Spieler erkunden, zurückweichen und den anderen Weg wählen. Speichern/Laden, Tod und Gebietswechsel erhalten Ergebnis, Zeichenfortschritt, Erzernte und Reliktplatz. Laufende Kämpfe werden beim Laden zurückgesetzt; Leben und Mana werden dabei nicht aufgefüllt.
+
+Beide Abläufe wurden vom neuen Spiel über Eddas ersten Auftrag bis zur abschließenden Reaktion automatisiert geprüft. Spielzeit, Schwierigkeit und Atmosphäre müssen noch im menschlichen Spieltest bewertet werden.
 
 ## Weitere Klassen — Entwurf, noch nicht spielbar
 
@@ -67,4 +74,4 @@ Tab bietet Talente/Beutel und Entdeckungen als getrennte Ansichten. Neun kurze T
 | Magier | Magieschulen und Ressourcenketten | Erste vollständig umgesetzte Grundlage |
 | Wanderer | Werkzeuge, Heimlichkeit, Verhandlung | Illusion und Geistersicht |
 
-Langfristig verbindet ein Netz aus gemeinsamen Grundlagen und Spezialisierungszweigen die Klassen. Ein großer Skill Tree ist geplant; die drei Talente in 0.3 sind kein solcher fertiger Baum.
+Langfristig verbindet ein Netz aus gemeinsamen Grundlagen und Spezialisierungszweigen die Klassen. Ein großer Skill Tree ist geplant; die drei Talente in 0.4 sind kein solcher fertiger Baum.

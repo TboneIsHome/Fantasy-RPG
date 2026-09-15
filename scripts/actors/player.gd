@@ -123,7 +123,7 @@ func update_visual() -> void:
 	var frame := int(phase*10)%4 if velocity.length()>1 else 0
 	icon.texture = PixelArt.texture("mage",frame+(4 if aim.y<-0.65 else 0))
 	staff_light.position.x = -13 if icon.flip_h else 13
-	staff_light.energy = 0.20+cast_flash*3
+	staff_light.energy = 0.20+cast_flash*3+(0.12 if run and not run.inventory.equipped.is_empty() else 0.0)
 	icon.position.y = -1 if velocity.length()>1 and sin(phase*15)>0 else 0
 	icon.modulate = Color("dcffff") if vitals.invulnerable>0 and fmod(phase,0.12)<0.06 else Color.WHITE
 	queue_redraw()

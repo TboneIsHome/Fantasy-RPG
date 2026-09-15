@@ -1,7 +1,7 @@
 class_name SaveSystem
 extends RefCounted
 
-const VERSION := 2
+const VERSION := 3
 const DEFAULT_PATH := "user://lichtpfad_v1.json"
 const LIGHTS := ["light_0","light_1","light_2"]
 const MAX_BYTES := 1048576
@@ -28,7 +28,7 @@ static func valid_list(value: Variant, allowed: Array) -> bool:
 static func validate(data: Variant) -> String:
 	if not data is Dictionary:
 		return "Der Spielstand ist beschädigt."
-	if not (data.get("save_version")==1 or data.get("save_version")==VERSION) or data.get("generator_version") != WorldGenerator.VERSION:
+	if not (data.get("save_version")==1 or data.get("save_version")==2 or data.get("save_version")==VERSION) or data.get("generator_version") != WorldGenerator.VERSION:
 		return "Dieser Spielstand gehört zu einer anderen Speicher- oder Generatorversion."
 	if not data.get("run") is Dictionary or not data.get("player") is Dictionary or not data.get("settings") is Dictionary:
 		return "Im Spielstand fehlen notwendige Daten."
@@ -84,27 +84,60 @@ static func validate(data: Variant) -> String:
 			var world := DungeonGenerator.generate(run.world_seed)
 			if not DungeonGenerator.navigable(world,Vector2i(Vector2(player.x,player.y)/16),vault.shortcut_open,vault.secret_open):
 				return "Der Speicherpunkt liegt außerhalb begehbarer Gruftwege."
+	if data.save_version==VERSION:
+		return validate_source(run)
+	return ""
+
+static func validate_source(run: Dictionary) -> String:
+	if not run.get("source") is Dictionary or not run.get("inventory") is Dictionary:
+		return "Quellengeschichte oder Reliktinventar fehlen."
+	var source: Dictionary=run.source
+	var bag: Dictionary=run.inventory
+	for key in ["seen","guardian_defeated","reported","ore_taken"]:
+		if not source.get(key) is bool: return "Ungültiger Zustand der Quellengeschichte: "+key
+	if source.get("resolution") not in ["","restored","broken"] or not number_in(source.get("alignment"),0,2) or source.alignment!=floor(float(source.alignment)):
+		return "Ungültige Entscheidung oder Zeichenfolge."
+	if not valid_list(bag.get("owned"),Content.section("relics").keys()) or not bag.get("equipped") is String or (not bag.equipped.is_empty() and not bag.equipped in bag.owned):
+		return "Das Reliktinventar ist ungültig."
+	var resolved: bool=not source.resolution.is_empty()
+	var evidence: bool="water_memory" in run.vault.memories and "root_memory" in run.vault.memories and "star_chart" in run.vault.relics
+	if source.seen and not run.quest_complete:
+		return "Die Quellengeschichte beginnt vor dem geöffneten Zugang."
+	if (resolved and not source.seen) or (source.alignment>0 and (not evidence or not source.seen or resolved)):
+		return "Die Bindung widerspricht ihren gefundenen Hinweisen."
+	if (source.resolution=="restored" and (not evidence or source.guardian_defeated)) or (source.guardian_defeated!=(source.resolution=="broken")):
+		return "Hüter und Lösung der Bindung widersprechen sich."
+	if (source.reported and not resolved) or (source.ore_taken and source.resolution!="broken"):
+		return "Die Folgen der Quellengeschichte sind ungültig."
+	if resolved!=(Content.section("source_quest").reward_item in bag.owned):
+		return "Quellengeschichte und Belohnung widersprechen sich."
 	return ""
 
 static func migrate(data: Dictionary) -> Dictionary:
 	var updated: Dictionary=data.duplicate(true)
 	if updated.save_version==1:
-		updated.save_version=VERSION
+		updated.save_version=2
 		updated.dungeon_version=DungeonGenerator.VERSION
 		updated.run.region="forest"
 		updated.run.vault=DungeonProgress.new().serialize()
+	if updated.save_version==2:
+		updated.save_version=VERSION
+		updated.run.source=SourceQuest.new().serialize()
+		updated.run.inventory=RelicInventory.new().serialize()
 	return updated
 
 static func write(data: Dictionary, path: String = DEFAULT_PATH) -> String:
 	var error := validate(data)
 	if not error.is_empty():
 		return error
-	# Keep one permanent copy before the first write of the new format.
-	var preserved := path+".pre-v03"
-	if not FileAccess.file_exists(preserved):
+	# Preserve previous originals, including an old backup recovered from a damaged main file.
+	for policy in [[".pre-v03",1],[".pre-v04",2]]:
+		var preserved: String=path+str(policy[0])
+		if FileAccess.file_exists(preserved): continue
 		for source in [path,path+".bak"]:
 			var previous := read_one(source)
-			if previous.get("migrated_from",0)==1:
+			var previous_version: int=int(previous.get("migrated_from",0))
+			if previous_version>0 and previous_version<=int(policy[1]):
 				if DirAccess.copy_absolute(source,preserved)!=OK:
 					return "Der ursprüngliche Spielstand konnte nicht gesichert werden."
 				break
@@ -141,7 +174,7 @@ static func read_one(path: String) -> Dictionary:
 	if not error.is_empty():
 		return {"error":error}
 	var migrated: Dictionary=migrate(data)
-	return {"data":migrated,"error":"","notice":"Spielstand aus 0.1 / 0.2 übernommen.","migrated_from":1} if data.save_version==1 else {"data":migrated,"error":""}
+	return {"data":migrated,"error":"","notice":"Dein bisheriger Lichtpfad wurde übernommen.","migrated_from":int(data.save_version)} if data.save_version<VERSION else {"data":migrated,"error":""}
 
 static func read(path: String = DEFAULT_PATH) -> Dictionary:
 	var result := read_one(path)

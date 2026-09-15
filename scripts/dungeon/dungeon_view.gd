@@ -3,6 +3,7 @@ extends WorldView
 var navigation: AStarGrid2D
 var progress: DungeonProgress
 var phase: float = 0
+var source_resolution: String = ""
 
 func build(world: Dictionary) -> void:
 	data=world
@@ -134,6 +135,7 @@ func _draw() -> void:
 		var shift := sin(phase+p.x*0.03+p.y*0.07)
 		draw_line(p+Vector2(3,7+shift*2),p+Vector2(10+shift*2,7+shift*2),Color(0.61,0.83,0.79,0.45),1)
 	for room in data.get("rooms",[]):
+		if room.id=="sanctum" and not source_resolution.is_empty(): continue
 		var at := WorldGenerator.center(room.center)
 		if room.style in ["stars","water","amber","sanctum"]:
 			var color := Color(0.83,0.76,0.52,0.25) if room.style in ["amber","sanctum"] else Color(0.54,0.77,0.77,0.25)

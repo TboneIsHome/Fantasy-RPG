@@ -14,11 +14,11 @@ func check(condition: bool, title: String) -> void:
 
 func verify() -> void:
 	for path in [SAVE,RECOVERY]:
-		for suffix in ["",".bak",".tmp",".pre-v03"]:
+		for suffix in ["",".bak",".tmp",".pre-v03",".pre-v04"]:
 			if FileAccess.file_exists(path+suffix): DirAccess.remove_absolute(path+suffix)
 	var original := FileAccess.get_file_as_bytes("res://tests/fixtures/v02_completed_save.json")
 	var loaded := SaveSystem.read("res://tests/fixtures/v02_completed_save.json")
-	check(loaded.error.is_empty() and loaded.data.save_version==2 and loaded.data.dungeon_version==1,"Completed 0.2 save migrates to both explicit current version fields")
+	check(loaded.error.is_empty() and loaded.data.save_version==SaveSystem.VERSION and loaded.data.dungeon_version==1,"Completed 0.2 save migrates to both explicit current version fields")
 	check(loaded.data.run.quest_complete and loaded.data.run.active_lights.size()==3 and loaded.data.run.learned==["bloom"] and loaded.data.run.defeated.size()==2,"Completed quest, talent and defeated foes remain intact")
 	check(loaded.data.run.vault==DungeonProgress.new().serialize(),"Old completed games begin with a genuinely undiscovered dungeon")
 	DirAccess.copy_absolute("res://tests/fixtures/v02_completed_save.json",SAVE)
@@ -54,7 +54,7 @@ func verify() -> void:
 	game.queue_free()
 	for i in 5: await process_frame
 	for path in [SAVE,RECOVERY]:
-		for suffix in ["",".bak",".tmp",".pre-v03"]:
+		for suffix in ["",".bak",".tmp",".pre-v03",".pre-v04"]:
 			if FileAccess.file_exists(path+suffix): DirAccess.remove_absolute(path+suffix)
 	var report := FileAccess.open("res://test-output/migration_results.json",FileAccess.WRITE)
 	report.store_string(JSON.stringify({"checks":checks,"failures":failures},"  "));report.close()

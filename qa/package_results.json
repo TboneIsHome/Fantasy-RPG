@@ -1,15 +1,15 @@
 {
-  "version": "0.3.0",
-  "archive": "Lichterhain_0.3_Windows.zip",
-  "bytes": 33971004,
-  "sha256": "13cad176ab0747f04129e3da934f93847dce09ef8ae7457940b3177c5cda0ca5",
+  "version": "0.4.0",
+  "archive": "Lichterhain_0.4_Windows.zip",
+  "bytes": 34000262,
+  "sha256": "c00c4e4a618e3908c6701bb0957580ee8392624a2edd52a7bd2b61a84bc2025b",
   "zip_crc_passed": true,
   "windows_architecture": "x86_64",
   "entries": [
-    "Lichterhain_0.3/Spielen/Lichterhain.exe",
-    "Lichterhain_0.3/START_HIER.txt",
-    "Lichterhain_0.3/Lizenzen/DEJAVU_FONT_LICENSE.txt",
-    "Lichterhain_0.3/Lizenzen/GODOT_COPYRIGHT.txt",
-    "Lichterhain_0.3/Lizenzen/GODOT_LICENSE.txt"
+    "Lichterhain_0.4/Spielen/Lichterhain.exe",
+    "Lichterhain_0.4/START_HIER.txt",
+    "Lichterhain_0.4/Lizenzen/DEJAVU_FONT_LICENSE.txt",
+    "Lichterhain_0.4/Lizenzen/GODOT_COPYRIGHT.txt",
+    "Lichterhain_0.4/Lizenzen/GODOT_LICENSE.txt"
   ]
 }

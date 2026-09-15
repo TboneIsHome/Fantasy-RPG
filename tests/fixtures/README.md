@@ -9,3 +9,7 @@ The digest is SHA-256 of `generated.tiles.to_byte_array()`, covering every logic
 # Frozen completed 0.2 save
 
 `v02_completed_save.json` was produced by the actual 0.2 source at local commit `dc4a6bb` (GitHub `e58d31478c430ee25b2f26c6bffcaddd94cfcff9`), with Godot 4.5.1. All three lights and Edda's first quest are complete; the character has bloom, 2 motes, 81 health, 55 mana, level 2 / 81 XP, and two defeated wolves. It still uses save format 1.
+
+# Frozen completed 0.3 dungeon save
+
+`v03_completed_save.json` was produced before any 0.4 changes by an isolated checkout of local commit `fdfac23e1c3287690aea73c08dfbb29598d0f0d9` (same source tree as GitHub `24b66a914827f11bb7da39c245e9da3a19d14731`), using Godot 4.5.1. It uses save format 2. The player is at the dungeon entrance (232, 264), with resources 77 / 43 / 67, level 3 / 10 XP, bloom, one unspent point and seven motes. Both memories and treasures, all rooms, both opened gates and Edda's chart reaction are recorded. Two enemies are defeated. No source-quest or equipment fields existed in that code.

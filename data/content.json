@@ -71,6 +71,22 @@
       "thorn_duration": 2.8,
       "thorn_slow": 0.75,
       "thorn_interval": 0.9
+    },
+    "guardian": {
+      "name": "Gebundener Quellenhüter",
+      "hp": 280,
+      "speed": 0,
+      "damage": 21,
+      "xp": 0,
+      "aggro": 190,
+      "leash": 300,
+      "windup": 1.1,
+      "recovery": 1.5,
+      "slam_radius": 34,
+      "fan_windup": 1.25,
+      "fan_damage": 17,
+      "fan_count": 5,
+      "fan_spread": 0.72
     }
   },
   "skills": {
@@ -99,5 +115,17 @@
     "title": "Die verstummten Lichter",
     "goal": 3,
     "reward": "Quellenfokus"
+  },
+  "source_quest": {
+    "reward_xp": 90,
+    "reward_item": "source_heart",
+    "ore_motes": 4
+  },
+  "relics": {
+    "source_heart": {
+      "name": "Quellenherz",
+      "description": "Trifft dein Frostkreis mindestens einen Gegner, erhältst du einmal pro Zauber 6 Mana zurück.",
+      "frost_refund": 6
+    }
   }
 }

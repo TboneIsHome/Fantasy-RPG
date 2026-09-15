@@ -55,6 +55,7 @@ func capture() -> void:
 	game.queue_free()
 	for i in 5:
 		await process_frame
+	await create_timer(0.15).timeout
 	quit()
 
 func rendered_frames(count: int) -> void:

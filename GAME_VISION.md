@@ -1,6 +1,6 @@
 # Lichterhain
 
-Stand: 10. September 2026 · Arbeitstitel · Prototyp 0.3
+Stand: 13. September 2026 · Arbeitstitel · Prototyp 0.4
 
 Ein atmosphärisches Fantasy-RPG: Als Magier wanderst du durch farbenreiche, alte Wälder. Verlassene Schutzlichter, unruhige Tiere und rätselhafte Wesen führen dich zu Orten, deren Geschichte du aus Spuren erschließt. Später verändern deine Entscheidungen, welche Wege sicher sind und was in den Regionen erwacht.
 
@@ -25,10 +25,10 @@ Tims langfristiges Ziel ist eine geheimnisvolle, wunderschöne und überraschend
 
 Erkunden → Spuren und Gefahren erkennen → Magie und Bewegung einsetzen → einen Ort verstehen oder einen Konflikt lösen → Funde und Erfahrung erhalten → Fähigkeiten verbessern → zurückkehren und Folgen beobachten.
 
-0.1 erprobte die Runde Lager → Waldlichter → Erfahrung/Talente → Edda → neue Rastpunkte. 0.2 vertiefte die Darstellung. 0.3 verbindet diese Runde mit der Quellengruft: Hinweise lesen, Räume wiedererkennen, optionale Orte entdecken und dauerhafte Wege öffnen. Alternative Konfliktlösungen folgen im vollständigen Vertical Slice.
+0.1 erprobte die Runde Lager → Waldlichter → Erfahrung/Talente → Edda → neue Rastpunkte. 0.2 vertiefte die Darstellung. 0.3 verbindet diese Runde mit der Quellengruft: Hinweise lesen, Räume wiedererkennen, optionale Orte entdecken und dauerhafte Wege öffnen. 0.4 ergänzt einen vollständigen Untersuchungs- und Kampfweg mit sichtbaren Folgen und einem ausrüstbaren Quellenherz.
 
 ## Qualitätsziel
 
 Lieber wenige Orte, an die man sich erinnert, als viele austauschbare Zufallsmarkierungen. Der vollständige Slice soll ungefähr 15–25 Minuten tragen; diese Dauer ist ein Designziel und noch nicht durch menschliche Spieltests bestätigt.
 
-Eine lebendige Welt braucht nachvollziehbare Veränderungen. In 0.3 erinnern sich Speicherstand und Edda an einzelne Funde; eine allgemeine NPC- oder Regionssimulation ist noch kein Bestandteil des Spiels.
+Eine lebendige Welt braucht nachvollziehbare Veränderungen. In 0.4 erinnern sich Speicherstand und Edda an Funde und die Lösung der Quelle; eine allgemeine NPC- oder Regionssimulation ist noch kein Bestandteil des Spiels.

@@ -1,5 +1,6 @@
 class_name HudCanvas
 extends Control
+var guardian: SourceGuardian
 
 var run: RunState
 var player: MagePlayer
@@ -95,8 +96,8 @@ func _draw() -> void:
 		draw_rect(Rect2(16,69,160*run.xp/(run.level*60.0),1),GOLD)
 		card(Rect2(455,10,175,52))
 		if run.quest_complete:
-			text(Vector2(467,25),"UNTER DEN WURZELN",9,GOLD)
-			text(Vector2(467,42),"Die Karte ist geborgen" if run.vault.reported else "Sternenkarte zu Edda bringen" if "star_chart" in run.vault.relics else "Die Sternenkarte finden" if run.region=="vault" else "Gruft im Sternengarten finden",9)
+			text(Vector2(467,25),"DAS GEDÄCHTNIS DER QUELLE",8,GOLD)
+			text(Vector2(467,42),run.source.objective(run.vault),8)
 		else:
 			text(Vector2(467,25),"DIE VERSTUMMTEN LICHTER",9,GOLD)
 			text(Vector2(467,42),"Zurück zu Edda" if run.active_lights.size()==3 else "Waldlichter",11)
@@ -139,6 +140,11 @@ func _draw() -> void:
 			card(Rect2(320-w/2-11,271,w+22,26))
 			text(Vector2(320-w/2,288),prompt,11)
 		var mouse := get_local_mouse_position().floor()
+		if is_instance_valid(guardian) and guardian.awake and guardian.hp>0:
+			card(Rect2(193,48,254,26))
+			text(Vector2(205,59),"QUELLENHÜTER",8,GOLD)
+			text(Vector2(321,59),"Erholung" if guardian.state!=WildEnemy.Mode.WINDUP else "Quellenschlag" if guardian.attack_index%2==0 else "Sternenfächer",8,CREAM)
+			meter(Vector2(205,65),230,guardian.hp/float(guardian.definition.hp),Color("d7b477"))
 		draw_arc(mouse,5,0,TAU,12,Color("eae2bb"),1)
 		for direction in [Vector2.LEFT,Vector2.RIGHT,Vector2.UP,Vector2.DOWN]:
 			draw_line(mouse+direction*8,mouse+direction*5,CREAM,1)
@@ -209,5 +215,5 @@ func _draw_vault_map() -> void:
 	var p := origin+player.position/16*3
 	draw_circle(p,3,Color("cfffe1"))
 	draw_arc(p,5,0,TAU,16,Color("cfffe1"),1)
-	text(Vector2(143,291),"Abkürzung geöffnet" if run.vault.shortcut_open else "Eine Winde könnte den Rückweg verkürzen.",10,GOLD)
+	text(Vector2(143,291),"Quellengarten · sicherer Rastpunkt" if run.source.resolution=="restored" else "Sternenerz freigelegt" if run.source.resolution=="broken" else "Abkürzung geöffnet" if run.vault.shortcut_open else "Eine Winde könnte den Rückweg verkürzen.",10,GOLD)
 	text(Vector2(143,315),"Nur entdeckte Räume · M / ESC schließen",9,MUTED)

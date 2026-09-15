@@ -7,6 +7,7 @@ var player: MagePlayer
 var combat: CombatSystem
 var ui: GameUI
 var audio: AudioController
+var source_story: SourceStory
 var nearest: Landmark
 var scan_time: float = 0
 var last_level: int = 1
@@ -24,6 +25,9 @@ func _ready() -> void:
 	ui.requested.connect(handle_action)
 	ui.volume_changed.connect(func(value): settings.volume=value; audio.volume=value)
 	ui.shake_changed.connect(func(value): settings.shake=value; player.shake_enabled=value)
+	source_story=SourceStory.new()
+	source_story.game=self
+	add_child(source_story)
 	build_run("LICHTERHAIN")
 	show_title()
 
@@ -80,6 +84,8 @@ func _build_region(saved_player: Dictionary = {}, spawn_override: Vector2 = Vect
 	for definition in generated.enemies:
 		if definition.id in run.defeated:
 			continue
+		if run.region=="vault" and run.source.resolution=="restored" and definition.id in SourceQuest.QUIET_ENEMIES:
+			continue
 		var enemy := WildEnemy.new()
 		enemy.configure(definition,player,camp)
 		if terrain is DungeonView:
@@ -107,6 +113,7 @@ func _build_region(saved_player: Dictionary = {}, spawn_override: Vector2 = Vect
 		atmosphere.run=run
 		world.add_child(atmosphere)
 		run.discover("camp")
+	source_story.build_region()
 	audio.volume=settings.volume
 	ui.settings=settings.duplicate()
 	ui.hud.player=player
@@ -152,6 +159,7 @@ func show_title() -> void:
 	ui.title_menu(FileAccess.file_exists(save_path) or FileAccess.file_exists(save_path+".bak"))
 
 func handle_action(action: String, argument: String = "") -> void:
+	if is_instance_valid(source_story) and source_story.handle_action(action,argument): return
 	match action:
 		"new":
 			build_run(argument)
@@ -173,6 +181,12 @@ func handle_action(action: String, argument: String = "") -> void:
 		"journal":
 			get_tree().paused=true
 			ui.journal(run)
+		"equipment":
+			get_tree().paused=true
+			ui.journal(run,false,true)
+		"equip_relic":
+			if run.inventory.equip(argument): save_game()
+			ui.journal(run,false,true)
 		"learn":
 			if run.learn(argument):
 				audio.play("light")
@@ -230,6 +244,8 @@ func _scan_landmarks() -> void:
 		for room in terrain.data.rooms:
 			if room.rect.has_point(Vector2i(player.position/16)):
 				region=room.name
+				if room.id=="sanctum" and not run.source.resolution.is_empty():
+					region="Quellengarten" if run.source.resolution=="restored" else "Die offene Erzader"
 				if not room.id in run.vault.visited:
 					run.vault.visited.append(room.id)
 					ui.toast("Entdeckt: "+room.name)
@@ -246,6 +262,7 @@ func _scan_landmarks() -> void:
 				ui.toast("Entdeckt: "+landmark.title)
 	ui.hud.location_name=region
 	ui.hud.prompt=""
+	if is_instance_valid(source_story.guardian) and source_story.guardian.awake: return
 	if nearest:
 		if nearest is DungeonObject:
 			ui.hud.prompt=dungeon_prompt(nearest)
@@ -259,6 +276,7 @@ func _scan_landmarks() -> void:
 			ui.hud.prompt="E · Am Waldlicht rasten" if run.quest_complete else "Dieses Waldlicht leuchtet wieder."
 
 func dungeon_prompt(object: DungeonObject) -> String:
+	if object is SourceSite: return source_story.prompt()
 	match object.kind:
 		"entrance": return "E · Quellengruft betreten" if run.quest_complete else "E · Die versiegelte Treppe untersuchen"
 		"exit": return "E · In den Sternengarten zurückkehren"
@@ -295,6 +313,7 @@ func interact_dungeon(object: DungeonObject) -> void:
 				run.vault.memories.append(object.id)
 				run.add_xp(int(DungeonGenerator.content().memory_xp))
 				object.activate()
+				save_game()
 			show_discovery(object.id)
 		"chest":
 			if object.active or (object.id=="amber_seed" and not run.vault.secret_open):
@@ -335,15 +354,20 @@ func show_discovery(id: String) -> void:
 	ui.dialogue(entry.title,entry.text,[["Im Journal nachlesen","discoveries"],["Weitergehen","resume"]])
 
 func interact(landmark: Landmark) -> void:
+	if landmark is SourceSite:
+		source_story.interact()
+		return
 	if landmark is DungeonObject:
 		interact_dungeon(landmark)
 		return
 	if landmark.kind=="npc":
 		get_tree().paused=true
-		if "star_chart" in run.vault.relics:
+		if not run.source.resolution.is_empty():
+			source_story.speak_to_edda()
+		elif "star_chart" in run.vault.relics:
 			run.vault.reported=true
 			save_game()
-			ui.dialogue("Edda · Eine Karte unter Wurzeln","Diese Linien gehören nicht an den Himmel. Meine Lehrerin suchte ihr Ende im Aschemoor. Ich dachte, die Karte sei mit ihr verloren gegangen.\n\nBewahre sie. Manchmal ist ein Fund der Anfang einer Frage.",[["Entdeckungen lesen","discoveries"],["Weiter erkunden","resume"]])
+			ui.dialogue("Edda · Eine Karte unter Wurzeln","Diese Linien gehören nicht an den Himmel. Meine Lehrerin suchte ihr Ende im Aschemoor.\n\nDie Karte erklärt auch die gebrochene Fassung in der Gruft. Lies die Erinnerungen im Wasser und zwischen den Wurzeln. Vielleicht musst du ihren Hüter gar nicht bekämpfen.",[["Entdeckungen lesen","discoveries"],["Weiter erkunden","resume"]])
 		elif run.quest_complete:
 			ui.dialogue("Edda","Hörst du das Wasser? Die Quelle erinnert sich wieder. Dein Quellenfokus lässt dich an jedem geweckten Waldlicht rasten. Im alten Sternengarten öffnet er außerdem die Treppe zur Quellengruft.",[["Talente ansehen","journal"],["Aufbrechen","resume"]])
 		elif run.active_lights.size()==3:

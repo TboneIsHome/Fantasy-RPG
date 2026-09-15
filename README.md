@@ -1,6 +1,6 @@
-# Lichterhain · Version 0.3 — Unter den Wurzeln
+# Lichterhain · Version 0.4 — Das Gedächtnis der Quelle
 
-Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelwaldregion und der ersten Quellengruft. Auf die Grafikiteration 0.2 folgt ein neuer Erkundungsabschnitt mit Erinnerungen, dauerhaften Funden und einem dritten Gegner. Der Prototyp ist noch nicht der vollständige Vertical Slice oder eine mehrstündige Spielwelt.
+Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelwaldregion und der ersten Quellengruft. Der erste zusammenhängende Spielabschnitt führt nun bis zum Quellenhüter, zwei Questlösungen und einem ausrüstbaren Relikt. Sein Inhalt ist implementiert und automatisiert geprüft; menschliche Abnahme und mehrstündige Weltinhalte stehen noch aus.
 
 ## Direkt spielen unter Windows
 
@@ -9,21 +9,21 @@ Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelw
 3. **Neuen Lichtpfad beginnen** wählen. Der voreingestellte Seed eignet sich für die erste Runde.
 4. Mit **WASD** zu Edda nördlich des Lagerfeuers gehen und **E** drücken.
 
-Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen erforderlich. Die beigefügte Anwendung ist ein Windows-x86_64-Export. Version 0.1 wurde von Tim gespielt und positiv beurteilt. Version 0.3 wurde unter Linux automatisiert und visuell geprüft; der neue Windows-Export ist hier nicht nativ unter Windows ausgeführt.
+Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen erforderlich. Die beigefügte Anwendung ist ein Windows-x86_64-Export. Version 0.1 wurde von Tim gespielt und positiv beurteilt. Version 0.4 wurde unter Linux automatisiert und visuell geprüft; der neue Windows-Export ist hier nicht nativ unter Windows ausgeführt.
 
-## Neu in Version 0.3
+## Neu in Version 0.4
 
-- Die Quellengruft: sechs Haupträume, eine versteckte Nische, eine Schleife und eine freischaltbare Abkürzung.
-- Zisterne, Wurzelarchiv, unterirdischer Garten und Sternensäle mit eigener Pixelgrafik, Wasserbecken und Lichtstimmung.
-- Dornkobolde: Ihr angekündigter Angriff hinterlässt eine zeitlich begrenzte Dornenfläche. In der Gruft finden Gegner Wege um Wände.
-- Entdeckungsjournal mit neun kurzen Orts- und Fundtexten. Unbekannte Inhalte bleiben verborgen.
-- Sternenkarte, optionaler Fund, gelesene Hinweise und geöffnete Wege bleiben gespeichert. Edda reagiert auf die zurückgebrachte Karte.
-- Lichtstaub erhält eine Verwendung: Zwei Einheiten füllen an der Sickerquelle Leben, Mana und Ausdauer auf.
-- Die Dungeonkarte zeichnet besuchte Räume auf; die Weltzeit läuft auch unter der Erde weiter.
+- **Gebundener Quellenhüter:** ein eigener großer Gegner mit angekündigtem Quellenschlag und einem Fächer langsamer Geschosse. Verlassen des Raums beendet den Versuch; ein erneuter Versuch beginnt mit voller Hütergesundheit.
+- **Zwei vollständige Wege:** Die Hinweise untersuchen und die Bindung stimmen oder den Hüter im Kampf besiegen. Beide Wege geben dieselbe Reliktbelohnung und 90 Erfahrung.
+- **Sichtbare Folgen:** Eine reparierte Bindung schafft einen sicheren Quellengarten mit kostenloser Rast. Der Kampf legt eine Erzader frei, die einmalig vier Lichtstaub gibt.
+- **Quellenherz:** ein an- und ablegbares Relikt. Ein Frostkreis mit mindestens einem Treffer gibt einmal pro Zauber sechs Mana zurück; ein Fehlschuss gibt nichts zurück.
+- **Die Welt erinnert sich:** Edda reagiert auf deine Lösung. Hinweise, begonnene Zeichenfolge, Ergebnis, Erzernte und Reliktplatz bleiben gespeichert.
+- Neue Hütergrafik, Angriffsmarkierungen, Garten-/Erzgestaltung, Bossanzeige und eigener Reliktreiter im Journal.
+- Neu gelesene Dungeon-Erinnerungen werden jetzt unmittelbar gespeichert; hier fehlte in 0.3 noch der automatische Schreibaufruf.
 
-**Spielstände aus 0.1 und 0.2 bleiben verwendbar.** Starte die neue EXE und wähle „Am Speicherpunkt fortsetzen“. Originale Spielstände beider Versionen wurden tatsächlich geladen. Beim ersten Speichern wird das erweiterte Format 2 geschrieben und der bisherige gültige Stand zusätzlich als `.pre-v03` aufbewahrt. Ältere Spielversionen können Format 2 nicht lesen.
+**Spielstände aus 0.1, 0.2 und 0.3 bleiben verwendbar.** Wähle „Am Speicherpunkt fortsetzen“. Originale Spielstände aller drei Versionen wurden geladen. Vor dem ersten Speichern im erweiterten Format 3 wird der bisherige gültige Stand als `.pre-v04` aufbewahrt, auch beim Wiederherstellen aus einer Sicherung. Eine vorhandene `.pre-v03`-Sicherung bleibt unverändert. Ältere Spielversionen können Format 3 nicht lesen.
 
-**So erreichst du die neuen Inhalte:** Drei Waldlichter wecken, bei Edda den Quellenfokus abholen und zum alten Sternengarten gehen. Wenige Schritte südöstlich seines Waldlichts führt ein Tor in die Quellengruft. Wer Eddas Auftrag schon abgeschlossen hat, kann direkt dorthin gehen.
+**So erreichst du die neuen Inhalte:** Nach Eddas erstem Auftrag öffnet der Quellenfokus die Gruft südöstlich des Waldlichts im alten Sternengarten. Untersuche mit E die leuchtende Fassung im hinteren Raum, nördlich des ruhenden Hüters. Deine Erinnerungen und Sternenkarte aus 0.3 zählen bereits für den Untersuchungsweg. Ein neuer Lauf ist nicht nötig.
 
 ## Steuerung
 
@@ -35,7 +35,7 @@ Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen 
 | Rechte Maustaste / 2 | Frostkreis am Zielpunkt innerhalb der Reichweite |
 | Leertaste | Ausweichen in Bewegungsrichtung; im Stand in die letzte Bewegungsrichtung |
 | E | Sprechen, rasten, Hinweise lesen, Funde aufnehmen und Übergänge benutzen |
-| Tab | Journal mit Talenten, Beutel und Entdeckungen öffnen/schließen |
+| Tab | Journal mit Talenten, Beutel, Entdeckungen und Reliktplatz öffnen/schließen |
 | M | Karte öffnen/schließen |
 | Esc | Pause / Fenster schließen |
 | F5 / F9 | Speichern / letzten Speicherpunkt laden |
@@ -47,15 +47,15 @@ Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen 
 
 Eddas Auftrag annehmen, drei Waldlichter in beliebiger Reihenfolge finden und mit E entzünden. Gegner geben Erfahrung und Lichtstaub. Im Journal kannst du Talentpunkte ausgeben. Wenn alle Lichter erwacht sind, zu Edda zurückkehren und den Quellenfokus annehmen. Danach kannst du auch an Waldlichtern rasten.
 
-Danach die Quellengruft erkunden, ihre Hinweise lesen und die Sternenkarte zu Edda bringen. Eine Abkürzung erleichtert die Rückkehr; aufmerksames Lesen kann einen weiteren Ort erschließen. Die kleine Welt bleibt nach Abschluss begehbar. Ein neuer Seed beginnt einen neuen Lauf.
+Danach die Quellengruft erkunden, Erinnerungen und Sternenkarte finden und die gebrochene Fassung untersuchen. Du kannst die Bindung stimmen oder den Hüter herausfordern. Rückzug lässt beide Möglichkeiten offen; der abgeschlossene Weg bleibt eine dauerhafte Entscheidung. Kehre mit dem Ergebnis zu Edda zurück. Die kleine Welt bleibt danach begehbar. Ein neuer Seed beginnt einen neuen Lauf.
 
 ## Speichern
 
-Rasten, F5, Gebietswechsel, neue Dungeonhinweise/Funde, geöffnete Wege und die Rückgabe des Auftrags speichern. Beim regulären Schließen des laufenden Spiels wird ein lebender Charakter ebenfalls gespeichert. Der Menüpunkt „Speichern und zum Titel“ speichert zuerst. Es gibt **einen Speicherpunkt plus die vorherige Sicherung** und bei der Umstellung die unveränderte Altstand-Sicherung.
+Rasten, F5, Gebietswechsel, neue Dungeonhinweise/Funde, geöffnete Wege, richtige Zeichen, die Lösung der Quelle, Reliktwechsel und die Rückgabe des Auftrags speichern. Beim regulären Schließen des laufenden Spiels wird ein lebender Charakter ebenfalls gespeichert. Der Menüpunkt „Speichern und zum Titel“ speichert zuerst. Es gibt **einen Speicherpunkt plus die vorherige Sicherung** und bei der Umstellung die unveränderte Altstand-Sicherung.
 
 Ein neuer Lauf ersetzt diesen Speicherpunkt, sobald du speicherst. Beim Tod, auch in der Gruft, kannst du ohne Fundverlust am Lager zurückkehren. Noch lebende Gegner kehren beim Laden oder erneuten Betreten einer Region gesund an ihre Ausgangsorte zurück; besiegte bleiben verschwunden. Kurze Effekte und Abklingzeiten werden dabei zurückgesetzt.
 
-Datei: `user://lichtpfad_v1.json`; der etablierte Dateiname bleibt trotz Format 2 erhalten. Godot legt sie im Benutzerordner des Spiels ab, nicht neben der EXE. Unter Windows ist das normalerweise `%APPDATA%\Godot\app_userdata\Lichterhain\`. Die rotierende Sicherung endet auf `.bak`, die einmalige alte Sicherung auf `.pre-v03`.
+Datei: `user://lichtpfad_v1.json`; der etablierte Dateiname bleibt trotz Format 3 erhalten. Godot legt sie im Benutzerordner des Spiels ab, nicht neben der EXE. Unter Windows ist das normalerweise `%APPDATA%\Godot\app_userdata\Lichterhain\`. Die rotierende Sicherung endet auf `.bak`, die alte Sicherung auf `.pre-v03` und die Sicherung vor diesem Update auf `.pre-v04`.
 
 ## Im Editor weiterentwickeln
 
@@ -79,4 +79,4 @@ GDScript wird verwendet; die .NET-Ausgabe ist nicht notwendig. Das Projekt kommt
 
 Der vollständige Quellcode, die Tests und die Projektdokumentation liegen in [TboneIsHome/Fantasy-RPG](https://github.com/TboneIsHome/Fantasy-RPG). Jede Iteration erhält einen eigenen Commit. Binäre Builds und lokale Godot-Caches gehören nicht in den Quellcode-Stand.
 
-Die spielbare Windows-Version wird als separates Download-Paket **Lichterhain_0.3_Windows.zip** bereitgestellt.
+Die spielbare Windows-Version wird als separates Download-Paket **Lichterhain_0.4_Windows.zip** bereitgestellt.

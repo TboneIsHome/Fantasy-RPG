@@ -22,6 +22,8 @@ Godot **4.5.1 Standard**, GDScript, Compatibility-Renderer, 60 Physikschritte/Se
 | Grafik | `art/pixel_art.gd`: aus Pixelprimitiven aufgebaute, zwischengespeicherte Sprite-Texturen |
 | Dungeon-Grafik | `art/dungeon_art.gd`: eigene Wurzeln, Säulen, Tore, Quellen, Funde und Dornkobold |
 | UI | `ui/game_ui.gd`: Menüs und Steuerelemente; `ui/hud_canvas.gd`: HUD und Karte |
+| Quellenquest / Ausrüstung | `progression/source_quest.gd`: dauerhafte Entscheidung und Zeichenfolge; `progression/source_story.gd`: Szenen-/Dialogablauf; `progression/relic_inventory.gd`: Besitz und Reliktplatz |
+| Quellenhüter / Folgen | `actors/source_guardian.gd`, `combat/source_impact.gd`, `dungeon/source_site.gd`, `dungeon/source_grove.gd`, `art/source_art.gd` |
 | Persistenz | `persistence/save_system.gd`: Schema, Validierung, temporäre Datei und Sicherung |
 | Audio | `audio/audio_controller.gd`: lokal synthetisierte Klänge, Stimmenpool, Lautstärke |
 
@@ -31,9 +33,9 @@ Es gibt keine Autoload-Singletons für Spielzustände. Definitionen und unverän
 
 ## Ordner und kommende Module
 
-`scenes/` Einstiegsszene; `scripts/actors`, `art`, `audio`, `combat`, `core`, `dungeon`, `persistence`, `ui`, `world`; `data/` Werte und Ortsdefinitionen; `tests/` ausführbare Prüfungen; `tools/verify.py` lokaler Prüfablauf.
+`scenes/` Einstiegsszene; `scripts/actors`, `art`, `audio`, `combat`, `core`, `dungeon`, `persistence`, `progression`, `ui`, `world`; `data/` Werte und Ortsdefinitionen; `tests/` ausführbare Prüfungen; `tools/verify.py` lokaler Prüfablauf.
 
-Mit dem vollständigen Slice werden Inventar/Ausrüstung, Questgraph und NPC-Erinnerungen eigene Module. Fraktionen und abstrakte Regionsereignisse kommen danach. Dafür werden aktuell keine leeren Scheinmodule angelegt.
+SourceQuest und RelicInventory sind eigene Module. Ein allgemeiner Questgraph, weitere Ausrüstungsarten und allgemeine NPC-Erinnerungen folgen später. Fraktionen und abstrakte Regionsereignisse kommen danach. Dafür werden aktuell keine leeren Scheinmodule angelegt.
 
 ## Generierung
 
@@ -50,13 +52,21 @@ Dungeonversion 1 verwendet einen festen, in `data/vault.json` definierten Raumgr
 
 ## Speicherung und Kompatibilität
 
-Format 2, Waldgeneratorversion 1 und Dungeonversion 1. JSON speichert Seed, Figur, Fortschritt, Talente, Licht- und Gegner-IDs, entdeckte Orte, Tageszeit und Einstellungen. Neu sind die aktive Region und ein eigener Dungeonzustand für besuchte Räume, Erinnerungen, Funde, offene Tore und Eddas Kartenreaktion. IDs, Datentypen, Wertebereiche und Zustandsabhängigkeiten werden geprüft. Eine gespeicherte Dungeonposition muss auf einem tatsächlich zugänglichen Bodentile liegen. Schreiben erfolgt über eine temporäre Datei und den vorherigen Stand als `.bak`.
+Format 3, Waldgeneratorversion 1 und Dungeonversion 1. JSON speichert Seed, Figur, Fortschritt, Talente, Licht- und Gegner-IDs, entdeckte Orte, Tageszeit und Einstellungen. Zur aktiven Region und dem Dungeonzustand kommen `source` (gesehen, Zeichenfortschritt, Ausgang, Hütersieg, Eddas Reaktion, Erzernte) sowie `inventory` (besessene Relikte, angelegtes Relikt). IDs, Datentypen, Wertebereiche und Zustandsabhängigkeiten werden geprüft. Eine gespeicherte Dungeonposition muss auf einem tatsächlich zugänglichen Bodentile liegen. Schreiben erfolgt über eine temporäre Datei und den vorherigen Stand als `.bak`.
 
-Gültiges Format 1 wird beim Lesen explizit im Speicher auf Format 2 erweitert: aktive Region Wald, leerer Dungeonzustand, erhaltene Originalwerte. Die Quelldatei bleibt beim Laden unverändert. Vor dem ersten Überschreiben eines gültigen Altstands wird eine bytegenaue `.pre-v03`-Kopie angelegt; spätere Speicherungen verändern sie nicht. Der bekannte Dateiname `lichtpfad_v1.json` bleibt erhalten. Godots JSON-Zahlen können als Float ankommen, deshalb vergleichen Versionsprüfungen numerisch und verwenden keine typstrenge Array-Mitgliedschaft.
+Gültiges Format 1 wird zunächst auf Format 2 erweitert: aktive Region Wald und leerer Dungeonzustand. Format 2 wird dann explizit auf Format 3 migriert: unentschiedene Quellenquest und leeres Reliktinventar. Vorhandene Hinweise aus 0.3 zählen bereits für die neue Untersuchung. Die Quelldatei bleibt beim Laden unverändert. Vor dem ersten Überschreiben eines gültigen Altstands wird eine bytegenaue `.pre-v04`-Kopie angelegt; eine bestehende `.pre-v03`-Kopie wird nie überschrieben. Bei direktem Umstieg aus 0.1/0.2 bleibt auch die bisherige `.pre-v03`-Regel erhalten. Das gilt ebenso bei Wiederherstellung aus einer gültigen alten `.bak`-Datei.
 
-Beschädigte Hauptdateien können auf die gültige Sicherung zurückfallen. Unbekannte Format-/Generator-/Dungeonversionen werden mit einer Meldung abgelehnt; hier erfolgt kein stiller Rückfall auf eine ältere Sicherung. Ältere Builds können Format 2 nicht lesen. Weitere Schemaänderungen brauchen erneut eine explizite Migration oder parallele Generatorversion.
+Der bekannte Dateiname `lichtpfad_v1.json` bleibt erhalten. Godots JSON-Zahlen können als Float ankommen, deshalb vergleichen Versionsprüfungen numerisch. Quellenzustände werden auch gegeneinander validiert: Reparatur benötigt die Hinweise, ein Sieg passt nur zur gebrochenen Bindung, Erzernte nur zur Erzader, ein angelegtes Relikt muss besessen sein und Belohnung/Ausgang müssen zusammenpassen. Die Zeichenfolge darf in einem Speicherpunkt nur 0–2 betragen; das dritte Zeichen schließt die Quest vor dem Schreiben ab.
 
-Lebende Gegner starten beim Laden und erneutem Betreten einer Region wieder gesund an ihren Ausgangsorten; laufende Projektile und kurze Effekte werden nicht gespeichert. Abklingzeiten werden zurückgesetzt. Dauerhafte Verluste/Entdeckungen bleiben erhalten. Ein Gebietswechsel gibt kurz 0,8 Sekunden Ankunftsschutz. Tod in der Gruft führt zum Waldlager. Dies sind die dokumentierten Grenzen des Prototyps.
+Beschädigte Hauptdateien können auf eine gültige Sicherung zurückfallen. Unbekannte Format-/Generator-/Dungeonversionen werden abgelehnt; hier erfolgt kein stiller Rückfall auf einen älteren Stand. Ältere Builds können Format 3 nicht lesen. Weitere Schemaänderungen brauchen erneut eine explizite Migration oder parallele Generatorversion.
+
+Lebende Gegner starten beim Laden und erneutem Betreten einer Region wieder gesund an ihren Ausgangsorten; laufende Projektile und kurze Effekte werden nicht gespeichert. Abklingzeiten werden zurückgesetzt. Dauerhafte Verluste/Entdeckungen bleiben erhalten. Ein Gebietswechsel gibt kurz 0,8 Sekunden Ankunftsschutz. Tod in der Gruft führt zum Waldlager. Der Hüter ist nach dem Laden zunächst inaktiv und gesund. Seine abgeschlossenen Ergebnisse und das Relikt bleiben erhalten. Dies sind die dokumentierten Grenzen des Prototyps.
+
+## Quellenkampf und Folgen
+
+SourceGuardian erweitert die bestehende WildEnemy-Schnittstelle für Treffer, Frostsynergie und Projektile. Nur ein ausdrücklich erweckter Hüter gehört zur Gegnergruppe. Seine zwei Angriffe sind eine feste Markierung mit einmaligem SourceImpact sowie ein angekündigter Projektilfächer. Projektil-Urheber werden mit stabilen IDs markiert, damit Rückzug nur die Hütereffekte aufräumt. Der Sieg wird nach dem laufenden Kampfschritt abgeschlossen; ein mitgeführter RunState-Bezug verhindert die Übertragung eines verspäteten Siegcallbacks auf einen neu geladenen Lauf.
+
+SourceStory baut pro aktiver Gruft genau einen Quellenort und gegebenenfalls einen Hüter auf. Das Gelände und seine Generatorversion werden nicht verändert. Der Garten ist ein explizites Schutzrechteck für Gegner, Geschosse und Dornen; zwei Wächter werden ohne zusätzliche Erfahrung beruhigt. SourceGrove zeichnet den dauerhaften Ausgang, SourceSite bietet Rast oder einmalige Erzernte. Lebensdauer und Gebietsabbau bleiben an den Szenenbaum gebunden.
 
 ## Pixelregeln
 
@@ -73,6 +83,8 @@ Lebende Gegner starten beim Laden und erneutem Betreten einer Region wieder gesu
 - Generator 1 und dessen Zufallsstrom sind unverändert. Der separate Darstellungsstrom `/art/v2` beeinflusst keine Kollisionen oder IDs.
 - `tests/fixtures/v01_save.json` und der vollständige Terrain-Hash stammen vom unveränderten 0.1-Code. Der Kompatibilitätstest lädt diese Dateien tatsächlich in die Szene.
 - `tests/fixtures/v02_completed_save.json` stammt vom unveränderten 0.2-Code und enthält den abgeschlossenen ersten Auftrag; der Migrationstest prüft damit den sofortigen Dungeonzugang.
+
+- `tests/fixtures/v03_completed_save.json` stammt vom unveränderten 0.3-Code; Quellenquest, Ausrüstung, Hinweisfortschritt und beide Lösungen werden in `tests/source_suite.gd` geprüft.
 
 ## Technische Referenzen
 

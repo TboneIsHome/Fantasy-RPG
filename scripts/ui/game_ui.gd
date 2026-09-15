@@ -103,7 +103,7 @@ func title_menu(has_save: bool) -> void:
 	start.pressed.connect(func(): requested.emit("new",field.text))
 	button(box,"Am Speicherpunkt fortsetzen","load").disabled = not has_save
 	label(box,"WASD bewegen · Maus zielen · E interagieren\nLMT / RMT zaubern · Leertaste ausweichen",10,HudCanvas.MUTED)
-	label(box,"Version 0.3 · Unter den Wurzeln\nEin neuer Lauf ersetzt den Speicherpunkt beim Speichern.",9,HudCanvas.MUTED)
+	label(box,"Version 0.4 · Das Gedächtnis der Quelle\nEin neuer Lauf ersetzt den Speicherpunkt beim Speichern.",9,HudCanvas.MUTED)
 	start.grab_focus()
 
 func pause_menu() -> void:
@@ -133,14 +133,15 @@ func pause_menu() -> void:
 func dialogue(title: String, body: String, choices: Array) -> void:
 	var box := shell("dialogue",title,body,370)
 	for choice in choices:
-		button(box,choice[0],choice[1])
+		button(box,choice[0],choice[1],choice[2] if choice.size()>2 else "")
 
-func journal(run: RunState, discoveries: bool = false) -> void:
+func journal(run: RunState, discoveries: bool = false, equipment: bool = false) -> void:
 	var box := shell("journal","Dein Lichtpfad","",480)
 	var tabs := HBoxContainer.new()
 	box.add_child(tabs)
 	button(tabs,"Talente & Beutel","journal").size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	button(tabs,"Entdeckungen","discoveries").size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	button(tabs,"Relikt","equipment").size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	var scroll := ScrollContainer.new()
 	scroll.custom_minimum_size=Vector2(0,180)
 	scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
@@ -149,7 +150,28 @@ func journal(run: RunState, discoveries: bool = false) -> void:
 	content.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	content.add_theme_constant_override("separation",9)
 	scroll.add_child(content)
-	if discoveries:
+	if equipment:
+		label(content,"Reliktplatz: "+("leer" if run.inventory.equipped.is_empty() else str(Content.section("relics")[run.inventory.equipped].name)),13,HudCanvas.GOLD)
+		if run.inventory.owned.is_empty():
+			label(content,"Ein Quellenherz wartet am Ende der Gruft. Repariere die Bindung oder überwinde ihren Hüter.",12,HudCanvas.MUTED)
+		for id in run.inventory.owned:
+			var definition: Dictionary=Content.section("relics")[id]
+			var row := HBoxContainer.new()
+			content.add_child(row)
+			var icon := TextureRect.new()
+			var atlas := AtlasTexture.new()
+			atlas.atlas=SourceArt.texture("heart")
+			atlas.region=Rect2(28,58,40,42)
+			icon.texture=atlas
+			row.add_child(icon)
+			var copy := VBoxContainer.new()
+			copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+			row.add_child(copy)
+			label(copy,definition.name,14,HudCanvas.GOLD)
+			label(copy,definition.description,11,HudCanvas.MUTED)
+			button(content,"Abnehmen" if run.inventory.equipped==id else "Anlegen","equip_relic","" if run.inventory.equipped==id else id)
+		label(content,"Beide Wege durch die Quellengeschichte geben dasselbe Relikt. Seine Wirkung gilt, solange du es trägst.",10,HudCanvas.MUTED)
+	elif discoveries:
 		var known := DiscoveryBook.known(run)
 		if known.is_empty():
 			label(content,"Entdeckte Orte und gelesene Erinnerungen erscheinen hier.",12)
