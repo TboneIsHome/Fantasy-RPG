@@ -3,9 +3,11 @@ extends RefCounted
 var owned: Array[String] = []
 var equipped: String = ""
 
+func can_grant(id: String) -> bool:
+	return id not in owned and Content.section("relics").has(id)
+
 func grant(id: String) -> bool:
-	if id in owned or not Content.section("relics").has(id):
-		return false
+	if not can_grant(id): return false
 	owned.append(id)
 	if equipped.is_empty(): equipped=id
 	return true

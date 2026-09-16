@@ -21,6 +21,11 @@ func verify() -> void:
 	game.handle_action("source_tune")
 	for sign_id in SourceQuest.SIGNS: game.handle_action("source_align",sign_id)
 	passed=passed and game.run.source.resolution=="restored" and game.run.inventory.equipped=="source_heart" and game.source_story.grove.resolution=="restored" and SaveSystem.read(game.save_path).data.save_version==3
+	# M02: compiled state actions retain their replay guards and complete rewards.
+	var checkpoint: Dictionary = game.run.serialize()
+	var replay_ok: bool = not game.run.collect_vault_relic("star_chart") and not game.run.align_source("star") and not game.run.defeat_source_guardian() and game.run.serialize() == checkpoint and SaveSystem.validate(SaveSystem.snapshot(game.run, game.player, game.settings)).is_empty()
+	print("EXPORT STATE REPLAY ", "PASS" if replay_ok else "FAIL")
+	passed = passed and replay_ok
 	# M01: verify persistence inside the compiled release pack.
 	var original := FileAccess.get_file_as_bytes(game.save_path)
 	DirAccess.copy_absolute(game.save_path, game.save_path + ".bak")

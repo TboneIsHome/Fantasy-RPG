@@ -119,10 +119,7 @@ func _enemy_bolt(origin: Vector2, direction: Vector2, amount: float, source_id: 
 func _defeated(enemy: WildEnemy) -> void:
 	if enemy is SourceGuardian:
 		return
-	if enemy.id in run.defeated:
+	if not run.defeat_enemy(enemy.id, enemy.kind):
 		return
-	run.defeated.append(enemy.id)
-	run.motes += 1
-	run.add_xp(int(enemy.definition.xp))
 	effects.burst(enemy.global_position,Color("d3dcb0"),18)
 	enemy_defeated.emit()

@@ -3,7 +3,7 @@ extends RefCounted
 
 const VERSION := 3
 const DEFAULT_PATH := "user://lichtpfad_v1.json"
-const LIGHTS := ["light_0","light_1","light_2"]
+const LIGHTS := RunState.LIGHT_IDS
 const MAX_BYTES := 1048576
 
 static func snapshot(run: RunState, player: MagePlayer, settings: Dictionary) -> Dictionary:

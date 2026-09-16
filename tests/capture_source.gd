@@ -62,8 +62,7 @@ func capture() -> void:
 	game.player.position+=Vector2(-22,18)
 	await frames(6)
 	await shot("source_guardian")
-	game.run.source.guardian_defeated=true
-	game.source_story.finish("broken")
+	game.source_story.finish_broken(game.run)
 	await frames()
 	await shot("source_victory")
 	game.handle_action("resume")

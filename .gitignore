@@ -1,6 +1,7 @@
 .godot/
 builds/
 test-output/
+qa/**/*.import
 *.tmp
 *.log
 *.zip

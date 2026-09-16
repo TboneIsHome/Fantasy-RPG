@@ -11,6 +11,31 @@ var guardian_defeated: bool = false
 var reported: bool = false
 var ore_taken: bool = false
 
+func inspect() -> bool:
+	if seen: return false
+	seen = true
+	return true
+
+func reset_alignment() -> bool:
+	if not resolution.is_empty() or alignment == 0: return false
+	alignment = 0
+	return true
+
+func defeat_guardian(vault: DungeonProgress) -> bool:
+	if not seen or not resolution.is_empty(): return false
+	guardian_defeated = true
+	return resolve("broken", vault)
+
+func harvest_ore() -> bool:
+	if resolution != "broken" or ore_taken: return false
+	ore_taken = true
+	return true
+
+func report_outcome() -> bool:
+	if resolution.is_empty() or reported: return false
+	reported = true
+	return true
+
 func has_evidence(vault: DungeonProgress) -> bool:
 	return "water_memory" in vault.memories and "root_memory" in vault.memories and "star_chart" in vault.relics
 

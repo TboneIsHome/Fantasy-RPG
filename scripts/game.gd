@@ -185,7 +185,7 @@ func handle_action(action: String, argument: String = "") -> void:
 			get_tree().paused=true
 			ui.journal(run,false,true)
 		"equip_relic":
-			if run.inventory.equip(argument): save_game()
+			if run.equip_relic(argument): save_game()
 			ui.journal(run,false,true)
 		"learn":
 			if run.learn(argument):
@@ -211,14 +211,11 @@ func handle_action(action: String, argument: String = "") -> void:
 			handle_action("resume")
 			ui.toast("Edda hat dich zurückgebracht. Deine Funde bleiben bei dir.")
 		"accept":
-			run.quest_accepted=true
+			run.accept_quest()
 			handle_action("resume")
 			ui.toast("Folge den hellen Pfaden. M öffnet Eddas Karte.")
 		"reward":
-			if run.active_lights.size()==3 and not run.quest_complete:
-				run.quest_complete=true
-				run.quest_accepted=true
-				run.add_xp(45)
+			if run.complete_quest():
 				player.vitals.refill()
 				audio.play("light")
 				save_game()
@@ -246,8 +243,7 @@ func _scan_landmarks() -> void:
 				region=room.name
 				if room.id=="sanctum" and not run.source.resolution.is_empty():
 					region="Quellengarten" if run.source.resolution=="restored" else "Die offene Erzader"
-				if not room.id in run.vault.visited:
-					run.vault.visited.append(room.id)
+				if run.visit_room(room.id):
 					ui.toast("Entdeckt: "+room.name)
 	for landmark in get_tree().get_nodes_in_group("landmarks"):
 		var distance := player.global_position.distance_to(landmark.global_position)
@@ -303,42 +299,34 @@ func interact_dungeon(object: DungeonObject) -> void:
 				ui.toast("Die Sickerquelle benötigt %d Lichtstaub." % cost)
 			elif player.vitals.hp>=100 and player.vitals.mana>=100 and player.vitals.stamina>=100:
 				ui.toast("Du bist bereits vollständig erholt.")
-			else:
-				run.motes-=cost
+			elif run.spend_motes(cost):
 				player.vitals.refill()
 				combat.effects.ring(player.position,28,Color("b7e5d3"))
 				save_game()
 		"memory":
-			if not object.id in run.vault.memories:
-				run.vault.memories.append(object.id)
-				run.add_xp(int(DungeonGenerator.content().memory_xp))
+			if run.unlock_memory(object.id):
 				object.activate()
 				save_game()
-			show_discovery(object.id)
+			if object.id in run.vault.memories: show_discovery(object.id)
 		"chest":
-			if object.active or (object.id=="amber_seed" and not run.vault.secret_open):
+			if not run.collect_vault_relic(object.id):
 				return
-			run.vault.relics.append(object.id)
-			run.add_xp(int(DungeonGenerator.content().chart_xp if object.id=="star_chart" else DungeonGenerator.content().seed_xp))
 			object.activate()
 			audio.play("light")
 			save_game()
 			show_discovery(object.id)
 		"lever":
-			run.vault.shortcut_open=true
-			open_dungeon_gates()
-			save_game()
-			ui.toast("Ein Gitter hebt sich. Der kurze Weg zum Eingang ist frei.")
+			if run.open_vault_shortcut():
+				open_dungeon_gates()
+				if save_game(): ui.toast("Ein Gitter hebt sich. Der kurze Weg zum Eingang ist frei.")
 		"gate":
 			if not object.active:
 				ui.toast("Die Winde liegt auf der anderen Seite, im Garten ohne Sonne.")
 		"secret_gate":
-			if "water_memory" in run.vault.memories:
-				run.vault.secret_open=true
+			if run.open_vault_secret():
 				open_dungeon_gates()
-				save_game()
-				ui.toast("Der Stern im Stein antwortet. Ein verborgener Weg öffnet sich.")
-			else:
+				if save_game(): ui.toast("Der Stern im Stein antwortet. Ein verborgener Weg öffnet sich.")
+			elif not run.vault.secret_open:
 				ui.toast("Ein kaum erkennbares Zeichen. Vielleicht kennt das Wasser seine Bedeutung.")
 
 func open_dungeon_gates() -> void:
@@ -365,8 +353,7 @@ func interact(landmark: Landmark) -> void:
 		if not run.source.resolution.is_empty():
 			source_story.speak_to_edda()
 		elif "star_chart" in run.vault.relics:
-			run.vault.reported=true
-			save_game()
+			if run.report_vault_chart(): save_game()
 			ui.dialogue("Edda · Eine Karte unter Wurzeln","Diese Linien gehören nicht an den Himmel. Meine Lehrerin suchte ihr Ende im Aschemoor.\n\nDie Karte erklärt auch die gebrochene Fassung in der Gruft. Lies die Erinnerungen im Wasser und zwischen den Wurzeln. Vielleicht musst du ihren Hüter gar nicht bekämpfen.",[["Entdeckungen lesen","discoveries"],["Weiter erkunden","resume"]])
 		elif run.quest_complete:
 			ui.dialogue("Edda","Hörst du das Wasser? Die Quelle erinnert sich wieder. Dein Quellenfokus lässt dich an jedem geweckten Waldlicht rasten. Im alten Sternengarten öffnet er außerdem die Treppe zur Quellengruft.",[["Talente ansehen","journal"],["Aufbrechen","resume"]])

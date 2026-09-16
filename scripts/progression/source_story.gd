@@ -75,19 +75,13 @@ func interact() -> void:
 	if quest.resolution=="restored":
 		game.player.vitals.refill()
 		game.combat.effects.ring(site.position,35,Color("c4e8ad"))
-		game.save_game()
-		game.ui.toast("Der Quellengarten schenkt dir Ruhe und neue Kraft.")
+		if game.save_game(): game.ui.toast("Der Quellengarten schenkt dir Ruhe und neue Kraft.")
 	elif quest.resolution=="broken":
-		if not quest.ore_taken:
-			quest.ore_taken=true
-			game.run.motes+=int(Content.section("source_quest").ore_motes)
+		if game.run.harvest_source_ore():
 			apply_outcome()
-			game.save_game()
-			game.ui.toast("Sternenerz geborgen · +%d Lichtstaub" % int(Content.section("source_quest").ore_motes))
+			if game.save_game(): game.ui.toast("Sternenerz geborgen · +%d Lichtstaub" % int(Content.section("source_quest").ore_motes))
 	else:
-		if not quest.seen:
-			quest.seen=true
-			game.save_game()
+		if game.run.inspect_source(): game.save_game()
 		show_choices()
 
 func show_choices() -> void:
@@ -108,12 +102,11 @@ func handle_action(action: String, argument: String) -> bool:
 	if action=="source_back":
 		show_choices()
 	elif action=="source_challenge":
-		if is_instance_valid(guardian):
-			game.run.source.alignment=0
-			game.save_game()
+		if is_instance_valid(guardian) and game.run.prepare_source_challenge():
+			var saved: bool=game.save_game()
 			game.handle_action("resume")
 			guardian.awaken()
-			game.ui.toast("Quellenhüter · Kreis verlassen, zwischen den Geschossen ausweichen.")
+			if saved: game.ui.toast("Quellenhüter · Kreis verlassen, zwischen den Geschossen ausweichen.")
 	elif action=="source_tune":
 		if game.run.source.has_evidence(game.run.vault):
 			show_tuning()
@@ -125,13 +118,13 @@ func handle_action(action: String, argument: String) -> bool:
 			game.ui.dialogue("Spuren der Bindung","Noch zu finden:\n"+"\n".join(missing),[["Zurück zur Bindung","source_back"],["Erkunden","resume"]])
 	elif action=="source_align":
 		if not game.run.source.has_evidence(game.run.vault): return true
-		var correct: bool=game.run.source.align(argument,game.run.vault)
-		if correct and game.run.source.alignment==3:
-			finish("restored")
+		var correct: bool=game.run.align_source(argument)
+		if correct and game.run.source.resolution=="restored":
+			present_completion()
 		else:
-			game.save_game()
+			var saved: bool=game.save_game()
 			show_tuning()
-			if not correct: game.ui.toast("Die Zeichen verlöschen. Die Erinnerungen nennen ihre Reihenfolge.")
+			if not correct and saved: game.ui.toast("Die Zeichen verlöschen. Die Erinnerungen nennen ihre Reihenfolge.")
 	return true
 
 func _guardian_fallen(_enemy: WildEnemy) -> void:
@@ -139,13 +132,10 @@ func _guardian_fallen(_enemy: WildEnemy) -> void:
 
 func finish_broken(original_run: RunState) -> void:
 	if game.run!=original_run or game.run.region!="vault" or not game.run.source.resolution.is_empty(): return
-	game.run.source.guardian_defeated=true
-	finish("broken")
+	if game.run.defeat_source_guardian(): present_completion()
 
-func finish(path: String) -> void:
-	if not game.run.source.resolve(path,game.run.vault): return
-	game.run.inventory.grant(Content.section("source_quest").reward_item)
-	game.run.add_xp(int(Content.section("source_quest").reward_xp))
+func present_completion() -> void:
+	var path: String=game.run.source.resolution
 	apply_outcome()
 	game.audio.play("light")
 	if game.player.vitals.hp<=0: return
@@ -162,8 +152,6 @@ func _withdrawn() -> void:
 
 func speak_to_edda() -> void:
 	var quest: SourceQuest=game.run.source
-	quest.reported=true
-	if "star_chart" in game.run.vault.relics: game.run.vault.reported=true
-	game.save_game()
+	if game.run.report_source(): game.save_game()
 	var copy := "Du hast ihm seine Aufgabe zurückgegeben. Vielleicht schützt er dort unten bald Wurzeln, die wir noch gar nicht kennen. Bewahre das Quellenherz; sein Licht gehört nun auch zu deinem Weg." if quest.resolution=="restored" else "Du hast den Hüter bezwungen. Ohne die Bindung werden wir lernen müssen, was unter der Quelle geschlafen hat. Das Quellenherz ist kein Urteil über deinen Weg — es ist eine Erinnerung daran."
 	game.ui.dialogue("Edda · Die Quelle erinnert sich",copy+"\n\nDie erste Geschichte des Lichterhains ist abgeschlossen. Seine Wege und Funde bleiben dir offen.",[["Mein Relikt ansehen","equipment"],["Weiter erkunden","resume"]])
