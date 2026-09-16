@@ -2,7 +2,9 @@
 
 Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelwaldregion und der ersten Quellengruft. Der erste zusammenhängende Spielabschnitt führt nun bis zum Quellenhüter, zwei Questlösungen und einem ausrüstbaren Relikt. Tim hat die neue Version positiv getestet; strukturierte Plattformabnahme und mehrstündige Weltinhalte stehen noch aus.
 
-**Aktuelle Entwicklungsphase: Foundation M00.** Der unveränderte 0.4-Quellstand ist seit 15.09.2026 vollständig auf GitHub und zusätzlich unter `reference/v0.4-original` festgehalten. Der [M00-Audit](docs/FOUNDATION_M00.md) beschreibt den tatsächlichen Stand und die geplanten kleinen Stabilisierungsschritte. Neue Inhalte haben derzeit keine Priorität. M00 verändert kein Gameplay und kein Saveformat.
+**Aktuelle Entwicklungsphase: Foundation M01.** Der [M01-Bericht](docs/FOUNDATION_M01.md) dokumentiert die gezielte Absicherung des Speicherns: **IMPLEMENTED**, 290 automatisierte Prüfungen plus echter Schreibfehlertest **TESTED**, native Windows-/manuelle Abnahme noch offen. Der ursprüngliche 0.4-Quellstand bleibt unter `reference/v0.4-original` erhalten; der [M00-Audit](docs/FOUNDATION_M00.md) bleibt die historische Referenz. Speicherformat und Gameplay-Regeln bleiben unverändert.
+
+Die [Creative Design Bible v1.0](docs/CREATIVE_DESIGN_BIBLE_V1.md) ist die maßgebliche kreative Referenz. Sie beschreibt das langfristige Spielerlebnis; die aktuelle Arbeit bleibt auf M01 begrenzt.
 
 ## Direkt spielen unter Windows
 
@@ -71,6 +73,7 @@ GDScript wird verwendet; die .NET-Ausgabe ist nicht notwendig. Das Projekt kommt
 ## Projektwissen
 
 - `GAME_VISION.md`: bestätigte Richtung und Designpfeiler.
+- `docs/CREATIVE_DESIGN_BIBLE_V1.md`: vollständige kreative Referenz einschließlich offener Detailentscheidungen.
 - `GAME_DESIGN.md`: tatsächliche Mechaniken und der geplante Slice.
 - `TECHNICAL_DESIGN.md`: Module, Pixelregeln, Generierung und Speichergrenzen.
 - `ROADMAP.md` und `TASKS.md`: nächste kleine Schritte und Abnahmekriterien.
@@ -81,4 +84,4 @@ GDScript wird verwendet; die .NET-Ausgabe ist nicht notwendig. Das Projekt kommt
 
 Der vollständige Quellcode, die Tests und die Projektdokumentation liegen in [TboneIsHome/Fantasy-RPG](https://github.com/TboneIsHome/Fantasy-RPG). Jede Iteration erhält einen eigenen Commit. Binäre Builds und lokale Godot-Caches gehören nicht in den Quellcode-Stand.
 
-Die spielbare Windows-Version wird als separates Download-Paket **Lichterhain_0.4_Windows.zip** bereitgestellt.
+Das aktuelle Windows-Testpaket heißt **Lichterhain_0.4_M01_Windows.zip**. Vor dem Test den bisherigen Benutzerordner sichern; die Anleitung liegt als `START_HIER.txt` bei. Das ursprüngliche 0.4-Archiv bleibt als Referenz erhalten.

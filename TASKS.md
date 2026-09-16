@@ -37,7 +37,10 @@
 - [x] M00: bestehende 197 Checks und Save-Migrationen in getrennter Kopie wiederholen; Linux-/Windows-Exporte und ihre Packs prüfen.
 - [x] Tims positiven Testbericht zur neuen Version aufnehmen; Grenzen der Plattformabnahme ausdrücklich erhalten.
 - [ ] Strukturierte native Windows-Smoke-Runde und persönliche Spielstände prüfen; bisher nicht verfügbar.
-- [ ] **STOP nach M00-Bericht.** Erst danach M01: Save-Fehler reproduzieren, gezielt testen und minimal beheben.
+- [x] Creative Design Bible vollständig lesen, als kreative Referenz integrieren und offene Details erhalten.
+- [x] M01 nach Tims Auftrag beginnen: Save-Fehler reproduzieren, gezielt testen und minimal beheben.
+- [x] M01: Wiederhergestellten Arbeitsstand durch 290 Checks, echten Schreibfehler und beide Export-Packs verifizieren; Quellstand und Nachweise sichern.
+- [ ] M01: strukturierte native Windows-/manuelle Abnahme abschließen; bis dahin insgesamt PARTIALLY TESTED.
 - [ ] Danach M02: dauerhafte Zustandsänderungen und vollständige Belohnungen beim fachlichen Besitzer kontrollieren.
 - [ ] Danach M03: aktiven Regionslebenszyklus mit klarer Herkunft verzögerter Aktionen abgrenzen.
 - [ ] Danach M04: JSON-Inhalte validieren und doppelte Gameplay-Werte schrittweise zusammenführen.

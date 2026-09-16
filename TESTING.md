@@ -1,20 +1,49 @@
 # Prüfungen und bekannte Grenzen
 
-## Foundation M00 — aktueller Nachweis vom 15.09.2026
+## Foundation M01 — aktueller Nachweis vom 16.09.2026
 
-Der vollständige ursprüngliche 0.4-Quellstand wurde unverändert nach GitHub übertragen und unter `reference/v0.4-original` gesichert. In einer aus diesem Commit extrahierten Kopie mit eigenem Benutzerverzeichnis wurden **197/197 bestehende Checks erneut bestanden**. Beide Release-Exporte wurden neu erstellt; der Linux-Export lief nativ, das Windows-Ressourcenpaket unter Linux. 16 Spielansichten wurden gerendert, davon fünf tatsächlich visuell kontrolliert. Eine native Windows-Smoke-Runde und persönliche Windows-Spielstände sind **NOT TESTED**. Tims positiver Testbericht ist aufgenommen, ohne daraus eine protokollierte Plattformabnahme abzuleiten.
+**IMPLEMENTED**, automatisierte Regression **TESTED**, Meilenstein insgesamt **PARTIALLY TESTED**: 290/290 Checks (197 bestehende + 93 neue), zusätzlich ein echter Betriebssystem-Schreibfehler. Beide Release-Exporte wurden erstellt und geprüft: Linux nativ, Windows-Ressourcenpaket unter Linux. Native Windows-Ausführung, persönliche Windows-Spielstände und eine menschliche Smoke-Runde sind **NOT TESTED**.
 
-Aktuelle Ergebnisse: [qa/m00_results.json](qa/m00_results.json); aktuelle Rohlogs: [qa/m00_logs/](qa/m00_logs/); Referenzprüfsummen: [qa/m00_reference_manifest.json](qa/m00_reference_manifest.json). Die ursprünglichen Berichte unten und am 0.4-Referenzcommit bleiben historische Messungen. Der [M00-Bericht](docs/FOUNDATION_M00.md) besitzt die Befund-/Risikomatrix und die noch offenen Prüfgrenzen.
+Aktueller Bericht: [docs/FOUNDATION_M01.md](docs/FOUNDATION_M01.md); maschinenlesbare Ergebnisse: [qa/m01_results.json](qa/m01_results.json); Rohlogs: [qa/m01_logs/](qa/m01_logs/); geprüfte Dateihashes: [qa/m01_reference_manifest.json](qa/m01_reference_manifest.json). Diese Nachweise stammen aus der erneuten Verifikation des wiederhergestellten Arbeitsstands. Frühere lokale M01-Logs gingen bei der Bereinigung verloren und werden nicht als gespeicherte Belege ausgegeben.
 
-Die drei zusätzlichen `v04_*.json`-Fixtures stammen aus dem unveränderten Originalrelease. Herkunft, Ablauf und unveränderliche SHA-256-Werte stehen ausschließlich in [tests/fixtures/README.md](tests/fixtures/README.md). Sie ergänzen die alten Fixtures; sie ersetzen keine davon.
+Der historische M00-Nachweis bleibt unverändert unter [qa/m00_results.json](qa/m00_results.json), [qa/m00_logs/](qa/m00_logs/) und im [M00-Bericht](docs/FOUNDATION_M00.md). Die sechs eingefrorenen Save-Dateien und ihre Herkunft bleiben unverändert; zentrale Quelle: [tests/fixtures/README.md](tests/fixtures/README.md). Persönliche Saves wurden nicht bereitgestellt.
 
-### Reproduzierbar prüfen, ohne Originalreports zu überschreiben
+### M01-Prüfgruppen
 
-Eine getrennte Kopie des Referenzcommits verwenden. Den eigenen Godot-4.5.1-Pfad als Argument übergeben; `XDG_DATA_HOME` und `XDG_CONFIG_HOME` auf eigens angelegte Prüfverzeichnisse setzen. Den vorhandenen Aufruf `python3 tools/verify.py /absoluter/pfad/zu/godot` in dieser Kopie ausführen. Die sechs Gruppen bleiben dieselben, und ihre Logs landen nur unter dem dortigen `test-output/`.
+| Prüfung | Umfang / Ergebnis |
+| --- | --- |
+| Sechs bestehende Gruppen unten | 197/197; Welt, Kampf, UI, Regionen, Quellenquest, Relikt und Migrationen |
+| `save_io_reproduction.gd` | 8/8; beschädigte Hauptdatei + gültige 0.4-Sicherung, Speichern nach Recovery, real blockierter temporärer Pfad |
+| `save_fault_suite.gd` | 71/71; Write/Flush, Kurzschreiben, falsche Bytes trotz Erfolg, Copy/Rename, real blockierte Umbenennung, Fehlermeldungen ohne erfundene Sicherung, Legacy-Kopien/Migrationen, ungültige/beschädigte/zu große Daten, Zukunftsversionen, unveränderte Fixtures |
+| `save_scene_smoke.gd` | 14/14 headless; echte Szene mit drei 0.4-Zuständen, Fehler beim Speichern/Schließen/Titelwechsel, erneuter Versuch, lesbare Meldung im Pausefenster, Recovery |
+| `tools/reproduce_save_write_error.py` | **TESTED**, zusätzlich zu den 290 Checks: Linux-Kindprozess mit 64-Byte-Dateigrenze; geöffnetes Schreiben meldet intern Erfolg, Datei ist trotzdem unvollständig; SaveSystem erkennt den Fehler, Sicherung bleibt unverändert und ladbar |
+| `export_smoke.gd` | **TESTED** gegen beide Release-Packs; bestehender Questabschluss plus beschädigte Hauptdatei/Recovery und fehlgeschlagenes Speichern |
+| Grafische Save-Szene | **TESTED**, 16/16 unter X11/Mesa: dieselben 14 Szenenchecks plus zwei PNG-Ausgaben. Beide tatsächlichen Spielansichten visuell kontrolliert; Pausefehlermeldung vollständig lesbar, Panel innerhalb 640 × 360, Recovery-Hinweis sichtbar |
 
-Exportprüfung: in der Kopie die Presets `Windows Desktop` und `Linux Desktop` mit `--export-release` in neue Ausgabepfade exportieren. `tests/export_smoke.gd` als externes Script gegen den Linux-Build und mit dem Godot-Linux-Binary über `--main-pack` gegen die eingebetteten Ressourcen der Windows-EXE ausführen. Exportvorlagen derselben Engine-Version müssen im Prüfprofil verfügbar sein. Native Windows-Ausführung separat dokumentieren.
+Die beiden kontrollierten Aufnahmen liegen unter [qa/m01_images/](qa/m01_images/). Der virtuelle Treiber unterstützt keinen VSync-Wechsel; die entsprechende Warnung ist protokolliert. Dies ist eine automatisiert gesteuerte Szene mit visueller Kontrolle, keine menschliche Spielrunde.
 
-Für M01 werden erst anschließend gezielte Schreib-/Flush-/Renamefehler, gültige Format-3-Sicherungen bei beschädigter Hauptdatei und fehlgeschlagene Rückbenennungen reproduziert. Diese Tests und ein Fix sind **PLANNED**, nicht durch die 197 vorhandenen Checks belegt. Nach M00 gilt der vereinbarte Stop-Punkt.
+Injizierte Windows-Rename-Semantik (Ziel vor Fehlschlag entfernt) ist keine native Windows-Ausführung. Der echte Schreibfehler-Test setzt das Dateilimit ausschließlich im kurzlebigen Testprozess und arbeitet in einem eigenen temporären Benutzerprofil. Unter anderen Betriebssystemen wird dieser einzelne Test ausdrücklich als nicht getestet ausgewiesen; die portable Fehlersuite bleibt ausführbar.
+
+### Reproduzierbarer Prüfablauf
+
+Godot 4.5.1 Standard und offizielle Exportvorlagen derselben Version verwenden. In einer Arbeitskopie mit isoliertem Benutzerprofil ausführen; `test-output/` besitzt nur neue Ergebnisse. Vorhandene `qa/`-Referenznachweise nicht überschreiben.
+
+```bash
+XDG_DATA_HOME=/absoluter/pruefpfad/data XDG_CONFIG_HOME=/absoluter/pruefpfad/config python3 tools/verify.py /absoluter/pfad/zu/godot
+```
+
+Die neun Testgruppen laufen nach dem Import nacheinander; unter Linux folgt der echte Schreibfehler. Der Runner prüft Exitcodes, Scriptfehler und den Abschlussmarker des Szenentests. Exportprüfung: beide Presets mit `--export-release` in neue Ausgabepfade exportieren; `tests/export_smoke.gd` extern gegen den Linux-Build und mit dem Linux-Editor über `--main-pack` gegen die Windows-EXE ausführen. Tests, Reports und Dokumentation sind vom Spielpaket ausgeschlossen.
+
+Die grafische Variante von `tests/save_scene_smoke.gd` benötigt eine grafische Sitzung. Sie ergänzt zwei Capture-Prüfungen (16 statt 14); diese sind kein zweiter Satz von 14 zusätzlichen Regressionstests. Frühere Capture-/Kampfläufe bleiben für gezielte Regressionen erhalten.
+
+### Offene native Windows-/manuelle Abnahme
+
+1. Spiel schließen und den gesamten Ordner `%APPDATA%\Godot\app_userdata\Lichterhain\` separat kopieren. Das M01-Paket benutzt denselben Speicherort. Originale 0.4-Dateien außerhalb des Testordners aufbewahren.
+2. M01-Archiv vollständig entpacken, EXE starten, bisherigen Speicherpunkt fortsetzen; Questlösung, Relikt, Talente, Waldlichter und Funde prüfen.
+3. Wald/Gruft wechseln, speichern, beenden, erneut laden; Steuerung, Kampf und sichtbare Folgen kurz prüfen.
+4. Nur in einer entbehrlichen Testkopie: eine gültige Hauptdatei nach `.bak` kopieren, Hauptdatei beschädigen, Recovery-Hinweis und erneutes Speichern prüfen. Anschließend `.bak` auf unveränderte Bytes kontrollieren.
+5. Nur im Testprofil vor dem Speichern einen Ordner `lichtpfad_v1.json.tmp` anlegen. F5, „Speichern und zum Titel“ und Fensterschließen müssen einen sichtbaren Fehler zeigen und die Sitzung erhalten. Den Testordner entfernen, erneut speichern und laden.
+6. Resultat mit Windows-Version, Buildhash und konkreten Beobachtungen protokollieren. Bis dahin bleibt diese Abnahme **NOT TESTED**.
 
 ## Historische Releaseprüfung 0.4
 
@@ -49,7 +78,7 @@ Die Tests verwenden eigene Dateinamen und löschen ihre Testspielstände. Sie ü
 
 ## Wiederholen
 
-`godot` steht für Godot 4.5.1. Der lokale Prüfablauf importiert das Projekt und führt alle sechs Testgruppen nacheinander aus. Er wertet zusätzlich Fehlermeldungen im Log aus, da Godot bei manchen Scriptfehlern Exitcode 0 zurückgeben kann.
+`godot` steht für Godot 4.5.1. Der lokale Prüfablauf importiert das Projekt und führt die oben beschriebenen neun Testgruppen nacheinander aus; unter Linux folgt der echte Schreibfehler-Test. Er wertet zusätzlich Fehlermeldungen im Log aus, da Godot bei manchen Scriptfehlern Exitcode 0 zurückgeben kann.
 
 ```bash
 python3 tools/verify.py /absoluter/pfad/zu/godot

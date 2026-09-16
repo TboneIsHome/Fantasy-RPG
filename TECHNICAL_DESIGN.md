@@ -1,6 +1,6 @@
 # Technische Architektur
 
-Diese Beschreibung gehört zum tatsächlichen 0.4-Code. M00 ändert die Laufzeitarchitektur nicht. Der datierte [Foundation-M00-Abgleich](docs/FOUNDATION_M00.md) benennt verbleibende Risiken, insbesondere die noch nicht reproduzierten Save-I/O-Fehlerpfade, und die verbindliche schrittweise Migration. Erweiterungen in den folgenden Abschnitten sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
+Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation M01. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; der [M01-Bericht](docs/FOUNDATION_M01.md) dokumentiert die inzwischen reproduzierten und abgesicherten Save-I/O-Fehlerpfade. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
 
 ## Laufzeit
 
@@ -26,7 +26,7 @@ Godot **4.5.1 Standard**, GDScript, Compatibility-Renderer, 60 Physikschritte/Se
 | UI | `ui/game_ui.gd`: Menüs und Steuerelemente; `ui/hud_canvas.gd`: HUD und Karte |
 | Quellenquest / Ausrüstung | `progression/source_quest.gd`: dauerhafte Entscheidung und Zeichenfolge; `progression/source_story.gd`: Szenen-/Dialogablauf; `progression/relic_inventory.gd`: Besitz und Reliktplatz |
 | Quellenhüter / Folgen | `actors/source_guardian.gd`, `combat/source_impact.gd`, `dungeon/source_site.gd`, `dungeon/source_grove.gd`, `art/source_art.gd` |
-| Persistenz | `persistence/save_system.gd`: Schema, Validierung, temporäre Datei und Sicherung |
+| Persistenz | `persistence/save_system.gd`: Schema, Validierung und Schreibtransaktion; `persistence/save_file_io.gd`: kleine, pro Schreibaufruf ersetzbare Dateischnittstelle für überprüfbare Fehlerpfade |
 | Audio | `audio/audio_controller.gd`: lokal synthetisierte Klänge, Stimmenpool, Lautstärke |
 
 Es gibt keine Autoload-Singletons für Spielzustände. Definitionen und unveränderliche Texturen werden statisch gecacht. Eine Sitzung besitzt ihre Welt, Figur, Kampfobjekte und ihren Zustand. Ein neues Spiel ersetzt nur diese Sitzung. Die UI bleibt beim Pausieren bedienbar, die Welt pausiert.
@@ -53,6 +53,18 @@ Alle Schleifen sind begrenzt. Ein Breitensuchtest prüft Erreichbarkeit auf dem 
 Dungeonversion 1 verwendet einen festen, in `data/vault.json` definierten Raumgraphen und begrenzte Seed-Variation der Raumgrößen und Gegnerpositionen. Drei Tiles breite Gänge, zwei solide Wasserbecken und veränderbare Torsperren bilden das Raster. Geöffnete Tore aktualisieren Physikkörper und AStarGrid2D gemeinsam. Die Navigation nutzt vier Nachbarn ohne diagonales Schneiden von Ecken. Separate Breitensuchen prüfen geschlossene und geöffnete Geheimwege für 100 Seeds. Der Waldeingang wird auf der bestehenden freien Lichtung ergänzt, ohne Terrainversion 1 oder dessen Zufallsstrom zu ändern.
 
 ## Speicherung und Kompatibilität
+
+M01-Schreibablauf (**IMPLEMENTED**, automatisiert **TESTED**):
+
+1. Snapshot validieren und serialisierte UTF-8-Größe gegen `MAX_BYTES` prüfen.
+2. `.tmp` schreiben, Flush-/Schreibfehler auswerten, anschließend wieder öffnen und alle Bytes vergleichen. Die Datei muss zusätzlich die bestehende Save-Validierung bestehen. Godot 4.5.1 meldet nicht jeden Betriebssystemfehler über `get_error()`; der Bytevergleich ist deshalb erforderlich.
+3. Benötigte permanente `.pre-v03`-/`.pre-v04`-Originale über eine eigene temporäre Kopie erstellen und bytegenau prüfen. Vorhandene Originale nie überschreiben; eine ungültige vorhandene Vorversionssicherung blockiert die Migration mit einer Fehlermeldung.
+4. Nur eine **gültige Hauptdatei** über `.bak.tmp` geprüft nach `.bak` kopieren. Eine beschädigte Hauptdatei darf eine gültige Sicherung nicht ersetzen. Die Hauptdatei bleibt bis zur letzten Umbenennung erhalten.
+5. Erst danach `.tmp` auf den Hauptpfad umbenennen. Bei einem Fehler bleibt die gültige Sicherung für `read()` verfügbar; keine ungeprüfte Rückbenennung verbraucht sie. Die Fehlermeldung verspricht nur dann eine Sicherung, wenn sie tatsächlich lesbar ist.
+
+`SaveFileIO` ist keine globale Schnittstelle und kein neuer Manager. Nur Tests übergeben gezielt fehlschlagende Dateioperationen. Normales Gameplay verwendet echte Dateizugriffe. `game.gd` behandelt fehlgeschlagenes Speichern bereits korrekt; M01 zeigt dessen Meldung zusätzlich im Pausefenster, damit sie dort lesbar bleibt. Speichern-und-Titel sowie Fensterschließen lassen bei einem Speicherfehler die Sitzung für einen erneuten Versuch offen.
+
+Grenzen: synchroner einzelner Schreiber; keine zugesicherte Stromausfall-/Hardware-Dauerhaftigkeit und kein Mehrprozess-Locking. Eine fehlgeschlagene Ersetzung kann unter Windows das Ziel bereits entfernt haben: Beim Backup-Schritt bleibt dann die Hauptdatei, beim abschließenden Hauptdatei-Schritt die zuvor geprüfte Sicherung. Dieses Verhalten ist durch Fehlerinjektion abgedeckt; native Windows-Dateioperationen sind noch **NOT TESTED**. Zusätzliche `.tmp`-Dateien sind Arbeitsdateien und keine Ladequelle. Schema und Migration selbst bleiben unverändert.
 
 Format 3, Waldgeneratorversion 1 und Dungeonversion 1. JSON speichert Seed, Figur, Fortschritt, Talente, Licht- und Gegner-IDs, entdeckte Orte, Tageszeit und Einstellungen. Zur aktiven Region und dem Dungeonzustand kommen `source` (gesehen, Zeichenfortschritt, Ausgang, Hütersieg, Eddas Reaktion, Erzernte) sowie `inventory` (besessene Relikte, angelegtes Relikt). IDs, Datentypen, Wertebereiche und Zustandsabhängigkeiten werden geprüft. Eine gespeicherte Dungeonposition muss auf einem tatsächlich zugänglichen Bodentile liegen. Schreiben erfolgt über eine temporäre Datei und den vorherigen Stand als `.bak`.
 

@@ -1,6 +1,8 @@
 # Lichterhain
 
-Stand: 13. September 2026 · Arbeitstitel · Prototyp 0.4
+Stand: 16. September 2026 · Arbeitstitel · Prototyp 0.4 / Foundation M01
+
+Maßgebliche kreative Referenz ist die vollständige [Creative Design Bible v1.0](docs/CREATIVE_DESIGN_BIBLE_V1.md). Diese Seite fasst den bisherigen Prototyp zusammen; sie ersetzt die Bible nicht. Technik und tatsächlich implementierte Grenzen stehen in [TECHNICAL_DESIGN.md](TECHNICAL_DESIGN.md). Offene Details aus Abschnitt 21 der Bible bleiben offen; Ergänzungen sind bis zu Tims Bestätigung **PROPOSAL**.
 
 Ein atmosphärisches Fantasy-RPG: Als Magier wanderst du durch farbenreiche, alte Wälder. Verlassene Schutzlichter, unruhige Tiere und rätselhafte Wesen führen dich zu Orten, deren Geschichte du aus Spuren erschließt. Später verändern deine Entscheidungen, welche Wege sicher sind und was in den Regionen erwacht.
 
@@ -10,7 +12,7 @@ Tims langfristiges Ziel ist eine geheimnisvolle, wunderschöne und überraschend
 
 - Farbenreich und geheimnisvoll, mit gefährlichen dunklen Orten.
 - Top-down mit leicht schräg gezeichneten Figuren und Umgebungsobjekten.
-- Erste Klasse: Magier mit Fernzaubern, Flächenzaubern und begrenztem Mana.
+- Erster Prototyp-Spielstil: Magier mit Fernzaubern, Flächenzaubern und begrenztem Mana. Langfristig freie Charakterentwicklung ohne starre Klassenbindung.
 - Godot 4, GDScript, PC, Singleplayer, offline. Keine KI-Dienste zum Spielen.
 
 ## Designpfeiler

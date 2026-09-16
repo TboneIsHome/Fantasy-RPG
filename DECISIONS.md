@@ -32,9 +32,16 @@
 | 2026-09-10 | Eigenes SourceQuest-/RelicInventory-Modul, Speicherformat 3 | Dauerhafte Entscheidungen und Ausrüstung bleiben unabhängig vom neu aufgebauten Szenenbaum |
 | 2026-09-10 | 0.4 als implementierten Slice kennzeichnen, menschliche Abnahme offenlassen | Automatisierte Vollständigkeit belegt noch keine Länge, Schwierigkeit oder Wirkung im längeren Spieltest |
 
-## Noch nicht endgültig entschieden
+## Foundation-Entscheidungen
 
-Nachtrag 2026-09-15:
+Nachtrag 2026-09-16:
+
+- Tim erklärt M00 für abgeschlossen und beauftragt nach Integration der Creative Design Bible die Fortsetzung mit M01. Der frühere M00-Stop ist damit aufgehoben; M02–M04 bleiben geplant.
+- Die vollständige [Creative Design Bible v1.0](docs/CREATIVE_DESIGN_BIBLE_V1.md) ist die kreative Autorität. Technische Einschränkungen dürfen ihre zentrale Spielerfahrung nicht still verändern. Offene Details bleiben offen; neue Details benötigen als **PROPOSAL** Tims Bestätigung.
+- M01 behält Schema 3 und die bestehenden Migrationen. Ein kleiner Dateiadapter erlaubt reproduzierbare Fehler; Bytevergleich, geprüfte Backup-Kopien und kontrollierte Fehlerausgänge sichern den vorhandenen Schreibablauf ab. Kein Save-Reset oder globaler Eventbus.
+- Eine bereinigte Arbeitsumgebung enthielt den noch nicht hochgeladenen M01-Stand nicht mehr. Wiederaufnahme aus dem gesicherten M00-Commit, unveränderten Eingaben und dokumentierten Änderungen; erneut ausgeführte Prüfungen sind von den verlorenen früheren Rohlogs getrennt. Fertige Audit-/Designanalyse wird nicht neu begonnen.
+
+Historischer Nachtrag 2026-09-15 (M00):
 
 - Tim priorisiert eine kleine, erweiterbare Weltsimulation und robuste Kernsysteme. Die nächste Inhalts-/Bedieniteration wird durch die verbindliche Reihenfolge M00–M04 ersetzt; Stop nach M00.
 - Der ursprüngliche lokale 0.4-Quellstand ist wieder zugänglich und wurde unverändert nach `TboneIsHome/Fantasy-RPG` übertragen. Der Referenzzweig `reference/v0.4-original` hält dieses Release fest. Ein Rückgriff auf 0.3 ist deshalb nicht erforderlich.
@@ -42,4 +49,6 @@ Nachtrag 2026-09-15:
 - Neue Baseline-Prüfungen erfolgen in einer getrennten Kopie mit eigenem Benutzerverzeichnis. Originale Reports, Exporte und Legacy-Fixtures werden vorher gesichert. Persönliche Windows-Spielstände wurden nicht bereitgestellt.
 - Tims positiver Testbericht zur neuen Version ist aufgenommen. Er ersetzt keine protokollierte native Windows-Abnahme oder mehrstündige Stabilitätsprüfung.
 
-Name der Gesamtwelt, endgültiger Spieltitel, finale Figurenanimationen, vollständiges Klassennetz, Schwierigkeit und Todessanktionen. Die derzeit milde Rückkehr zum Lager dient dem schnellen Testen des Spielgefühls.
+## Noch nicht endgültig entschieden
+
+Die ausdrücklichen offenen Designbereiche werden zentral in Abschnitt 21 der [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md) gepflegt. Neue verbindliche Details werden erst nach Tims Bestätigung ergänzt. Der aktuelle Magier und die milde Rückkehr zum Lager sind Prototyp-Regeln; sie legen weder starre Klassen noch die endgültige Progression fest.

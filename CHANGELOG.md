@@ -1,5 +1,14 @@
 # Änderungen
 
+## Foundation M01 auf 0.4.0 — 2026-09-16
+
+- Creative Design Bible v1.0 vollständig aus Tims unverändertem Dokument übernommen; kreative Autorität, Konfliktregeln und offene Details dokumentiert.
+- Nach realer Fehlerreproduktion den bestehenden Save-Schreibablauf gezielt abgesichert: vollständiger Bytevergleich, geprüfte temporäre Backup-Kopien, Schutz gültiger Sicherungen nach Recovery und sichere Fehlerrückgaben bei fehlgeschlagenem Rename.
+- Vorversionssicherungen geprüft erstellen; vorhandene Originale unverändert lassen. Kein Schema-, Balance- oder Generatorwechsel.
+- Speicherfehler und erfolgreicher Wiederholungsversuch auch im Pausefenster lesbar anzeigen.
+- 197 bestehende und 93 neue automatisierte Checks bestanden; zusätzlicher echter OS-Schreibfehler geprüft. Linux-Export nativ und Windows-Spielpaket unter Linux geprüft. Native Windows-/manuelle Abnahme offen: insgesamt **PARTIALLY TESTED**.
+- Quellstand nach Bereinigung der Arbeitsumgebung wiederhergestellt und erneut verifiziert. M00-Nachweise und eingefrorene Altstände bleiben erhalten; M02–M04 nicht begonnen.
+
 ## 0.4.0 — 2026-09-13 · Das Gedächtnis der Quelle
 
 - Gebundener Quellenhüter mit angekündigtem Quellenschlag, fünfteiligen Projektilfächern, Rückzug und eigenen Pixelgrafiken.

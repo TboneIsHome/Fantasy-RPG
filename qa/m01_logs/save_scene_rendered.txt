@@ -1,0 +1,22 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS SAVE SCENE: v04_alignment_started.json: exact persisted state restored into the real scene
+PASS SAVE SCENE: v04_alignment_started.json: playable save/reload leaves the frozen fixture unchanged
+PASS SAVE SCENE: v04_restored_equipped.json: exact persisted state restored into the real scene
+PASS SAVE SCENE: v04_restored_equipped.json: playable save/reload leaves the frozen fixture unchanged
+PASS SAVE SCENE: v04_broken_ore_unequipped.json: exact persisted state restored into the real scene
+PASS SAVE SCENE: v04_broken_ore_unequipped.json: playable save/reload leaves the frozen fixture unchanged
+PASS SAVE SCENE: Failed save reaches the HUD and preserves the previous file
+PASS SAVE SCENE: Save-and-title stays in the current session on failure
+PASS SAVE SCENE: Save failure is readable in the pause card instead of hidden behind it
+PASS SAVE SCENE: Pause card with wrapped save error stays inside the viewport
+PASS SAVE SCENE: Rendered save feedback: m01_save_error
+PASS SAVE SCENE: Failed close-save leaves the session available for retry
+PASS SAVE SCENE: Retry updates both HUD and pause feedback after a complete save
+PASS SAVE SCENE: Actual scene load recovers the backup and explains the recovery
+PASS SAVE SCENE: Rendered save feedback: m01_save_recovered
+PASS SAVE SCENE: Saving the recovered scene keeps a valid backup
+SAVE SCENE RESULT 16/16

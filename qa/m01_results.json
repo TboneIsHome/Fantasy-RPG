@@ -1,0 +1,182 @@
+{
+  "date": "2026-09-16",
+  "baseline_commit": "dc7eed91771727f4b79a7789d3af80129386089b",
+  "godot": "4.5.1.stable.official.f62fdbde1",
+  "implementation_status": "IMPLEMENTED",
+  "milestone_status": "PARTIALLY TESTED",
+  "automated_status": "TESTED",
+  "existing_checks": 197,
+  "new_checks": 93,
+  "total_checks": 290,
+  "failed_checks": 0,
+  "groups": {
+    "results": {
+      "checks": 50,
+      "duration_ms": 9183,
+      "failures": [],
+      "godot": "4.5.1-stable (official)"
+    },
+    "ui_results": {
+      "checks": 14,
+      "failures": []
+    },
+    "compatibility_results": {
+      "checks": 8,
+      "failures": [],
+      "fixture_source": "0.1 e646cf2"
+    },
+    "dungeon_results": {
+      "checks": 48,
+      "duration_ms": 12993,
+      "failures": [],
+      "seeds": 100
+    },
+    "migration_results": {
+      "checks": 12,
+      "failures": []
+    },
+    "source_results": {
+      "checks": 65,
+      "duration_ms": 29465,
+      "failures": []
+    },
+    "save_io_reproduction_results": {
+      "checks": 8,
+      "failures": [],
+      "godot": "4.5.1-stable (official)"
+    },
+    "save_fault_results": {
+      "checks": 71,
+      "failures": []
+    },
+    "save_scene_results": {
+      "checks": 14,
+      "failures": [],
+      "renderer": "headless"
+    }
+  },
+  "verification_stages": [
+    {
+      "stage": "import",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "test_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "ui_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_compatibility",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "dungeon_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "migration_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "source_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_io_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_fault_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_scene_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "real_write_error",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "real_os_write_failure": {
+    "status": "TESTED",
+    "mechanism": "Linux RLIMIT_FSIZE=64 in disposable child/profile",
+    "probe_bytes": 64,
+    "expected_bytes": 895,
+    "engine_store_reported_success": true,
+    "engine_get_error": 0,
+    "save_error_reported": true,
+    "backup_unchanged": true,
+    "previous_save_loadable": true,
+    "log": "qa/m01_logs/real_write_error.txt"
+  },
+  "exports": [
+    {
+      "stage": "export_windows",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "export_linux",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "smoke_linux",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "smoke_windows_pack",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "package": {
+    "archive": "Lichterhain_0.4_M01_Windows.zip",
+    "bytes": 34164860,
+    "sha256": "5cb7248a95c97384c8bd95ae9b940ebb5ccf2e2c3b94c3bd7e43b424bfb1b171",
+    "exe_sha256": "e89169e7edc60ff0f21857793fb60aa2f27fee525fb0da9ba82a97d5a47706ea",
+    "zip_crc_valid": true,
+    "embedded_exe_matches_tested_export": true,
+    "pe_architecture": "x86_64",
+    "files": [
+      "Spielen/Lichterhain.exe",
+      "START_HIER.txt",
+      "CREDITS.md",
+      "licenses/DEJAVU_FONT_LICENSE.txt",
+      "licenses/GODOT_COPYRIGHT.txt",
+      "licenses/GODOT_LICENSE.txt"
+    ]
+  },
+  "native_windows": "NOT TESTED",
+  "personal_windows_saves": "NOT TESTED",
+  "human_smoke_round": "NOT TESTED",
+  "M02_M03_M04": "PLANNED",
+  "recovery_note": "Current logs were generated after restoring the previously unpushed M01 files. Earlier local M01 logs were removed by workspace cleanup and are not claimed as recovered.",
+  "rendered_scene": {
+    "checks": 16,
+    "failures": [],
+    "renderer": "X11/Mesa llvmpipe",
+    "status": "TESTED",
+    "visually_inspected": [
+      "qa/m01_images/m01_save_error.png",
+      "qa/m01_images/m01_save_recovered.png"
+    ],
+    "note": "14 repeated scene checks plus two capture checks; do not add 16 to the 290 headless total. Both screenshots inspected; no human playthrough."
+  }
+}

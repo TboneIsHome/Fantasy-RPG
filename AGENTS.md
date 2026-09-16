@@ -1,9 +1,11 @@
 # Working on Lichterhain
 
-Read README.md, DECISIONS.md, TASKS.md, TESTING.md, and docs/FOUNDATION_M00.md before extending this project.
+Read README.md, DECISIONS.md, TASKS.md, TESTING.md, docs/CREATIVE_DESIGN_BIBLE_V1.md, and the current foundation report before extending this project.
 
 - Preserve Tim's choices: mysterious, colorful fantasy; slightly angled top-down pixel art; mage first; Godot 4 and GDScript; offline singleplayer.
-- Follow the foundation sequence in ROADMAP.md: M00 audit/reference baseline, then M01 save safety, M02 state ownership, M03 region lifecycle, M04 content validation. Stop after presenting M00; do not start M01 or add gameplay systems without the next user instruction. Tim has reported a positive test of the new version; structured native Windows acceptance remains unrecorded.
+- Follow the foundation sequence in ROADMAP.md. Tim accepted M00 and authorized M01 save safety with the creative Bible integration. M01 is implemented and automatically verified; native Windows/manual acceptance remains open. Do not advance to M02–M04 or add gameplay in this iteration.
+- The creative Bible owns the intended experience; TECHNICAL_DESIGN.md owns the implemented architecture. Flag conflicts instead of silently weakening the vision. Explicitly open design details remain open; new details are PROPOSAL until Tim confirms them. Before a future feature, check priority, dependencies, foundation readiness, architecture changes and tests.
+- The mage is the first prototype playstyle, not a permanent class restriction. Preserve the Bible's freedom, meaningful consequences and optional depth.
 - Preserve the original 0.4 release at GitHub reference/v0.4-original. M00 only adds documentation, baseline evidence and frozen reference saves. Do not regenerate or overwrite any frozen fixture to make a later test pass.
 - Keep balance definitions in data/content.json and actor/state/UI responsibilities separated.
 - Pin development and export to Godot 4.5.1 for this baseline. Investigate and document any deliberate upgrade.

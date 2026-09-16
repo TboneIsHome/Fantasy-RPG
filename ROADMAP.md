@@ -1,13 +1,13 @@
 # Roadmap
 
-Stand: 2026-09-15, spielbarer Quellstand 0.4.0. Tim priorisiert jetzt robuste Kernsysteme und eine kleine, erweiterbare Weltsimulation. Langfristiges Ziel ist eine glaubwürdige, schöne und gefährliche prozedurale Fantasywelt, in der Neugier und Entscheidungen persönliche Geschichten ermöglichen. Größe und Systemtiefe werden schrittweise geprüft; der aktuelle Prototyp erfüllt diesen Umfang noch nicht.
+Stand: 2026-09-16, spielbarer Quellstand 0.4.0 / Foundation M01. Die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md) besitzt das langfristige Spielerlebnis. Aktuell priorisiert Tim robuste Kernsysteme und eine kleine, erweiterbare Weltsimulation. Größe und Systemtiefe werden schrittweise geprüft; der aktuelle Prototyp erfüllt die langfristige Vision noch nicht.
 
 ## Verbindliche nächste Reihenfolge
 
 | Meilenstein | Kleinster zusammenhängender Umfang | Abnahme / Status |
 | --- | --- | --- |
-| **M00 — Referenz und Audit** | Originalen 0.4-Code gegen Audit V1 prüfen; Quellstand, Reports, Exporte und verfügbare Saves sichern; Regression wiederholen | Audit und Sicherung **IMPLEMENTED**; 197 Checks und Export-Packs **TESTED**; Plattformabnahme **PARTIALLY TESTED**. Bericht und Grenzen: [FOUNDATION_M00.md](docs/FOUNDATION_M00.md). **STOP vor M01.** |
-| **M01 — Save-System** | Den beschriebenen I/O-Fehlerfall reproduzieren, Test ergänzen und kleinsten sicheren Fix durchführen | **PLANNED.** Schreib-/Flush-/Renamefehler, kaputte Hauptdatei mit gültiger Sicherung, Erhalt des letzten gültigen Stands, Altstand-Migrationen, ungültige/beschädigte Daten |
+| **M00 — Referenz und Audit** | Originalen 0.4-Code gegen Audit V1 prüfen; Quellstand, Reports, Exporte und verfügbare Saves sichern | **COMPLETE** laut Tim. Historische Prüfergebnisse und Grenzen: [FOUNDATION_M00.md](docs/FOUNDATION_M00.md). Der damalige Stop-Punkt wurde durch Tims Auftrag zur Bible-Integration und M01 aufgehoben. |
+| **M01 — Save-System** | I/O-Fehler reproduzieren, minimal absichern und Fehlermeldungen im Pausefenster sichtbar halten | **IMPLEMENTED**, insgesamt **PARTIALLY TESTED**. 290 Checks, echter OS-Schreibfehler und beide Export-Packs **TESTED**; native Windows-/manuelle Abnahme **NOT TESTED**. [Ergebnisse und Grenzen](docs/FOUNDATION_M01.md). Kein Beginn von M02 in dieser Iteration. |
 | **M02 — Zustandsänderungen** | Dauerhafte Fortschrittsaktionen und vollständige Belohnungen beim fachlichen Besitzer bündeln | **PLANNED.** Voraussetzungen geprüft, Wiederholungen sicher, keine Doppelbelohnung, konsistente Bestätigung/Benachrichtigung und Speicherung |
 | **M03 — Regionslebenszyklus** | Build/Activate/Deactivate/Unload/Travel aus der Sitzung heraus klar abgrenzen | **PLANNED.** Wald/Gruft, genau ein Spieler, keine doppelten Gegner, alte Referenzen/verspätete Aktionen verworfen, Save/Load erhalten |
 | **M04 — Inhaltsdaten** | Bestehende JSON-Quellen validieren und Regeln mit Gameplay, HUD und Saveprüfung verbinden | **PLANNED.** Verständliche Release-Fehler; IDs, Felder, Typen, Bereiche und Querverweise geprüft; keine Balanceänderung durch die Migration |
