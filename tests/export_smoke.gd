@@ -21,6 +21,19 @@ func verify() -> void:
 	game.handle_action("source_tune")
 	for sign_id in SourceQuest.SIGNS: game.handle_action("source_align",sign_id)
 	passed=passed and game.run.source.resolution=="restored" and game.run.inventory.equipped=="source_heart" and game.source_story.grove.resolution=="restored" and SaveSystem.read(game.save_path).data.save_version==3
+	# M01: verify persistence inside the compiled release pack.
+	var original := FileAccess.get_file_as_bytes(game.save_path)
+	DirAccess.copy_absolute(game.save_path, game.save_path + ".bak")
+	var damaged := FileAccess.open(game.save_path, FileAccess.WRITE)
+	damaged.store_string("{ damaged primary"); damaged.close()
+	var recovered := SaveSystem.read(game.save_path)
+	var recovery_ok: bool = recovered.error.is_empty() and SaveSystem.write(recovered.data, game.save_path).is_empty() and FileAccess.get_file_as_bytes(game.save_path + ".bak") == original
+	print("EXPORT SAVE RECOVERY ", "PASS" if recovery_ok else "FAIL")
+	DirAccess.make_dir_absolute(game.save_path + ".tmp")
+	var failure_ok: bool = not game.save_game() and SaveSystem.read(game.save_path).error.is_empty()
+	DirAccess.remove_absolute(game.save_path + ".tmp")
+	print("EXPORT SAVE ERROR ", "PASS" if failure_ok else "FAIL")
+	passed = passed and recovery_ok and failure_ok
 	print("EXPORT SMOKE ","PASS" if passed else "FAIL")
 	paused=false
 	game.queue_free()

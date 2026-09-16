@@ -10,14 +10,24 @@ engine = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else 'godot'
 output = project / 'test-output'
 output.mkdir(exist_ok=True)
 stages = [('import', ['--editor', '--import', '--quit'])]
-for script in ['test_suite', 'ui_smoke', 'save_compatibility', 'dungeon_suite', 'migration_suite', 'source_suite']:
+for script in ['test_suite', 'ui_smoke', 'save_compatibility', 'dungeon_suite', 'migration_suite', 'source_suite',
+               'save_io_reproduction', 'save_fault_suite', 'save_scene_smoke']:
     stages.append((script, ['--script', f'res://tests/{script}.gd']))
+if sys.platform == 'linux':
+    stages.append(('real_write_error', []))
+else:
+    print('NOT TESTED: Linux-only real RLIMIT_FSIZE write probe; portable fault suite still runs.', flush=True)
 results = []
 for name, args in stages:
-    run = subprocess.run([str(engine), '--headless', '--audio-driver', 'Dummy', '--path', str(project), *args],
+    command = ([sys.executable, str(project / 'tools/reproduce_save_write_error.py'), str(engine)]
+               if name == 'real_write_error' else
+               [str(engine), '--headless', '--audio-driver', 'Dummy', '--path', str(project), *args])
+    run = subprocess.run(command,
                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, timeout=120)
     (output / f'{name}.log').write_text(run.stdout)
     errors = [line for line in run.stdout.splitlines() if 'ERROR:' in line or line.startswith('FAIL')]
+    if name == 'save_scene_smoke' and 'SAVE SCENE RESULT ' not in run.stdout:
+        errors.append('Missing completion marker: save/close may have ended the test early.')
     result = {'stage': name, 'passed': run.returncode == 0 and not errors, 'exit_code': run.returncode}
     results.append(result)
     print(name, 'PASS' if result['passed'] else 'FAIL', flush=True)
