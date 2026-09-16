@@ -7,6 +7,7 @@ signal shake_changed(enabled: bool)
 var hud: HudCanvas
 var root: Control
 var panel: Control
+var pause_status: Label
 var page: String = "title"
 var heading_font: Font = preload("res://assets/fonts/DejaVuSerif.ttf")
 var settings: Dictionary = {"volume":0.4,"shake":true}
@@ -23,6 +24,7 @@ func _ready() -> void:
 	root.add_child(hud)
 
 func clear() -> void:
+	pause_status = null
 	if is_instance_valid(panel):
 		root.remove_child(panel)
 		panel.queue_free()
@@ -33,6 +35,10 @@ func clear() -> void:
 func toast(message: String) -> void:
 	hud.toast_text = message
 	hud.toast_left = 4.5
+	# The pause card covers the HUD toast. Keep save/load feedback readable
+	# in its existing subtitle area, including failed save-and-title/close.
+	if page == "pause" and is_instance_valid(pause_status):
+		pause_status.text = message
 
 func shell(kind: String, title: String, subtitle: String, width: float = 360) -> VBoxContainer:
 	clear()
@@ -107,7 +113,8 @@ func title_menu(has_save: bool) -> void:
 	start.grab_focus()
 
 func pause_menu() -> void:
-	var box := shell("pause","Eine kurze Rast","Die Welt wartet auf dich.",330)
+	var box := shell("pause","Eine kurze Rast","",330)
+	pause_status = label(box,"Die Welt wartet auf dich.",11,HudCanvas.MUTED)
 	button(box,"Weitergehen","resume").grab_focus()
 	var row := HBoxContainer.new()
 	box.add_child(row)

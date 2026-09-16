@@ -126,39 +126,73 @@ static func migrate(data: Dictionary) -> Dictionary:
 		updated.run.inventory=RelicInventory.new().serialize()
 	return updated
 
-static func write(data: Dictionary, path: String = DEFAULT_PATH) -> String:
+static func write(data: Dictionary, path: String = DEFAULT_PATH, io: SaveFileIO = null) -> String:
 	var error := validate(data)
 	if not error.is_empty():
 		return error
-	# Preserve previous originals, including an old backup recovered from a damaged main file.
+	var text := JSON.stringify(data)
+	var bytes := text.to_utf8_buffer()
+	if bytes.size() > MAX_BYTES:
+		return "Der Spielstand ist zu groß und wurde nicht gespeichert."
+	if io == null:
+		io = SaveFileIO.new()
+	var temporary := path + ".tmp"
+	if io.write_text(temporary, text) != OK or not matches_bytes(temporary, bytes):
+		return "Spielstand konnte nicht vollständig geschrieben werden. Bitte erneut speichern."
+	if not read_one(temporary).error.is_empty():
+		return "Die geschriebene Datei ist nicht lesbar. Der Speicherpunkt wurde nicht ersetzt."
+	# Permanent originals are staged and checked too: a failed copy must never
+	# leave a partial .pre-v* file that later saves mistake for a preserved original.
 	for policy in [[".pre-v03",1],[".pre-v04",2]]:
 		var preserved: String=path+str(policy[0])
-		if FileAccess.file_exists(preserved): continue
 		for source in [path,path+".bak"]:
 			var previous := read_one(source)
 			var previous_version: int=int(previous.get("migrated_from",0))
 			if previous_version>0 and previous_version<=int(policy[1]):
-				if DirAccess.copy_absolute(source,preserved)!=OK:
+				if FileAccess.file_exists(preserved):
+					var original := read_one(preserved)
+					if not original.error.is_empty() or int(original.get("migrated_from",0)) not in range(1,int(policy[1])+1):
+						return "Die Vorversionssicherung ist ungültig. Die bisherigen Dateien bleiben erhalten."
+				elif not copy_verified(source, preserved, io):
 					return "Der ursprüngliche Spielstand konnte nicht gesichert werden."
 				break
-	var temporary := path+".tmp"
-	var file := FileAccess.open(temporary,FileAccess.WRITE)
-	if file==null:
-		return "Spielstand konnte nicht geschrieben werden."
-	file.store_string(JSON.stringify(data))
-	file.flush()
-	file.close()
 	var backup := path+".bak"
-	if FileAccess.file_exists(path):
-		if FileAccess.file_exists(backup) and DirAccess.remove_absolute(backup)!=OK:
-			return "Die Sicherung konnte nicht ersetzt werden."
-		if DirAccess.rename_absolute(path,backup)!=OK:
+	# Copy a valid main file before replacing it. A damaged main must never
+	# rotate over the valid backup we just recovered. Main stays until commit.
+	if read_one(path).error.is_empty():
+		if not copy_verified(path, backup, io):
 			return "Der bisherige Spielstand konnte nicht gesichert werden."
-	if DirAccess.rename_absolute(temporary,path)!=OK:
-		if FileAccess.file_exists(backup):
-			DirAccess.rename_absolute(backup,path)
-		return "Speichern fehlgeschlagen; der vorige Stand wurde beibehalten."
+	if io.rename_file(temporary,path)!=OK:
+		# Windows may delete the destination before rename fails. Never consume
+		# the backup in an unchecked rollback; read() can recover it directly.
+		if read_one(backup).error.is_empty():
+			return "Speichern fehlgeschlagen. Der letzte gültige Stand bleibt als Sicherung erhalten."
+		return "Speichern fehlgeschlagen. Bitte erneut speichern."
 	return ""
+
+static func matches_bytes(path: String, expected: PackedByteArray) -> bool:
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return false
+	if file.get_length() != expected.size():
+		file.close()
+		return false
+	var actual := file.get_buffer(expected.size())
+	var error := file.get_error()
+	file.close()
+	return error == OK and actual == expected
+
+static func copy_verified(source: String, destination: String, io: SaveFileIO) -> bool:
+	# Sources are already validated by write(). Keep the exact legacy bytes.
+	var original := FileAccess.get_file_as_bytes(source)
+	if original.is_empty() or original.size() > MAX_BYTES:
+		return false
+	var temporary := destination + ".tmp"
+	if io.copy_file(source, temporary) != OK or not matches_bytes(temporary, original):
+		return false
+	# A failed replacement may remove destination on Windows. Its source is
+	# still intact; write() stops here instead of touching the main file.
+	return io.rename_file(temporary, destination) == OK
 
 static func read_one(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
