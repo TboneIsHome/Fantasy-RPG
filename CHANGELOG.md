@@ -1,5 +1,14 @@
 # Änderungen
 
+## Foundation M02 auf 0.4.0 — 2026-09-16
+
+- Fortschrittsaktionen bei RunState und den vorhandenen Zustandsmodellen gebündelt: Aufträge, Lichter, Gegnerbelohnungen, Räume, Erinnerungen/Funde, Tore, Berichte, Quellenabschluss, Erz, Lichtstaub und Reliktwechsel.
+- Reproduzierten Doppelaufruf über eine zweite Truhenansicht abgesichert; gespeicherter Besitz verhindert doppelte Funde/XP und einen dadurch ungültigen Save.
+- Benachrichtigung erst nach vollständiger Zustandsänderung und Belohnung; unbekannte IDs, fehlende Voraussetzungen und Wiederholungen gezielt geprüft.
+- Erfolgreicher Zustand im Arbeitsspeicher und erfolgreiche Speicherung getrennt behandelt; Speicherfehler bei betroffenen Weltmeldungen nicht mehr durch einen Erfolgstext ersetzt.
+- 290 bestehende und 115 neue Checks bestanden, dazu echter OS-Schreibfehler und beide Release-Packs. Acht Spielansichten gerendert, drei tatsächlich visuell kontrolliert. Native Windows-/manuelle Abnahme offen: **PARTIALLY TESTED**.
+- Keine neuen Gameplay-Systeme, kein Saveformatwechsel. M03/M04 bleiben geplant.
+
 ## Foundation M01 auf 0.4.0 — 2026-09-16
 
 - Creative Design Bible v1.0 vollständig aus Tims unverändertem Dokument übernommen; kreative Autorität, Konfliktregeln und offene Details dokumentiert.

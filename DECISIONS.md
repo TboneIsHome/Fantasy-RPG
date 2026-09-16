@@ -34,6 +34,13 @@
 
 ## Foundation-Entscheidungen
 
+M02-Fortsetzung am 2026-09-16:
+
+- Tim beauftragt nach dem M01-Ergebnis die nächste besprochene Iteration. M02 wird umgesetzt; die offene native Windows-/manuelle Abnahme von M01 wird dadurch nicht als bestanden gewertet.
+- RunState koordiniert bestehende Fortschrittsaktionen und komplette Belohnungen; DungeonProgress, SourceQuest und RelicInventory behalten ihre lokalen Regeln. Das vorhandene Signal meldet bestätigte Zustände, es löst keine globalen Befehlsfolgen oder Schreibvorgänge aus.
+- Die physische Aktion bleibt bei Szene/Kampf/Actor; der dauerhafte Zustand entscheidet über Wiederholung und Belohnung. Insbesondere ist eine inaktive Truhengrafik keine Berechtigung für einen bereits gespeicherten Fund.
+- Schema 3, Migrationen, Balance, Generatoren und vorhandene Save-Checkpoints bleiben erhalten. M03 und M04 werden nicht vorgezogen.
+
 Nachtrag 2026-09-16:
 
 - Tim erklärt M00 für abgeschlossen und beauftragt nach Integration der Creative Design Bible die Fortsetzung mit M01. Der frühere M00-Stop ist damit aufgehoben; M02–M04 bleiben geplant.

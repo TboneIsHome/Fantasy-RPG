@@ -1,6 +1,6 @@
 # Technische Architektur
 
-Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation M01. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; der [M01-Bericht](docs/FOUNDATION_M01.md) dokumentiert die inzwischen reproduzierten und abgesicherten Save-I/O-Fehlerpfade. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
+Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation M02. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; [M01](docs/FOUNDATION_M01.md) dokumentiert die Save-Absicherung, [M02](docs/FOUNDATION_M02.md) die kontrollierten Fortschrittsaktionen. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
 
 ## Laufzeit
 
@@ -38,6 +38,30 @@ Es gibt keine Autoload-Singletons für Spielzustände. Definitionen und unverän
 `scenes/` Einstiegsszene; `scripts/actors`, `art`, `audio`, `combat`, `core`, `dungeon`, `persistence`, `progression`, `ui`, `world`; `data/` Werte und Ortsdefinitionen; `tests/` ausführbare Prüfungen; `tools/verify.py` lokaler Prüfablauf.
 
 SourceQuest und RelicInventory sind eigene Module. Ein allgemeiner Questgraph, weitere Ausrüstungsarten und allgemeine NPC-Erinnerungen folgen später. Fraktionen und abstrakte Regionsereignisse kommen danach. Dafür werden aktuell keine leeren Scheinmodule angelegt.
+
+## Fortschrittsaktionen und Zustandsbesitzer — M02
+
+**IMPLEMENTED.** Szenen, UI und Kampf fordern dauerhafte Fortschrittsänderungen bei `RunState` an. Die lokalen Modelle bleiben erhalten; RunState koordiniert Änderungen, die zugleich einen Fund/Questzustand und XP, Lichtstaub oder Ausrüstung betreffen. Es gibt keinen neuen Manager oder globalen Eventbus.
+
+| Besitzer | Fachaktionen / Verantwortung |
+| --- | --- |
+| RunState | Auftrag annehmen/abschließen, Lichter, Entdeckungen, Talentlernen, Gegner-ID mit XP/Lichtstaub, geprüfte Lichtstaubausgabe; koordiniert die folgenden Teilmodelle samt Belohnungen |
+| DungeonProgress | Raum-ID prüfen/besuchen, Erinnerung freischalten, Fund beanspruchen, Tore öffnen, Sternenkarte berichten; wiederholte und unzulässige Requests ablehnen |
+| SourceQuest | Quelle untersuchen, Zeichenfolge, Reset vor Herausforderung, einmaliger Ausgang, Bericht und Erzflag |
+| RelicInventory | Bekanntes Relikt einmalig vergeben, Besitz vor Ausrüstung prüfen, leeren Platz erlauben; bestehende Frost-Manarückgabe |
+| `game.gd`, SourceStory, CombatSystem | Physische Voraussetzungen, Szenenreaktion, Actor-Ressourcen, Dialoge/Audio/VFX und explizite Save-Checkpoints nach bestätigter Aktion |
+
+`RunState.changed` meldet einmal den **vollständigen** dauerhaften Fortschrittszustand. Bei Questabschluss stehen Flag, XP/Stufe/Talentpunkte und gegebenenfalls Relikt/Equipment vor der Meldung fest. Auch der dritte richtige Quellenzeichenschritt löst die Quest samt Belohnung vor der Meldung auf: Kein Beobachter erhält `alignment=3` oder einen Ausgang ohne sein Relikt. Wiederholte Belohnungsrequests ändern nichts und melden nichts. Das ermöglicht einen unmittelbaren gültigen Snapshot aus dem Signalhandler; das Signal schreibt selbst keine Datei.
+
+Rückgabewerte sind fachlich: Die meisten Methoden geben an, ob sie den Zustand geändert haben. `align_source()` bestätigt mit `true` ein richtiges Zeichen; ein falsches bekanntes Zeichen kann mit `false` einen **gemeldeten Reset** bewirken. Unbekannte Zeichen verändern nichts. `prepare_source_challenge()` bestätigt die zulässige Herausforderung auch ohne vorherige Zeichenfolge; nur ein tatsächlicher Reset emittiert `changed`. Diese Sonderfälle werden explizit getestet; es gibt keinen generischen Dispatcher, der alle Bool-Ergebnisse als dasselbe behandelt.
+
+Persistenz bleibt getrennt: Erfolg einer Fortschrittsaktion bedeutet eine bestätigte Änderung im Arbeitsspeicher. Scheitert anschließend der Save-Checkpoint, bleibt diese Änderung bestehen, der letzte gute Datenträgerstand bleibt geschützt, und ein erneuter Save schreibt denselben Zustand. Wiederholte Quest-/Fundrequests sind kein erneuter Belohnungsweg. Szenenmeldungen bei Erz, Toröffnung, Quellengarten und Herausforderung überschreiben eine fehlgeschlagene Speicherung nicht mit einem Erfolgstext.
+
+Die bestehenden Speicherzeitpunkte bleiben erhalten: Erinnerungen/Funde, geöffnete Tore, Questabschluss, Zeichenfortschritt, Herausforderung, Erz, Berichte und Reliktwechsel werden an ihren bisherigen Aufrufstellen gesichert. Gegnerbelohnungen, Entdeckungen, Räume, Waldlicht-Aktivierung, Annahme und Talentlernen gehen wie bisher in den nächsten Checkpoint ein; `changed` erzeugt kein Autosave pro Treffer oder Scan. F5, Rast, Reise und reguläres Schließen bleiben Checkpoints. Wiederholte bereits bestätigte Aktionen benötigen keinen neuen Schreibvorgang. Eine fehlschlagende Speicherung kann ausdrücklich mit F5 wiederholt werden.
+
+Ausnahmen von dieser Fortschrittsoberfläche sind bewusst erhalten: `restore()` und Testaufbau konstruieren geprüfte Zustände direkt; `game.gd` setzt den Seed beim Sitzungsstart und die aktive Region beim vorhandenen Reise-/Respawnablauf (M03). Zeit bleibt bei `advance_time()` ohne Änderungsmeldung pro Frame; Position und Vitals bleiben Actor-Zustand, Einstellungen gehören zur Sitzung. Öffentliche GDScript-Felder sind keine technisch erzwungene Unveränderlichkeit; Laufzeitaufrufer halten die Zuständigkeiten ein.
+
+`RunState.LIGHT_IDS` besitzt die bekannten Licht-IDs; `SaveSystem.LIGHTS` bleibt als kompatibler Alias erhalten. Die normale Gegnerannahme prüft die bestehenden Generator-1-IDs/Kinds und verwendet XP aus der vorhandenen JSON-Definition. Die noch feste Identitätskonvention von Generator und Saveprüfung sowie übrige doppelte Inhaltswerte gehören weiterhin zu M04; kein neues Datenformat oder Schema wurde eingeführt.
 
 ## Generierung
 

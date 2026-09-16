@@ -1,6 +1,28 @@
 # Prüfungen und bekannte Grenzen
 
-## Foundation M01 — aktueller Nachweis vom 16.09.2026
+## Foundation M02 — aktueller Nachweis vom 16.09.2026
+
+**IMPLEMENTED**, automatisierte Regression **TESTED**, insgesamt **PARTIALLY TESTED**. 405/405 Checks (290 unverändert erhaltene + 115 neue), zusätzlicher echter OS-Schreibfehler, beide Release-Exporte und Pack-Smokes bestanden. Linux lief nativ; das eingebettete Windows-Spielpaket wurde unter Linux geprüft. Native Windows-Ausführung, persönliche Windows-Spielstände und menschliche Smoke-Runde bleiben **NOT TESTED**.
+
+Bericht: [FOUNDATION_M02.md](docs/FOUNDATION_M02.md); strukturierte Ergebnisse: [qa/m02_results.json](qa/m02_results.json); Rohlogs: [qa/m02_logs/](qa/m02_logs/); geprüfte Dateihashes: [qa/m02_reference_manifest.json](qa/m02_reference_manifest.json). M00-/M01-Reports und eingefrorene Spielstände bleiben historische Referenzen.
+
+| Neue Prüfgruppe | Ergebnis und Aussage |
+| --- | --- |
+| `state_replay_reproduction.gd` | 3/3; eine zweite inaktive Truhenansicht kann den bereits gespeicherten Fund nicht erneut vergeben oder den Save ungültig machen. Vor dem Fix auf M01: 1/3, beide Fehler im Baseline-Log dokumentiert |
+| `state_actions_suite.gd` | 100/100; ID-/Voraussetzungsprüfung, einheitliche komplette Belohnungen, Wiederholungen, Reentranz aus Signalhandlern, Meldung unmittelbar speicherbarer Zustände, beide Quellenwege, Kosten, Relikte und unabhängige Snapshots |
+| `state_actions_scene.gd` | 12/12; echter Questabschluss und Erzernte bei blockierter Temp-Datei, vorige Dateibytes erhalten, Wiederholung ohne zweite Belohnung, erneutes Speichern und Laden |
+| Erweiterter Export-Smoke | Zusätzlich `EXPORT STATE REPLAY PASS` aus beiden kompilierten Spielpaketen; M01-Recovery-/Schreibfehler-Smokes bleiben erhalten |
+
+`python3 tools/verify.py /absoluter/pfad/zu/godot` führt nun zwölf Gruppen plus unter Linux den echten Schreibfehler aus. Weiterhin ein isoliertes Prüfprofil verwenden; Details unten. Nach dem vollständigen Gate wurde ausschließlich im neuen Szenentest die bereits im M01-Test bewährte kurze Wartezeit für die Freigabe des Audio-Playbacks ergänzt. Der finale Szenentest wurde separat erneut mit `--verbose` bestanden; kein Audio-Objekt blieb beim Prozessende offen. Diese Test-Aufräumänderung verändert weder Runtime noch Assertions.
+
+Acht Ansichten wurden mit `tests/capture_source.gd` unter X11/Mesa erzeugt. Drei wurden tatsächlich visuell kontrolliert: Quellengarten, Kampfabschlussdialog und Reliktausrüstung; archiviert unter [qa/m02_images/](qa/m02_images/). Die übliche VSync-Warnung des virtuellen Treibers ist im Capture-Log erfasst. Der Capture-Ablauf stellt den Kampfabschluss direkt her; der echte Kampf bleibt in `source_suite.gd` geprüft. Kein menschlicher Spieltest wird daraus abgeleitet.
+
+### Offene M02-Windows-Smoke-Runde
+
+Zuerst den bisherigen Benutzerordner vollständig separat sichern (Pfad in der M01-Anleitung unten); das M02-Testpaket benutzt denselben Speicherort. Einen bestehenden Stand laden, Erinnerungen/Funde erneut aufsuchen und bei Edda sprechen. Bereits erhaltene Funde und abgeschlossene Questbelohnungen dürfen keine weiteren XP erzeugen. Relikt ab-/anlegen, Wald/Gruft wechseln, speichern und neu starten. Auf einem separaten passenden Teststand Erz zweimal ansprechen: nur der erste Fund gibt vier Lichtstaub. Den gewohnten Kampf und die Steuerung kurz prüfen; Ergebnis mit Windows-Version und Buildhash festhalten. Vor Abschluss dieser Runde bleibt M02 **PARTIALLY TESTED**.
+
+
+## Foundation M01 — historischer Nachweis vom 16.09.2026
 
 **IMPLEMENTED**, automatisierte Regression **TESTED**, Meilenstein insgesamt **PARTIALLY TESTED**: 290/290 Checks (197 bestehende + 93 neue), zusätzlich ein echter Betriebssystem-Schreibfehler. Beide Release-Exporte wurden erstellt und geprüft: Linux nativ, Windows-Ressourcenpaket unter Linux. Native Windows-Ausführung, persönliche Windows-Spielstände und eine menschliche Smoke-Runde sind **NOT TESTED**.
 
@@ -32,7 +54,7 @@ Godot 4.5.1 Standard und offizielle Exportvorlagen derselben Version verwenden. 
 XDG_DATA_HOME=/absoluter/pruefpfad/data XDG_CONFIG_HOME=/absoluter/pruefpfad/config python3 tools/verify.py /absoluter/pfad/zu/godot
 ```
 
-Die neun Testgruppen laufen nach dem Import nacheinander; unter Linux folgt der echte Schreibfehler. Der Runner prüft Exitcodes, Scriptfehler und den Abschlussmarker des Szenentests. Exportprüfung: beide Presets mit `--export-release` in neue Ausgabepfade exportieren; `tests/export_smoke.gd` extern gegen den Linux-Build und mit dem Linux-Editor über `--main-pack` gegen die Windows-EXE ausführen. Tests, Reports und Dokumentation sind vom Spielpaket ausgeschlossen.
+Seit M02 laufen zwölf Testgruppen nach dem Import nacheinander; unter Linux folgt der echte Schreibfehler. Der Runner prüft Exitcodes, Scriptfehler und den Abschlussmarker des Szenentests. Exportprüfung: beide Presets mit `--export-release` in neue Ausgabepfade exportieren; `tests/export_smoke.gd` extern gegen den Linux-Build und mit dem Linux-Editor über `--main-pack` gegen die Windows-EXE ausführen. Tests, Reports und Dokumentation sind vom Spielpaket ausgeschlossen.
 
 Die grafische Variante von `tests/save_scene_smoke.gd` benötigt eine grafische Sitzung. Sie ergänzt zwei Capture-Prüfungen (16 statt 14); diese sind kein zweiter Satz von 14 zusätzlichen Regressionstests. Frühere Capture-/Kampfläufe bleiben für gezielte Regressionen erhalten.
 
@@ -78,7 +100,7 @@ Die Tests verwenden eigene Dateinamen und löschen ihre Testspielstände. Sie ü
 
 ## Wiederholen
 
-`godot` steht für Godot 4.5.1. Der lokale Prüfablauf importiert das Projekt und führt die oben beschriebenen neun Testgruppen nacheinander aus; unter Linux folgt der echte Schreibfehler-Test. Er wertet zusätzlich Fehlermeldungen im Log aus, da Godot bei manchen Scriptfehlern Exitcode 0 zurückgeben kann.
+`godot` steht für Godot 4.5.1. Der lokale Prüfablauf importiert das Projekt und führt die oben beschriebenen zwölf Testgruppen nacheinander aus; unter Linux folgt der echte Schreibfehler-Test. Er wertet zusätzlich Fehlermeldungen im Log aus, da Godot bei manchen Scriptfehlern Exitcode 0 zurückgeben kann.
 
 ```bash
 python3 tools/verify.py /absoluter/pfad/zu/godot

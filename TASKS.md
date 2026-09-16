@@ -41,7 +41,9 @@
 - [x] M01 nach Tims Auftrag beginnen: Save-Fehler reproduzieren, gezielt testen und minimal beheben.
 - [x] M01: Wiederhergestellten Arbeitsstand durch 290 Checks, echten Schreibfehler und beide Export-Packs verifizieren; Quellstand und Nachweise sichern.
 - [ ] M01: strukturierte native Windows-/manuelle Abnahme abschließen; bis dahin insgesamt PARTIALLY TESTED.
-- [ ] Danach M02: dauerhafte Zustandsänderungen und vollständige Belohnungen beim fachlichen Besitzer kontrollieren.
+- [x] M02: Fortschrittsaktionen bei RunState und seinen vorhandenen Teilmodellen bündeln; wiederholte Requests und vollständige Belohnungen prüfen.
+- [x] M02: Truhen-Doppelaufruf reproduzieren und absichern; 405 Checks, beide Exporte und betroffene Questausgänge prüfen.
+- [ ] M02: native Windows-/manuelle Smoke-Runde nachholen; kein positiver Testbericht aus einer bloßen Fortsetzungsanweisung ableiten.
 - [ ] Danach M03: aktiven Regionslebenszyklus mit klarer Herkunft verzögerter Aktionen abgrenzen.
 - [ ] Danach M04: JSON-Inhalte validieren und doppelte Gameplay-Werte schrittweise zusammenführen.
 

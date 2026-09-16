@@ -1,0 +1,103 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS STATE: Unknown light: no mutation or notification
+PASS STATE: Wrong owner for a dungeon memory: no mutation or notification
+PASS STATE: Unknown discovery: no mutation or notification
+PASS STATE: Talent without a point: no mutation or notification
+PASS STATE: Incomplete light quest: no mutation or notification
+PASS STATE: Source before the forest quest: no mutation or notification
+PASS STATE: Guardian before source discovery: no mutation or notification
+PASS STATE: Unowned equipment: no mutation or notification
+PASS STATE: Accept forest quest: one complete notification
+PASS STATE: Repeated quest acceptance: no mutation or notification
+PASS STATE: Activate light_0: one complete notification
+PASS STATE: Existing light XP retained: light_0
+PASS STATE: Repeated light_0: no mutation or notification
+PASS STATE: Activate light_1: one complete notification
+PASS STATE: Existing light XP retained: light_1
+PASS STATE: Repeated light_1: no mutation or notification
+PASS STATE: Activate light_2: one complete notification
+PASS STATE: Existing light XP retained: light_2
+PASS STATE: Repeated light_2: no mutation or notification
+PASS STATE: Complete forest quest: one complete notification
+PASS STATE: Quest reward is complete before a reentrant observer can request it again
+PASS STATE: Repeated forest reward: no mutation or notification
+PASS STATE: Learn known talent: one complete notification
+PASS STATE: Repeated learned talent: no mutation or notification
+PASS STATE: Unknown talent: no mutation or notification
+PASS STATE: Discover camp: one complete notification
+PASS STATE: Repeated discovery: no mutation or notification
+PASS STATE: Unknown persistent enemy: no mutation or notification
+PASS STATE: Mismatched enemy kind: no mutation or notification
+PASS STATE: Guardian cannot use ordinary kill rewards: no mutation or notification
+PASS STATE: Confirmed enemy defeat: one complete notification
+PASS STATE: Enemy ID, dust and configured XP are granted together
+PASS STATE: Repeated death notification: no mutation or notification
+PASS STATE: Negative payment: no mutation or notification
+PASS STATE: Zero payment: no mutation or notification
+PASS STATE: Unaffordable payment: no mutation or notification
+PASS STATE: Affordable payment: one complete notification
+PASS STATE: Insufficient balance after payment: no mutation or notification
+PASS STATE: Unknown room: no mutation or notification
+PASS STATE: Visit room: one complete notification
+PASS STATE: Repeated room visit: no mutation or notification
+PASS STATE: Unknown memory: no mutation or notification
+PASS STATE: Unknown find: no mutation or notification
+PASS STATE: Hidden find before its gate opens: no mutation or notification
+PASS STATE: Secret gate without clue: no mutation or notification
+PASS STATE: Chart report without chart: no mutation or notification
+PASS STATE: Read water memory: one complete notification
+PASS STATE: Memory keeps its existing XP
+PASS STATE: Repeated memory: no mutation or notification
+PASS STATE: Open secret using known clue: one complete notification
+PASS STATE: Repeated secret opening: no mutation or notification
+PASS STATE: Open shortcut: one complete notification
+PASS STATE: Repeated shortcut opening: no mutation or notification
+PASS STATE: Collect chart: one complete notification
+PASS STATE: Collect accessible hidden find: one complete notification
+PASS STATE: Both finds retain their existing XP
+PASS STATE: Repeated chart request: no mutation or notification
+PASS STATE: Repeated hidden find request: no mutation or notification
+PASS STATE: Report chart: one complete notification
+PASS STATE: Repeated chart report: no mutation or notification
+PASS STATE: Inspect source: one complete notification
+PASS STATE: Repeated source inspection: no mutation or notification
+PASS STATE: Alignment before all clues: no mutation or notification
+PASS STATE: Read final clue: one complete notification
+PASS STATE: Unknown source sign: no mutation or notification
+PASS STATE: First correct source sign: one complete notification
+PASS STATE: Wrong known sign resets progress and publishes that change once
+PASS STATE: Restart alignment: one complete notification
+PASS STATE: Challenge resets an existing alignment: one complete notification
+PASS STATE: Challenge with no alignment accepts the encounter without inventing a persistent change
+PASS STATE: Resume first sign: one complete notification
+PASS STATE: Second sign: one complete notification
+PASS STATE: Unavailable reward prevents partial quest completion: no mutation or notification
+PASS STATE: Final sign resolves and rewards source: one complete notification
+PASS STATE: Observer receives a complete investigation outcome with its single reward
+PASS STATE: Repeated final sign: no mutation or notification
+PASS STATE: Cannot change an established source outcome: no mutation or notification
+PASS STATE: Restored garden has no harvestable ore: no mutation or notification
+PASS STATE: Report complete source outcome: one complete notification
+PASS STATE: Repeated source report: no mutation or notification
+PASS STATE: Unequip owned relic: one complete notification
+PASS STATE: Already empty slot: no mutation or notification
+PASS STATE: Unknown equipment: no mutation or notification
+PASS STATE: Equip owned relic: one complete notification
+PASS STATE: Reloaded chart remains claimed: no mutation or notification
+PASS STATE: Reloaded source cannot reward again: no mutation or notification
+PASS STATE: Snapshots and restored arrays do not alias external mutations
+PASS STATE: Combat route starts without investigation clues
+PASS STATE: Confirmed guardian defeat resolves combat route: one complete notification
+PASS STATE: Combat route publishes the same complete reward
+PASS STATE: Repeated guardian defeat: no mutation or notification
+PASS STATE: Harvest exposed ore: one complete notification
+PASS STATE: Ore grants exactly the configured dust
+PASS STATE: Repeated ore harvest: no mutation or notification
+PASS STATE: Report combat route without chart: one complete notification
+PASS STATE: Source report does not invent a missing chart
+PASS STATE: Later chart remains obtainable: one complete notification
+PASS STATE: Later chart report updates the remaining state: one complete notification
+PASS STATE: All reports are now complete: no mutation or notification
+PASS STATE: Every emitted state is immediately save-valid; no partial reward or alignment=3 escapes
+STATE ACTIONS RESULT 100/100

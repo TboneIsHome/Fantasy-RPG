@@ -1,0 +1,230 @@
+{
+  "date": "2026-09-16",
+  "baseline_commit": "fd77854ccadec7ba885ff3b77f60565502fc19ce",
+  "implementation_checkpoint": "85d974f0b5fbb3749e559de18bb2de5d8e29f6a9",
+  "godot": "4.5.1.stable.official.f62fdbde1",
+  "implementation_status": "IMPLEMENTED",
+  "milestone_status": "PARTIALLY TESTED",
+  "automated_status": "TESTED",
+  "previous_checks": 290,
+  "new_checks": 115,
+  "total_checks": 405,
+  "failed_checks": 0,
+  "groups": {
+    "results": {
+      "checks": 50,
+      "duration_ms": 11301,
+      "failures": [],
+      "godot": "4.5.1-stable (official)"
+    },
+    "ui_results": {
+      "checks": 14,
+      "failures": []
+    },
+    "compatibility_results": {
+      "checks": 8,
+      "failures": [],
+      "fixture_source": "0.1 e646cf2"
+    },
+    "dungeon_results": {
+      "checks": 48,
+      "duration_ms": 15083,
+      "failures": [],
+      "seeds": 100
+    },
+    "migration_results": {
+      "checks": 12,
+      "failures": []
+    },
+    "source_results": {
+      "checks": 65,
+      "duration_ms": 29847,
+      "failures": []
+    },
+    "save_io_reproduction_results": {
+      "checks": 8,
+      "failures": [],
+      "godot": "4.5.1-stable (official)"
+    },
+    "save_fault_results": {
+      "checks": 71,
+      "failures": []
+    },
+    "save_scene_results": {
+      "checks": 14,
+      "failures": [],
+      "renderer": "headless"
+    },
+    "state_replay_results": {
+      "checks": 3,
+      "failures": []
+    },
+    "state_actions_results": {
+      "checks": 100,
+      "failures": [],
+      "invalid_notifications": []
+    },
+    "state_actions_scene_results": {
+      "checks": 12,
+      "failures": []
+    }
+  },
+  "verification_stages": [
+    {
+      "stage": "import",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "test_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "ui_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_compatibility",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "dungeon_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "migration_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "source_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_io_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_fault_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_scene_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_scene",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "real_write_error",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "baseline_reproduction": {
+    "checks": 3,
+    "failures": [
+      "Repeated request from an inactive second chest view cannot grant another item or XP",
+      "Repeated chest request leaves a saveable state"
+    ]
+  },
+  "real_os_write_failure": {
+    "status": "TESTED",
+    "log": "qa/m02_logs/real_write_error.txt"
+  },
+  "scene_cleanup_recheck": {
+    "status": "TESTED",
+    "reason": "Allow audio mixer to release WAV playback before process exit, matching existing save_scene_smoke cleanup",
+    "final_log": "qa/m02_logs/state_actions_scene.txt",
+    "runtime_changed_after_full_gate": false
+  },
+  "exports": [
+    {
+      "stage": "export_windows",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "export_linux",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "smoke_linux",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "smoke_windows_pack",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "package": {
+    "archive": "Lichterhain_0.4_M02_Windows.zip",
+    "bytes": 34168816,
+    "sha256": "85ad17e6a226201a8bae3ea364aa9ec6e7f9f0121fa49d8dccf77844c1ab95ec",
+    "exe_sha256": "0b78b6e7f927460facd59e3af7daf8e13618d41bc45ae40003d24448517573f4",
+    "zip_crc_valid": true,
+    "embedded_exe_matches_tested_export": true,
+    "pe_architecture": "x86_64",
+    "files": [
+      "Spielen/Lichterhain.exe",
+      "START_HIER.txt",
+      "CREDITS.md",
+      "licenses/DEJAVU_FONT_LICENSE.txt",
+      "licenses/GODOT_COPYRIGHT.txt",
+      "licenses/GODOT_LICENSE.txt"
+    ]
+  },
+  "visual_review": {
+    "generated": 8,
+    "inspected": 3,
+    "paths": [
+      "qa/m02_images/source_garden.png",
+      "qa/m02_images/source_victory.png",
+      "qa/m02_images/source_equipment.png"
+    ],
+    "renderer": "X11 / Mesa llvmpipe",
+    "combat_capture_is_staged": true,
+    "actual_combat_test": "tests/source_suite.gd"
+  },
+  "progression_write_review": {
+    "files": [
+      "scripts/game.gd",
+      "scripts/combat/combat_system.gd",
+      "scripts/progression/source_story.gd"
+    ],
+    "direct_progress_mutations": [],
+    "retained_exceptions": [
+      "session seed initialization",
+      "region travel and respawn (M03)",
+      "actor vitals and position",
+      "session settings"
+    ]
+  },
+  "native_windows": "NOT TESTED",
+  "personal_windows_saves": "NOT TESTED",
+  "human_smoke_round": "NOT TESTED",
+  "M03_M04": "PLANNED"
+}
