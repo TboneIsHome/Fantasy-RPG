@@ -12,7 +12,8 @@ output.mkdir(exist_ok=True)
 stages = [('import', ['--editor', '--import', '--quit'])]
 for script in ['test_suite', 'ui_smoke', 'save_compatibility', 'dungeon_suite', 'migration_suite', 'source_suite',
                'save_io_reproduction', 'save_fault_suite', 'save_scene_smoke',
-               'state_replay_reproduction', 'state_actions_suite', 'state_actions_scene']:
+               'state_replay_reproduction', 'state_actions_suite', 'state_actions_scene',
+               'region_replay_reproduction', 'region_lifecycle_suite']:
     stages.append((script, ['--script', f'res://tests/{script}.gd']))
 if sys.platform == 'linux':
     stages.append(('real_write_error', []))
@@ -31,6 +32,10 @@ for name, args in stages:
         errors.append('Missing completion marker: save/close may have ended the test early.')
     if name == 'state_actions_scene' and 'STATE SCENE RESULT ' not in run.stdout:
         errors.append('Missing completion marker for state action scene.')
+    if name in ('region_replay_reproduction', 'region_lifecycle_suite'):
+        marker = 'REGION REPLAY RESULT ' if name == 'region_replay_reproduction' else 'REGION LIFECYCLE RESULT '
+        if marker not in run.stdout:
+            errors.append('Missing completion marker for region lifecycle tests.')
     result = {'stage': name, 'passed': run.returncode == 0 and not errors, 'exit_code': run.returncode}
     results.append(result)
     print(name, 'PASS' if result['passed'] else 'FAIL', flush=True)

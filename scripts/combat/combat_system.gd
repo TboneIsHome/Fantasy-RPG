@@ -7,12 +7,25 @@ var player: MagePlayer
 var run: RunState
 var effects: CombatFeedback
 var peaceful_area: Rect2
+var _active: bool = true
+
+func deactivate() -> void:
+	_active = false
+	player = null
+	run = null
+
+func _can_act() -> bool:
+	return _active and is_inside_tree() and not is_queued_for_deletion()
+
+func _exit_tree() -> void:
+	deactivate()
 
 func _ready() -> void:
 	effects = CombatFeedback.new()
 	add_child(effects)
 
 func cast(id: String, origin: Vector2, target: Vector2) -> void:
+	if not _can_act(): return
 	var data: Dictionary = Content.section("spells")[id]
 	sound_requested.emit(id)
 	if id == "bolt":
@@ -49,6 +62,7 @@ func _clear_line(from: Vector2, to: Vector2) -> bool:
 	return get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(from,to,1)).is_empty()
 
 func _bolt_hit(body: Node, point: Vector2, direction: Vector2) -> void:
+	if not _can_act(): return
 	effects.burst(point,Color("c2eecb"),6)
 	if body is WildEnemy:
 		var chained: WildEnemy = null
@@ -65,6 +79,7 @@ func _bolt_hit(body: Node, point: Vector2, direction: Vector2) -> void:
 func connect_enemy(enemy: WildEnemy) -> void:
 	enemy.defeated.connect(_defeated)
 	enemy.hit.connect(func(target,amount,shatter):
+		if not _can_act(): return
 		effects.number(target.global_position,str(int(amount))+("!" if shatter else ""),Color("c4f1ee") if shatter else Color("f0d9ab"))
 		effects.burst(target.global_position+Vector2(0,-9),Color("aed8c5"),8)
 		sound_requested.emit("hit"))
@@ -75,6 +90,7 @@ func connect_enemy(enemy: WildEnemy) -> void:
 		enemy.slam_requested.connect(_source_slam)
 
 func _source_slam(point: Vector2, radius: float, amount: float) -> void:
+	if not _can_act(): return
 	var impact := SourceImpact.new()
 	impact.position=point
 	impact.player=player
@@ -89,6 +105,7 @@ func clear_guardian_effects() -> void:
 			child.queue_free()
 
 func _thorns(point: Vector2) -> void:
+	if not _can_act(): return
 	var definition: Dictionary=Content.section("enemies").kobold
 	var patch := ThornPatch.new()
 	patch.position=point
@@ -103,6 +120,7 @@ func _thorns(point: Vector2) -> void:
 	sound_requested.emit("hit")
 
 func _enemy_bolt(origin: Vector2, direction: Vector2, amount: float, source_id: String = "") -> void:
+	if not _can_act(): return
 	var projectile := MagicProjectile.new()
 	projectile.position = origin
 	projectile.direction = direction
@@ -111,12 +129,14 @@ func _enemy_bolt(origin: Vector2, direction: Vector2, amount: float, source_id: 
 	projectile.hostile = true
 	projectile.source_id=source_id
 	projectile.struck.connect(func(body,point,heading):
+		if not _can_act(): return
 		if body is MagePlayer and not peaceful_area.has_point(body.global_position):
 			body.take_damage(amount,heading)
 		effects.burst(point,Color("e9b192"),7))
 	add_child(projectile)
 
 func _defeated(enemy: WildEnemy) -> void:
+	if not _can_act(): return
 	if enemy is SourceGuardian:
 		return
 	if not run.defeat_enemy(enemy.id, enemy.kind):

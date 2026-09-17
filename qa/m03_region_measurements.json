@@ -1,0 +1,264 @@
+{
+  "baseline": {
+    "created": {
+      "combat": 14,
+      "players": 14,
+      "views": 14
+    },
+    "samples": [
+      {
+        "enemies": 8,
+        "nodes": 4555,
+        "objects": 8765.0,
+        "players": 1,
+        "region": "forest",
+        "travel_ms": 792.198
+      },
+      {
+        "enemies": 6,
+        "nodes": 364,
+        "objects": 2286.0,
+        "players": 1,
+        "region": "vault",
+        "travel_ms": 66.553
+      },
+      {
+        "enemies": 8,
+        "nodes": 4555,
+        "objects": 8765.0,
+        "players": 1,
+        "region": "forest",
+        "travel_ms": 806.85
+      },
+      {
+        "enemies": 6,
+        "nodes": 364,
+        "objects": 2286.0,
+        "players": 1,
+        "region": "vault",
+        "travel_ms": 69.124
+      },
+      {
+        "enemies": 8,
+        "nodes": 4555,
+        "objects": 8765.0,
+        "players": 1,
+        "region": "forest",
+        "travel_ms": 731.268
+      },
+      {
+        "enemies": 6,
+        "nodes": 364,
+        "objects": 2286.0,
+        "players": 1,
+        "region": "vault",
+        "travel_ms": 69.932
+      },
+      {
+        "enemies": 8,
+        "nodes": 4555,
+        "objects": 8765.0,
+        "players": 1,
+        "region": "forest",
+        "travel_ms": 722.231
+      },
+      {
+        "enemies": 6,
+        "nodes": 364,
+        "objects": 2286.0,
+        "players": 1,
+        "region": "vault",
+        "travel_ms": 66.918
+      },
+      {
+        "enemies": 8,
+        "nodes": 4555,
+        "objects": 8765.0,
+        "players": 1,
+        "region": "forest",
+        "travel_ms": 774.999
+      },
+      {
+        "enemies": 6,
+        "nodes": 364,
+        "objects": 2286.0,
+        "players": 1,
+        "region": "vault",
+        "travel_ms": 80.773
+      },
+      {
+        "enemies": 8,
+        "nodes": 4555,
+        "objects": 8765.0,
+        "players": 1,
+        "region": "forest",
+        "travel_ms": 765.433
+      },
+      {
+        "enemies": 6,
+        "nodes": 364,
+        "objects": 2286.0,
+        "players": 1,
+        "region": "vault",
+        "travel_ms": 64.557
+      }
+    ],
+    "transitions": 14
+  },
+  "m03": {
+    "created": {
+      "combat": 14,
+      "players": 14,
+      "views": 14
+    },
+    "samples": [
+      {
+        "enemies": 8,
+        "nodes": 4556,
+        "objects": 8768.0,
+        "players": 1,
+        "region": "forest",
+        "travel_ms": 830.045
+      },
+      {
+        "enemies": 6,
+        "nodes": 365,
+        "objects": 2289.0,
+        "players": 1,
+        "region": "vault",
+        "travel_ms": 71.566
+      },
+      {
+        "enemies": 8,
+        "nodes": 4556,
+        "objects": 8768.0,
+        "players": 1,
+        "region": "forest",
+        "travel_ms": 785.528
+      },
+      {
+        "enemies": 6,
+        "nodes": 365,
+        "objects": 2289.0,
+        "players": 1,
+        "region": "vault",
+        "travel_ms": 76.291
+      },
+      {
+        "enemies": 8,
+        "nodes": 4556,
+        "objects": 8768.0,
+        "players": 1,
+        "region": "forest",
+        "travel_ms": 743.25
+      },
+      {
+        "enemies": 6,
+        "nodes": 365,
+        "objects": 2289.0,
+        "players": 1,
+        "region": "vault",
+        "travel_ms": 72.627
+      },
+      {
+        "enemies": 8,
+        "nodes": 4556,
+        "objects": 8768.0,
+        "players": 1,
+        "region": "forest",
+        "travel_ms": 755.424
+      },
+      {
+        "enemies": 6,
+        "nodes": 365,
+        "objects": 2289.0,
+        "players": 1,
+        "region": "vault",
+        "travel_ms": 77.836
+      },
+      {
+        "enemies": 8,
+        "nodes": 4556,
+        "objects": 8768.0,
+        "players": 1,
+        "region": "forest",
+        "travel_ms": 806.333
+      },
+      {
+        "enemies": 6,
+        "nodes": 365,
+        "objects": 2289.0,
+        "players": 1,
+        "region": "vault",
+        "travel_ms": 76.516
+      },
+      {
+        "enemies": 8,
+        "nodes": 4556,
+        "objects": 8768.0,
+        "players": 1,
+        "region": "forest",
+        "travel_ms": 730.247
+      },
+      {
+        "enemies": 6,
+        "nodes": 365,
+        "objects": 2289.0,
+        "players": 1,
+        "region": "vault",
+        "travel_ms": 70.869
+      }
+    ],
+    "transitions": 14
+  },
+  "summary": {
+    "forest": {
+      "m02": {
+        "median_travel_ms": 770.216,
+        "min_travel_ms": 722.231,
+        "max_travel_ms": 806.85,
+        "node_counts": [
+          4555
+        ],
+        "object_counts": [
+          8765.0
+        ]
+      },
+      "m03": {
+        "median_travel_ms": 770.476,
+        "min_travel_ms": 730.247,
+        "max_travel_ms": 830.045,
+        "node_counts": [
+          4556
+        ],
+        "object_counts": [
+          8768.0
+        ]
+      }
+    },
+    "vault": {
+      "m02": {
+        "median_travel_ms": 68.021,
+        "min_travel_ms": 64.557,
+        "max_travel_ms": 80.773,
+        "node_counts": [
+          364
+        ],
+        "object_counts": [
+          2286.0
+        ]
+      },
+      "m03": {
+        "median_travel_ms": 74.459,
+        "min_travel_ms": 70.869,
+        "max_travel_ms": 77.836,
+        "node_counts": [
+          365
+        ],
+        "object_counts": [
+          2289.0
+        ]
+      }
+    }
+  }
+}

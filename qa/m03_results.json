@@ -1,0 +1,203 @@
+{
+  "status": "PARTIALLY TESTED",
+  "implemented": "M03 Region Lifecycle",
+  "baseline_commit": "da04ab81cdb5fc4ea1b17254aeccd96a8742bbd9",
+  "engine": "4.5.1.stable.official.f62fdbde1",
+  "assertions": {
+    "passed": 504,
+    "total": 504,
+    "existing": 405,
+    "new": 99
+  },
+  "suites": [
+    {
+      "suite": "test_suite",
+      "passed": 50,
+      "checks": 50
+    },
+    {
+      "suite": "ui_smoke",
+      "passed": 14,
+      "checks": 14
+    },
+    {
+      "suite": "save_compatibility",
+      "passed": 8,
+      "checks": 8
+    },
+    {
+      "suite": "dungeon_suite",
+      "passed": 48,
+      "checks": 48
+    },
+    {
+      "suite": "migration_suite",
+      "passed": 12,
+      "checks": 12
+    },
+    {
+      "suite": "source_suite",
+      "passed": 65,
+      "checks": 65
+    },
+    {
+      "suite": "save_io_reproduction",
+      "passed": 8,
+      "checks": 8
+    },
+    {
+      "suite": "save_fault_suite",
+      "passed": 71,
+      "checks": 71
+    },
+    {
+      "suite": "save_scene_smoke",
+      "passed": 14,
+      "checks": 14
+    },
+    {
+      "suite": "state_replay_reproduction",
+      "passed": 3,
+      "checks": 3
+    },
+    {
+      "suite": "state_actions_suite",
+      "passed": 100,
+      "checks": 100
+    },
+    {
+      "suite": "state_actions_scene",
+      "passed": 12,
+      "checks": 12
+    },
+    {
+      "suite": "region_replay_reproduction",
+      "passed": 4,
+      "checks": 4
+    },
+    {
+      "suite": "region_lifecycle_suite",
+      "passed": 95,
+      "checks": 95
+    }
+  ],
+  "gate": [
+    {
+      "stage": "import",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "test_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "ui_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_compatibility",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "dungeon_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "migration_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "source_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_io_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_fault_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_scene_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_scene",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "region_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "region_lifecycle_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "real_write_error",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "baseline_reproduction": {
+    "checks": 4,
+    "failures": [
+      "Old deferred victory cannot resolve the replacement vault",
+      "Old deferred victory cannot grant a relic or XP",
+      "Replacement vault keeps its own dormant guardian"
+    ]
+  },
+  "exports": [
+    {
+      "stage": "export_windows",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "export_linux",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "smoke_linux",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "smoke_windows_pack",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "native_m03_windows": "NOT TESTED",
+  "human_m03_playtest": "NOT TESTED",
+  "m02_human_windows": "TESTED - explicitly confirmed by Tim before M03",
+  "graphics": "NOT TESTED - local X server could not open listening sockets; no new captures produced",
+  "performance": "m03_region_measurements.json",
+  "scope": "No M04, streaming, 3D preparation or new gameplay.",
+  "archived_log_normalization": "ANSI color codes and line-ending whitespace removed; test messages unchanged."
+}

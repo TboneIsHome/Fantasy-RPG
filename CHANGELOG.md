@@ -1,5 +1,15 @@
 # Änderungen
 
+## Foundation M03 — 2026-09-16
+
+- M02 durch Tims manuellen Windows-Spieltest ausdrücklich abgenommen; ausschließlich M03 begonnen.
+- Aktive 2D-Region in sitzungsgebundenen RegionLifecycle und RegionInstance abgegrenzt; bestehende Generatoren, Player-Neuaufbau und Combat-Mechanik erhalten.
+- Monotone, nicht gespeicherte Generation verwirft alte Deferred-/Timer-/Signalaktionen; Gruft–Wald–Gruft-Hüterfehler vor dem Fix reproduziert.
+- Alte Region vor Neubau deaktiviert und getrennt; HUD, SourceStory, Interaktionen und Session-Signale kontrolliert gelöst/neu verbunden. Keine doppelten Players oder Gegner im geprüften Umfang.
+- Savefehler beim Reisen bleibt sichtbar; unverändertes Schema 3 und originale Referenzspielstände.
+- 504/504 Checks plus echter OS-Schreibfehler, Vergleichsmessung und beide Release-Packs bestanden. M03-Windows-Spieltest offen: **PARTIALLY TESTED**. Keine neuen Grafikaufnahmen wegen nicht startendem lokalem X11-Server.
+- [M03 Completion Report](docs/FOUNDATION_M03.md); Stop vor M04.
+
 ## Foundation M02 auf 0.4.0 — 2026-09-16
 
 - Fortschrittsaktionen bei RunState und den vorhandenen Zustandsmodellen gebündelt: Aufträge, Lichter, Gegnerbelohnungen, Räume, Erinnerungen/Funde, Tore, Berichte, Quellenabschluss, Erz, Lichtstaub und Reliktwechsel.

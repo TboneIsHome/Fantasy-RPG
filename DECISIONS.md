@@ -34,6 +34,15 @@
 
 ## Foundation-Entscheidungen
 
+M03-Auftrag und Umsetzung am 2026-09-16:
+
+- Tim bestätigt M02 ausdrücklich durch einen manuellen Windows-Spieltest und beauftragt ausschließlich M03; danach Stop vor M04. Die neue M03-EXE braucht ihre eigene manuelle Abnahme.
+- Lichterhain bleibt dauerhaft ein 2D-isometrisches RPG. Keine 3D-Abstraktionen oder Streaming-Vorbereitung im aktuellen Umfang.
+- Ein sitzungsgebundener RegionLifecycle besitzt genau eine RegionInstance. Bestehende Generatoren, Ansichten, Actors, Kampf- und Story-Fachlogik bleiben erhalten. Die bisherigen game-Zugriffe auf Player/Terrain/Combat sind nur lesende Sichten auf die aktuelle Instanz.
+- Jede Instanz erhält eine neue, nicht gespeicherte Generation. Sie gilt nur beim zugehörigen Lebenszyklus; alte Deferred-/Timer-/Signalaktionen müssen ihre Herkunft mitbringen. Load und neue Runs setzen den Zähler nicht zurück.
+- Die bisherige verzögerte Hüterbelohnung wird nach einer schnellen Gruft–Wald–Gruft-Rückkehr verworfen. Der damalige Regionsname allein konnte alte und neue Gruft nicht unterscheiden; der Fehler ist auf M02 reproduziert.
+- Reiseprüfungen, Ressourcenübernahme, Camp-Rückkehr und Baumwechsel gehören zum Lebenszyklus. game.gd behält explizite Speicherpunkte und UI/Audio-Anbindung. Eine fehlgeschlagene Reisespeicherung behält die sichtbare Fehlermeldung.
+
 M02-Fortsetzung am 2026-09-16:
 
 - Tim beauftragt nach dem M01-Ergebnis die nächste besprochene Iteration. M02 wird umgesetzt; die offene native Windows-/manuelle Abnahme von M01 wird dadurch nicht als bestanden gewertet.

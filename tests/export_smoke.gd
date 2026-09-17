@@ -26,6 +26,16 @@ func verify() -> void:
 	var replay_ok: bool = not game.run.collect_vault_relic("star_chart") and not game.run.align_source("star") and not game.run.defeat_source_guardian() and game.run.serialize() == checkpoint and SaveSystem.validate(SaveSystem.snapshot(game.run, game.player, game.settings)).is_empty()
 	print("EXPORT STATE REPLAY ", "PASS" if replay_ok else "FAIL")
 	passed = passed and replay_ok
+	# M03: compiled lifecycle replaces trees once and rejects a prior generation.
+	game.handle_action("resume")
+	var origin: int = game.regions.generation
+	var previous: Node = game.world
+	game.travel_to("forest")
+	game.travel_to("vault")
+	var region_ok: bool = game.regions.generation == origin + 2 and not game.regions.is_current(origin) and not previous.is_inside_tree() and get_nodes_in_group("player").size() == 1 and get_nodes_in_group("enemies").size() == 5 and game.ui.hud.player == game.player and game.source_story.grove.resolution == "restored"
+	region_ok = region_ok and game.save_game() and game.load_game() and game.run.region == "vault" and game.run.inventory.equipped == "source_heart"
+	print("EXPORT REGION LIFECYCLE ", "PASS" if region_ok else "FAIL")
+	passed = passed and region_ok
 	# M01: verify persistence inside the compiled release pack.
 	var original := FileAccess.get_file_as_bytes(game.save_path)
 	DirAccess.copy_absolute(game.save_path, game.save_path + ".bak")

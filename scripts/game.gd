@@ -1,10 +1,16 @@
 extends Node2D
 
 var run: RunState
-var world: Node2D
-var terrain: WorldView
-var player: MagePlayer
-var combat: CombatSystem
+var regions: RegionLifecycle
+# Compatibility views, never separate mutable owners of regional references.
+var world: RegionInstance:
+	get: return regions.current if is_instance_valid(regions) else null
+var terrain: WorldView:
+	get: return world.terrain if is_instance_valid(world) else null
+var player: MagePlayer:
+	get: return world.player if is_instance_valid(world) else null
+var combat: CombatSystem:
+	get: return world.combat if is_instance_valid(world) else null
 var ui: GameUI
 var audio: AudioController
 var source_story: SourceStory
@@ -28,10 +34,18 @@ func _ready() -> void:
 	source_story=SourceStory.new()
 	source_story.game=self
 	add_child(source_story)
+	regions=RegionLifecycle.new()
+	add_child(regions)
+	regions.deactivating.connect(_region_deactivating)
+	regions.activated.connect(_region_activated)
 	build_run("LICHTERHAIN")
 	show_title()
 
-func build_run(seed_text: String, saved: Dictionary = {}) -> void:
+func build_run(seed_text: String, saved: Dictionary = {}) -> bool:
+	if regions.is_transitioning(): return false
+	regions.unload()
+	if run and run.changed.is_connected(_progress_changed):
+		run.changed.disconnect(_progress_changed)
 	run=RunState.new() if saved.is_empty() else RunState.restore(saved.run)
 	run.world_seed=seed_text.strip_edges().substr(0,64)
 	if run.world_seed.is_empty():
@@ -40,116 +54,59 @@ func build_run(seed_text: String, saved: Dictionary = {}) -> void:
 		settings=saved.settings.duplicate()
 	last_level=run.level
 	run.changed.connect(_progress_changed)
-	_build_region(saved.get("player",{}))
+	return regions.build(run, settings, saved.get("player",{}))
 
-func _build_region(saved_player: Dictionary = {}, spawn_override: Vector2 = Vector2(INF,INF)) -> void:
-	get_tree().paused=false
-	if is_instance_valid(world):
-		remove_child(world)
-		world.queue_free()
+func _region_deactivating(region: RegionInstance) -> void:
+	var origin := region.generation
+	region.combat.sound_requested.disconnect(_region_sound.bind(origin))
+	region.player.dash_performed.disconnect(_region_sound.bind("dash",origin))
+	region.player.was_hit.disconnect(_region_sound.bind("hurt",origin))
+	region.player.died.disconnect(_region_player_died.bind(origin))
 	nearest=null
-	world=Node2D.new()
-	world.name="CurrentRun"
-	add_child(world)
-	var generated: Dictionary=DungeonGenerator.generate(run.world_seed) if run.region=="vault" else WorldGenerator.generate(run.world_seed)
-	if run.region=="vault":
-		var vault_view := DungeonView.new()
-		vault_view.progress=run.vault
-		terrain=vault_view
-	else:
-		terrain=WorldView.new()
-	world.add_child(terrain)
-	terrain.build(generated)
-	player=MagePlayer.new()
-	player.run=run
-	player.position=generated.spawn if not is_finite(spawn_override.x) else spawn_override
-	player.position=Vector2(saved_player.get("x",player.position.x),saved_player.get("y",player.position.y))
-	player.shake_enabled=settings.shake
-	terrain.actors.add_child(player)
-	player.camera.limit_right=int(generated.get("width",WorldGenerator.WIDTH))*16
-	player.camera.limit_bottom=int(generated.get("height",WorldGenerator.HEIGHT))*16
-	player.vitals.hp=float(saved_player.get("hp",100))
-	player.vitals.mana=float(saved_player.get("mana",100))
-	player.vitals.stamina=float(saved_player.get("stamina",100))
-	combat=CombatSystem.new()
-	combat.run=run
-	combat.player=player
-	world.add_child(combat)
-	combat.sound_requested.connect(audio.play)
-	player.cast_requested.connect(combat.cast)
-	player.dash_performed.connect(func(): audio.play("dash"))
-	player.was_hit.connect(func(): audio.play("hurt"))
-	player.died.connect(func(): get_tree().paused=true; ui.death_menu())
-	var camp: Vector2=generated.spawn if run.region=="vault" else WorldGenerator.center(generated.points[0].tile)
-	for definition in generated.enemies:
-		if definition.id in run.defeated:
-			continue
-		if run.region=="vault" and run.source.resolution=="restored" and definition.id in SourceQuest.QUIET_ENEMIES:
-			continue
-		var enemy := WildEnemy.new()
-		enemy.configure(definition,player,camp)
-		if terrain is DungeonView:
-			enemy.pathfinder=terrain.navigation
-		terrain.actors.add_child(enemy)
-		combat.connect_enemy(enemy)
-	for point in generated.points:
-		var landmark: Landmark
-		if run.region=="vault":
-			landmark=DungeonObject.new()
-			landmark.configure(point,dungeon_object_active(point.id))
-		else:
-			landmark=Landmark.new()
-			landmark.configure(point,point.id in run.active_lights)
-		terrain.actors.add_child(landmark)
-	if run.region=="forest":
-		var npc := Landmark.new()
-		npc.configure({"id":"edda","kind":"npc","name":"Edda, Hüterin der Quelle","tile":generated.points[0].tile+Vector2i(0,-3)},false)
-		terrain.actors.add_child(npc)
-		var entrance := DungeonObject.new()
-		entrance.configure({"id":"vault_entrance","kind":"entrance","name":"Eingang zur Quellengruft","tile":generated.points[3].tile+Vector2i(2,2)},run.quest_complete)
-		terrain.actors.add_child(entrance)
-		var atmosphere := ForestAtmosphere.new()
-		atmosphere.player=player
-		atmosphere.run=run
-		world.add_child(atmosphere)
-		run.discover("camp")
+	scan_time=0
+	source_story.clear_region()
+	ui.clear()
+	ui.hud.player=null
+	ui.hud.run=null
+	ui.hud.map_data={}
+	ui.hud.prompt=""
+	ui.hud.game_visible=false
+
+func _region_activated(region: RegionInstance) -> void:
+	get_tree().paused=false
+	var origin := region.generation
+	combat.sound_requested.connect(_region_sound.bind(origin))
+	player.dash_performed.connect(_region_sound.bind("dash",origin))
+	player.was_hit.connect(_region_sound.bind("hurt",origin))
+	player.died.connect(_region_player_died.bind(origin))
 	source_story.build_region()
 	audio.volume=settings.volume
 	ui.settings=settings.duplicate()
 	ui.hud.player=player
 	ui.hud.run=run
-	ui.hud.map_data=generated
-	ui.hud.location_name="Quellengruft" if run.region=="vault" else "Laternenrast"
+	ui.hud.map_data=terrain.data
+	ui.hud.location_name="Quellengruft" if region.region_id=="vault" else "Laternenrast"
 	ui.hud.prompt=""
 	ui.hud.game_visible=true
 	ui.clear()
-	player.input_enabled=true
-	player.cast_armed=false
 	scan_time=0
-	player.camera.reset_smoothing()
+	if region.region_id=="forest": run.discover("camp")
+
+func _region_sound(id: String, origin_generation: int) -> void:
+	if regions.is_current(origin_generation): audio.play(id)
+
+func _region_player_died(origin_generation: int) -> void:
+	if not regions.is_current(origin_generation): return
+	get_tree().paused=true
+	ui.death_menu()
 
 func dungeon_object_active(id: String) -> bool:
-	if id in ["shortcut_gate","shortcut_lever"]:
-		return run.vault.shortcut_open
-	if id=="secret_gate":
-		return run.vault.secret_open
-	return id in run.vault.memories or id in run.vault.relics
+	return world.dungeon_object_active(id) if is_instance_valid(world) else false
 
 func travel_to(region: String) -> void:
-	if region not in ["forest","vault"] or region==run.region or player.vitals.hp<=0:
-		return
-	if region=="vault" and not run.quest_complete:
-		return
-	var stats := {"hp":player.vitals.hp,"mana":player.vitals.mana,"stamina":player.vitals.stamina}
-	run.region=region
-	var spawn := Vector2(INF,INF)
-	if region=="forest":
-		var forest := WorldGenerator.generate(run.world_seed)
-		spawn=WorldGenerator.center(forest.points[3].tile+Vector2i(2,3))
-	_build_region(stats,spawn)
-	player.vitals.invulnerable=0.8
-	save_game()
-	ui.toast("Die Quellengruft · M zeichnet entdeckte Räume auf." if region=="vault" else "Zurück im Sternengarten.")
+	if not regions.travel(region, settings): return
+	if save_game():
+		ui.toast("Die Quellengruft · M zeichnet entdeckte Räume auf." if region=="vault" else "Zurück im Sternengarten.")
 
 func show_title() -> void:
 	player.input_enabled=false
@@ -162,8 +119,8 @@ func handle_action(action: String, argument: String = "") -> void:
 	if is_instance_valid(source_story) and source_story.handle_action(action,argument): return
 	match action:
 		"new":
-			build_run(argument)
-			ui.toast("Willkommen. Sprich mit Edda nördlich des Lagerfeuers.")
+			if build_run(argument):
+				ui.toast("Willkommen. Sprich mit Edda nördlich des Lagerfeuers.")
 		"resume":
 			ui.clear()
 			get_tree().paused=false
@@ -199,9 +156,7 @@ func handle_action(action: String, argument: String = "") -> void:
 			if save_game():
 				show_title()
 		"respawn":
-			if run.region=="vault":
-				run.region="forest"
-				_build_region()
+			regions.return_to_camp(settings)
 			player.position=terrain.data.spawn
 			player.vitals.refill()
 			player.reset_transient()
@@ -285,6 +240,7 @@ func dungeon_prompt(object: DungeonObject) -> String:
 	return ""
 
 func interact_dungeon(object: DungeonObject) -> void:
+	if not regions.owns(object): return
 	match object.kind:
 		"entrance":
 			if run.quest_complete:
@@ -342,6 +298,7 @@ func show_discovery(id: String) -> void:
 	ui.dialogue(entry.title,entry.text,[["Im Journal nachlesen","discoveries"],["Weitergehen","resume"]])
 
 func interact(landmark: Landmark) -> void:
+	if not regions.owns(landmark): return
 	if landmark is SourceSite:
 		source_story.interact()
 		return
@@ -390,7 +347,7 @@ func load_game() -> bool:
 	if not result.error.is_empty():
 		ui.toast(result.error)
 		return false
-	build_run(result.data.run.world_seed,result.data)
+	if not build_run(result.data.run.world_seed,result.data): return false
 	ui.toast(result.get("notice","Lichtpfad geladen."))
 	return true
 

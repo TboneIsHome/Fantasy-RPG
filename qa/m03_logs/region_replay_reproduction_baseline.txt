@@ -1,0 +1,7 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS REGION REPLAY: Round trip retains the same persistent run and region ID
+FAIL REGION REPLAY: Old deferred victory cannot resolve the replacement vault
+FAIL REGION REPLAY: Old deferred victory cannot grant a relic or XP
+FAIL REGION REPLAY: Replacement vault keeps its own dormant guardian
+REGION REPLAY RESULT 1/4

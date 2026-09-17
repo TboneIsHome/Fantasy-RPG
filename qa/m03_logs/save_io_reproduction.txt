@@ -1,0 +1,11 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS SAVE IO: Damaged primary loads the valid format-3 backup
+PASS SAVE IO: Recovered save can be written
+PASS SAVE IO: Saving after recovery preserves the valid backup byte for byte
+PASS SAVE IO: Temporary path blocked by a real directory
+PASS SAVE IO: Failure to open the temporary file is reported
+PASS SAVE IO: Open failure keeps the original valid backup
+PASS SAVE IO: Previous save remains loadable after open failure
+PASS SAVE IO: Frozen 0.4 fixture remains unchanged
+SAVE IO RESULT 8/8

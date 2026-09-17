@@ -85,7 +85,8 @@ func button(parent: Node, title: String, action: String, argument: String = "") 
 	item.add_theme_stylebox_override("hover",HudCanvas.box_style(Color("35605d"),HudCanvas.GOLD))
 	item.add_theme_stylebox_override("focus",HudCanvas.box_style(Color(0,0,0,0),HudCanvas.GOLD))
 	item.add_theme_stylebox_override("pressed",HudCanvas.box_style(Color("537065"),HudCanvas.GOLD))
-	item.pressed.connect(func(): requested.emit(action,argument))
+	item.pressed.connect(func():
+		if is_instance_valid(item) and item.is_inside_tree(): requested.emit(action,argument))
 	parent.add_child(item)
 	return item
 
@@ -106,7 +107,8 @@ func title_menu(has_save: bool) -> void:
 	var start := button(box,"Neuen Lichtpfad beginnen","unused")
 	for connection in start.pressed.get_connections():
 		start.pressed.disconnect(connection.callable)
-	start.pressed.connect(func(): requested.emit("new",field.text))
+	start.pressed.connect(func():
+		if is_instance_valid(field) and field.is_inside_tree(): requested.emit("new",field.text))
 	button(box,"Am Speicherpunkt fortsetzen","load").disabled = not has_save
 	label(box,"WASD bewegen · Maus zielen · E interagieren\nLMT / RMT zaubern · Leertaste ausweichen",10,HudCanvas.MUTED)
 	label(box,"Version 0.4 · Das Gedächtnis der Quelle\nEin neuer Lauf ersetzt den Speicherpunkt beim Speichern.",9,HudCanvas.MUTED)

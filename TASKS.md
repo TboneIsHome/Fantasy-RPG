@@ -43,8 +43,11 @@
 - [ ] M01: strukturierte native Windows-/manuelle Abnahme abschließen; bis dahin insgesamt PARTIALLY TESTED.
 - [x] M02: Fortschrittsaktionen bei RunState und seinen vorhandenen Teilmodellen bündeln; wiederholte Requests und vollständige Belohnungen prüfen.
 - [x] M02: Truhen-Doppelaufruf reproduzieren und absichern; 405 Checks, beide Exporte und betroffene Questausgänge prüfen.
-- [ ] M02: native Windows-/manuelle Smoke-Runde nachholen; kein positiver Testbericht aus einer bloßen Fortsetzungsanweisung ableiten.
-- [ ] Danach M03: aktiven Regionslebenszyklus mit klarer Herkunft verzögerter Aktionen abgrenzen.
+- [x] M02: Tim bestätigt ausdrücklich den erfolgreichen manuellen Windows-Spieltest vor dem M03-Auftrag.
+- [x] M03: sitzungsgebundenen 2D-Regionslebenszyklus, Generationsprüfung und Referenzabbau umsetzen.
+- [x] M03: 504 Checks, alte Hüteraktion reproduzieren/abweisen, doppelte Aufbauten ausschließen, Exporte/Packs prüfen und Completion Report erstellen.
+- [ ] M03: neues Windows-Testpaket manuell abnehmen; bis dahin insgesamt PARTIALLY TESTED.
+- [ ] Stop nach M03; M04 erst mit neuem Auftrag beginnen.
 - [ ] Danach M04: JSON-Inhalte validieren und doppelte Gameplay-Werte schrittweise zusammenführen.
 
 Audit, konkrete Dateien und Risiken: [docs/FOUNDATION_M00.md](docs/FOUNDATION_M00.md). Verbindliche Reihenfolge und Abnahme: [ROADMAP.md](ROADMAP.md).

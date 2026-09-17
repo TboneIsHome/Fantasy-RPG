@@ -1,6 +1,36 @@
 # Prüfungen und bekannte Grenzen
 
-## Foundation M02 — aktueller Nachweis vom 16.09.2026
+## Foundation M03 — aktueller Nachweis vom 16.09.2026
+
+**IMPLEMENTED**, automatisch **TESTED**, insgesamt **PARTIALLY TESTED**. 504/504 Checks: alle 405 bisherigen plus 99 neue. Zusätzlich der unveränderte echte Linux-OS-Schreibfehler. Beide Release-Packs bestanden; native Windows-Ausführung und menschlicher Spieltest des **M03-Builds** sind **NOT TESTED**. Tims bestätigte M02-Abnahme wird nicht auf eine neue EXE übertragen.
+
+Bericht: [FOUNDATION_M03.md](docs/FOUNDATION_M03.md); Ergebnisse: [qa/m03_results.json](qa/m03_results.json); Rohlogs: [qa/m03_logs/](qa/m03_logs/); Dateihashes: [qa/m03_reference_manifest.json](qa/m03_reference_manifest.json). Isoliertes Benutzerprofil; keine persönlichen oder eingefrorenen Saves überschrieben. Archivierte Textlogs wurden nur um Terminal-Farbcodes und Leerzeichen an Zeilenenden bereinigt; Prüfaussagen sind unverändert.
+
+| Prüfung | Ergebnis |
+| --- | --- |
+| `region_replay_reproduction.gd` | Auf unverändertem M02 **1/4**, nach Fix **4/4**. Echter Hütertod, dann Gruft–Wald–Gruft ohne Zwischenframe: alter Abschluss darf neue Gruft weder lösen noch belohnen oder deren Hüter entfernen |
+| `region_lifecycle_suite.gd` | **95/95**: beide Richtungen, gesperrte/ungültige Reise, sofortiger Referenzabbau, Ressourcen, Gruppen/IDs, alte Signale/Interaktionen/UI, echte Timer, Projektile/Einschläge/Dornen, aktuelle gültige Hüterbelohnung, Load/neuer Run, zwölf schnelle Wechsel, Savefehler/Retry, Tod/Camp und wiederholtes Unload |
+| Bestehende zwölf Gruppen | **405/405**, einschließlich echtem Zauberkampf gegen Hüter, beiden Questwegen, Legacy-Saves und M01/M02-Fehlerpfaden |
+| `measure_region_lifecycle.gd` | Identischer Lauf auf M02/M03: 14 Wechsel, davon 12 gemessen nach Aufwärmen. Je 14 Player, Views und CombatSysteme; ein aktiver Player, stabile Objekt-/Node-Zahlen. [Rohmessungen](qa/m03_region_measurements.json) |
+| `export_smoke.gd` | Beide Release-Packs: `EXPORT REGION LIFECYCLE PASS`, zusätzlich bestehende State-Replay-/Recovery-/Savefehler-Prüfungen und `EXPORT SMOKE PASS`. Linux nativ; Windows-Pack mit Linux-Engine |
+| Grafische M03-Aufnahmen | **NOT TESTED**: X11-Server konnte lokale Sockets nicht öffnen. Es wurden keine neuen Spielbilder erzeugt. UI-Signale wurden headless geprüft; keine Layout-/Grafikänderung |
+
+Die 95 Lifecycle-Checks enthalten wiederholte Invarianten je Wechsel; sie sind keine 95 verschiedenen Gameplay-Features oder Spielstunden. Der Timer-Test erzeugt bewusst einen außerhalb des alten Baums wartenden SceneTreeTimer mit gebundener Herkunft. Für aktuelle Hüterabschlüsse und bestehenden echten Kampf bleiben positive Tests erhalten, damit die Absicherung nicht einfach alle Abschlüsse blockiert.
+
+Der zuerst versuchte Export fand im frischen Prüfprofil die bereits vorhandenen Vorlagen nicht. Nach Verknüpfung derselben offiziellen 4.5.1-Vorlagen bestanden beide Exporte; kein Produktcode wurde dafür geändert. Der Ausgangsfehler ist separat archiviert. Die Runtime blieb nach dem vollständigen Gate unverändert.
+
+### M03 unter Windows abnehmen
+
+Vorher den bisherigen Ordner `%APPDATA%\Godot\app_userdata\Lichterhain\` separat sichern. Das M03-Paket benutzt denselben Pfad wie M02. Archiv vollständig entpacken; `Spielen/Lichterhain.exe` starten und den alten Stand fortsetzen.
+
+1. Wald → Gruft → Wald mehrfach spielen, auch direkt zurückkehren. Genau ein Magier, passende Gegner, Kamera/HUD und Interaktionen prüfen.
+2. Während gegnerischer Geschosse wechseln; Hüter herausfordern, zurückziehen, Region verlassen und erneut betreten. Alte Angriffe oder ein alter Abschluss dürfen die neue Region nicht treffen.
+3. Nach beiden Wechselrichtungen speichern, Anwendung schließen, laden; Position, Ressourcen, Quest/Funde/Tore und Relikt prüfen.
+4. In der Gruft sterben und zum Lager zurückkehren. Normalen Kampf und Steuerung kurz prüfen.
+5. Ergebnis und möglichst Windows-Version sowie Buildhash festhalten; der Hash der ausgelieferten EXE steht im Paket und Referenzmanifest. Bis dahin bleibt M03 **PARTIALLY TESTED**, M04 **PLANNED**.
+
+
+## Foundation M02 — historischer Nachweis vom 16.09.2026
 
 **IMPLEMENTED**, automatisierte Regression **TESTED**, insgesamt **PARTIALLY TESTED**. 405/405 Checks (290 unverändert erhaltene + 115 neue), zusätzlicher echter OS-Schreibfehler, beide Release-Exporte und Pack-Smokes bestanden. Linux lief nativ; das eingebettete Windows-Spielpaket wurde unter Linux geprüft. Native Windows-Ausführung, persönliche Windows-Spielstände und menschliche Smoke-Runde bleiben **NOT TESTED**.
 
@@ -17,9 +47,9 @@ Bericht: [FOUNDATION_M02.md](docs/FOUNDATION_M02.md); strukturierte Ergebnisse: 
 
 Acht Ansichten wurden mit `tests/capture_source.gd` unter X11/Mesa erzeugt. Drei wurden tatsächlich visuell kontrolliert: Quellengarten, Kampfabschlussdialog und Reliktausrüstung; archiviert unter [qa/m02_images/](qa/m02_images/). Die übliche VSync-Warnung des virtuellen Treibers ist im Capture-Log erfasst. Der Capture-Ablauf stellt den Kampfabschluss direkt her; der echte Kampf bleibt in `source_suite.gd` geprüft. Kein menschlicher Spieltest wird daraus abgeleitet.
 
-### Offene M02-Windows-Smoke-Runde
+### M02-Windows-Spieltest — nachträglich bestätigt
 
-Zuerst den bisherigen Benutzerordner vollständig separat sichern (Pfad in der M01-Anleitung unten); das M02-Testpaket benutzt denselben Speicherort. Einen bestehenden Stand laden, Erinnerungen/Funde erneut aufsuchen und bei Edda sprechen. Bereits erhaltene Funde und abgeschlossene Questbelohnungen dürfen keine weiteren XP erzeugen. Relikt ab-/anlegen, Wald/Gruft wechseln, speichern und neu starten. Auf einem separaten passenden Teststand Erz zweimal ansprechen: nur der erste Fund gibt vier Lichtstaub. Den gewohnten Kampf und die Steuerung kurz prüfen; Ergebnis mit Windows-Version und Buildhash festhalten. Vor Abschluss dieser Runde bleibt M02 **PARTIALLY TESTED**.
+Zuerst den bisherigen Benutzerordner vollständig separat sichern (Pfad in der M01-Anleitung unten); das M02-Testpaket benutzt denselben Speicherort. Einen bestehenden Stand laden, Erinnerungen/Funde erneut aufsuchen und bei Edda sprechen. Bereits erhaltene Funde und abgeschlossene Questbelohnungen dürfen keine weiteren XP erzeugen. Relikt ab-/anlegen, Wald/Gruft wechseln, speichern und neu starten. Auf einem separaten passenden Teststand Erz zweimal ansprechen: nur der erste Fund gibt vier Lichtstaub. Den gewohnten Kampf und die Steuerung kurz prüfen; Ergebnis mit Windows-Version und Buildhash festhalten. Tim hat vor M03 ausdrücklich einen erfolgreichen manuellen Windows-Spieltest bestätigt (**TESTED — Nutzerbericht**, M02 abgeschlossen). Die konkrete Windows-Unterversion, Schrittfolge und Buildhash wurden nicht genannt; die obige Prüfliste wird damit nicht rückwirkend als einzeln protokolliert ausgegeben.
 
 
 ## Foundation M01 — historischer Nachweis vom 16.09.2026
@@ -54,7 +84,7 @@ Godot 4.5.1 Standard und offizielle Exportvorlagen derselben Version verwenden. 
 XDG_DATA_HOME=/absoluter/pruefpfad/data XDG_CONFIG_HOME=/absoluter/pruefpfad/config python3 tools/verify.py /absoluter/pfad/zu/godot
 ```
 
-Seit M02 laufen zwölf Testgruppen nach dem Import nacheinander; unter Linux folgt der echte Schreibfehler. Der Runner prüft Exitcodes, Scriptfehler und den Abschlussmarker des Szenentests. Exportprüfung: beide Presets mit `--export-release` in neue Ausgabepfade exportieren; `tests/export_smoke.gd` extern gegen den Linux-Build und mit dem Linux-Editor über `--main-pack` gegen die Windows-EXE ausführen. Tests, Reports und Dokumentation sind vom Spielpaket ausgeschlossen.
+Seit M03 laufen vierzehn Testgruppen nach dem Import nacheinander; unter Linux folgt der echte Schreibfehler. Der Runner prüft Exitcodes, Scriptfehler und den Abschlussmarker des Szenentests. Exportprüfung: beide Presets mit `--export-release` in neue Ausgabepfade exportieren; `tests/export_smoke.gd` extern gegen den Linux-Build und mit dem Linux-Editor über `--main-pack` gegen die Windows-EXE ausführen. Tests, Reports und Dokumentation sind vom Spielpaket ausgeschlossen.
 
 Die grafische Variante von `tests/save_scene_smoke.gd` benötigt eine grafische Sitzung. Sie ergänzt zwei Capture-Prüfungen (16 statt 14); diese sind kein zweiter Satz von 14 zusätzlichen Regressionstests. Frühere Capture-/Kampfläufe bleiben für gezielte Regressionen erhalten.
 
@@ -100,7 +130,7 @@ Die Tests verwenden eigene Dateinamen und löschen ihre Testspielstände. Sie ü
 
 ## Wiederholen
 
-`godot` steht für Godot 4.5.1. Der lokale Prüfablauf importiert das Projekt und führt die oben beschriebenen zwölf Testgruppen nacheinander aus; unter Linux folgt der echte Schreibfehler-Test. Er wertet zusätzlich Fehlermeldungen im Log aus, da Godot bei manchen Scriptfehlern Exitcode 0 zurückgeben kann.
+`godot` steht für Godot 4.5.1. Der lokale Prüfablauf importiert das Projekt und führt die oben beschriebenen vierzehn Testgruppen nacheinander aus; unter Linux folgt der echte Schreibfehler-Test. Er wertet zusätzlich Fehlermeldungen im Log aus, da Godot bei manchen Scriptfehlern Exitcode 0 zurückgeben kann.
 
 ```bash
 python3 tools/verify.py /absoluter/pfad/zu/godot

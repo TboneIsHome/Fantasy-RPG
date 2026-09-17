@@ -62,3 +62,7 @@ Alle sechs eingefrorenen Spielstände, M00-/M01-Nachweise, Creative Design Bible
 Die öffentlichen GDScript-Felder sind weiterhin lesbar und technisch beschreibbar; diese Iteration migriert die tatsächlichen Laufzeit-Aufrufer, keine komplette Objektimmutabilität. Wiederherstellung und Testaufbau dürfen Felder gezielt konstruieren. Seed/Region bleiben zunächst bei der bestehenden Sitzungs-/Reiselogik; Vitals bei den Actors. Das ist keine vorgezogene M03-Umsetzung.
 
 Bekannte ID-Konventionen und teilweise harte Gameplay-Werte bleiben Gegenstand von M04. Kein Anspruch auf beliebige neue Inhalte ohne künftige Inhaltsvalidierung. Die Creative Design Bible bleibt unverändert maßgeblich; diese Zustandsverantwortung unterstützt nachvollziehbare Konsequenzen und kombinierbare Systeme, ohne offene kreative Details festzulegen.
+
+## Nachträgliche Nutzerabnahme
+
+Tim hat vor dem M03-Auftrag ausdrücklich bestätigt: M02 ist abgeschlossen und zusätzlich durch einen erfolgreichen manuellen Windows-Spieltest bestätigt. Damit ist die damals offene allgemeine Spielabnahme nachgeholt (**TESTED — Nutzerbericht**). Windows-Unterversion, einzelne Testschritte und Buildhash wurden dabei nicht angegeben; daraus wird keine nachträgliche Durchführung der speziellen Windows-Dateifehlerinjektionen abgeleitet. Die obigen automatisierten Belege und damaligen Grenzen bleiben historisch unverändert.

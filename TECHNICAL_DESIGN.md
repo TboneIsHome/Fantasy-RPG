@@ -1,6 +1,6 @@
 # Technische Architektur
 
-Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation M02. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; [M01](docs/FOUNDATION_M01.md) dokumentiert die Save-Absicherung, [M02](docs/FOUNDATION_M02.md) die kontrollierten Fortschrittsaktionen. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
+Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation M03. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; [M01](docs/FOUNDATION_M01.md) dokumentiert die Save-Absicherung, [M02](docs/FOUNDATION_M02.md) die kontrollierten Fortschrittsaktionen und [M03](docs/FOUNDATION_M03.md) den abgegrenzten Regionslebenszyklus. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
 
 ## Laufzeit
 
@@ -10,7 +10,9 @@ Godot **4.5.1 Standard**, GDScript, Compatibility-Renderer, 60 Physikschritte/Se
 
 | Bereich | Dateien / Zuständigkeit |
 |---|---|
-| Zusammenbau | `scripts/game.gd`: baut eine Sitzung, verdrahtet Signale, verarbeitet Interaktionen und Menüzustände |
+| Sitzung | `scripts/game.gd`: RunState, UI/Audio, Interaktionen und explizite Speicherpunkte; verdrahtet regionale Referenzen |
+| Regionslebenszyklus | `world/region_lifecycle.gd`: genau eine aktive Region, Wechsel, Invalidierung, Generationskennung, Ressourcenübernahme und Camp-Rückkehr |
+| Regionsinstanz | `world/region_instance.gd`: bestehender 2D-Aufbau von Terrain, Player, Gegnern, Landmarken, Combat und Atmosphäre |
 | Zustandsdaten | `core/run_state.gd`: Seed, Fortschritt, IDs veränderter Weltobjekte; `core/content.gd`: Definitionen aus JSON |
 | Eingabe / Figur | `actors/player.gd`, `core/input_setup.gd`: Bewegung, Kamera, Zielrichtung, Eingaben |
 | Attribute | `actors/vitals.gd`: Leben, Mana, Ausdauer, Regeneration und Schadensschutz |
@@ -31,7 +33,7 @@ Godot **4.5.1 Standard**, GDScript, Compatibility-Renderer, 60 Physikschritte/Se
 
 Es gibt keine Autoload-Singletons für Spielzustände. Definitionen und unveränderliche Texturen werden statisch gecacht. Eine Sitzung besitzt ihre Welt, Figur, Kampfobjekte und ihren Zustand. Ein neues Spiel ersetzt nur diese Sitzung. Die UI bleibt beim Pausieren bedienbar, die Welt pausiert.
 
-`game.gd` ersetzt bei Gebietswechseln nur den aktiven Weltbaum; der RunState mit beiden Regionen bleibt bestehen. Leben, Mana und Ausdauer werden übernommen. Der alte Baum wird vor dem Aufbau aus dem Szenenbaum entfernt, damit alte Gegner-/Interaktionsgruppen sofort verschwinden. Weltzeit gehört zum RunState und tickt nur im laufenden Spiel, unabhängig von Wald oder Gruft. `combat/thorn_patch.gd` begrenzt die Lebensdauer, prüft Sichtkontakt und nutzt dieselbe Schadensannahme wie andere Angriffe.
+`RegionLifecycle` ersetzt bei Gebietswechseln den aktiven 2D-Regionsbaum; der RunState mit beiden Regionen bleibt bestehen. Leben, Mana und Ausdauer werden übernommen. Der alte Baum wird vor dem Aufbau aus dem Szenenbaum entfernt, damit alte Gegner-/Interaktionsgruppen sofort verschwinden. Lichterhain bleibt dauerhaft 2D-isometrisch; M03 verändert weder Darstellung noch Projektion und enthält keine 3D-Vorbereitung. Weltzeit gehört zum RunState und tickt nur im laufenden Spiel, unabhängig von Wald oder Gruft. `combat/thorn_patch.gd` begrenzt die Lebensdauer, prüft Sichtkontakt und nutzt dieselbe Schadensannahme wie andere Angriffe.
 
 ## Ordner und kommende Module
 
@@ -59,9 +61,33 @@ Persistenz bleibt getrennt: Erfolg einer Fortschrittsaktion bedeutet eine bestä
 
 Die bestehenden Speicherzeitpunkte bleiben erhalten: Erinnerungen/Funde, geöffnete Tore, Questabschluss, Zeichenfortschritt, Herausforderung, Erz, Berichte und Reliktwechsel werden an ihren bisherigen Aufrufstellen gesichert. Gegnerbelohnungen, Entdeckungen, Räume, Waldlicht-Aktivierung, Annahme und Talentlernen gehen wie bisher in den nächsten Checkpoint ein; `changed` erzeugt kein Autosave pro Treffer oder Scan. F5, Rast, Reise und reguläres Schließen bleiben Checkpoints. Wiederholte bereits bestätigte Aktionen benötigen keinen neuen Schreibvorgang. Eine fehlschlagende Speicherung kann ausdrücklich mit F5 wiederholt werden.
 
-Ausnahmen von dieser Fortschrittsoberfläche sind bewusst erhalten: `restore()` und Testaufbau konstruieren geprüfte Zustände direkt; `game.gd` setzt den Seed beim Sitzungsstart und die aktive Region beim vorhandenen Reise-/Respawnablauf (M03). Zeit bleibt bei `advance_time()` ohne Änderungsmeldung pro Frame; Position und Vitals bleiben Actor-Zustand, Einstellungen gehören zur Sitzung. Öffentliche GDScript-Felder sind keine technisch erzwungene Unveränderlichkeit; Laufzeitaufrufer halten die Zuständigkeiten ein.
+Ausnahmen von dieser Fortschrittsoberfläche sind bewusst erhalten: `restore()` und Testaufbau konstruieren geprüfte Zustände direkt; `game.gd` setzt den Seed beim Sitzungsstart; `RegionLifecycle` setzt `RunState.region` beim bestätigten Reise-/Campablauf (M03). Zeit bleibt bei `advance_time()` ohne Änderungsmeldung pro Frame; Position und Vitals bleiben Actor-Zustand, Einstellungen gehören zur Sitzung. Öffentliche GDScript-Felder sind keine technisch erzwungene Unveränderlichkeit; Laufzeitaufrufer halten die Zuständigkeiten ein.
 
 `RunState.LIGHT_IDS` besitzt die bekannten Licht-IDs; `SaveSystem.LIGHTS` bleibt als kompatibler Alias erhalten. Die normale Gegnerannahme prüft die bestehenden Generator-1-IDs/Kinds und verwendet XP aus der vorhandenen JSON-Definition. Die noch feste Identitätskonvention von Generator und Saveprüfung sowie übrige doppelte Inhaltswerte gehören weiterhin zu M04; kein neues Datenformat oder Schema wurde eingeführt.
+
+## Regionslebenszyklus — M03
+
+**IMPLEMENTED.** `game.gd` besitzt einen RegionLifecycle als normalen Kind-Node, ohne `_process()`, Autoload oder Eventbus. Dieser besitzt genau eine RegionInstance (`Node2D`). `game.world`, `terrain`, `player` und `combat` sind lesende Zugriffssichten auf diese Instanz, keine separat gepflegten Referenzen. Generatoren und Views erzeugen weiterhin Terrain/Navigation/Grafik; RegionInstance übernimmt nur den aus game.gd herausgelösten Zusammenbau. SourceStory bleibt ein eigener Sitzungs-Node und besitzt weiter den Quest-/Dialogablauf.
+
+`build()` erzeugt eine Region aus einem gegebenen RunState und Player-Snapshot. `travel()` prüft Ziel, Questzugang und lebenden Player, übernimmt dessen Vitals und setzt `run.region`. `return_to_camp()` behält den bisherigen Tod-in-der-Gruft-Ablauf. Pro erfolgreichem Neuaufbau entstehen ein Terrain, ein neuer Player und ein CombatSystem; bestehende Generatoren werden nicht doppelt aufgerufen, nur um den Wald-Rückkehrpunkt zu ermitteln. Ein erneuter Aufruf für dasselbe Reiseziel baut nichts auf.
+
+Ein Wechsel läuft synchron ab:
+
+1. Aktuelle Instanz ungültig setzen; Verarbeitung und Player-Eingabe deaktivieren, Combat gegen weitere Signal-/Trefferaktionen sperren.
+2. Über das benannte lokale Signal `deactivating` UI-, SourceStory-, Interaktions- und Audio-/Player-Verbindungen lösen. Auch bereits erfasste Callbacks müssen ihre Herkunft noch prüfen.
+3. Aktuelle Besitzerreferenz leeren, alten Baum sofort aus dem Szenenbaum entfernen, danach `queue_free()`. Alte Actors verschwinden sofort aus Gruppen und Physikwelt; Speicherfreigabe erfolgt am Frame-Ende.
+4. Generation erhöhen, genau eine neue 2D-Instanz aufbauen und aktivieren.
+5. Über `activated` SourceStory, HUD, Audio und Player-Tod neu anbinden. Erst nach dem synchronen Wechsel schreibt game.gd seinen bisherigen Save-Checkpoint.
+
+`_transitioning` weist verschachtelte Wechsel zurück. Auch `build_run()` darf während eines Lebenszyklus-Callbacks keinen anderen RunState einsetzen. `unload()` ist wiederholt sicher. Die alten Bäume können bis zum Frame-Ende noch zur Freigabe vorgemerkt sein; sie sind bereits getrennt und inaktiv, also keine zweite aktive Region.
+
+**Identitäten:** `RunState.region` (`forest`/`vault`) bleibt gespeichert. Die RegionInstance trägt nur die Identität ihres Aufbaus und eine transiente fortlaufende `generation`. `is_current(origin_generation)` ist während Abbau oder nach Unload falsch; Reise, Load und neuer Run erzeugen stets eine andere Generation. Die Zahl wird nicht gespeichert und gilt im Kontext ihres RegionLifecycle, nicht als global eindeutige ID zwischen Spielprozessen.
+
+**Verzögerte Aktionen:** SourceStory bindet RunState und Generation schon beim Verbinden der Hütersignale und reicht sie an `finish_broken()` weiter. Die Prüfung erfolgt erneut bei der verzögerten Ausführung. Somit reicht auch eine Rückkehr in dieselbe Gruft nicht aus, um eine alte Aktion gültig zu machen. Rückzugsaktionen sowie Player-Tod/Audio besitzen dieselbe Herkunftsprüfung. Neue regionsübergreifend wartende Timer/Callbacks müssen dieses Muster verwenden; es gibt keinen universellen Dispatcher.
+
+Projektile, Einschläge und Dornen bleiben Kinder des regionsgebundenen CombatSystem. Sie werden gemeinsam deaktiviert, entfernt und freigegeben; ihre Mechanik bleibt unverändert. Alte Combat-Callbacks lehnen nach Deaktivierung weitere Treffer, Belohnungen oder Effekte ab. Interaktionen verlangen ein Objekt aus dem aktuellen Baum. Dialogbuttons aus einem bereits entfernten UI-Panel senden keine Requests mehr.
+
+RunState, Generator-/Saveversionen, JSON-Inhalte und Belohnungsregeln bleiben erhalten. Der Player lebt weiterhin nur bis zum nächsten Neuaufbau. Kein Streaming, Region-Cache, Hintergrundsimulation oder persistenter regionsübergreifender Actor. Savefehler ändern die erfolgreich betretene Region im Arbeitsspeicher nicht zurück; die Meldung bleibt sichtbar und F5 kann erneut speichern.
 
 ## Generierung
 
