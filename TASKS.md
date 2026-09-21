@@ -50,8 +50,13 @@
 - [x] M04 ist durch den neuen Auftrag ausdrücklich autorisiert.
 - [x] M04: gemeinsame Definitionen, einmalige Content-Validierung und Ressourcenkompatibilität ohne Schemawechsel.
 - [x] M04: 707 Checks, Release-Exporte/Fehlerstarts und Foundation Completion Report.
-- [ ] M04: neues Windows-Paket manuell testen und Completion Report gemeinsam prüfen.
-- [ ] Stop nach M04; nächste Entwicklungsphase nur nach gemeinsamer Entscheidung.
+- [x] M04: Tim bestätigt Foundation M00–M04, 707 Checks, manuelle Windows-Abnahme und abgeschlossene gemeinsame Prüfung.
+- [x] M05 durch genehmigtes Interaction Design Proposal V1.0 und Implementation Prompt ausdrücklich freigegeben.
+- [x] M05: synchronen Interaction Contract mit getrennten Angeboten/Anfragen, frischer Prüfung und bestätigten Ergebnissen integrieren.
+- [x] M05: reale Funde, Sickerquelle, Steindurchgang und Quellenfassung schrittweise migrieren; fachliche Zustandsbesitzer erhalten.
+- [x] M05: 789/789 Checks, beide Exporte/Packs, unveränderte Referenzspielstände, Windows-Testpaket und Completion Report.
+- [ ] M05: neues Windows-Paket manuell spielen; Ergebnisse und Completion Report gemeinsam prüfen.
+- [ ] Stop nach M05; M06 und weitere Systeme erst nach eigenem genehmigtem Design und neuer Freigabe.
 
 Audit, konkrete Dateien und Risiken: [docs/FOUNDATION_M00.md](docs/FOUNDATION_M00.md). Verbindliche Reihenfolge und Abnahme: [ROADMAP.md](ROADMAP.md).
 

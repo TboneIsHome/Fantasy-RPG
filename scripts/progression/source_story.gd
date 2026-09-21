@@ -3,6 +3,7 @@ extends Node
 ## Coordinates this quest without coupling persistent state to the live scene.
 const SITE_CELL := Vector2i(78,43)
 const GUARDIAN_CELL := Vector2i(78,51)
+const REACH := 42.0
 var game: Node2D
 var guardian: SourceGuardian
 var site: SourceSite
@@ -72,31 +73,8 @@ func apply_outcome() -> void:
 			else:
 				enemy.peaceful_area=room_bounds
 
-func prompt() -> String:
-	if game.run.source.resolution=="restored": return "E · Im Quellengarten rasten"
-	if game.run.source.resolution=="broken": return "Die Erzader ist abgeerntet." if game.run.source.ore_taken else "E · Sternenerz bergen"
-	return "Die Bindung steht unter Spannung." if is_instance_valid(guardian) and guardian.awake else "E · Die Bindung untersuchen"
-
 func can_use() -> bool:
-	return game.regions.is_current(region_generation) and is_instance_valid(site) and site.is_inside_tree() and game.run.region=="vault" and game.player.vitals.hp>0 and game.player.global_position.distance_to(site.global_position)<=42
-
-func interact() -> void:
-	if not can_use(): return
-	if is_instance_valid(guardian) and guardian.awake:
-		game.ui.toast("Weiche aus oder verlasse den Raum, um dich zurückzuziehen.")
-		return
-	var quest: SourceQuest=game.run.source
-	if quest.resolution=="restored":
-		game.player.vitals.refill()
-		game.combat.effects.ring(site.position,35,Color("c4e8ad"))
-		if game.save_game(): game.ui.toast("Der Quellengarten schenkt dir Ruhe und neue Kraft.")
-	elif quest.resolution=="broken":
-		if game.run.harvest_source_ore():
-			apply_outcome()
-			if game.save_game(): game.ui.toast("Sternenerz geborgen · +%d Lichtstaub" % int(Content.section("source_quest").ore_motes))
-	else:
-		if game.run.inspect_source(): game.save_game()
-		show_choices()
+	return game.regions.is_current(region_generation) and is_instance_valid(site) and site.is_inside_tree() and game.run.region=="vault" and game.player.vitals.hp>0 and game.player.global_position.distance_to(site.global_position)<=REACH
 
 func show_choices() -> void:
 	get_tree().paused=true

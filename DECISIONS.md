@@ -34,6 +34,16 @@
 
 ## Foundation-Entscheidungen
 
+M05-Auftrag und Umsetzung am 2026-09-21:
+
+- Tim erklärt Foundation M00–M04 samt 707 Checks, manueller Windows-Abnahme und Reportprüfung für abgeschlossen. Die früher dokumentierten Plattformgrenzen bleiben historische Prüfnachweise, keine nachträglich ausgeführten Einzeltests.
+- Das ausdrücklich genehmigte Interaction Design Proposal V1.0 und der M05-Auftrag erlauben ausschließlich die Interaction Foundation. Die Creative Bible bleibt unverändert. Nach M05 Stop; M06–M10 sind geplante Richtungen, keine automatische Implementierungsfreigabe.
+- Ein sitzungsgebundener synchroner Vertrag koordiniert Angebot, Anfrage, frische Bedingungen und bestätigte Auflösung. Intents gehören den Verbrauchern. Zustandsänderungen bleiben bei RunState/Vitals; Darstellung und Save-Checkpoints folgen beim konkreten Verbraucher.
+- Zunächst reale Funde, Sickerquelle, vorhandener geheimer Steindurchgang und Quellenfassung migrieren. Andere Interaktionen bleiben bestehen. Keine globale Condition-Engine, kein Eventbus, kein neues Loot-/Dialog-/Inventarsystem.
+- Requests erfassen Generation und Lebenszyklus-ID bei ihrer Entstehung und halten schwache Referenzen. Die UI bewahrt den angebotenen Intent bis zur Ausführung; ein inzwischen geänderter Quellenzustand darf die beabsichtigte Untersuchung nicht still in Erzernte umdeuten.
+- Die bestehenden E-Prompts zeigen weiterhin eine Aktion. Mehrfachauswahl, verborgene Möglichkeiten, Interaktionsdauer/Abbruch/Commitment und konkurrierende Actors bleiben offen. Der Vertrag unterstützt mehrere Angebote, entscheidet aber keine neue Bedienung.
+- 789/789 Checks und beide Release-Packs sind geprüft. Die eigene manuelle M05-Windows-Abnahme bleibt offen. Saveformat 3, Definitionen, Balance, RegionLifecycle und Combat bleiben unverändert.
+
 M04-Auftrag und Umsetzung am 2026-09-20:
 
 - Tim bestätigt M03 samt manuellem Windows-Spieltest und beauftragt ausschließlich Datenkonsistenz und Content-Validierung. Danach Stop mit Foundation Completion Report; M04 braucht eine eigene manuelle Abnahme.

@@ -14,7 +14,8 @@ for script in ['test_suite', 'ui_smoke', 'save_compatibility', 'dungeon_suite', 
                'save_io_reproduction', 'save_fault_suite', 'save_scene_smoke',
                'state_replay_reproduction', 'state_actions_suite', 'state_actions_scene',
                'region_replay_reproduction', 'region_lifecycle_suite',
-               'content_validation_suite', 'data_consistency_suite']:
+               'content_validation_suite', 'data_consistency_suite',
+               'interaction_contract_suite', 'interaction_scene_suite']:
     stages.append((script, ['--script', f'res://tests/{script}.gd']))
 stages.append(('content_startup', []))
 if sys.platform == 'linux':
@@ -42,6 +43,8 @@ for name, args in stages:
         if 'CONTENT STARTUP SUMMARY ' not in run.stdout: errors.append('Missing content startup completion')
     for suite, marker in [('content_validation_suite', 'CONTENT VALIDATION RESULT '), ('data_consistency_suite', 'DATA CONSISTENCY RESULT ')]:
         if name == suite and marker not in run.stdout: errors.append('Missing M04 completion marker')
+    for suite, marker in [('interaction_contract_suite', 'INTERACTION CONTRACT RESULT '), ('interaction_scene_suite', 'INTERACTION SCENE RESULT ')]:
+        if name == suite and marker not in run.stdout: errors.append('Missing M05 completion marker')
     if name == 'save_scene_smoke' and 'SAVE SCENE RESULT ' not in run.stdout:
         errors.append('Missing completion marker: save/close may have ended the test early.')
     if name == 'state_actions_scene' and 'STATE SCENE RESULT ' not in run.stdout:

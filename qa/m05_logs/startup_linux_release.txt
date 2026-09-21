@@ -1,0 +1,53 @@
+ERROR: res://data/content.json
+$ (line 0)
+Invalid JSON: Expected key
+   at: push_error (core/variant/variant_utility.cpp:1024)
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS STARTUP: Test resource overlay installed
+PASS STARTUP: Invalid bundle builds no run, region or player
+PASS STARTUP: Visible startup diagnostic identifies file and actual problem
+PASS STARTUP: No partial content is published
+PASS STARTUP: Content failure blocks saving before file operations
+PASS STARTUP: Failed load is cached; no repeated validation or duplicate errors
+PASS STARTUP: Existing save bytes remain untouched
+CONTENT STARTUP RESULT 7/7 malformed
+ERROR: data/content.json
+source_quest.reward_item
+Missing relic reference
+Received: missing_relic
+   at: push_error (core/variant/variant_utility.cpp:1024)
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS STARTUP: Test resource overlay installed
+PASS STARTUP: Invalid bundle builds no run, region or player
+PASS STARTUP: Visible startup diagnostic identifies file and actual problem
+PASS STARTUP: No partial content is published
+PASS STARTUP: Content failure blocks saving before file operations
+PASS STARTUP: Failed load is cached; no repeated validation or duplicate errors
+PASS STARTUP: Existing save bytes remain untouched
+CONTENT STARTUP RESULT 7/7 reference
+ERROR: data/vault.json
+rooms[0].size
+Room including +/-2 size variation must fit inside grid border
+Received: [19.0, 13.0]
+   at: push_error (core/variant/variant_utility.cpp:1024)
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS STARTUP: Test resource overlay installed
+PASS STARTUP: Invalid bundle builds no run, region or player
+PASS STARTUP: Visible startup diagnostic identifies file and actual problem
+PASS STARTUP: No partial content is published
+PASS STARTUP: Content failure blocks saving before file operations
+PASS STARTUP: Failed load is cached; no repeated validation or duplicate errors
+PASS STARTUP: Existing save bytes remain untouched
+CONTENT STARTUP RESULT 7/7 geometry
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS STARTUP: Initial valid load succeeds
+PASS STARTUP: Test resource overlay installed
+PASS STARTUP: Loaded immutable cache is reused without reparsing changed disk files
+PASS STARTUP: Normal frame activity keeps the one validated bundle
+PASS STARTUP: Existing save bytes remain untouched
+CONTENT STARTUP RESULT 5/5 cache
+CONTENT STARTUP SUMMARY [{"case": "malformed", "passed": true, "checks": 7, "exit_code": 0}, {"case": "reference", "passed": true, "checks": 7, "exit_code": 0}, {"case": "geometry", "passed": true, "checks": 7, "exit_code": 0}, {"case": "cache", "passed": true, "checks": 5, "exit_code": 0}]

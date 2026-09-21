@@ -1,0 +1,269 @@
+{
+  "date": "2026-09-21",
+  "status": "PARTIALLY TESTED",
+  "implemented": "M05 Interaction Foundation",
+  "baseline_commit": "d43a0dbcabd3a4a20df95b433101508084512bcb",
+  "foundation_v1_acceptance": "COMPLETE - manual Windows acceptance explicitly confirmed by Tim before M05",
+  "engine": "4.5.1.stable.official.f62fdbde1",
+  "assertions": {
+    "passed": 789,
+    "total": 789,
+    "existing": 707,
+    "new": 82
+  },
+  "suites": [
+    {
+      "suite": "test_suite",
+      "passed": 50,
+      "checks": 50
+    },
+    {
+      "suite": "ui_smoke",
+      "passed": 14,
+      "checks": 14
+    },
+    {
+      "suite": "save_compatibility",
+      "passed": 8,
+      "checks": 8
+    },
+    {
+      "suite": "dungeon_suite",
+      "passed": 48,
+      "checks": 48
+    },
+    {
+      "suite": "migration_suite",
+      "passed": 12,
+      "checks": 12
+    },
+    {
+      "suite": "source_suite",
+      "passed": 65,
+      "checks": 65
+    },
+    {
+      "suite": "save_io_reproduction",
+      "passed": 8,
+      "checks": 8
+    },
+    {
+      "suite": "save_fault_suite",
+      "passed": 71,
+      "checks": 71
+    },
+    {
+      "suite": "save_scene_smoke",
+      "passed": 14,
+      "checks": 14
+    },
+    {
+      "suite": "state_replay_reproduction",
+      "passed": 3,
+      "checks": 3
+    },
+    {
+      "suite": "state_actions_suite",
+      "passed": 100,
+      "checks": 100
+    },
+    {
+      "suite": "state_actions_scene",
+      "passed": 12,
+      "checks": 12
+    },
+    {
+      "suite": "region_replay_reproduction",
+      "passed": 4,
+      "checks": 4
+    },
+    {
+      "suite": "region_lifecycle_suite",
+      "passed": 95,
+      "checks": 95
+    },
+    {
+      "suite": "content_validation_suite",
+      "passed": 88,
+      "checks": 88
+    },
+    {
+      "suite": "data_consistency_suite",
+      "passed": 89,
+      "checks": 89
+    },
+    {
+      "suite": "interaction_contract_suite",
+      "passed": 29,
+      "checks": 29
+    },
+    {
+      "suite": "interaction_scene_suite",
+      "passed": 53,
+      "checks": 53
+    },
+    {
+      "suite": "content_startup",
+      "passed": 26,
+      "checks": 26
+    }
+  ],
+  "gate": [
+    {
+      "stage": "import",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "test_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "ui_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_compatibility",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "dungeon_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "migration_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "source_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_io_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_fault_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_scene_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_scene",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "region_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "region_lifecycle_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "content_validation_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "data_consistency_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "interaction_contract_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "interaction_scene_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "content_startup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "real_write_error",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "exports": [
+    {
+      "stage": "export_windows",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "export_linux",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "smoke_linux",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "smoke_windows_pack",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "startup_linux_release",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "startup_windows_pack",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "native_M05_Windows": "NOT TESTED",
+  "human_M05_playtest": "NOT TESTED",
+  "new_graphics_capture": "NOT TESTED - no layout or visual asset changes",
+  "discovery_measurement": "Integration test: 120 direct 0.01-second game process steps, 9-11 nearest-target discoveries; existing 0.12-second cadence",
+  "incremental_regression": "M04 baseline and after chest, fountain, secret passage: existing 707 checks. Final gate adds 82 M05 checks.",
+  "development_findings": [
+    "First chest integration passed gameplay but leaked cached script resources at exit; removed mutual DungeonObject/adapter construction dependency, repeated full regression cleanly.",
+    "New scene test parse diagnostics required explicit types; test setup corrected to respect already-harvested frozen fixture. No fixture bytes changed."
+  ],
+  "package": {
+    "filename": "Lichterhain_0.4_M05_Windows.zip",
+    "bytes": 34040548,
+    "sha256": "e8ac2db3a45e592df5e166a3b79babd9ccf469e7c841031e5bd0429766ccff4a",
+    "exe_sha256": "687a1eca7985b6ae040c41eeabf92fb74a132d30498061cbd53d3573394c5dc9",
+    "pe_architecture": "x86_64",
+    "zip_crc": "PASS"
+  },
+  "log_normalization": "ANSI color codes and trailing whitespace removed; messages preserved",
+  "scope": "M05 only. No balance, JSON, save format, RegionLifecycle, combat, stats, weapons or magic changes."
+}

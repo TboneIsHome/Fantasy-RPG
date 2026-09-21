@@ -2,6 +2,8 @@ extends Node2D
 
 var run: RunState
 var regions: RegionLifecycle
+var interactions: InteractionCore
+var nearest_request: InteractionRequest
 # Compatibility views, never separate mutable owners of regional references.
 var world: RegionInstance:
 	get: return regions.current if is_instance_valid(regions) else null
@@ -39,6 +41,7 @@ func _ready() -> void:
 	add_child(source_story)
 	regions=RegionLifecycle.new()
 	add_child(regions)
+	interactions=InteractionCore.new(regions)
 	regions.deactivating.connect(_region_deactivating)
 	regions.activated.connect(_region_activated)
 	build_run("LICHTERHAIN")
@@ -66,6 +69,7 @@ func _region_deactivating(region: RegionInstance) -> void:
 	region.player.was_hit.disconnect(_region_sound.bind("hurt",origin))
 	region.player.died.disconnect(_region_player_died.bind(origin))
 	nearest=null
+	nearest_request=null
 	scan_time=0
 	source_story.clear_region()
 	ui.clear()
@@ -83,6 +87,11 @@ func _region_activated(region: RegionInstance) -> void:
 	player.was_hit.connect(_region_sound.bind("hurt",origin))
 	player.died.connect(_region_player_died.bind(origin))
 	source_story.build_region()
+	for object in terrain.actors.get_children():
+		if object is SourceSite:
+			object.interaction = SourceInteraction.new(object, self)
+		elif object is DungeonObject and object.kind in ["chest", "font", "secret_gate"]:
+			object.interaction = DungeonInteraction.new(object, self)
 	audio.volume=settings.volume
 	ui.settings=settings.duplicate()
 	ui.hud.player=player
@@ -189,11 +198,15 @@ func _process(delta: float) -> void:
 		_scan_landmarks()
 		terrain.update_canopies(player.global_position)
 	if Input.is_action_just_pressed("interact") and is_instance_valid(nearest):
-		interact(nearest)
+		if nearest is DungeonObject and nearest.interaction != null:
+			if nearest_request != null: execute_interaction(nearest_request)
+		else:
+			interact(nearest)
 
 func _scan_landmarks() -> void:
 	nearest=null
-	var closest_distance: float=36
+	nearest_request=null
+	var closest_distance: float=DungeonInteraction.REACH
 	var region := "Die Quellengruft" if run.region=="vault" else "Die Lichterhaine"
 	if run.region=="vault":
 		for room in terrain.data.rooms:
@@ -218,7 +231,14 @@ func _scan_landmarks() -> void:
 	ui.hud.prompt=""
 	if is_instance_valid(source_story.guardian) and source_story.guardian.awake: return
 	if nearest:
-		if nearest is DungeonObject:
+		if nearest is DungeonObject and nearest.interaction != null:
+			var discovery := interactions.discover(player, nearest.interaction, run)
+			ui.hud.prompt=discovery.notice
+			if not discovery.offers.is_empty():
+				var offer: Dictionary=discovery.offers[0]
+				ui.hud.prompt=offer.prompt
+				nearest_request=interactions.request(player, nearest.interaction, offer.intent)
+		elif nearest is DungeonObject:
 			ui.hud.prompt=dungeon_prompt(nearest)
 		elif nearest.kind=="npc":
 			ui.hud.prompt="E · Mit Edda sprechen"
@@ -230,20 +250,22 @@ func _scan_landmarks() -> void:
 			ui.hud.prompt="E · Am Waldlicht rasten" if run.quest_complete else "Dieses Waldlicht leuchtet wieder."
 
 func dungeon_prompt(object: DungeonObject) -> String:
-	if object is SourceSite: return source_story.prompt()
+	if object.interaction != null:
+		var discovery := interactions.discover(player, object.interaction, run)
+		return discovery.notice if discovery.offers.is_empty() else discovery.offers[0].prompt
 	match object.kind:
 		"entrance": return "E · Quellengruft betreten" if run.quest_complete else "E · Die versiegelte Treppe untersuchen"
 		"exit": return "E · In den Sternengarten zurückkehren"
-		"font": return "E · Rasten für %d Lichtstaub" % DungeonGenerator.content().fountain_cost
 		"memory": return "E · Erinnerung lesen"
-		"chest": return "Der Fund liegt in deinem Journal." if object.active else "E · Behältnis öffnen"
 		"lever": return "Die Abkürzung ist geöffnet." if object.active else "E · Wurzelwinde drehen"
 		"gate": return "Das Gitter steht offen." if object.active else "E · Das Gitter untersuchen"
-		"secret_gate": return "Der Stein hat den Weg freigegeben." if object.active else "E · Wasserspuren untersuchen"
 	return ""
 
 func interact_dungeon(object: DungeonObject) -> void:
 	if not regions.owns(object): return
+	if object.interaction != null:
+		_interact_target(object.interaction)
+		return
 	match object.kind:
 		"entrance":
 			if run.quest_complete:
@@ -252,28 +274,11 @@ func interact_dungeon(object: DungeonObject) -> void:
 				get_tree().paused=true
 				ui.dialogue("Die versiegelte Treppe","Drei erloschene Zeichen liegen im Stein. Wecke die drei Waldlichter und kehre zu Edda zurück. Ihr Quellenfokus könnte die Treppe öffnen.",[["Zurück","resume"]])
 		"exit": travel_to("forest")
-		"font":
-			var cost: int=int(DungeonGenerator.content().fountain_cost)
-			if run.motes<cost:
-				ui.toast("Die Sickerquelle benötigt %d Lichtstaub." % cost)
-			elif player.vitals.is_full():
-				ui.toast("Du bist bereits vollständig erholt.")
-			elif run.spend_motes(cost):
-				player.vitals.refill()
-				combat.effects.ring(player.position,28,Color("b7e5d3"))
-				save_game()
 		"memory":
 			if run.unlock_memory(object.id):
 				object.activate()
 				save_game()
 			if object.id in run.vault.memories: show_discovery(object.id)
-		"chest":
-			if not run.collect_vault_relic(object.id):
-				return
-			object.activate()
-			audio.play("light")
-			save_game()
-			show_discovery(object.id)
 		"lever":
 			if run.open_vault_shortcut():
 				open_dungeon_gates()
@@ -281,12 +286,17 @@ func interact_dungeon(object: DungeonObject) -> void:
 		"gate":
 			if not object.active:
 				ui.toast("Die Winde liegt auf der anderen Seite, im Garten ohne Sonne.")
-		"secret_gate":
-			if run.open_vault_secret():
-				open_dungeon_gates()
-				if save_game(): ui.toast("Der Stern im Stein antwortet. Ein verborgener Weg öffnet sich.")
-			elif not run.vault.secret_open:
-				ui.toast("Ein kaum erkennbares Zeichen. Vielleicht kennt das Wasser seine Bedeutung.")
+
+func _interact_target(target: InteractionTarget) -> void:
+	var discovery := interactions.discover(player, target, run)
+	if not discovery.offers.is_empty():
+		execute_interaction(interactions.request(player, target, discovery.offers[0].intent))
+
+func execute_interaction(request: InteractionRequest) -> InteractionResult:
+	var result := interactions.execute(request, run)
+	# Results are confirmed first. An old region never presents into its successor.
+	if interactions.is_current(request): request.target().present(result)
+	return result
 
 func open_dungeon_gates() -> void:
 	for object in get_tree().get_nodes_in_group("landmarks"):
@@ -302,9 +312,6 @@ func show_discovery(id: String) -> void:
 
 func interact(landmark: Landmark) -> void:
 	if not regions.owns(landmark): return
-	if landmark is SourceSite:
-		source_story.interact()
-		return
 	if landmark is DungeonObject:
 		interact_dungeon(landmark)
 		return

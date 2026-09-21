@@ -1,5 +1,13 @@
 # Änderungen
 
+## Gameplay Foundation M05 — 2026-09-21
+
+- Von Tim abgenommene Foundation M00–M04 als Basis erhalten; genehmigten Interaction-Vertrag umgesetzt.
+- Discovery, erfassten Intent, frische Ausführungsprüfung und bestätigte Folgen getrennt. Generation/Lifecycle-ID und schwache Referenzen verwerfen alte Requests; verschachtelte Auflösungen werden abgewiesen.
+- Sternenkarte/Bernsteinsamen, Sickerquelle, geheimer Steindurchgang und Quellenfassung/Garten/Erzader verwenden den Vertrag. Bestehende Zustandsbesitzer, Rückmeldungen und Save-Checkpoints bleiben erhalten.
+- 789/789 Checks, davon 82 neue; beide Release-Exporte und Pack-Prüfungen bestanden. Definitionen, Balance, Saveformat 3, eingefrorene Saves, Regions- und Kampfsystem unverändert.
+- [M05 Completion Report](docs/FOUNDATION_M05.md), Windows-Testpaket und Prüfliste erstellt. Manueller M05-Windows-Test offen: **PARTIALLY TESTED**. Stop vor M06.
+
 ## Foundation M04 — 2026-09-20
 
 - Bestehende Spieler-, Zauber-, Talent-, Gegner- und Belohnungswerte mit Gameplay/HUD/Journal zusammengeführt; keine Balanceänderung.

@@ -1,20 +1,21 @@
 # Roadmap
 
-Stand: 2026-09-21, spielbarer Quellstand 0.4.0 / Foundation M04. Die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md) besitzt das langfristige Spielerlebnis. Aktuell priorisiert Tim robuste Kernsysteme und eine kleine, erweiterbare Weltsimulation. Größe und Systemtiefe werden schrittweise geprüft; der aktuelle Prototyp erfüllt die langfristige Vision noch nicht.
+Stand: 2026-09-21, spielbarer Quellstand 0.4.0 / Gameplay Foundation M05. Tim hat Foundation M00–M04 einschließlich manueller Windows-Abnahme bestätigt und ausschließlich M05 freigegeben. Die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md) besitzt das langfristige Spielerlebnis. Aktuell priorisiert Tim robuste Kernsysteme und eine kleine, erweiterbare Weltsimulation. Größe und Systemtiefe werden schrittweise geprüft; der aktuelle Prototyp erfüllt die langfristige Vision noch nicht.
 
 ## Verbindliche nächste Reihenfolge
 
 | Meilenstein | Kleinster zusammenhängender Umfang | Abnahme / Status |
 | --- | --- | --- |
 | **M00 — Referenz und Audit** | Originalen 0.4-Code gegen Audit V1 prüfen; Quellstand, Reports, Exporte und verfügbare Saves sichern | **COMPLETE** laut Tim. Historische Prüfergebnisse und Grenzen: [FOUNDATION_M00.md](docs/FOUNDATION_M00.md). Der damalige Stop-Punkt wurde durch Tims Auftrag zur Bible-Integration und M01 aufgehoben. |
-| **M01 — Save-System** | I/O-Fehler reproduzieren, minimal absichern und Fehlermeldungen im Pausefenster sichtbar halten | **IMPLEMENTED**, insgesamt **PARTIALLY TESTED**. 290 Checks, echter OS-Schreibfehler und beide Export-Packs **TESTED**; native Windows-/manuelle Abnahme **NOT TESTED**. [Ergebnisse und Grenzen](docs/FOUNDATION_M01.md). Historischer Abschluss; anschließend von Tim zur nächsten Iteration freigegeben. |
+| **M01 — Save-System** | I/O-Fehler reproduzieren, minimal absichern und Fehlermeldungen im Pausefenster sichtbar halten | **COMPLETE** als Teil der von Tim abgenommenen Foundation. 290 historische Checks und Linux-Dateifehler. Native Windows-Dateifehlerinjektion bleibt **NOT TESTED**; spätere Spieltests ersetzen sie nicht. [Ergebnisse und Grenzen](docs/FOUNDATION_M01.md). |
 | **M02 — Zustandsänderungen** | Dauerhafte Fortschrittsaktionen und vollständige Belohnungen beim fachlichen Besitzer bündeln | **COMPLETE** laut Tim; zusätzlicher manueller Windows-Spieltest ausdrücklich bestätigt. 405 automatisierte Checks und historische Nachweise: [Bericht](docs/FOUNDATION_M02.md). Keine nachträgliche Behauptung einzelner nicht protokollierter Windows-Dateifehlertests. |
 | **M03 — Regionslebenszyklus** | Build/Activate/Deactivate/Unload/Travel aus der Sitzung heraus klar abgrenzen | **COMPLETE / TESTED** laut Tim; manueller Windows-Test vor M04 ausdrücklich bestätigt. 504/504 historische Checks. [M03 Completion Report mit Nachtrag](docs/FOUNDATION_M03.md). |
-| **M04 — Inhaltsdaten** | Bestehende JSON-Quellen validieren und Regeln mit Gameplay, HUD und Saveprüfung verbinden | **IMPLEMENTED / PARTIALLY TESTED.** 707/707 Checks, beide Release-Exporte und Release-Fehlerstarts geprüft. Eigener manueller Windows-Test noch **NOT TESTED**. [Foundation Completion Report](docs/FOUNDATION_COMPLETION_REPORT.md). |
+| **M04 — Inhaltsdaten** | Bestehende JSON-Quellen validieren und Regeln mit Gameplay, HUD und Saveprüfung verbinden | **COMPLETE / TESTED** laut Tim einschließlich manueller Windows-Abnahme und Reportprüfung vor M05. 707/707 Checks. [Foundation Completion Report mit Nachtrag](docs/FOUNDATION_COMPLETION_REPORT.md). |
+| **M05 — Interaction Foundation** | Kleiner Vertrag, getrennte Discovery/Execution, frische Validierung und bestätigte Folgen; bestehende reale Verbraucher anbinden | **IMPLEMENTED**, automatisiert **TESTED**, insgesamt **PARTIALLY TESTED**. 789/789 Checks, beide Exporte/Packs und Windows-Testpaket fertig. Eigener manueller M05-Windows-Test **NOT TESTED**. [M05 Completion Report](docs/FOUNDATION_M05.md). |
 
 Nach jedem Umbauschritt: relevante neue Prüfungen, gesamte bestehende Regression, Savegame-Prüfungen, Exportprüfung und dokumentierte manuelle Smoke-Runde. Eine offene Plattformprüfung wird offen ausgewiesen. Keine parallelen Umbauten unabhängiger Kernsysteme und kein Save-Reset als Abkürzung.
 
-**Aktueller Stop:** M04-Windows-Test und Foundation Completion Report gemeinsam prüfen. Keine nächste Entwicklungsphase und keine großen neuen Gameplay-Systeme sind begonnen oder freigegeben.
+**Aktueller Stop:** M05-Windows-Spieltest und M05 Completion Report gemeinsam prüfen. M06 und spätere Systeme sind nicht begonnen und brauchen jeweils ein genehmigtes Design sowie eine neue Implementierungsfreigabe.
 
 ## Bisherige spielbare Referenzen
 
@@ -29,7 +30,16 @@ Das unveränderte 0.4-Release liegt auf `reference/v0.4-original`. M00 baut dara
 
 ## Spätere Entwicklungsphasen — PLANNED
 
-Nach M01–M04 werden konkrete nächste Anforderungen erneut bewertet: Interaktionen und Actor-Stats, Combat-Schnittstellen, begrenzte Zeit-/Wetterzustände, danach Inventar/Equipment/Magie/Status und NPC-/Questmodelle. Bestehende Module werden schrittweise erweitert, wo dies einen nachweisbaren Nutzen hat. JSON bleibt; kein universeller Eventbus und keine leeren Managergerüste.
+| Geplante Richtung | Status / Grenze |
+| --- | --- |
+| M06 Stats Foundation | **PLANNED**; eigenes genehmigtes Systemdesign erforderlich |
+| M07 Combat Resolution | **PLANNED**; auf geklärten Stats-/Schadensverträgen aufbauen |
+| M08 Weapon Foundation | **PLANNED**; kein vorgezogenes Waffenarsenal |
+| M09 Magic Foundation | **PLANNED**; bestehende Fähigkeiten bis dahin erhalten |
+| M10 Status Effects | **PLANNED**; konkrete Anforderungen und Abhängigkeiten zuerst prüfen |
+| Living World Foundation → RPG Systems → Dynamic / Procedural World | **PLANNED**; später in kleine, genehmigte Milestones aufteilen |
+
+Diese Reihenfolge stammt aus Tims Master Chat V2.0 und ist keine pauschale Umsetzungsfreigabe. Bestehende Module werden nur bei nachweisbarem Nutzen schrittweise erweitert. JSON bleibt; kein universeller Eventbus und keine leeren Managergerüste.
 
 Streaming, umfangreiche KI, Fraktionen, Wirtschaft, Crafting, Begleiter und große neue Regionen bleiben später. Ebenso warten neue Klassen, umfangreiche Talentnetze und Inhaltskataloge. Die vorhandenen Bedienungswünsche (Eingabebelegung, Controller, Reichweitenvorschau, Orientierung und Balancing) bleiben im Qualitätsbacklog von TASKS.md, verdrängen aber nicht die aktuelle Stabilisierung.
 

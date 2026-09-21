@@ -1,6 +1,52 @@
 # Prüfungen und bekannte Grenzen
 
-## Foundation M04 — aktueller Nachweis vom 21.09.2026
+## Interaction Foundation M05 — aktueller Nachweis vom 21.09.2026
+
+**IMPLEMENTED**, automatisiert **TESTED**, insgesamt **PARTIALLY TESTED**. Der finale isolierte Gesamtlauf besteht **789/789 Checks**: alle bisherigen 707 plus 82 neue. Zusätzlich bestehen der echte Linux-Schreibfehler sowie beide Release-Exporte, Pack-Smokes und Release-Startproben. **Eigener manueller M05-Windows-Spieltest und native M05-EXE-Ausführung: NOT TESTED.** Tims bestätigte Foundation-Abnahme gilt für den vorherigen M04-Stand. Stop nach M05.
+
+[M05 Completion Report](docs/FOUNDATION_M05.md) · [Ergebnisse](qa/m05_results.json) · [Logs](qa/m05_logs/) · [Prüfsummen](qa/m05_reference_manifest.json).
+
+| Prüfgruppe | Tatsächlicher Nachweis |
+| --- | --- |
+| Unveränderte M04-Basis | 707/707 vor Änderungen; Git-Archiv und Prüfsummen gesichert |
+| Schrittweise Migration | Nach Funden, Sickerquelle und Steindurchgang jeweils die komplette bisherige Regression: 707/707. Danach Quellenadapter und finaler Gesamtlauf |
+| `interaction_contract_suite.gd` | **29/29**: gültige/ungültige Requests, lokale und mehrere Intents, reine Discovery, fehlendes/geändertes Angebot, geänderte Condition, frischer Kontext, bestätigte mehrere Folgen, Reentranz, Wiederholung, falsche Sitzung, leere/freigegebene Referenzen, alte Generation, echte Funde und Save/Load |
+| `interaction_scene_suite.gd` | **53/53**: reale Sickerquelle mit Kosten/vollen Ressourcen, Bewegung/Tod/neuem Sichthindernis zwischen Angebot und Ausführung, Reentranz und Savefehler/Retry; Steindurchgang mit/ohne Hinweis und tatsächlicher Barriere/Navigation; Quellenfassung, laufender Hüter, Zeichenweg, Garten, Erz, Original-Fixtures und einmalige Folgen |
+| Region und Eingabe | Echter SceneTreeTimer liefert eine alte Anfrage nach Gruft–Wald–Gruft; detach/queue_free/freigegebenes Target; genau ein Player, SourceStory-Referenzen; echter HUD-/E-Pfad hält den gewählten Intent fest, statt nach Zustandswechsel eine andere Handlung auszuführen |
+| Discovery-Aufwand | Instrumentierte echte Sickerquelle: 120 direkte `_process(0.01)`-Schritte erzeugen 9–11 Discovery-Aufrufe. Bestehender 0,12-s-Takt; keine Prüfung aller Targets oder Bedingungen pro Frame. Kein allgemeiner FPS-/Benchmarknachweis |
+| Bisherige Regression | **707/707** einschließlich aller eingefrorenen 0.1/0.2/0.3/0.4-Saves, Migrationen, Recovery, Schreib-/Renamefehler, Zustandsbesitzer, Regionen, Datenvalidierung und Spielabläufe |
+| Release-Packs | Linux nativ und eingebettetes Windows-Pack mit Linux-Engine: `EXPORT INTERACTION CONTRACT PASS`, zusätzlich alle bisherigen Export-Marker. Vier Content-Startproben je Pack bestanden; diese wiederholten Prüfungen werden nicht nochmals zur 789-Summe gezählt |
+| Windows-ZIP | EXE ist PE x86_64; ZIP-CRC und Übereinstimmung mit der geprüften Exportdatei kontrolliert. Startanleitung, Buildhash und M05-Prüfliste enthalten |
+
+Der finale Runner umfasst unter Linux **21 Stufen**: Import, 18 GDScript-Gruppen, Content-Startproben und echter Linux-Dateifehler. Die Zahl 789 zählt Assertions einschließlich parametrisierter Fälle, keine Features oder Spielstunden. Zwei bestehende Szenenprüfungen stellen den Player nun tatsächlich neben den migrierten Brunnen/Fund; der doppelte Fund erhält einen echten Adapter. Alle bisherigen Assertions bleiben erhalten.
+
+Frühe Entwicklungsfehler sind in den Logs erhalten: Die erste Fundintegration bestand ihre Gameplayprüfungen, hinterließ aber wegen einer gegenseitigen Script-Konstruktionsabhängigkeit Ressourcen beim Prozessende. Adapter werden jetzt durch die Sitzung verdrahtet; der wiederholte vollständige Lauf beendet sich ohne diese Leaks. Neue Testskripte benötigten explizite Typen. Das originale Kampfweg-Fixture enthält bereits abgeerntetes Erz; die Prüfung verwendet für den vorherigen Zustand eine separate Arbeitsspeicherkopie. Kein Fixture wurde umgeschrieben. Die im historischen M04-Bericht genannte einmalige parallele Testabweichung wird nicht als durch M05 behoben behauptet; M05-Gates und Exporte liefen seriell in getrennten Profilen.
+
+### M05 reproduzieren
+
+Godot **4.5.1** und passende offizielle Exportvorlagen verwenden. Alle Prüfungen laufen mit eigenen Benutzerprofilen; persönliche Windows-Saves und eingefrorene Fixtures bleiben unberührt. Nicht gleichzeitig gegen denselben Testordner exportieren/testen.
+
+```bash
+XDG_DATA_HOME=/absoluter/testpfad/data XDG_CONFIG_HOME=/absoluter/testpfad/config python3 tools/verify.py /absoluter/pfad/zu/godot
+```
+
+Die Exportbefehle und Startproben unten gelten weiter. Gegen beide frisch gebauten Packs zusätzlich `tests/export_smoke.gd` ausführen; der Windows-Pack-Test unter Linux ist keine native Windows-Abnahme. Erwartete Content-Diagnosen sind ausschließlich in den gezielten Content-Startproben erlaubt. Fehlende M05-Abschlussmarker, Scriptfehler und Timeouts lassen den Runner fehlschlagen.
+
+### M05 unter Windows abnehmen — NOT TESTED
+
+Zuerst den gesamten bisherigen Ordner `%APPDATA%\Godot\app_userdata\Lichterhain\` separat sichern. `Lichterhain_0.4_M05_Windows.zip` vollständig entpacken und `Spielen/Lichterhain.exe` öffnen. Das Paket benutzt denselben Savepfad und weiterhin Format 3. Unterschiedliche Quellenwege auf getrennten Testkopien prüfen; keine Originalstände zurücksetzen.
+
+1. Vorhandenen Foundation-Stand fortsetzen; HUD, Journal, Relikt, Funde und aktueller Quellenzustand müssen passen.
+2. Noch vorhandene Sternenkarte/Bernsteinsamen öffnen, erneut ansprechen, speichern/neustarten: Fund und XP nur einmal. Bereits gesammelte Funde bleiben verbraucht.
+3. Sickerquelle verletzt mit ausreichendem Lichtstaub, vollständig erholt und ohne ausreichenden Lichtstaub ansprechen. Nur eine tatsächliche Rast kostet weiterhin 2 Lichtstaub; Hinweis und Ressourcen stimmen.
+4. Steindurchgang vor/nach dem Wasserhinweis untersuchen. Der bisherige Hinweistext bzw. der geöffnete begehbare Weg bleibt erhalten; offene Passage nach Laden prüfen.
+5. Quellenfassung untersuchen, Zeichen-/Herausforderungsdialog prüfen und vor aktivem Hüter keine Rast/Ernte erhalten. Auf passenden separaten Ständen Garten kostenlos nutzen bzw. Erz genau einmal für 4 Lichtstaub bergen. Quest-/Reliktbelohnungen nicht erneut vergeben.
+6. Wald → Gruft → Wald → Gruft, auch zügig. Ein Player, passende Gegner, aktuelle Prompts und funktionierende neue Targets; speichern, schließen, fortsetzen. Bewegung, zwei Zauber und Ausweichen kurz prüfen.
+7. Auffälligkeiten, Windows-Version und EXE-Hash aus `START_HIER.txt` notieren; M05-Bericht gemeinsam prüfen. Keine automatische Freigabe von M06.
+
+## Foundation M04 — historischer Nachweis vom 21.09.2026
+
+**Späterer Nachtrag:** Tim hat vor M05 Foundation M00–M04 samt 707/707 Checks, manueller Windows-Abnahme und abgeschlossener Reportprüfung bestätigt (**COMPLETE**). Die folgenden Aussagen und Prüflisten dokumentieren den damaligen Auslieferungsstand; sie behaupten keine nachträglich protokollierten Einzeltests.
 
 **IMPLEMENTED / PARTIALLY TESTED.** Der finale isolierte Gesamtlauf besteht **707/707 Checks**: 504 bisherige und 203 neue. Zusätzlich bestehen der echte Linux-Schreibfehler und die Release-Prüfungen. **Eigener manueller M04-Windows-Spieltest: NOT TESTED.** Tims ausdrückliche M03-Abnahme deckt den neuen Build nicht ab. Nach M04 ist Stop vor einer weiteren Entwicklungsphase.
 

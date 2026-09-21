@@ -170,6 +170,7 @@ func verify() -> void:
 	var font: DungeonObject
 	for node in get_nodes_in_group("landmarks"):
 		if node.id == "vault_font": font=node
+	game.player.position=font.position+Vector2(0,24)
 	game.interact_dungeon(font)
 	check(game.run.motes == 10,"Full changed maxima do not charge fountain cost")
 	game.player.vitals.hp=120

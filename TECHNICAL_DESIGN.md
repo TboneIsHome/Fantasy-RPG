@@ -1,6 +1,6 @@
 # Technische Architektur
 
-Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation M04. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; [M01](docs/FOUNDATION_M01.md) dokumentiert die Save-Absicherung, [M02](docs/FOUNDATION_M02.md) die kontrollierten Fortschrittsaktionen und [M03](docs/FOUNDATION_M03.md) den abgegrenzten Regionslebenszyklus. [Foundation Completion Report](docs/FOUNDATION_COMPLETION_REPORT.md) fasst den Abschlussstand und seine Abnahmegrenzen zusammen. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
+Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation v1.0 und Interaction Foundation M05. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; [M01](docs/FOUNDATION_M01.md) dokumentiert die Save-Absicherung, [M02](docs/FOUNDATION_M02.md) die kontrollierten Fortschrittsaktionen und [M03](docs/FOUNDATION_M03.md) den abgegrenzten Regionslebenszyklus. Der [Foundation Completion Report](docs/FOUNDATION_COMPLETION_REPORT.md) enthält den M00–M04-Abschluss und Tims anschließende Windows-Abnahme; [M05](docs/FOUNDATION_M05.md) dokumentiert die neue Iteration. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
 
 ## Laufzeit
 
@@ -11,6 +11,8 @@ Godot **4.5.1 Standard**, GDScript, Compatibility-Renderer, 60 Physikschritte/Se
 | Bereich | Dateien / Zuständigkeit |
 |---|---|
 | Sitzung | `scripts/game.gd`: RunState, UI/Audio, Interaktionen und explizite Speicherpunkte; verdrahtet regionale Referenzen |
+| Interaktionsvertrag | `interaction/interaction_core.gd`, `interaction_target.gd`, `interaction_request.gd`, `interaction_context.gd`, `interaction_result.gd`: sitzungsgebundene Anfrage, aktuelle Angebote/Validierung, bestätigtes Ergebnis; kein Besitzer von Gameplayregeln |
+| Interaktionsverbraucher | `dungeon/dungeon_interaction.gd`, `source_interaction.gd`: vorhandene Truhen, Sickerquelle, Steindurchgang und Quellenfassung; fragen RunState/Vitals an und präsentieren das bestätigte Ergebnis |
 | Regionslebenszyklus | `world/region_lifecycle.gd`: genau eine aktive Region, Wechsel, Invalidierung, Generationskennung, Ressourcenübernahme und Camp-Rückkehr |
 | Regionsinstanz | `world/region_instance.gd`: bestehender 2D-Aufbau von Terrain, Player, Gegnern, Landmarken, Combat und Atmosphäre |
 | Zustandsdaten | `core/run_state.gd`: Seed, Fortschritt, IDs veränderter Weltobjekte |
@@ -38,7 +40,7 @@ Es gibt keine Autoload-Singletons für Spielzustände. Definitionen und unverän
 
 ## Ordner und kommende Module
 
-`scenes/` Einstiegsszene; `scripts/actors`, `art`, `audio`, `combat`, `core`, `dungeon`, `persistence`, `progression`, `ui`, `world`; `data/` Werte und Ortsdefinitionen; `tests/` ausführbare Prüfungen; `tools/verify.py` lokaler Prüfablauf.
+`scenes/` Einstiegsszene; `scripts/actors`, `art`, `audio`, `combat`, `core`, `dungeon`, `interaction`, `persistence`, `progression`, `ui`, `world`; `data/` Werte und Ortsdefinitionen; `tests/` ausführbare Prüfungen; `tools/verify.py` lokaler Prüfablauf.
 
 SourceQuest und RelicInventory sind eigene Module. Ein allgemeiner Questgraph, weitere Ausrüstungsarten und allgemeine NPC-Erinnerungen folgen später. Fraktionen und abstrakte Regionsereignisse kommen danach. Dafür werden aktuell keine leeren Scheinmodule angelegt.
 
@@ -89,6 +91,53 @@ Ein Wechsel läuft synchron ab:
 Projektile, Einschläge und Dornen bleiben Kinder des regionsgebundenen CombatSystem. Sie werden gemeinsam deaktiviert, entfernt und freigegeben; ihre Mechanik bleibt unverändert. Alte Combat-Callbacks lehnen nach Deaktivierung weitere Treffer, Belohnungen oder Effekte ab. Interaktionen verlangen ein Objekt aus dem aktuellen Baum. Dialogbuttons aus einem bereits entfernten UI-Panel senden keine Requests mehr.
 
 RunState, Generator-/Saveversionen, JSON-Inhalte und Belohnungsregeln bleiben erhalten. Der Player lebt weiterhin nur bis zum nächsten Neuaufbau. Kein Streaming, Region-Cache, Hintergrundsimulation oder persistenter regionsübergreifender Actor. Savefehler ändern die erfolgreich betretene Region im Arbeitsspeicher nicht zurück; die Meldung bleibt sichtbar und F5 kann erneut speichern.
+
+## Interaktionsvertrag — M05
+
+**IMPLEMENTED.** Die Sitzung besitzt einen `InteractionCore` als `RefCounted`, ohne eigenen Prozess, Autoload oder Signale. Ein vorhandenes DungeonObject kann einen `InteractionTarget`-Adapter besitzen. Die Sitzung verdrahtet die derzeit ausgewählten Verbraucher einmal nach Regionsaktivierung. Das Objekt hält seinen Adapter; Adapter und Request halten die Weltobjekte nur über schwache Referenzen. Es entsteht kein zusätzlicher Interaktions-Node pro Objekt und keine globale Target-Registrierung.
+
+Der Kern kennt keine Truhen, Questbedingungen, Kosten, Beute oder VFX. Er prüft Herkunft/Lebensdauer, lässt den Verbraucher sein aktuelles Angebot und seine Bedingungen prüfen und gibt dessen Ergebnis zurück. `RunState`, DungeonProgress, SourceQuest und Vitals behalten ihre vorhandenen Fachregeln. Der Adapter schreibt keine zweite persistente Zustandskopie.
+
+### Tatsächliche Schnittstellen
+
+| Schnittstelle | Vertrag |
+| --- | --- |
+| `core.discover(actor, target, state)` | Liefert `{"offers": [...], "notice": "..."}` vom Target. Jedes Angebot besitzt einen eindeutigen lokalen `intent` und `prompt`. Ein Target darf mehrere Angebote liefern; es gibt kein globales Verb-Enum. Discovery ist ohne Zustandsänderung, Dateizugriff oder aufwendige Bedingungsprüfung. |
+| `core.request(actor, target, intent)` | Erzeugt eine Anfrage mit gewähltem Intent, schwachen Actor-/Adapterreferenzen, Herkunftsgeneration und Lebenszyklus-ID. Diese Herkunft wird beim Erstellen erfasst, niemals bei späterer Lieferung neu zugewiesen. |
+| `InteractionContext` | Für den synchronen Aufruf frisch aufgebaut: Actor, tatsächlicher Target-Node, Intent, opaque `world_state`-Referenz und Generation. `distance()` verwendet aktuelle Weltpositionen. Actor-Ressourcen werden am tatsächlichen Actor gelesen; der Weltzustand wird weder kopiert noch gespeichert. |
+| `target.validate(context)` | Leerer `StringName` erlaubt die Auflösung; ein lokaler Grundcode weist sie ab. Der Kern enthält keine Condition-Engine. Validation verändert keinen Zustand und wartet nicht. |
+| `target.resolve(context)` | Fragt die zuständigen Fachsysteme an und liefert erst nach deren synchronem Ergebnis einen `InteractionResult`. Keine Coroutines oder wartenden Animationen innerhalb der Auflösung. |
+| `InteractionResult` | `resolved` unterscheidet Ablehnung vor/bei der Auflösung von einem bestätigten Ausgang. `code` ist ein lokaler Grund/Ausgang. `consequences` enthält eine kopierte, außen schreibgeschützte Dictionary mit bereits angewandten Folgen; aktuelle Verbraucher nutzen nur einfache Werte. Keine weiter auszuführenden Befehle oder Node-Referenzen. |
+| `game.execute_interaction(request)` | Ruft den Kern mit dem aktuellen RunState auf. Erst danach ruft die Sitzung `target.present(result)` auf, sofern Herkunft, Actor und Ziel weiterhin aktuell sind. Darstellung und bestehende Save-Checkpoints gehören diesem Verbraucher, nicht dem Core. |
+
+Ausführung: Herkunft und lebende Baumreferenzen prüfen → frischen Kontext bilden → angebotenen Intent erneut abgleichen → konkrete Bedingungen erneut prüfen → Lebensdauer nochmals prüfen → fachlich auflösen → Ergebnis zurückgeben → bei weiterhin aktueller Region präsentieren. Die erneute Discovery wählt **keinen anderen Intent**: Eine frühere Untersuchung darf nach einem Quellenabschluss nicht automatisch Erz ernten.
+
+Das Ergebnis darf ohne Weltänderung bestätigt sein. Der geschlossene Steindurchgang lässt sich untersuchen, obwohl der Wasserhinweis noch fehlt; der bisherige Hinweistext ist ein gültiger Ausgang `unreadable`. Eine volle oder unbezahlbare Sickerquelle wird dagegen vor dem Abbuchen abgelehnt. Ein bereits eingesammelter Fund bietet keine weitere Öffnung an. Zustand und Wiederholbarkeit werden beim zuständigen Besitzer geprüft, nicht durch einen generischen Einmal- oder Cooldownmechanismus.
+
+### Migrierte Verbraucher und Grenzen
+
+| Vorhandenes Ziel | Lokaler Intent | Zuständigkeit / bestätigte Folgen |
+| --- | --- | --- |
+| Sternenkarte, Bernsteinsamen | `open` | RunState/DungeonProgress vergeben den vorhandenen Fund und seine bestehenden XP genau einmal; danach Grafik, Klang, Save und Discovery-Dialog. |
+| Sickerquelle | `rest` | Aktueller Actor, Reichweite/Sicht, vorhandene Kosten und Ressourcenstand prüfen; RunState bezahlt, Vitals füllt auf, danach Ring und Save. |
+| Stein mit Wasserspuren | `inspect` | RunState entscheidet mit dem bestehenden Wasserhinweis über Öffnung; bestätigte Öffnung aktualisiert die bestehende Barriere/Navigation und speichert. Ohne Hinweis bleibt der alte Reaktionstext erhalten. |
+| Quellenfassung / Garten / Erzader | `inspect`, `rest` oder `gather`, je nach Zustand | SourceInteraction fragt RunState/Vitals an. SourceStory behält Wahl-/Zeichendialoge, Herausforderung, Hüterabschluss und Weltreaktion; bestehende Questregeln und einmalige Erzbelohnung bleiben erhalten. |
+
+Die gemeinsame Nahprüfung der **Verbraucher** verwendet den tatsächlichen lebenden Magier, dessen RunState, Entfernung und einen aktuellen Sichtstrahl. Die vorhandene Auswahlgrenze bleibt 36 Pixel (`DungeonInteraction.REACH`); die bisherige Quellen-Ausführungsgrenze bleibt 42 Pixel (`SourceStory.REACH`, auch für bestehende Dialogbedingungen). Das Target-eigene Torhindernis ist kein fremdes Sichthindernis. Ein fremdes Hindernis oder eine zwischenzeitliche Bewegung wird bei der Ausführung erkannt. Künftige Actors dürfen den generischen Vertrag verwenden, benötigen aber ihren eigenen Verbraucher; diese Adapter sind ausdrücklich für den vorhandenen Player ausgelegt.
+
+Die bestehende Suche innerhalb der einzigen aktiven Region bleibt bei 0,12 Sekunden. Nur das nächste relevante Target wird nach seinen Angeboten gefragt. Die UI zeigt wie bisher die erste vorhandene Aktion oder einen Informationstext. Sie leitet die Aktion bei migrierten Zielen nicht aus dem Objekttyp ab; `E` verwendet die erfasste Anfrage. Keine neue Mehrfachauswahl-UI, globale Weltsuche oder per-Frame-Condition-Auswertung.
+
+NPC/Edda, Lager/Waldlichter, Erinnerungen, Wurzelwinde, Hauptgitter und Regionsübergänge bleiben bei ihren bestehenden Pfaden. `game.interact()`/`interact_dungeon()` leiten die migrierten Ziele in den Vertrag. Bestehende M02/M04-Tests positionieren den Player nun tatsächlich neben ihrem Testobjekt; ihre bisherigen Assertions bleiben erhalten.
+
+### Lebensdauer, Reentranz und Persistenz
+
+M03 bleibt unverändert. Die Sitzung löscht ihre nächste Anfrage bei Deaktivierung; extern aufgehobene Requests scheitern trotzdem an Lifecycle-ID/Generation und schwachen Referenzen. Ein gleicher stabiler Objektname in einer neu aufgebauten Gruft macht einen alten Request nicht gültig. Entfernte, zur Freigabe vorgemerkte und freigegebene Targets werden abgewiesen. Kein alter Ergebnisdialog wird in der neuen Region angezeigt.
+
+Während einer synchronen Ausführung weist der Core verschachtelte Ausführungen mit `busy` zurück, auch aus vorhandenen RunState-Signalhandlern. Danach entscheidet wieder der fachliche Zustand über eine neue Anfrage. Dies ist keine Reservierung für mehrere NPCs, kein Thread-/Mehrspieler-Locking, keine lang dauernde Aktion und keine allgemeine Rollback-Transaktion. Consumer-Callbacks müssen synchron bleiben; reaktive Regionswechsel innerhalb einer noch laufenden fachlichen Mutation sind kein unterstützter Ablauf.
+
+Bestätigung bedeutet eine abgeschlossene Änderung im Arbeitsspeicher. Ein anschließend fehlgeschlagener Save macht die Aktion nicht ungeschehen und berechtigt nicht zur erneuten Belohnung. Der bestehende Fehler bleibt sichtbar, der letzte gültige Datenträgerstand bleibt erhalten, und F5 kann denselben Zustand erneut speichern. Schema 3, Generatoren, JSON-Balance, eingefrorene Spielstände und die Save-Implementierung sind unverändert. Der Core speichert weder Requests noch Context/Result.
+
+Bewusst offen bleiben die im genehmigten Proposal genannten UX-Auswahlregeln, verborgene Interaktionsmöglichkeiten, Dauer/Abbruch/Commitment und konkurrierende Actors. M05 entscheidet diese Bereiche nicht vor. Aktuelle Tests und Abnahme: [TESTING.md](TESTING.md); Ergebnis und Risiken: [M05 Completion Report](docs/FOUNDATION_M05.md).
 
 ## Inhaltsdaten und Konsistenz — M04
 

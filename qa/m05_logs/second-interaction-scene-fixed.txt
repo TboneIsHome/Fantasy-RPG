@@ -1,0 +1,17 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS INTERACTION SCENE: Existing fountain offers Rest with its definition-owned cost
+PASS INTERACTION SCENE: Repeated fountain discovery neither spends currency nor restores resources
+PASS INTERACTION SCENE: Resource condition changed after discovery is rechecked before execution
+PASS INTERACTION SCENE: Full actor is rejected without a charge
+PASS INTERACTION SCENE: Execution rechecks distance after the actor moved
+PASS INTERACTION SCENE: Dead actor cannot use the fountain
+PASS INTERACTION SCENE: Real fountain returns both applied consequences
+PASS INTERACTION SCENE: Existing currency signal cannot reenter the interaction while resolution is incomplete
+PASS INTERACTION SCENE: Fountain checkpoint includes both currency and restored resources
+PASS INTERACTION SCENE: Repeated full-health request never charges twice
+PASS INTERACTION SCENE: Repeatable fountain remains usable after later damage
+PASS INTERACTION SCENE: Save failure preserves both confirmed in-memory action and last good file
+PASS INTERACTION SCENE: Save failure does not turn retry into a duplicate charge
+PASS INTERACTION SCENE: Explicit save retry persists the existing result without replaying it
+INTERACTION SCENE RESULT 14/14

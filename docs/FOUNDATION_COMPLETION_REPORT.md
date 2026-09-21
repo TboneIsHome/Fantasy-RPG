@@ -1,5 +1,9 @@
 # LICHTERHAIN — FOUNDATION COMPLETION REPORT
 
+**Nachtrag vom 21.09.2026:** Tim hat vor M05 die Prüfung dieses Berichts, Foundation M00–M04, 707/707 Checks und die manuelle Windows-Abnahme ausdrücklich bestätigt. Foundation v1.0 ist damit **COMPLETE**. Anschließend wurde ausschließlich das genehmigte Interaction Design für M05 freigegeben. Der aktuelle Folgebericht ist [FOUNDATION_M05.md](FOUNDATION_M05.md). Die folgenden Aussagen bleiben als historischer Stand zum damaligen Abschluss erhalten; der Nutzerbericht ersetzt keine einzeln protokollierte native Windows-Dateifehlerinjektion.
+
+---
+
 Stand: 21.09.2026 · Quellstand 0.4.0 / Foundation M04 · Godot 4.5.1.
 
 **M04: IMPLEMENTED / PARTIALLY TESTED.** Die technische Umsetzung, automatisierte Regression und Release-Prüfung sind abgeschlossen. Die eigene manuelle Windows-Abnahme des neuen Pakets steht aus. **Stop nach M04.** Keine anschließende Entwicklungsphase wurde begonnen.

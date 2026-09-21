@@ -1,6 +1,7 @@
 class_name DungeonObject
 extends Landmark
 var barrier: StaticBody2D
+var interaction: InteractionTarget
 
 func configure(point: Dictionary, is_active: bool) -> void:
 	id=point.id

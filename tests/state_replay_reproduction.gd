@@ -24,6 +24,8 @@ func verify() -> void:
 	var stale := DungeonObject.new()
 	stale.configure({"id":"star_chart", "kind":"chest", "name":"Die vergessene Sternenkarte", "tile":Vector2i(78,46)}, false)
 	game.terrain.actors.add_child(stale)
+	stale.interaction = DungeonInteraction.new(stale, game)
+	game.player.position = stale.position + Vector2(0,24)
 	game.interact_dungeon(stale)
 	check(game.run.serialize() == before, "Repeated request from an inactive second chest view cannot grant another item or XP")
 	check(SaveSystem.validate(SaveSystem.snapshot(game.run, game.player, game.settings)).is_empty(), "Repeated chest request leaves a saveable state")
