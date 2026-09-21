@@ -177,7 +177,7 @@ func journal(run: RunState, discoveries: bool = false, equipment: bool = false) 
 			copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 			row.add_child(copy)
 			label(copy,definition.name,14,HudCanvas.GOLD)
-			label(copy,definition.description,11,HudCanvas.MUTED)
+			label(copy,Content.description(definition),11,HudCanvas.MUTED)
 			button(content,"Abnehmen" if run.inventory.equipped==id else "Anlegen","equip_relic","" if run.inventory.equipped==id else id)
 		label(content,"Beide Wege durch die Quellengeschichte geben dasselbe Relikt. Seine Wirkung gilt, solange du es trägst.",10,HudCanvas.MUTED)
 	elif discoveries:
@@ -189,7 +189,7 @@ func journal(run: RunState, discoveries: bool = false, equipment: bool = false) 
 			label(content,entry.title,13,HudCanvas.GOLD)
 			label(content,entry.text,11,HudCanvas.MUTED)
 	else:
-		label(content,"Stufe %d · %d / %d Erfahrung · %d Talentpunkte" % [run.level,run.xp,run.level*60,run.skill_points],11)
+		label(content,"Stufe %d · %d / %d Erfahrung · %d Talentpunkte" % [run.level,run.xp,RunState.xp_required(run.level),run.skill_points],11)
 		for id in Content.section("skills"):
 			var data: Dictionary=Content.section("skills")[id]
 			var row := HBoxContainer.new()
@@ -199,10 +199,10 @@ func journal(run: RunState, discoveries: bool = false, equipment: bool = false) 
 			copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 			row.add_child(copy)
 			label(copy,data.name,12,HudCanvas.GOLD)
-			label(copy,data.description,10,HudCanvas.MUTED)
+			label(copy,Content.description(data),10,HudCanvas.MUTED)
 			var learn := button(row,"Gelernt" if id in run.learned else "Lernen","learn",id)
 			learn.disabled=id in run.learned or run.skill_points<=0
-		label(content,"Beutel: %d Lichtstaub · %d / 3 Waldlichter" % [run.motes,run.active_lights.size()],11)
+		label(content,"Beutel: %d Lichtstaub · %d / %d Waldlichter" % [run.motes,run.active_lights.size(),RunState.LIGHT_IDS.size()],11)
 		if run.quest_complete:
 			label(content,"Quellenfokus: Waldlichter als Rastpunkte; Zugang zur Quellengruft.",10,HudCanvas.GOLD)
 		else:

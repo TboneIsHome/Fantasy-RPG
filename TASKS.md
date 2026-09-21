@@ -46,9 +46,12 @@
 - [x] M02: Tim bestätigt ausdrücklich den erfolgreichen manuellen Windows-Spieltest vor dem M03-Auftrag.
 - [x] M03: sitzungsgebundenen 2D-Regionslebenszyklus, Generationsprüfung und Referenzabbau umsetzen.
 - [x] M03: 504 Checks, alte Hüteraktion reproduzieren/abweisen, doppelte Aufbauten ausschließen, Exporte/Packs prüfen und Completion Report erstellen.
-- [ ] M03: neues Windows-Testpaket manuell abnehmen; bis dahin insgesamt PARTIALLY TESTED.
-- [ ] Stop nach M03; M04 erst mit neuem Auftrag beginnen.
-- [ ] Danach M04: JSON-Inhalte validieren und doppelte Gameplay-Werte schrittweise zusammenführen.
+- [x] M03: Tim bestätigt im M04-Auftrag den erfolgreichen manuellen Windows-Test.
+- [x] M04 ist durch den neuen Auftrag ausdrücklich autorisiert.
+- [x] M04: gemeinsame Definitionen, einmalige Content-Validierung und Ressourcenkompatibilität ohne Schemawechsel.
+- [x] M04: 707 Checks, Release-Exporte/Fehlerstarts und Foundation Completion Report.
+- [ ] M04: neues Windows-Paket manuell testen und Completion Report gemeinsam prüfen.
+- [ ] Stop nach M04; nächste Entwicklungsphase nur nach gemeinsamer Entscheidung.
 
 Audit, konkrete Dateien und Risiken: [docs/FOUNDATION_M00.md](docs/FOUNDATION_M00.md). Verbindliche Reihenfolge und Abnahme: [ROADMAP.md](ROADMAP.md).
 

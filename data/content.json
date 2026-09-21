@@ -9,7 +9,14 @@
     "dash_cost": 28,
     "dash_cooldown": 0.62,
     "mana_regen": 8,
-    "stamina_regen": 30
+    "stamina_regen": 30,
+    "dash_name": "Schritt",
+    "mana_regen_delay": 0.65,
+    "damage_invulnerability": 0.65,
+    "hindered_speed": 0.55,
+    "knockback": 65,
+    "knockback_decay": 500,
+    "respawn_invulnerability": 1
   },
   "spells": {
     "bolt": {
@@ -18,7 +25,8 @@
       "cooldown": 0.32,
       "damage": 19,
       "speed": 265,
-      "range": 235
+      "range": 235,
+      "shatter_bonus": 10
     },
     "nova": {
       "name": "Frostkreis",
@@ -27,7 +35,8 @@
       "damage": 16,
       "radius": 48,
       "range": 130,
-      "slow_duration": 3.5
+      "slow_duration": 3.5,
+      "slow_multiplier": 0.4
     }
   },
   "enemies": {
@@ -41,7 +50,12 @@
       "leash": 195,
       "windup": 0.65,
       "recovery": 1.1,
-      "mode": "lunge"
+      "mode": "lunge",
+      "attack_range": 53,
+      "lunge_duration": 0.34,
+      "lunge_speed": 175,
+      "lunge_slow_multiplier": 0.55,
+      "hit_range": 19
     },
     "wisp": {
       "name": "Irrlicht",
@@ -53,7 +67,8 @@
       "leash": 190,
       "windup": 0.9,
       "recovery": 1.55,
-      "mode": "ranged"
+      "mode": "ranged",
+      "attack_range": 112
     },
     "kobold": {
       "name": "Dornkobold",
@@ -86,35 +101,38 @@
       "fan_windup": 1.25,
       "fan_damage": 17,
       "fan_count": 5,
-      "fan_spread": 0.72
+      "fan_spread": 0.72,
+      "mode": "guardian",
+      "awaken_delay": 1
     }
   },
   "skills": {
     "echo": {
       "name": "Widerhall",
-      "description": "Triff ein verlangsamtes Ziel: Der Lichtfunke springt zu einem zweiten Gegner."
+      "description": "Triff ein verlangsamtes Ziel: Der Lichtfunke springt zu einem zweiten Gegner.",
+      "chain_range": 65,
+      "chain_damage": 12
     },
     "flow": {
       "name": "Fließender Schritt",
-      "description": "Jeder erfolgreiche Ausweichschritt gibt 12 Mana zurück."
+      "description": "Jeder erfolgreiche Ausweichschritt gibt {mana_refund} Mana zurück.",
+      "mana_refund": 12
     },
     "bloom": {
       "name": "Quellenkreis",
-      "description": "Stehst du im eigenen Frostkreis, heilt er dich um 12 Leben."
+      "description": "Stehst du im eigenen Frostkreis, heilt er dich um {healing} Leben.",
+      "healing": 12
     }
   },
   "world": {
-    "width": 112,
-    "height": 88,
-    "tile_size": 16,
-    "generator_version": 1,
     "day_seconds": 240
   },
   "quest": {
     "id": "lights",
     "title": "Die verstummten Lichter",
-    "goal": 3,
-    "reward": "Quellenfokus"
+    "reward": "Quellenfokus",
+    "light_xp": 20,
+    "reward_xp": 45
   },
   "source_quest": {
     "reward_xp": 90,
@@ -124,8 +142,20 @@
   "relics": {
     "source_heart": {
       "name": "Quellenherz",
-      "description": "Trifft dein Frostkreis mindestens einen Gegner, erhältst du einmal pro Zauber 6 Mana zurück.",
+      "description": "Trifft dein Frostkreis mindestens einen Gegner, erhältst du einmal pro Zauber {frost_refund} Mana zurück.",
       "frost_refund": 6
     }
+  },
+  "progression": {
+    "xp_per_level": 60,
+    "enemy_motes": 1
+  },
+  "combat": {
+    "enemy_projectile_speed": 115,
+    "enemy_projectile_range": 210,
+    "enemy_knockback": 80,
+    "enemy_knockback_decay": 230,
+    "enemy_hit_stop": 0.06,
+    "camp_safe_radius": 110
   }
 }

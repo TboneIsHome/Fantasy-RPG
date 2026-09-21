@@ -2,12 +2,12 @@ class_name ThornPatch
 extends Node2D
 ## A stationary, short-lived control zone. The caster telegraphs its location first.
 var player: MagePlayer
-var remaining: float = 2.8
+var remaining: float = float(Content.section("enemies").kobold.thorn_duration)
 var pulse: float = 0
-var radius: float = 25
-var damage: float = 9
-var slow_seconds: float = 0.75
-var interval: float = 0.9
+var radius: float = float(Content.section("enemies").kobold.thorn_radius)
+var damage: float = float(Content.section("enemies").kobold.damage)
+var slow_seconds: float = float(Content.section("enemies").kobold.thorn_slow)
+var interval: float = float(Content.section("enemies").kobold.thorn_interval)
 var peaceful_area: Rect2
 
 func _ready() -> void:

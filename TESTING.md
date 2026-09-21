@@ -1,6 +1,52 @@
 # Prüfungen und bekannte Grenzen
 
-## Foundation M03 — aktueller Nachweis vom 16.09.2026
+## Foundation M04 — aktueller Nachweis vom 21.09.2026
+
+**IMPLEMENTED / PARTIALLY TESTED.** Der finale isolierte Gesamtlauf besteht **707/707 Checks**: 504 bisherige und 203 neue. Zusätzlich bestehen der echte Linux-Schreibfehler und die Release-Prüfungen. **Eigener manueller M04-Windows-Spieltest: NOT TESTED.** Tims ausdrückliche M03-Abnahme deckt den neuen Build nicht ab. Nach M04 ist Stop vor einer weiteren Entwicklungsphase.
+
+[Foundation Completion Report](docs/FOUNDATION_COMPLETION_REPORT.md) · [Ergebnisse](qa/m04_results.json) · [Logs](qa/m04_logs/) · [Prüfsummen](qa/m04_reference_manifest.json).
+
+| Prüfgruppe | Nachweis |
+| --- | --- |
+| Alle vierzehn bisherigen Gruppen | 504/504; alle Assertions erhalten. Der alte Test für eine fehlende Quellenbelohnung injiziert den Fehler jetzt in eine ausdrücklich isolierte Content-Kopie, weil der veröffentlichte Cache schreibgeschützt ist |
+| `content_validation_suite.gd` | 88/88; echte JSONs, fehlende Pflichtfelder, falsche Typen einschließlich Bool/Zahlstring, unbekannte Felder/IDs/Enums, NaN/±Infinity, negative/gebrochene Zahlen, Referenzen, Räume/Links/Spawns/Discovery, Tokenprüfung und Zahlenformatierung |
+| `data_consistency_suite.gd` | 89/89; gültige geänderte Testdefinitionen erreichen Player/Vitals, Zauber/Dash, HUD, Journal, Dialoge, tatsächliche Projektile, Schaden/Boni, Belohnungen und Brunnen. Einmalige Vergabe; alte Save-Ressourcen über niedrigeren Maxima, sechs Original-Fixtures, erneutes Save/Load und Backup-Recovery |
+| `content_startup_probe.gd` / `verify_content_startup.py` | 26/26 in vier eigenen Prozessen: defektes JSON, fehlende Reliktreferenz, ungültige Raumgeometrie, gültiger Cache trotz nachträglich defekter Datei. Test-PCKs überlagern nur den jeweiligen Prüfprozess; keine Quelldatenänderung. Fehleransicht, kein Run/Player/Teilbundle, kein Save-Schreiben, unveränderte Dateibytes |
+| `export_smoke.gd` | Linux nativ und Windows-Pack unter Linux: Datenkonsistenz, vollständiger Quellenabschluss, Belohnungs-Replay, Regionslebenszyklus, Save-Recovery und Schreibfehler |
+| Release-Startschutz | Dieselben vier Startproben zusätzlich mit jedem Release-Pack bestanden; die jeweils 26 werden nicht doppelt zur 707-Summe gezählt |
+
+Der finale Runner umfasst 19 Stufen: Import, 16 GDScript-Gruppen, Startup-Proben und echter Linux-Dateifehler. `Content` validiert nur einmal je Prozess, nicht pro Frame. Die Ladezeit aus dem Prüflog steht in `qa/m04_results.json`; sie ist eine einzelne lokale Headless-Messung, keine Performance-Garantie.
+
+Ein früher paralleler Gesamt-/Exportlauf meldete drei Fehler in der 95er-Regionssuite. Zwei isolierte Nachprüfungen und der abschließende serielle Gesamtlauf bestanden. Die Ursache dieser einmaligen Abweichung wurde nicht eindeutig reproduziert; sie wird nicht als behobener Spielfehler ausgegeben. Die Suite meldet nun den genauen Save-/Load-Fehler, falls er erneut auftritt. Die fehlgeschlagene Ausgabe bleibt archiviert. Weitere Tests und Exporte werden in getrennten Profilen nacheinander ausgeführt.
+
+Der erste zusätzliche Release-Datentest erkannte „6.0 Mana“ im aus JSON formatierten Text. Der Formatter erhält nun die bisherigen Ganzzahltexte und tatsächliche Bruchteile; vier zusätzliche Assertions und beide Release-Smokes prüfen das. Neue grafische M04-Aufnahmen sind **NOT TESTED**: Xvfb konnte keine Display-Sockets öffnen. Die Daten der tatsächlichen UI-Nodes sind automatisch geprüft; eine neue visuelle/Windows-Prüfung wird nicht behauptet.
+
+### Reproduzieren
+
+Die bestehende Befehlsfolge unten gilt weiter. Alle Läufe erhalten getrennte `XDG_DATA_HOME`-/`XDG_CONFIG_HOME`-Verzeichnisse; keine Prüfungen gegen persönliche Save-Ordner durchführen. `tools/verify.py` speichert auch bei einem Timeout das Teillog und meldet einen Fehlschlag. Erwartete Content-Diagnosen werden ausschließlich in den dafür vorgesehenen Startup-Proben erlaubt; Scriptfehler bleiben Fehler.
+
+```bash
+XDG_DATA_HOME=/absoluter/testpfad/data XDG_CONFIG_HOME=/absoluter/testpfad/config python3 tools/verify.py /absoluter/pfad/zu/godot
+python3 tools/verify_content_startup.py /absoluter/pfad/zum/linux-release
+python3 tools/verify_content_startup.py /absoluter/pfad/zu/godot /absoluter/pfad/zu/Lichterhain.exe
+```
+
+Die zweite und dritte Zeile verwenden eigene temporäre Benutzerprofile. Testskripte/Reports werden nicht in das Spielpaket ausgeliefert; Exportproben laufen von außen gegen den jeweiligen Pack. Original-Fixtures niemals neu erzeugen, um einen Test bestehen zu lassen.
+
+### M04 unter Windows abnehmen — NOT TESTED
+
+Vorher den gesamten bisherigen Ordner `%APPDATA%\Godot\app_userdata\Lichterhain\` separat sichern. Das neue Paket verwendet denselben Speicherort. `Lichterhain_0.4_M04_Windows.zip` vollständig entpacken und `Spielen/Lichterhain.exe` starten.
+
+1. Bestehenden M03-Spielstand fortsetzen: Ressourcen, Fortschritt, Talente, Quelle/Relikt und Funde prüfen.
+2. Lichtfunke/Frostkreis/Ausweichen benutzen: Kosten, Regeneration, Cooldownanzeige und Ressourcenbalken müssen zum tatsächlichen Verhalten passen. Talent- und Relikttexte im Journal lesen; bisherige Werte sind erhalten.
+3. Mit vorhandenen Talenten Fließenden Schritt/Heilung prüfen. Quellenherz an-/ablegen: Nova mit Treffer gibt einmal 6 MP, ohne Treffer keinen Refund. Keine doppelten Boni bei mehreren Gegnern.
+4. Am Lager, Waldlicht und in der Gruft rasten. Die Sickerquelle kostet weiterhin 2 Lichtstaub; vollständig erholt wird nichts abgezogen.
+5. Wald → Gruft → Wald, normaler Kampf, Speichern/Beenden/Fortsetzen. Einmalige Funde/Belohnungen dürfen nicht wiederholt vergeben werden.
+6. Ergebnis und gegebenenfalls Windows-Version, Auffälligkeiten und EXE-Hash aus `START_HIER.txt` festhalten. Danach Report gemeinsam prüfen; keine Folgephase automatisch beginnen.
+
+
+
+## Foundation M03 — historischer Nachweis vom 16.09.2026
 
 **IMPLEMENTED**, automatisch **TESTED**, insgesamt **PARTIALLY TESTED**. 504/504 Checks: alle 405 bisherigen plus 99 neue. Zusätzlich der unveränderte echte Linux-OS-Schreibfehler. Beide Release-Packs bestanden; native Windows-Ausführung und menschlicher Spieltest des **M03-Builds** sind **NOT TESTED**. Tims bestätigte M02-Abnahme wird nicht auf eine neue EXE übertragen.
 
@@ -19,7 +65,9 @@ Die 95 Lifecycle-Checks enthalten wiederholte Invarianten je Wechsel; sie sind k
 
 Der zuerst versuchte Export fand im frischen Prüfprofil die bereits vorhandenen Vorlagen nicht. Nach Verknüpfung derselben offiziellen 4.5.1-Vorlagen bestanden beide Exporte; kein Produktcode wurde dafür geändert. Der Ausgangsfehler ist separat archiviert. Die Runtime blieb nach dem vollständigen Gate unverändert.
 
-### M03 unter Windows abnehmen
+**Nachtrag 20.09.2026:** Tim hat M03 im M04-Auftrag ausdrücklich als abgeschlossen und manuell unter Windows bestätigt bezeichnet. Die damalige Abnahmelücke ist geschlossen; die darunterstehende Prüfliste ist kein nachträgliches Einzelprotokoll.
+
+### M03 unter Windows abnehmen (historische Prüfliste)
 
 Vorher den bisherigen Ordner `%APPDATA%\Godot\app_userdata\Lichterhain\` separat sichern. Das M03-Paket benutzt denselben Pfad wie M02. Archiv vollständig entpacken; `Spielen/Lichterhain.exe` starten und den alten Stand fortsetzen.
 

@@ -18,6 +18,15 @@ func frames(count: int = 3) -> void:
 		await physics_frame
 		await process_frame
 
+func save_and_load() -> bool:
+	if not game.save_game():
+		print("REGION SAVE DIAGNOSTIC: ", game.ui.hud.toast_text)
+		return false
+	if not game.load_game():
+		print("REGION LOAD DIAGNOSTIC: ", game.ui.hud.toast_text)
+		return false
+	return true
+
 func object(id: String) -> Landmark:
 	for node in get_nodes_in_group("landmarks"):
 		if node.id == id: return node
@@ -148,7 +157,7 @@ func verify() -> void:
 	origin = game.regions.generation
 	original_run = game.run
 	create_timer(0.02).timeout.connect(game.source_story.finish_broken.bind(original_run, origin))
-	check(game.save_game() and game.load_game() and game.regions.generation == origin + 1 and game.run != original_run, "Same-region save/load creates one new instance and run")
+	check(save_and_load() and game.regions.generation == origin + 1 and game.run != original_run, "Same-region save/load creates one new instance and run")
 	await frames(4)
 	check(game.run.source.resolution.is_empty() and game.run.source.alignment == 1, "Pre-load timer cannot change reloaded investigation checkpoint")
 	live("vault")
@@ -171,7 +180,7 @@ func verify() -> void:
 		live("vault")
 	check(created == {"players": 12, "views": 12, "combat": 12} and game.regions.generation == origin + 12, "Twelve rapid changes build exactly twelve players, views and combat systems")
 	await frames()
-	check(game.save_game() and game.load_game() and game.run.vault.serialize() == fixture.data.run.vault and game.run.inventory.serialize() == fixture.data.run.inventory and game.run.defeated == fixture.data.run.defeated, "Travel/save/load retains persistent dungeon, inventory and enemy state")
+	check(save_and_load() and game.run.vault.serialize() == fixture.data.run.vault and game.run.inventory.serialize() == fixture.data.run.inventory and game.run.defeated == fixture.data.run.defeated, "Travel/save/load retains persistent dungeon, inventory and enemy state")
 	var snapshot: Dictionary = SaveSystem.snapshot(game.run, game.player, game.settings)
 	check(snapshot.save_version == 3 and not snapshot.run.has("generation") and not snapshot.run.has("instance") and SaveSystem.validate(snapshot).is_empty(), "Instance generation stays outside the unchanged save schema")
 	# Travel remains successful in memory on disk failure; the prior save stays usable.
@@ -180,7 +189,7 @@ func verify() -> void:
 	game.travel_to("forest")
 	check(game.run.region == "forest" and FileAccess.get_file_as_bytes(SAVE) == saved_bytes and game.ui.hud.toast_text != "Zurück im Sternengarten.", "Travel save failure preserves disk and its visible error message")
 	DirAccess.remove_absolute(SAVE + ".tmp")
-	check(game.save_game() and game.load_game() and game.run.region == "forest", "Save retry and load preserve the completed travel")
+	check(save_and_load() and game.run.region == "forest", "Save retry and load preserve the completed travel")
 	game.travel_to("vault")
 	origin = game.regions.generation
 	game.player.vitals.invulnerable = 0

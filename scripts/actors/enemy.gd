@@ -63,7 +63,7 @@ func _physics_process(delta: float) -> void:
 	hit_stop = maxf(0,hit_stop-delta)
 	var distance := global_position.distance_to(target.global_position)
 	var direction := global_position.direction_to(target.global_position)
-	var speed := float(definition.speed)*(0.4 if slowed>0 else 1.0)
+	var speed := float(definition.speed)*(float(Content.section("spells").nova.slow_multiplier) if slowed>0 else 1.0)
 	velocity = Vector2.ZERO
 	if target.vitals.hp <= 0 or target_is_safe() or global_position.distance_to(home)>float(definition.leash):
 		if state != Mode.RETURN:
@@ -76,7 +76,7 @@ func _physics_process(delta: float) -> void:
 			if distance<float(definition.aggro) and not target_is_safe() and target.vitals.hp>0:
 				state = Mode.CHASE
 		Mode.CHASE:
-			var attack_range: float = float(definition.get("attack_range",53.0 if kind=="wolf" else 112.0))
+			var attack_range: float = float(definition.attack_range)
 			if distance<attack_range and clear_shot(target.global_position):
 				state = Mode.WINDUP
 				timer = float(definition.windup)
@@ -91,7 +91,7 @@ func _physics_process(delta: float) -> void:
 				attack_connected = false
 				if kind == "wolf":
 					state = Mode.ATTACK
-					timer = 0.34
+					timer = float(definition.lunge_duration)
 				elif kind=="kobold":
 					if clear_shot(attack_target):
 						thorns_requested.emit(attack_target)
@@ -103,8 +103,8 @@ func _physics_process(delta: float) -> void:
 					state = Mode.RECOVER
 					timer = float(definition.recovery)
 		Mode.ATTACK:
-			velocity = attack_direction*175*(0.55 if slowed>0 else 1.0)
-			if distance<19 and not attack_connected and clear_shot(target.global_position):
+			velocity = attack_direction*float(definition.lunge_speed)*(float(definition.lunge_slow_multiplier) if slowed>0 else 1.0)
+			if distance<float(definition.hit_range) and not attack_connected and clear_shot(target.global_position):
 				attack_connected = true
 				target.take_damage(float(definition.damage),attack_direction)
 			if timer<=0 or is_on_wall():
@@ -118,7 +118,7 @@ func _physics_process(delta: float) -> void:
 			if global_position.distance_to(home)<8:
 				state = Mode.IDLE
 	velocity += knockback
-	knockback = knockback.move_toward(Vector2.ZERO,230*delta)
+	knockback = knockback.move_toward(Vector2.ZERO,float(Content.section("combat").enemy_knockback_decay)*delta)
 	move_and_slide()
 	icon.flip_h = direction.x<0
 	if kind=="wolf":
@@ -131,7 +131,7 @@ func clear_shot(point: Vector2) -> bool:
 	return get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(global_position,point,1)).is_empty()
 
 func target_is_safe() -> bool:
-	return target.global_position.distance_to(camp)<110 or peaceful_area.has_point(target.global_position)
+	return target.global_position.distance_to(camp)<float(Content.section("combat").camp_safe_radius) or peaceful_area.has_point(target.global_position)
 
 func approach(point: Vector2) -> Vector2:
 	if not pathfinder or clear_shot(point):
@@ -152,10 +152,10 @@ func take_damage(amount: float, direction: Vector2 = Vector2.ZERO, is_bolt: bool
 	if hp<=0:
 		return false
 	var shatter := is_bolt and slowed>0
-	var final_amount := amount+10 if shatter else amount
+	var final_amount := amount+float(Content.section("spells").bolt.shatter_bonus) if shatter else amount
 	hp = maxf(0,hp-final_amount)
-	knockback = direction*80
-	hit_stop = 0.06
+	knockback = direction*float(Content.section("combat").enemy_knockback)
+	hit_stop = float(Content.section("combat").enemy_hit_stop)
 	hit.emit(self,final_amount,shatter)
 	if hp<=0:
 		defeated.emit(self)

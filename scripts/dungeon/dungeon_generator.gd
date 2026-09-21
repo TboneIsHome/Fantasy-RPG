@@ -4,14 +4,15 @@ const VERSION := 1
 const WIDTH := 96
 const HEIGHT := 64
 enum Tile {WALL, FLOOR, POOL}
-static var definitions: Dictionary = {}
+const SPAWN := Vector2i(14,16)
+const SECRET_JOIN := Vector2i(46,31)
+const BASINS := [Rect2i(38,12,4,5), Rect2i(51,10,4,4)]
 
 static func content() -> Dictionary:
-	if definitions.is_empty():
-		definitions=JSON.parse_string(FileAccess.get_file_as_string("res://data/vault.json"))
-	return definitions
+	return Content.vault()
 
 static func generate(seed_text: String) -> Dictionary:
+	if not Content.ensure_loaded(): return {}
 	var rng := RandomNumberGenerator.new()
 	rng.seed=WorldGenerator.seed_number(seed_text+"/vault/v1")
 	var tiles := PackedInt32Array()
@@ -34,10 +35,10 @@ static func generate(seed_text: String) -> Dictionary:
 		var b: Vector2i=centers[link[1]]
 		# The secret branch joins the north/south corridor at y=31.
 		if link[1]=="secret":
-			a=Vector2i(46,31)
+			a=SECRET_JOIN
 		carve(tiles,a,b)
 	# Shallow-looking cistern basins are solid water, with a clear central aisle.
-	for basin in [Rect2i(38,12,4,5),Rect2i(51,10,4,4)]:
+	for basin in BASINS:
 		for y in range(basin.position.y,basin.end.y):
 			for x in range(basin.position.x,basin.end.x):
 				tiles[y*WIDTH+x]=Tile.POOL
@@ -50,7 +51,7 @@ static func generate(seed_text: String) -> Dictionary:
 	for definition in content().encounters:
 		var cell := Vector2i(definition.tile[0],definition.tile[1])+Vector2i(rng.randi_range(-1,1),rng.randi_range(-1,1))
 		enemies.append({"id":definition.id,"kind":definition.kind,"position":WorldGenerator.center(cell)})
-	return {"region":"vault","seed":seed_text,"version":VERSION,"tiles":tiles,"rooms":rooms,"points":points,"enemies":enemies,"spawn":WorldGenerator.center(Vector2i(14,16)),"width":WIDTH,"height":HEIGHT}
+	return {"region":"vault","seed":seed_text,"version":VERSION,"tiles":tiles,"rooms":rooms,"points":points,"enemies":enemies,"spawn":WorldGenerator.center(SPAWN),"width":WIDTH,"height":HEIGHT}
 
 static func carve(tiles: PackedInt32Array, start: Vector2i, end: Vector2i) -> void:
 	var cell := start

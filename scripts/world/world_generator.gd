@@ -15,6 +15,7 @@ static func seed_number(text: String) -> int:
 	return value
 
 static func generate(seed_text: String) -> Dictionary:
+	if not Content.ensure_loaded(): return {}
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_number(seed_text)
 	var noise := FastNoiseLite.new()

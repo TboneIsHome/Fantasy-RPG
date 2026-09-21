@@ -1,6 +1,6 @@
 # Roadmap
 
-Stand: 2026-09-16, spielbarer Quellstand 0.4.0 / Foundation M03. Die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md) besitzt das langfristige Spielerlebnis. Aktuell priorisiert Tim robuste Kernsysteme und eine kleine, erweiterbare Weltsimulation. Größe und Systemtiefe werden schrittweise geprüft; der aktuelle Prototyp erfüllt die langfristige Vision noch nicht.
+Stand: 2026-09-21, spielbarer Quellstand 0.4.0 / Foundation M04. Die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md) besitzt das langfristige Spielerlebnis. Aktuell priorisiert Tim robuste Kernsysteme und eine kleine, erweiterbare Weltsimulation. Größe und Systemtiefe werden schrittweise geprüft; der aktuelle Prototyp erfüllt die langfristige Vision noch nicht.
 
 ## Verbindliche nächste Reihenfolge
 
@@ -9,10 +9,12 @@ Stand: 2026-09-16, spielbarer Quellstand 0.4.0 / Foundation M03. Die [Design-Bib
 | **M00 — Referenz und Audit** | Originalen 0.4-Code gegen Audit V1 prüfen; Quellstand, Reports, Exporte und verfügbare Saves sichern | **COMPLETE** laut Tim. Historische Prüfergebnisse und Grenzen: [FOUNDATION_M00.md](docs/FOUNDATION_M00.md). Der damalige Stop-Punkt wurde durch Tims Auftrag zur Bible-Integration und M01 aufgehoben. |
 | **M01 — Save-System** | I/O-Fehler reproduzieren, minimal absichern und Fehlermeldungen im Pausefenster sichtbar halten | **IMPLEMENTED**, insgesamt **PARTIALLY TESTED**. 290 Checks, echter OS-Schreibfehler und beide Export-Packs **TESTED**; native Windows-/manuelle Abnahme **NOT TESTED**. [Ergebnisse und Grenzen](docs/FOUNDATION_M01.md). Historischer Abschluss; anschließend von Tim zur nächsten Iteration freigegeben. |
 | **M02 — Zustandsänderungen** | Dauerhafte Fortschrittsaktionen und vollständige Belohnungen beim fachlichen Besitzer bündeln | **COMPLETE** laut Tim; zusätzlicher manueller Windows-Spieltest ausdrücklich bestätigt. 405 automatisierte Checks und historische Nachweise: [Bericht](docs/FOUNDATION_M02.md). Keine nachträgliche Behauptung einzelner nicht protokollierter Windows-Dateifehlertests. |
-| **M03 — Regionslebenszyklus** | Build/Activate/Deactivate/Unload/Travel aus der Sitzung heraus klar abgrenzen | **IMPLEMENTED**, **PARTIALLY TESTED**. 504/504 Checks, Lebenszyklusmessung und beide Release-Packs bestanden. Eigene manuelle Windows-Abnahme **NOT TESTED**. [M03 Completion Report](docs/FOUNDATION_M03.md). Stop vor M04. |
-| **M04 — Inhaltsdaten** | Bestehende JSON-Quellen validieren und Regeln mit Gameplay, HUD und Saveprüfung verbinden | **PLANNED.** Verständliche Release-Fehler; IDs, Felder, Typen, Bereiche und Querverweise geprüft; keine Balanceänderung durch die Migration |
+| **M03 — Regionslebenszyklus** | Build/Activate/Deactivate/Unload/Travel aus der Sitzung heraus klar abgrenzen | **COMPLETE / TESTED** laut Tim; manueller Windows-Test vor M04 ausdrücklich bestätigt. 504/504 historische Checks. [M03 Completion Report mit Nachtrag](docs/FOUNDATION_M03.md). |
+| **M04 — Inhaltsdaten** | Bestehende JSON-Quellen validieren und Regeln mit Gameplay, HUD und Saveprüfung verbinden | **IMPLEMENTED / PARTIALLY TESTED.** 707/707 Checks, beide Release-Exporte und Release-Fehlerstarts geprüft. Eigener manueller Windows-Test noch **NOT TESTED**. [Foundation Completion Report](docs/FOUNDATION_COMPLETION_REPORT.md). |
 
 Nach jedem Umbauschritt: relevante neue Prüfungen, gesamte bestehende Regression, Savegame-Prüfungen, Exportprüfung und dokumentierte manuelle Smoke-Runde. Eine offene Plattformprüfung wird offen ausgewiesen. Keine parallelen Umbauten unabhängiger Kernsysteme und kein Save-Reset als Abkürzung.
+
+**Aktueller Stop:** M04-Windows-Test und Foundation Completion Report gemeinsam prüfen. Keine nächste Entwicklungsphase und keine großen neuen Gameplay-Systeme sind begonnen oder freigegeben.
 
 ## Bisherige spielbare Referenzen
 

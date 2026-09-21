@@ -51,7 +51,7 @@ func align(sign_id: String, vault: DungeonProgress) -> bool:
 func resolve(path: String, vault: DungeonProgress) -> bool:
 	if not resolution.is_empty() or path not in ["restored","broken"]:
 		return false
-	if path=="restored" and (alignment!=3 or not has_evidence(vault) or guardian_defeated):
+	if path=="restored" and (alignment!=SIGNS.size() or not has_evidence(vault) or guardian_defeated):
 		return false
 	if path=="broken" and not guardian_defeated:
 		return false

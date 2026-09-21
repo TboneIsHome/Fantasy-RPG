@@ -1,0 +1,102 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS REGION: forest: one active region with matching persistent identity
+PASS REGION: forest: exactly one current player
+PASS REGION: forest: exact live enemy IDs without duplicates or old targets
+PASS REGION: forest: combat and HUD reference the active instance
+PASS REGION: Forest releases all SourceStory region references
+PASS REGION: Invalid, locked and same-region travel leave lifecycle untouched
+PASS REGION: Dead player cannot start ordinary travel
+PASS REGION: Deactivation rejects callbacks and stops old player before removal
+PASS REGION: External references cleared before old tree leaves
+PASS REGION: Reentrant travel rejected during teardown
+PASS REGION: Reentrant session replacement cannot overwrite the persistent owner
+PASS REGION: Forest to vault increments transient generation once
+PASS REGION: Old region immediately detached and combat state references released
+PASS REGION: Old player/combat session bridges disconnected
+PASS REGION: Fresh player preserves resources and arrival protection
+PASS REGION: vault: one active region with matching persistent identity
+PASS REGION: vault: exactly one current player
+PASS REGION: vault: exact live enemy IDs without duplicates or old targets
+PASS REGION: vault: combat and HUD reference the active instance
+PASS REGION: Vault rebinds SourceStory to its current instance
+PASS REGION: Already captured death callback cannot pause replacement region
+PASS REGION: Detached tree and old player/combat freed after frame boundary
+PASS REGION: Actual enemy projectile, source impact and thorn zone present at travel
+PASS REGION: forest: one active region with matching persistent identity
+PASS REGION: forest: exactly one current player
+PASS REGION: forest: exact live enemy IDs without duplicates or old targets
+PASS REGION: forest: combat and HUD reference the active instance
+PASS REGION: Forest releases all SourceStory region references
+PASS REGION: Vault exit still arrives beside the forest entrance
+PASS REGION: Old guardian story connections released
+PASS REGION: vault: one active region with matching persistent identity
+PASS REGION: vault: exactly one current player
+PASS REGION: vault: exact live enemy IDs without duplicates or old targets
+PASS REGION: vault: combat and HUD reference the active instance
+PASS REGION: Vault rebinds SourceStory to its current instance
+PASS REGION: Old projectile, combat, withdrawal, interaction and queued UI action cannot affect new vault
+PASS REGION: Expired region timer cannot award current run's source reward
+PASS REGION: All old hazards and SourceStory scene objects freed
+PASS REGION: Current generation still completes real guardian death once
+DIAGNOSTIC SAVE true toast=Lichtpfad gespeichert. validation=
+DIAGNOSTIC LOAD true toast=Lichtpfad geladen. origin=7 generation=8 oldrun=false
+PASS REGION: Same-region save/load creates one new instance and run
+PASS REGION: Pre-load timer cannot change reloaded investigation checkpoint
+PASS REGION: vault: one active region with matching persistent identity
+PASS REGION: vault: exactly one current player
+PASS REGION: vault: exact live enemy IDs without duplicates or old targets
+PASS REGION: vault: combat and HUD reference the active instance
+PASS REGION: Vault rebinds SourceStory to its current instance
+PASS REGION: New run keeps monotonic generation and rejects old actions
+PASS REGION: forest: one active region with matching persistent identity
+PASS REGION: forest: exactly one current player
+PASS REGION: forest: exact live enemy IDs without duplicates or old targets
+PASS REGION: forest: combat and HUD reference the active instance
+PASS REGION: Forest releases all SourceStory region references
+PASS REGION: vault: one active region with matching persistent identity
+PASS REGION: vault: exactly one current player
+PASS REGION: vault: exact live enemy IDs without duplicates or old targets
+PASS REGION: vault: combat and HUD reference the active instance
+PASS REGION: Vault rebinds SourceStory to its current instance
+PASS REGION: vault: one active region with matching persistent identity
+PASS REGION: vault: exactly one current player
+PASS REGION: vault: exact live enemy IDs without duplicates or old targets
+PASS REGION: vault: combat and HUD reference the active instance
+PASS REGION: Vault rebinds SourceStory to its current instance
+PASS REGION: vault: one active region with matching persistent identity
+PASS REGION: vault: exactly one current player
+PASS REGION: vault: exact live enemy IDs without duplicates or old targets
+PASS REGION: vault: combat and HUD reference the active instance
+PASS REGION: Vault rebinds SourceStory to its current instance
+PASS REGION: vault: one active region with matching persistent identity
+PASS REGION: vault: exactly one current player
+PASS REGION: vault: exact live enemy IDs without duplicates or old targets
+PASS REGION: vault: combat and HUD reference the active instance
+PASS REGION: Vault rebinds SourceStory to its current instance
+PASS REGION: vault: one active region with matching persistent identity
+PASS REGION: vault: exactly one current player
+PASS REGION: vault: exact live enemy IDs without duplicates or old targets
+PASS REGION: vault: combat and HUD reference the active instance
+PASS REGION: Vault rebinds SourceStory to its current instance
+PASS REGION: vault: one active region with matching persistent identity
+PASS REGION: vault: exactly one current player
+PASS REGION: vault: exact live enemy IDs without duplicates or old targets
+PASS REGION: vault: combat and HUD reference the active instance
+PASS REGION: Vault rebinds SourceStory to its current instance
+PASS REGION: Twelve rapid changes build exactly twelve players, views and combat systems
+DIAGNOSTIC ROUND SAVE true toast=Lichtpfad gespeichert. validation=
+DIAGNOSTIC ROUND LOAD true toast=Lichtpfad geladen.
+PASS REGION: Travel/save/load retains persistent dungeon, inventory and enemy state
+PASS REGION: Instance generation stays outside the unchanged save schema
+PASS REGION: Travel save failure preserves disk and its visible error message
+PASS REGION: Save retry and load preserve the completed travel
+PASS REGION: Dungeon death uses lifecycle once and returns a fresh mage to camp
+PASS REGION: forest: one active region with matching persistent identity
+PASS REGION: forest: exactly one current player
+PASS REGION: forest: exact live enemy IDs without duplicates or old targets
+PASS REGION: forest: combat and HUD reference the active instance
+PASS REGION: Forest releases all SourceStory region references
+PASS REGION: Repeated unload is safe and leaves no active region or actor references
+PASS REGION: Unloaded session retains no regional tree or external references
+REGION LIFECYCLE RESULT 95/95

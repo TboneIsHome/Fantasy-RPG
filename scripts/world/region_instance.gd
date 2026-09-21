@@ -32,9 +32,9 @@ func build(state: RunState, instance_generation: int, settings: Dictionary, save
 	terrain.actors.add_child(player)
 	player.camera.limit_right=int(generated.get("width",WorldGenerator.WIDTH))*16
 	player.camera.limit_bottom=int(generated.get("height",WorldGenerator.HEIGHT))*16
-	player.vitals.hp=float(saved_player.get("hp",100))
-	player.vitals.mana=float(saved_player.get("mana",100))
-	player.vitals.stamina=float(saved_player.get("stamina",100))
+	player.vitals.hp=float(saved_player.get("hp",player.vitals.hp))
+	player.vitals.mana=float(saved_player.get("mana",player.vitals.mana))
+	player.vitals.stamina=float(saved_player.get("stamina",player.vitals.stamina))
 	combat=CombatSystem.new()
 	combat.run=run
 	combat.player=player

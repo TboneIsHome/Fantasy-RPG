@@ -21,6 +21,15 @@ func verify() -> void:
 	game.handle_action("source_tune")
 	for sign_id in SourceQuest.SIGNS: game.handle_action("source_align",sign_id)
 	passed=passed and game.run.source.resolution=="restored" and game.run.inventory.equipped=="source_heart" and game.source_story.grove.resolution=="restored" and SaveSystem.read(game.save_path).data.save_version==3
+	# M04: definitions, HUD consumers and explicit validation survive release compilation.
+	var malformed := Content.all().duplicate(true)
+	malformed.enemies.guardian.fan_count=1
+	var errors := ContentValidator.validate_bundle(malformed,Content.vault(),Content.discoveries())
+	var data_ok: bool = Content.all().is_read_only() and Content.section("player").is_read_only() and Vitals.maximum("hp") == Content.section("player").hp
+	data_ok = data_ok and game.ui.hud.resource_fraction("hp") == game.player.vitals.hp/Vitals.maximum("hp") and not errors.is_empty() and "enemies.guardian.fan_count" in "\n".join(errors)
+	data_ok = data_ok and "6 Mana" in Content.description(Content.section("relics").source_heart) and SaveSystem.VERSION == 3
+	print("EXPORT DATA CONSISTENCY ", "PASS" if data_ok else "FAIL")
+	passed = passed and data_ok
 	# M02: compiled state actions retain their replay guards and complete rewards.
 	var checkpoint: Dictionary = game.run.serialize()
 	var replay_ok: bool = not game.run.collect_vault_relic("star_chart") and not game.run.align_source("star") and not game.run.defeat_source_guardian() and game.run.serialize() == checkpoint and SaveSystem.validate(SaveSystem.snapshot(game.run, game.player, game.settings)).is_empty()

@@ -5,6 +5,9 @@ const VERSION := 3
 const DEFAULT_PATH := "user://lichtpfad_v1.json"
 const LIGHTS := RunState.LIGHT_IDS
 const MAX_BYTES := 1048576
+# Serialization safety envelope, NOT a gameplay maximum. Format 1–3 records
+# absolute resources without the maximum used by the writing build.
+const MAX_STORED_RESOURCE := 1000000.0
 
 static func snapshot(run: RunState, player: MagePlayer, settings: Dictionary) -> Dictionary:
 	return {"save_version":VERSION,"generator_version":WorldGenerator.VERSION,"dungeon_version":DungeonGenerator.VERSION,
@@ -26,6 +29,8 @@ static func valid_list(value: Variant, allowed: Array) -> bool:
 	return true
 
 static func validate(data: Variant) -> String:
+	if not Content.ensure_loaded():
+		return "Die Spieldaten sind ungültig. Der Speicherpunkt bleibt unverändert."
 	if not data is Dictionary:
 		return "Der Spielstand ist beschädigt."
 	if not (data.get("save_version")==1 or data.get("save_version")==2 or data.get("save_version")==VERSION) or data.get("generator_version") != WorldGenerator.VERSION:
@@ -37,7 +42,7 @@ static func validate(data: Variant) -> String:
 		return "Der Welt-Seed ist ungültig."
 	var legacy: bool=data.save_version==1
 	var enemy_ids: Array = []
-	for i in range(1,4):
+	for i in range(1,LIGHTS.size()+1):
 		for j in 3:
 			enemy_ids.append("guard_%d_%d" % [i,j])
 	if not legacy:
@@ -52,15 +57,15 @@ static func validate(data: Variant) -> String:
 	for key in ["xp","level","skill_points","motes"]:
 		if not number_in(run.get(key),1 if key=="level" else 0,10000) or float(run[key])!=floor(float(run[key])):
 			return "Ungültiger Fortschrittswert: "+key
-	if run.xp>=run.level*60 or run.learned.size()+run.skill_points!=run.level-1:
+	if run.xp>=RunState.xp_required(int(run.level)) or run.learned.size()+run.skill_points!=run.level-1:
 		return "Stufe, Erfahrung und Talentpunkte widersprechen sich."
 	if not number_in(run.get("time_of_day"),0,1) or not run.get("quest_accepted") is bool or not run.get("quest_complete") is bool:
 		return "Zeit oder Auftragsstatus sind ungültig."
-	if run.quest_complete and run.active_lights.size()!=3:
+	if run.quest_complete and run.active_lights.size()!=LIGHTS.size():
 		return "Auftrag und aktivierte Lichter widersprechen sich."
 	var player: Dictionary = data.player
-	for pair in [["x",0,WorldGenerator.WIDTH*16],["y",0,WorldGenerator.HEIGHT*16],["hp",0.01,100],["mana",0,100],["stamina",0,100]]:
-		if not number_in(player.get(pair[0]),pair[1],pair[2]):
+	for pair in [["x",0,WorldGenerator.WIDTH*16],["y",0,WorldGenerator.HEIGHT*16],["hp",0,MAX_STORED_RESOURCE],["mana",0,MAX_STORED_RESOURCE],["stamina",0,MAX_STORED_RESOURCE]]:
+		if not number_in(player.get(pair[0]),pair[1],pair[2]) or (pair[0] == "hp" and player.hp <= 0):
 			return "Ungültiger Spielerwert: "+pair[0]
 	if not data.settings.get("shake") is bool or not number_in(data.settings.get("volume"),0,1):
 		return "Die gespeicherten Einstellungen sind ungültig."
@@ -95,7 +100,7 @@ static func validate_source(run: Dictionary) -> String:
 	var bag: Dictionary=run.inventory
 	for key in ["seen","guardian_defeated","reported","ore_taken"]:
 		if not source.get(key) is bool: return "Ungültiger Zustand der Quellengeschichte: "+key
-	if source.get("resolution") not in ["","restored","broken"] or not number_in(source.get("alignment"),0,2) or source.alignment!=floor(float(source.alignment)):
+	if source.get("resolution") not in ["","restored","broken"] or not number_in(source.get("alignment"),0,SourceQuest.SIGNS.size()-1) or source.alignment!=floor(float(source.alignment)):
 		return "Ungültige Entscheidung oder Zeichenfolge."
 	if not valid_list(bag.get("owned"),Content.section("relics").keys()) or not bag.get("equipped") is String or (not bag.equipped.is_empty() and not bag.equipped in bag.owned):
 		return "Das Reliktinventar ist ungültig."
@@ -208,7 +213,15 @@ static func read_one(path: String) -> Dictionary:
 	if not error.is_empty():
 		return {"error":error}
 	var migrated: Dictionary=migrate(data)
-	return {"data":migrated,"error":"","notice":"Dein bisheriger Lichtpfad wurde übernommen.","migrated_from":int(data.save_version)} if data.save_version<VERSION else {"data":migrated,"error":""}
+	var result := {"data":migrated,"error":""}
+	if data.save_version < VERSION:
+		result.notice = "Dein bisheriger Lichtpfad wurde übernommen."
+		result.migrated_from = int(data.save_version)
+	for resource in ["hp", "mana", "stamina"]:
+		if float(migrated.player[resource]) > Vitals.maximum(resource):
+			result.notice = (str(result.get("notice", "")) + " Gespeicherte Ressourcen über den aktuellen Maximalwerten bleiben erhalten. Regeneration und Boni füllen erst darunter nach.").strip_edges()
+			break
+	return result
 
 static func read(path: String = DEFAULT_PATH) -> Dictionary:
 	var result := read_one(path)
@@ -219,6 +232,6 @@ static func read(path: String = DEFAULT_PATH) -> Dictionary:
 		return result
 	var backup := read_one(path+".bak")
 	if backup.error.is_empty():
-		backup["notice"] = "Der letzte gesicherte Speicherpunkt wurde wiederhergestellt."
+		backup["notice"] = ("Der letzte gesicherte Speicherpunkt wurde wiederhergestellt. " + str(backup.get("notice", ""))).strip_edges()
 		return backup
 	return result

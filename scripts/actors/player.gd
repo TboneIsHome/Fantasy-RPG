@@ -78,9 +78,9 @@ func _physics_process(delta: float) -> void:
 			request_cast("bolt",get_global_mouse_position())
 		if Input.is_action_just_pressed("nova"):
 			request_cast("nova",get_global_mouse_position())
-	velocity = dash_direction*float(Content.section("player").dash_speed) if dash_remaining>0 else movement*float(Content.section("player").speed)*(0.55 if hindered>0 else 1.0)
+	velocity = dash_direction*float(Content.section("player").dash_speed) if dash_remaining>0 else movement*float(Content.section("player").speed)*(float(Content.section("player").hindered_speed) if hindered>0 else 1.0)
 	velocity += knockback
-	knockback = knockback.move_toward(Vector2.ZERO,500*delta)
+	knockback = knockback.move_toward(Vector2.ZERO,float(Content.section("player").knockback_decay)*delta)
 	move_and_slide()
 	update_visual()
 
@@ -97,13 +97,13 @@ func try_dash(direction: Vector2) -> bool:
 	dash_direction = direction.normalized()
 	dash_remaining = float(Content.section("player").dash_duration)
 	if run and "flow" in run.learned:
-		vitals.mana = minf(100,vitals.mana+12)
+		vitals.restore_mana(float(Content.section("skills").flow.mana_refund))
 	dash_performed.emit()
 	return true
 
 func take_damage(amount: float, direction: Vector2 = Vector2.ZERO) -> bool:
 	if vitals.damage(amount):
-		knockback = direction*65
+		knockback = direction*float(Content.section("player").knockback)
 		return true
 	return false
 
@@ -113,7 +113,7 @@ func reset_transient() -> void:
 	knockback = Vector2.ZERO
 	velocity = Vector2.ZERO
 	abilities = MageAbilities.new()
-	vitals.invulnerable = 1.0
+	vitals.invulnerable = float(Content.section("player").respawn_invulnerability)
 	shake = 0
 
 func update_visual() -> void:

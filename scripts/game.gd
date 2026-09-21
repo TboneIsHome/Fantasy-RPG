@@ -21,6 +21,9 @@ var save_path: String = SaveSystem.DEFAULT_PATH
 var settings: Dictionary = {"volume":0.4,"shake":true}
 
 func _ready() -> void:
+	if not Content.ensure_loaded():
+		_show_content_error()
+		return
 	InputSetup.install()
 	get_tree().auto_accept_quit=false
 	get_window().min_size=Vector2i(640,360)
@@ -253,7 +256,7 @@ func interact_dungeon(object: DungeonObject) -> void:
 			var cost: int=int(DungeonGenerator.content().fountain_cost)
 			if run.motes<cost:
 				ui.toast("Die Sickerquelle benötigt %d Lichtstaub." % cost)
-			elif player.vitals.hp>=100 and player.vitals.mana>=100 and player.vitals.stamina>=100:
+			elif player.vitals.is_full():
 				ui.toast("Du bist bereits vollständig erholt.")
 			elif run.spend_motes(cost):
 				player.vitals.refill()
@@ -314,7 +317,7 @@ func interact(landmark: Landmark) -> void:
 			ui.dialogue("Edda · Eine Karte unter Wurzeln","Diese Linien gehören nicht an den Himmel. Meine Lehrerin suchte ihr Ende im Aschemoor.\n\nDie Karte erklärt auch die gebrochene Fassung in der Gruft. Lies die Erinnerungen im Wasser und zwischen den Wurzeln. Vielleicht musst du ihren Hüter gar nicht bekämpfen.",[["Entdeckungen lesen","discoveries"],["Weiter erkunden","resume"]])
 		elif run.quest_complete:
 			ui.dialogue("Edda","Hörst du das Wasser? Die Quelle erinnert sich wieder. Dein Quellenfokus lässt dich an jedem geweckten Waldlicht rasten. Im alten Sternengarten öffnet er außerdem die Treppe zur Quellengruft.",[["Talente ansehen","journal"],["Aufbrechen","resume"]])
-		elif run.active_lights.size()==3:
+		elif run.active_lights.size()==RunState.LIGHT_IDS.size():
 			ui.dialogue("Edda","Drei Lichter. Ich hätte nicht gedacht, dass ich sie noch einmal sehen würde. Nimm diesen Fokus; die Quelle wird dich auf deinen Wegen begleiten.",[["Quellenfokus annehmen","reward"],["Noch einen Moment","resume"]])
 		elif not run.quest_accepted:
 			ui.dialogue("Edda · Hüterin der Quelle","Seit die Waldlichter verstummt sind, werden die Tiere unruhig. Drei alte Orte tragen noch einen Funken.\n\nFolge den Pfaden auf meiner Karte. Wecke die Lichter mit E und kehre zu mir zurück.",[["Ich suche die Waldlichter","accept"],["Ich sehe mich erst um","resume"]])
@@ -329,7 +332,7 @@ func interact(landmark: Landmark) -> void:
 		landmark.activate()
 		audio.play("light")
 		combat.effects.ring(landmark.position,45,Color("b4f0cf"))
-		ui.toast("Alle drei Lichter sind erwacht. Kehre zu Edda zurück." if run.active_lights.size()==3 else "Waldlicht erwacht · +20 Erfahrung")
+		ui.toast("Alle drei Lichter sind erwacht. Kehre zu Edda zurück." if run.active_lights.size()==RunState.LIGHT_IDS.size() else "Waldlicht erwacht · +%d Erfahrung" % int(Content.section("quest").light_xp))
 
 func _progress_changed() -> void:
 	if run.level>last_level:
@@ -353,7 +356,28 @@ func load_game() -> bool:
 
 func _notification(what: int) -> void:
 	if what==NOTIFICATION_WM_CLOSE_REQUEST:
-		if is_instance_valid(ui) and ui.page!="title" and player.vitals.hp>0:
+		if is_instance_valid(ui) and ui.page!="title" and is_instance_valid(player) and player.vitals.hp>0:
 			if not save_game():
 				return
 		get_tree().quit()
+
+func _show_content_error() -> void:
+	# Independent of GameUI/RunState: no partial world and no save write on failure.
+	var panel := Control.new()
+	panel.name = "ContentError"
+	add_child(panel)
+	var heading := Label.new()
+	heading.text = "Die Spieldaten konnten nicht geladen werden."
+	heading.position = Vector2(12,12)
+	panel.add_child(heading)
+	var detail := TextEdit.new()
+	detail.text = Content.error_text()
+	detail.editable = false
+	detail.position = Vector2(12,42)
+	detail.size = Vector2(616,260)
+	panel.add_child(detail)
+	var close := Button.new()
+	close.text = "Schließen"
+	close.position = Vector2(12,316)
+	close.pressed.connect(func(): get_tree().quit())
+	panel.add_child(close)

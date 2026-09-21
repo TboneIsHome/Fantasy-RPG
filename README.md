@@ -2,9 +2,9 @@
 
 Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelwaldregion und der ersten Quellengruft. Der erste zusammenhängende Spielabschnitt führt nun bis zum Quellenhüter, zwei Questlösungen und einem ausrüstbaren Relikt. Tim hat die neue Version positiv getestet; strukturierte Plattformabnahme und mehrstündige Weltinhalte stehen noch aus.
 
-**Aktuelle Entwicklungsphase: Foundation M03.** Ein sitzungsgebundener Regionslebenszyklus besitzt jetzt genau eine aktive 2D-Region und verwirft alte verzögerte Aktionen nach einem Wechsel. [M03 Completion Report](docs/FOUNDATION_M03.md): 504 bestandene automatisierte Prüfungen, Save-/Load-Regression und beide Export-Packs. Status **IMPLEMENTED / PARTIALLY TESTED**; die eigene manuelle Windows-Abnahme von M03 steht noch aus. Tim hat M02 ausdrücklich unter Windows getestet und abgeschlossen. Speicherformat 3, Generatoren und Gameplay-Werte bleiben erhalten; Lichterhain bleibt dauerhaft ein 2D-isometrisches RPG. Das ursprüngliche 0.4-Release liegt weiter unter `reference/v0.4-original`.
+**Aktuelle Entwicklungsphase: Foundation M04.** Gameplay, HUD und Belohnungstexte verwenden gemeinsame Definitionen; alle drei JSON-Dateien werden einmal geprüft und danach schreibgeschützt genutzt. Fehlerhafte Inhalte stoppen den Start mit konkreter Meldung. **707 automatisierte Checks** bestehen. Saveformat 3, bestehende Zahlen, Inhalte und Generatorversionen bleiben erhalten. M03 wurde von Tim manuell unter Windows bestätigt.
 
-Die [Creative Design Bible v1.0](docs/CREATIVE_DESIGN_BIBLE_V1.md) ist die maßgebliche kreative Referenz. Sie beschreibt das langfristige Spielerlebnis; die aktuelle Iteration bleibt auf M03 begrenzt. M04 wurde nicht begonnen.
+[Foundation Completion Report](docs/FOUNDATION_COMPLETION_REPORT.md): M04 ist **IMPLEMENTED / PARTIALLY TESTED**. Die eigene Windows-Spielabnahme steht aus. **Stop nach M04**; eine nächste Phase beginnt erst nach gemeinsamer Prüfung. Die [Creative Design Bible v1.0](docs/CREATIVE_DESIGN_BIBLE_V1.md) bleibt die maßgebliche kreative Referenz. Lichterhain bleibt dauerhaft 2D-isometrisch. Das ursprüngliche 0.4-Release liegt unter `reference/v0.4-original`.
 
 ## Direkt spielen unter Windows
 
@@ -84,4 +84,4 @@ GDScript wird verwendet; die .NET-Ausgabe ist nicht notwendig. Das Projekt kommt
 
 Der vollständige Quellcode, die Tests und die Projektdokumentation liegen in [TboneIsHome/Fantasy-RPG](https://github.com/TboneIsHome/Fantasy-RPG). Jede Iteration erhält einen eigenen Commit. Binäre Builds und lokale Godot-Caches gehören nicht in den Quellcode-Stand.
 
-Das aktuelle Windows-Testpaket heißt **Lichterhain_0.4_M03_Windows.zip**. Vor dem Test den bisherigen Benutzerordner sichern; die Anleitung liegt als `START_HIER.txt` bei. Die ursprünglichen 0.4-, M01- und M02-Archive bleiben als Referenzen erhalten.
+Das aktuelle Windows-Testpaket heißt **Lichterhain_0.4_M04_Windows.zip**. Vor dem Test den bisherigen Benutzerordner sichern; die Anleitung liegt als `START_HIER.txt` bei. Die ursprünglichen 0.4-, M01-, M02- und M03-Archive bleiben als Referenzen erhalten.

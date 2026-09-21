@@ -133,11 +133,13 @@ func verify() -> void:
 	check(state.prepare_source_challenge() and observations.size() == count, "Challenge with no alignment accepts the encounter without inventing a persistent change")
 	accept(state.align_source.bind("water"), "Resume first sign")
 	accept(state.align_source.bind("roots"), "Second sign")
+	# M04 publishes immutable definitions. Inject the same fault into a test-only copy.
+	var original_content := Content.all()
+	Content._cache = original_content.duplicate(true)
 	var reward: Dictionary = Content.section("source_quest")
-	var original_item: String = reward.reward_item
 	reward.reward_item = "missing_relic"
 	reject(state.align_source.bind("star"), "Unavailable reward prevents partial quest completion")
-	reward.reward_item = original_item
+	Content._cache = original_content
 	xp = total_xp(state)
 	reenter = state.align_source.bind("star")
 	accept(state.align_source.bind("star"), "Final sign resolves and rewards source")

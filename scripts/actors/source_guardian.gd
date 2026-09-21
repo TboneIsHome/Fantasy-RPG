@@ -27,7 +27,7 @@ func awaken() -> bool:
 	collision_layer=4
 	attack_index=0
 	state=Mode.RECOVER
-	timer=1.0
+	timer=float(definition.awaken_delay)
 	return true
 
 func withdraw() -> void:

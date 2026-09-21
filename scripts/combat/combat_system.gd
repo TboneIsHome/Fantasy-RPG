@@ -52,11 +52,12 @@ func cast(id: String, origin: Vector2, target: Vector2) -> void:
 				hit_any=enemy.take_damage(float(data.damage),center.direction_to(enemy.global_position)) or hit_any
 		var refund := run.inventory.frost_refund()
 		if hit_any and refund>0:
-			player.vitals.mana=minf(100,player.vitals.mana+refund)
-			effects.number(player.global_position,"+%d MP" % int(refund),Color("a7e9da"))
+			player.vitals.restore_mana(refund)
+			effects.number(player.global_position,"+%s MP" % Content.number_text(refund),Color("a7e9da"))
 		if "bloom" in run.learned and player.global_position.distance_to(center)<=float(data.radius):
-			player.vitals.hp = minf(100,player.vitals.hp+12)
-			effects.number(player.global_position,"+12",Color("b6edb3"))
+			var healing: float = float(Content.section("skills").bloom.healing)
+			player.vitals.heal(healing)
+			effects.number(player.global_position,"+" + Content.number_text(healing),Color("b6edb3"))
 
 func _clear_line(from: Vector2, to: Vector2) -> bool:
 	return get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(from,to,1)).is_empty()
@@ -68,13 +69,13 @@ func _bolt_hit(body: Node, point: Vector2, direction: Vector2) -> void:
 		var chained: WildEnemy = null
 		if body.slowed>0 and "echo" in run.learned:
 			for other in get_tree().get_nodes_in_group("enemies"):
-				if other != body and other.hp>0 and other.global_position.distance_to(body.global_position)<65 and _clear_line(body.global_position,other.global_position):
+				if other != body and other.hp>0 and other.global_position.distance_to(body.global_position)<float(Content.section("skills").echo.chain_range) and _clear_line(body.global_position,other.global_position):
 					if chained==null or other.global_position.distance_to(point)<chained.global_position.distance_to(point):
 						chained = other
 		body.take_damage(float(Content.section("spells").bolt.damage),direction,true)
 		if chained:
 			effects.ring(chained.global_position,15,Color("eae9b3"))
-			chained.take_damage(12,direction)
+			chained.take_damage(float(Content.section("skills").echo.chain_damage),direction)
 
 func connect_enemy(enemy: WildEnemy) -> void:
 	enemy.defeated.connect(_defeated)
@@ -124,8 +125,8 @@ func _enemy_bolt(origin: Vector2, direction: Vector2, amount: float, source_id: 
 	var projectile := MagicProjectile.new()
 	projectile.position = origin
 	projectile.direction = direction
-	projectile.speed = 115
-	projectile.remaining = 210
+	projectile.speed = float(Content.section("combat").enemy_projectile_speed)
+	projectile.remaining = float(Content.section("combat").enemy_projectile_range)
 	projectile.hostile = true
 	projectile.source_id=source_id
 	projectile.struck.connect(func(body,point,heading):

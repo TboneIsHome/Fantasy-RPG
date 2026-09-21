@@ -3,8 +3,8 @@ extends CharacterBody2D
 
 signal struck(body: Node, point: Vector2, direction: Vector2)
 var direction := Vector2.RIGHT
-var speed: float = 265
-var remaining: float = 235
+var speed: float = float(Content.section("spells").bolt.speed)
+var remaining: float = float(Content.section("spells").bolt.range)
 var hostile: bool = false
 var elapsed: float = 0
 var source_id: String = ""

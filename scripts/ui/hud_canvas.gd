@@ -20,6 +20,16 @@ const GOLD := Color("d6b77d")
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
+func resource_fraction(id: String) -> float:
+	return float(player.vitals.get(id)) / Vitals.maximum(id)
+
+func ability_readiness(id: String) -> float:
+	return 1-clampf(float(player.abilities.cooldowns[id])/float(MageAbilities.definition(id).cooldown),0,1)
+
+func ability_affordable(id: String) -> bool:
+	var available := player.vitals.stamina if id == "dash" else player.vitals.mana
+	return available >= float(MageAbilities.definition(id).cost)
+
 func _process(delta: float) -> void:
 	toast_left = maxf(0,toast_left-delta)
 	queue_redraw()
@@ -90,21 +100,21 @@ func _draw() -> void:
 		var colors := [Color("d78e80"),Color("79bfc9"),Color("d4b77b")]
 		for i in 3:
 			var y: float = 32+i*12
-			meter(Vector2(60,y),67,values[i]/100,colors[i])
+			meter(Vector2(60,y),67,resource_fraction(["hp","mana","stamina"][i]),colors[i])
 			text(Vector2(135,y+5),["LP ","MP ","AU "][i]+str(ceili(values[i])),8)
 		draw_rect(Rect2(16,69,160,1),Color("30484c"))
-		draw_rect(Rect2(16,69,160*run.xp/(run.level*60.0),1),GOLD)
+		draw_rect(Rect2(16,69,160*float(run.xp)/RunState.xp_required(run.level),1),GOLD)
 		card(Rect2(455,10,175,52))
 		if run.quest_complete:
 			text(Vector2(467,25),"DAS GEDÄCHTNIS DER QUELLE",8,GOLD)
 			text(Vector2(467,42),run.source.objective(run.vault),8)
 		else:
-			text(Vector2(467,25),"DIE VERSTUMMTEN LICHTER",9,GOLD)
-			text(Vector2(467,42),"Zurück zu Edda" if run.active_lights.size()==3 else "Waldlichter",11)
-			for i in 3:
+			text(Vector2(467,25),str(Content.section("quest").title).to_upper(),9,GOLD)
+			text(Vector2(467,42),"Zurück zu Edda" if run.active_lights.size()==RunState.LIGHT_IDS.size() else "Waldlichter",11)
+			for i in RunState.LIGHT_IDS.size():
 				diamond(Vector2(593+i*10,51),2.5,GOLD if i<run.active_lights.size() else Color("496268"))
-			if run.active_lights.size()<3:
-				text(Vector2(594,41),"%d / 3" % run.active_lights.size(),10,GOLD)
+			if run.active_lights.size()<RunState.LIGHT_IDS.size():
+				text(Vector2(594,41),"%d / %d" % [run.active_lights.size(), RunState.LIGHT_IDS.size()],10,GOLD)
 		var label_width: float = ThemeDB.fallback_font.get_string_size(location_name,HORIZONTAL_ALIGNMENT_LEFT,-1,11).x
 		card(Rect2(320-label_width/2-14,12,label_width+28,23),0.86)
 		text(Vector2(320-label_width/2,27),location_name,11,CREAM)
@@ -114,19 +124,16 @@ func _draw() -> void:
 		for i in 3:
 			var x: float = 11+i*89
 			var ids := ["bolt","nova","dash"]
-			var names := ["Lichtfunke","Frostkreis","Schritt"]
 			var binds := ["LMT / 1","RMT / 2","LEER"]
 			card(Rect2(x,308,84,41))
 			var cooldown: float = player.abilities.cooldowns[ids[i]]
 			var color := Color("aad9cd") if i==0 else Color("a0cddd") if i==1 else GOLD
 			spell_icon(Vector2(x+17,327),i,color.darkened(0.5) if cooldown>0.1 else color)
 			text(Vector2(x+33,320),binds[i],8,GOLD)
-			text(Vector2(x+33,333),names[i],8)
-			var cost: float = [8,28,28][i]
-			var resource: float = player.vitals.mana if i<2 else player.vitals.stamina
-			var ready: float = 1-clampf(cooldown/[0.32,4.5,0.62][i],0,1)
+			text(Vector2(x+33,333),MageAbilities.definition(ids[i]).name,8)
+			var ready := ability_readiness(ids[i])
 			draw_rect(Rect2(x+7,342,70,2),Color("29454b"))
-			draw_rect(Rect2(x+7,342,70*ready,2),color if resource>=cost else Color("a46868"))
+			draw_rect(Rect2(x+7,342,70*ready,2),color if ability_affordable(ids[i]) else Color("a46868"))
 			if cooldown>0.1:
 				text(Vector2(x+8,331),"%.1f" % cooldown,10,CREAM)
 		card(Rect2(467,312,163,37),0.86)
@@ -167,7 +174,7 @@ func _draw_map() -> void:
 	var colors := [Color("52735a"),Color("c3b581"),Color("497e8b"),Color("294c45"),Color("83948a"),Color("ddc497")]
 	for y in WorldGenerator.HEIGHT:
 		for x in WorldGenerator.WIDTH:
-			draw_rect(Rect2(origin+Vector2(x,y)*2.5,Vector2(2.5,2.5)),colors[map_data.tiles[y*112+x]])
+			draw_rect(Rect2(origin+Vector2(x,y)*2.5,Vector2(2.5,2.5)),colors[map_data.tiles[y*WorldGenerator.WIDTH+x]])
 	for point in map_data.points:
 		var p: Vector2 = origin+Vector2(point.tile)*2.5
 		var known: bool = point.id in run.discoveries
@@ -207,7 +214,7 @@ func _draw_vault_map() -> void:
 		for room in map_data.rooms:
 			if room.id==link[0]: a=Vector2(room.center)
 			if room.id==link[1]: b=Vector2(room.center)
-		if link[1]=="secret": a=Vector2(46,31)
+		if link[1]=="secret": a=Vector2(DungeonGenerator.SECRET_JOIN)
 		var from := origin+a*3
 		var to := origin+b*3
 		draw_line(from,Vector2(to.x,from.y),Color("829c8c"),1)

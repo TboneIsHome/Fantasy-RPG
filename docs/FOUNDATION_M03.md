@@ -4,6 +4,8 @@ Stand: 16.09.2026 · Basis: M02 `da04ab81cdb5fc4ea1b17254aeccd96a8742bbd9` · Go
 
 **IMPLEMENTED / PARTIALLY TESTED.** Implementierung, automatische Regression, Vergleichsmessung und Exportprüfungen sind abgeschlossen. Für die vollständige M03-Abnahme fehlt der manuelle Windows-Spieltest des neuen Pakets. **Stop: M04 ist nicht begonnen.**
 
+**Nachtrag 20.09.2026 — TESTED laut Nutzerbericht:** Tim bestätigt im M04-Auftrag ausdrücklich, dass M03 abgeschlossen und manuell unter Windows bestätigt ist. Die damalige Abnahmelücke ist damit geschlossen; Windows-Unterversion, einzelne Prüfschritte und Buildhash wurden nicht separat genannt. Der nachfolgende Bericht und seine QA-Dateien bleiben historische Nachweise vom 16.09.2026. M04 ist durch den neuen Auftrag autorisiert.
+
 ## 1. Ausgangslage
 
 Der lokale saubere M02-Stand entsprach GitHub `main`. Tim hat M02 ausdrücklich durch einen zusätzlichen erfolgreichen manuellen Windows-Spieltest bestätigt. Der vollständige Ausgangsstand bleibt über den Commit und ein vor Änderungen erzeugtes Referenzarchiv erhalten; originale Releases, eingefrorene Savegames und bisherige QA-Nachweise wurden nicht überschrieben.

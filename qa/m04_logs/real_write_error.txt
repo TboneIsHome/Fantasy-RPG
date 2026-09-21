@@ -1,0 +1,5 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+REAL WRITE PROBE: open=true store=true get_error=0 bytes=64 expected=895
+WRITE LIMIT RESULT: {"backup_unchanged":true,"previous_save_loadable":true,"reported_error":"Spielstand konnte nicht vollständig geschrieben werden. Bitte erneut speichern."}
+REAL WRITE ERROR PASS

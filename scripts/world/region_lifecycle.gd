@@ -26,6 +26,7 @@ func owns(node: Node) -> bool:
 	return is_current(_generation) and is_instance_valid(node) and not node.is_queued_for_deletion() and _current.is_ancestor_of(node)
 
 func build(run: RunState, settings: Dictionary, saved_player: Dictionary = {}, returning_to_forest: bool = false) -> bool:
+	if not Content.ensure_loaded(): return false
 	if _transitioning or run.region not in ["forest", "vault"]: return false
 	_transitioning = true
 	_unload()

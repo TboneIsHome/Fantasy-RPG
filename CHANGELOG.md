@@ -1,5 +1,14 @@
 # Änderungen
 
+## Foundation M04 — 2026-09-20
+
+- Bestehende Spieler-, Zauber-, Talent-, Gegner- und Belohnungswerte mit Gameplay/HUD/Journal zusammengeführt; keine Balanceänderung.
+- Einmalige gemeinsame Validierung der drei JSON-Dateien, schreibgeschützter Cache, Schema-/Referenz-/Geometriefehler mit Dateipfad und sichtbarem Startabbruch.
+- Speicherformat 3 erhalten; gespeicherte Ressourcen bleiben auch über geänderten Maximalwerten exakt erhalten, inklusive Hinweis und sicherer Backup-Wiederherstellung.
+- 707/707 Checks; beide Release-Packs geprüft. Manuelle M04-Windows-Abnahme offen. M03 laut Tim erfolgreich unter Windows getestet.
+- Foundation Completion Report erstellt; Stop vor einer weiteren Entwicklungsphase.
+
+
 ## Foundation M03 — 2026-09-16
 
 - M02 durch Tims manuellen Windows-Spieltest ausdrücklich abgenommen; ausschließlich M03 begonnen.

@@ -34,6 +34,14 @@
 
 ## Foundation-Entscheidungen
 
+M04-Auftrag und Umsetzung am 2026-09-20:
+
+- Tim bestätigt M03 samt manuellem Windows-Spieltest und beauftragt ausschließlich Datenkonsistenz und Content-Validierung. Danach Stop mit Foundation Completion Report; M04 braucht eine eigene manuelle Abnahme.
+- JSON bleibt maßgeblich; gemeinsame einmalige Validierung und rekursiv schreibgeschützte Definitionen statt mehrerer Parser/Caches. Release-Fehler stoppen vor Weltaufbau und Dateischreiben.
+- Bestehende Zahlen bleiben unverändert. Tatsächlich redundante Start-/HUD-/Bonuswerte nutzen dieselbe Definition. Stabile Generator-/Save-IDs bleiben explizite Verträge, kein generischer Content-Editor wird behauptet.
+- Saveformat 3 speichert weiterhin absolute Ressourcen. Die Serialisierungsgrenze wird von aktuellen Spielermaxima getrennt; alter Überschuss bleibt mit Hinweis erhalten und wird durch Regeneration/Boni/Rast weder vermindert noch vermehrt.
+- Creative Bible bleibt das WARUM. Keine neue Gameplay-Mechanik, Balanceentscheidung, 3D-Abstraktion oder vorgezogene Weltsimulation. Empfehlungen im Abschlussbericht sind PROPOSAL.
+
 M03-Auftrag und Umsetzung am 2026-09-16:
 
 - Tim bestätigt M02 ausdrücklich durch einen manuellen Windows-Spieltest und beauftragt ausschließlich M03; danach Stop vor M04. Die neue M03-EXE braucht ihre eigene manuelle Abnahme.

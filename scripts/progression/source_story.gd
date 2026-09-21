@@ -1,6 +1,8 @@
 class_name SourceStory
 extends Node
 ## Coordinates this quest without coupling persistent state to the live scene.
+const SITE_CELL := Vector2i(78,43)
+const GUARDIAN_CELL := Vector2i(78,51)
 var game: Node2D
 var guardian: SourceGuardian
 var site: SourceSite
@@ -28,14 +30,14 @@ func build_region() -> void:
 	for room in game.terrain.data.rooms:
 		if room.id=="sanctum": room_bounds=Rect2(Vector2(room.rect.position)*16,Vector2(room.rect.size)*16)
 	site=SourceSite.new()
-	site.configure({"id":"source_binding","tile":Vector2i(78,43)},false)
+	site.configure({"id":"source_binding","tile":SITE_CELL},false)
 	game.terrain.actors.add_child(site)
 	grove=SourceGrove.new()
 	grove.bounds=room_bounds
 	game.terrain.add_child(grove)
 	if game.run.source.resolution.is_empty():
 		guardian=SourceGuardian.new()
-		guardian.configure({"id":SourceQuest.GUARDIAN_ID,"kind":"guardian","position":WorldGenerator.center(Vector2i(78,51))},game.player,Vector2(-1000,-1000))
+		guardian.configure({"id":SourceQuest.GUARDIAN_ID,"kind":"guardian","position":WorldGenerator.center(GUARDIAN_CELL)},game.player,Vector2(-1000,-1000))
 		guardian.arena=room_bounds
 		game.terrain.actors.add_child(guardian)
 		game.combat.connect_enemy(guardian)
@@ -106,7 +108,7 @@ func show_tuning() -> void:
 	get_tree().paused=true
 	var count: int=game.run.source.alignment
 	var text: String=["Welches Zeichen beginnt die Bindung?","Das Wasser fließt. Was folgt ihm?","Die Wurzeln trinken. Welches Zeichen schließt den Kreis?"][count]
-	game.ui.dialogue("Die Bindung stimmen","%d / 3 Zeichen · %s" % [count,text],[["Den Stern setzen","source_align","star"],["Das Wasser wecken","source_align","water"],["Die Wurzeln führen","source_align","roots"],["Später fortsetzen","resume"]])
+	game.ui.dialogue("Die Bindung stimmen","%d / %d Zeichen · %s" % [count,SourceQuest.SIGNS.size(),text],[["Den Stern setzen","source_align","star"],["Das Wasser wecken","source_align","water"],["Die Wurzeln führen","source_align","roots"],["Später fortsetzen","resume"]])
 
 func handle_action(action: String, argument: String) -> bool:
 	if action not in ["source_tune","source_align","source_challenge","source_back"]: return false
@@ -156,7 +158,9 @@ func present_completion() -> void:
 	get_tree().paused=true
 	var title := "Die Quelle atmet" if path=="restored" else "Der Stern im gebrochenen Stein"
 	var copy := "Wasser und Wurzeln finden zueinander. Hier kannst du nun kostenlos rasten." if path=="restored" else "Der Hüter sinkt nieder. In der offenen Fassung wartet einmalig bergbares Sternenerz."
-	game.ui.dialogue(title,copy+"\n\nQuellenherz erhalten und angelegt · +90 Erfahrung. Ein Frostkreis mit Treffer gibt dir nun 6 Mana zurück. Erzähle Edda von deiner Entscheidung.",[["Relikt ansehen","equipment"],["Weitergehen","resume"]])
+	var reward := Content.section("source_quest")
+	var relic: Dictionary = Content.section("relics")[reward.reward_item]
+	game.ui.dialogue(title,copy+"\n\n%s erhalten und angelegt · +%d Erfahrung. Ein Frostkreis mit Treffer gibt dir nun %s Mana zurück. Erzähle Edda von deiner Entscheidung." % [relic.name, reward.reward_xp, Content.number_text(float(relic.frost_refund))],[["Relikt ansehen","equipment"],["Weitergehen","resume"]])
 
 func _withdrawn(origin_generation: int) -> void:
 	if not game.regions.is_current(origin_generation): return

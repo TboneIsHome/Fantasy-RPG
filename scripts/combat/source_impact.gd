@@ -1,8 +1,8 @@
 class_name SourceImpact
 extends Node2D
 var player: MagePlayer
-var radius: float = 34
-var damage: float = 21
+var radius: float = float(Content.section("enemies").guardian.slam_radius)
+var damage: float = float(Content.section("enemies").guardian.damage)
 var remaining: float = 0.45
 var struck: bool = false
 

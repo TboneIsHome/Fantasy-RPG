@@ -23,6 +23,9 @@ var inventory := RelicInventory.new()
 func advance_time(delta: float) -> void:
 	time_of_day=fposmod(time_of_day+delta/float(Content.section("world").day_seconds),1)
 
+static func xp_required(current_level: int) -> int:
+	return current_level * int(Content.section("progression").xp_per_level)
+
 func add_xp(amount: int) -> void:
 	if amount <= 0: return
 	_add_xp(amount)
@@ -31,8 +34,8 @@ func add_xp(amount: int) -> void:
 # Compound actions publish only after every related field and reward is ready.
 func _add_xp(amount: int) -> void:
 	xp += maxi(0, amount)
-	while xp >= level * 60:
-		xp -= level * 60
+	while xp >= xp_required(level):
+		xp -= xp_required(level)
 		level += 1
 		skill_points += 1
 
@@ -55,7 +58,7 @@ func activate_light(id: String) -> bool:
 	if id not in LIGHT_IDS or id in active_lights:
 		return false
 	active_lights.append(id)
-	add_xp(20)
+	add_xp(int(Content.section("quest").light_xp))
 	return true
 
 func accept_quest() -> bool:
@@ -70,7 +73,7 @@ func complete_quest() -> bool:
 		if id not in active_lights: return false
 	quest_complete = true
 	quest_accepted = true
-	_add_xp(45)
+	_add_xp(int(Content.section("quest").reward_xp))
 	changed.emit()
 	return true
 
@@ -85,7 +88,7 @@ func defeat_enemy(id: String, kind: String) -> bool:
 		if id == encounter.id and kind == encounter.kind: known = true
 	if not known: return false
 	defeated.append(id)
-	motes += 1
+	motes += int(Content.section("progression").enemy_motes)
 	_add_xp(int(Content.section("enemies")[kind].xp))
 	changed.emit()
 	return true

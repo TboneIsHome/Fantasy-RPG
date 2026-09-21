@@ -1,0 +1,252 @@
+{
+  "date": "2026-09-21",
+  "status": "PARTIALLY TESTED",
+  "implemented": "M04 Data Consistency & Content Validation",
+  "baseline_commit": "788d8ed090eef34ac11046db4f58d3487a0f911a",
+  "engine": "4.5.1.stable.official.f62fdbde1",
+  "assertions": {
+    "passed": 707,
+    "total": 707,
+    "existing": 504,
+    "new": 203
+  },
+  "suites": [
+    {
+      "suite": "test_suite",
+      "passed": 50,
+      "checks": 50
+    },
+    {
+      "suite": "ui_smoke",
+      "passed": 14,
+      "checks": 14
+    },
+    {
+      "suite": "save_compatibility",
+      "passed": 8,
+      "checks": 8
+    },
+    {
+      "suite": "dungeon_suite",
+      "passed": 48,
+      "checks": 48
+    },
+    {
+      "suite": "migration_suite",
+      "passed": 12,
+      "checks": 12
+    },
+    {
+      "suite": "source_suite",
+      "passed": 65,
+      "checks": 65
+    },
+    {
+      "suite": "save_io_reproduction",
+      "passed": 8,
+      "checks": 8
+    },
+    {
+      "suite": "save_fault_suite",
+      "passed": 71,
+      "checks": 71
+    },
+    {
+      "suite": "save_scene_smoke",
+      "passed": 14,
+      "checks": 14
+    },
+    {
+      "suite": "state_replay_reproduction",
+      "passed": 3,
+      "checks": 3
+    },
+    {
+      "suite": "state_actions_suite",
+      "passed": 100,
+      "checks": 100
+    },
+    {
+      "suite": "state_actions_scene",
+      "passed": 12,
+      "checks": 12
+    },
+    {
+      "suite": "region_replay_reproduction",
+      "passed": 4,
+      "checks": 4
+    },
+    {
+      "suite": "region_lifecycle_suite",
+      "passed": 95,
+      "checks": 95
+    },
+    {
+      "suite": "content_validation_suite",
+      "passed": 88,
+      "checks": 88
+    },
+    {
+      "suite": "data_consistency_suite",
+      "passed": 89,
+      "checks": 89
+    },
+    {
+      "suite": "content_startup",
+      "passed": 26,
+      "checks": 26
+    }
+  ],
+  "gate": [
+    {
+      "stage": "import",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "test_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "ui_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_compatibility",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "dungeon_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "migration_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "source_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_io_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_fault_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_scene_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_scene",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "region_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "region_lifecycle_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "content_validation_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "data_consistency_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "content_startup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "real_write_error",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "exports": [
+    {
+      "stage": "export_windows",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "export_linux",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "smoke_linux",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "smoke_windows_pack",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "startup_linux_release",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "startup_windows_pack",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "content_load_microseconds_single_sample": 4330,
+  "native_M04_Windows": "NOT TESTED",
+  "human_M04_playtest": "NOT TESTED",
+  "M03_human_Windows": "TESTED - explicitly confirmed by Tim before M04",
+  "graphics": "NOT TESTED - Xvfb could not open display sockets",
+  "intermittent_observation": {
+    "parallel_run_region_suite": "92/95; three save/load-related assertions failed",
+    "isolated_diagnostic": "95/95",
+    "isolated_suite": "95/95",
+    "final_serial_regression": "707/707",
+    "cause": "Not conclusively reproduced; diagnostics added, no runtime fix claimed"
+  },
+  "initial_release_data_failure": "JSON numeric token printed 6.0 Mana; fixed formatter, four assertions added; full regression and export probes repeated",
+  "package": {
+    "filename": "Lichterhain_0.4_M04_Windows.zip",
+    "bytes": 34029848,
+    "sha256": "32467f8151893bab1b81b6a1a47d72aac641a8b3a7e475f9ef03e50234475ece",
+    "exe_sha256": "49914828af70b4db11f13f6d5398cd5b4dcb26ca2753acfa62798a2f8fcf063b",
+    "pe_architecture": "x86_64",
+    "zip_crc": "PASS"
+  },
+  "log_normalization": "ANSI color codes and trailing whitespace removed; messages preserved",
+  "scope": "M04 only. No new gameplay, balance, save version, streaming, 3D or next phase."
+}

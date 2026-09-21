@@ -1,6 +1,6 @@
 # Technische Architektur
 
-Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation M03. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; [M01](docs/FOUNDATION_M01.md) dokumentiert die Save-Absicherung, [M02](docs/FOUNDATION_M02.md) die kontrollierten Fortschrittsaktionen und [M03](docs/FOUNDATION_M03.md) den abgegrenzten Regionslebenszyklus. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
+Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation M04. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; [M01](docs/FOUNDATION_M01.md) dokumentiert die Save-Absicherung, [M02](docs/FOUNDATION_M02.md) die kontrollierten Fortschrittsaktionen und [M03](docs/FOUNDATION_M03.md) den abgegrenzten Regionslebenszyklus. [Foundation Completion Report](docs/FOUNDATION_COMPLETION_REPORT.md) fasst den Abschlussstand und seine Abnahmegrenzen zusammen. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
 
 ## Laufzeit
 
@@ -13,7 +13,8 @@ Godot **4.5.1 Standard**, GDScript, Compatibility-Renderer, 60 Physikschritte/Se
 | Sitzung | `scripts/game.gd`: RunState, UI/Audio, Interaktionen und explizite Speicherpunkte; verdrahtet regionale Referenzen |
 | Regionslebenszyklus | `world/region_lifecycle.gd`: genau eine aktive Region, Wechsel, Invalidierung, Generationskennung, Ressourcenübernahme und Camp-Rückkehr |
 | Regionsinstanz | `world/region_instance.gd`: bestehender 2D-Aufbau von Terrain, Player, Gegnern, Landmarken, Combat und Atmosphäre |
-| Zustandsdaten | `core/run_state.gd`: Seed, Fortschritt, IDs veränderter Weltobjekte; `core/content.gd`: Definitionen aus JSON |
+| Zustandsdaten | `core/run_state.gd`: Seed, Fortschritt, IDs veränderter Weltobjekte |
+| Inhaltsdaten | `core/content.gd`: einmalig geprüftes, schreibgeschütztes JSON-Bundle; `core/content_validator.gd`: Schema/Querverweise; `dungeon/vault_content_validator.gd`: Generator-1-Geometrie |
 | Eingabe / Figur | `actors/player.gd`, `core/input_setup.gd`: Bewegung, Kamera, Zielrichtung, Eingaben |
 | Attribute | `actors/vitals.gd`: Leben, Mana, Ausdauer, Regeneration und Schadensschutz |
 | Fähigkeiten | `actors/mage_abilities.gd`: Ressourcen und Abklingzeiten; `combat/combat_system.gd`: Effekte und Kombinationen |
@@ -63,7 +64,7 @@ Die bestehenden Speicherzeitpunkte bleiben erhalten: Erinnerungen/Funde, geöffn
 
 Ausnahmen von dieser Fortschrittsoberfläche sind bewusst erhalten: `restore()` und Testaufbau konstruieren geprüfte Zustände direkt; `game.gd` setzt den Seed beim Sitzungsstart; `RegionLifecycle` setzt `RunState.region` beim bestätigten Reise-/Campablauf (M03). Zeit bleibt bei `advance_time()` ohne Änderungsmeldung pro Frame; Position und Vitals bleiben Actor-Zustand, Einstellungen gehören zur Sitzung. Öffentliche GDScript-Felder sind keine technisch erzwungene Unveränderlichkeit; Laufzeitaufrufer halten die Zuständigkeiten ein.
 
-`RunState.LIGHT_IDS` besitzt die bekannten Licht-IDs; `SaveSystem.LIGHTS` bleibt als kompatibler Alias erhalten. Die normale Gegnerannahme prüft die bestehenden Generator-1-IDs/Kinds und verwendet XP aus der vorhandenen JSON-Definition. Die noch feste Identitätskonvention von Generator und Saveprüfung sowie übrige doppelte Inhaltswerte gehören weiterhin zu M04; kein neues Datenformat oder Schema wurde eingeführt.
+`RunState.LIGHT_IDS` besitzt die bekannten Licht-IDs; `SaveSystem.LIGHTS` bleibt als kompatibler Alias erhalten. Die normale Gegnerannahme prüft die bestehenden Generator-1-IDs/Kinds und verwendet XP aus der vorhandenen JSON-Definition. M04 bindet die numerischen Belohnungen an JSON. Die feste Identitätskonvention bleibt ein explizit validierter Generator-/Save-Vertrag; eine beliebige Erweiterung der IDs ist noch kein unterstützter Authoring-Workflow.
 
 ## Regionslebenszyklus — M03
 
@@ -88,6 +89,55 @@ Ein Wechsel läuft synchron ab:
 Projektile, Einschläge und Dornen bleiben Kinder des regionsgebundenen CombatSystem. Sie werden gemeinsam deaktiviert, entfernt und freigegeben; ihre Mechanik bleibt unverändert. Alte Combat-Callbacks lehnen nach Deaktivierung weitere Treffer, Belohnungen oder Effekte ab. Interaktionen verlangen ein Objekt aus dem aktuellen Baum. Dialogbuttons aus einem bereits entfernten UI-Panel senden keine Requests mehr.
 
 RunState, Generator-/Saveversionen, JSON-Inhalte und Belohnungsregeln bleiben erhalten. Der Player lebt weiterhin nur bis zum nächsten Neuaufbau. Kein Streaming, Region-Cache, Hintergrundsimulation oder persistenter regionsübergreifender Actor. Savefehler ändern die erfolgreich betretene Region im Arbeitsspeicher nicht zurück; die Meldung bleibt sichtbar und F5 kann erneut speichern.
+
+## Inhaltsdaten und Konsistenz — M04
+
+**IMPLEMENTED / automatisiert TESTED.** JSON bleibt die Inhaltsquelle. `Content.ensure_loaded()` liest beim ersten Zugriff `data/content.json`, `data/vault.json` und `data/discoveries.json`, prüft das gesamte Bundle und veröffentlicht es erst nach erfolgreicher Prüfung. Dictionarys und Arrays sind rekursiv schreibgeschützt. `DiscoveryBook.entries()` und `DungeonGenerator.content()` sind lesende Zugriffe auf denselben Cache; ihre früheren unabhängigen Parser/Caches entfallen. Fehler werden ebenfalls zwischengespeichert. Es gibt kein Hot Reload und keine Prüfung pro Frame. Ein Neustart lädt geänderte Dateien neu.
+
+`ContentValidator` prüft die konkreten derzeit unterstützten Definitionen, `VaultContentValidator` den Raum-/Verbindungsvertrag. Die reinen Prüfmethoden ändern keine Eingabedaten. Das Laufzeit-Bundle ist unveränderlich; neue Tests setzen ausdrücklich eine private Testkopie ein, um geänderte Definitionen und den bestehenden Fehlerfall einer nicht verfügbaren Belohnung zu prüfen. Dies ist keine öffentliche Laufzeit-Schreibschnittstelle.
+
+### Maßgebliche Regelquellen
+
+Alle bisherigen Balancezahlen bleiben erhalten. Die Zahlen in dieser Tabelle beschreiben den M04-Stand; gepflegt werden sie ausschließlich in den genannten Definitionen.
+
+| Regel | Maßgebliche Quelle | Verbraucher |
+| --- | --- | --- |
+| LP/MP/AU-Maximum, jeweils 100 | `content.player.hp/mana/stamina` | Vitals-Start, Regeneration, Rast, Heilung/Refund-Caps, Regionsaufbau, HUD; Save übernimmt absolute Ressourcen |
+| Bewegung, Dash 28 AU / 0,62 s / 0,16 s | `content.player` | Player, MageAbilities, HUD über `MageAbilities.definition()` |
+| Mana/AU-Regeneration 8/30, Regenerationspause und Schadensschutz je 0,65 s | `content.player` | Vitals; gleiche Zahlen bedeuten hier zwei getrennte Regeln |
+| Lichtfunke 8 MP / 0,32 s / 19 Schaden; Frostbonus 10 | `content.spells.bolt` | MageAbilities, Projectile/Combat, Enemy, HUD |
+| Frostkreis 28 MP / 4,5 s / 16 Schaden, Reichweite/Radius/Verlangsamung | `content.spells.nova` | MageAbilities, Combat, Enemy, HUD |
+| Fließender Schritt 12 MP; Quellenkreis 12 LP | `content.skills.flow.mana_refund`, `bloom.healing` | Player/Combat/Vitals, Journaltexte mit geprüften Zahlentokens |
+| Widerhall 12 Schaden / 65 Reichweite | `content.skills.echo` | Bestehender Combat-Ketteneffekt |
+| Quellenherz 6 MP pro getroffener Nova | `content.relics.source_heart.frost_refund` | RelicInventory, Combat, Journal und Abschlussdialog; keine zweite Anwendung pro Ziel |
+| Level-Schwelle `Stufe × 60`, normaler Gegner 1 Lichtstaub | `content.progression` | RunState; `xp_required()` auch für HUD, Journal und Saveprüfung |
+| Waldlicht 20 XP; erster Auftrag 45 XP | `content.quest.light_xp/reward_xp` | RunState, Lichtmeldung; Questzielanzahl kommt aus `RunState.LIGHT_IDS` |
+| Quelle 90 XP / Quellenherz; Erz 4 Lichtstaub | `content.source_quest` | RunState, SourceStory-Dialog/Meldung, Save-Referenzprüfung |
+| Erinnerung 10, Karte 40, Samen 25 XP; Quelle kostet 2 Lichtstaub | `vault.json` bestehende Felder | RunState, Interaktion und Kostenhinweis |
+| Gegnerspezifische HP/XP/Schaden/Reichweiten/Angriffszeiten | `content.enemies` | WildEnemy, SourceGuardian, Dornen/Einschlag, gegnerische HP-Balken |
+| Gemeinsame Gegnergeschosse 115 Tempo / 210 Reichweite, Trefferreaktion/Campradius | `content.combat` | CombatSystem und WildEnemy |
+| Tagesdauer 240 s | `content.world.day_seconds` | RunState-Zeitfortschritt |
+
+Unbenutzte JSON-Kopien von Wald-Breite/Höhe/Tilegröße/Generatorversion und Questzielanzahl wurden entfernt. Die Generator-1-Konstanten und stabilen Licht-IDs besitzen diese Verträge bereits. Karte/Save greifen darauf zurück. Gruft-Spawn, Geheimweganschluss und Becken sind vorhandene Generatorregeln, die Erzeugung und Geometrieprüfung gemeinsam verwenden. Hüter-/Fassungspunkte gehören zu SourceStory. Layout-, Grafik-, Kollisions- und Scanparameter werden dadurch nicht zu frei veränderbaren Inhaltsdefinitionen erklärt.
+
+### Tatsächliche Validierungsregeln
+
+- Jede Datei muss ein JSON-Objekt sein. Pflichtfelder, Objekt-/Array-/Texttypen und unbekannte Felder werden geprüft; stille Fallback-Definitionen gibt es nicht.
+- IDs verwenden `[a-z][a-z0-9_]*`, maximal 64 Zeichen. Bestehende Zauber-/Talent-/Gegner-/Relikt-, Raum-, Fund- und Encounter-IDs sind Pflichtverträge. Nicht unterstützte IDs/Modi, doppelte IDs und fehlende Verweise werden abgewiesen. Ein gültiger Name allein erzeugt keine neue Mechanik.
+- Zahlen müssen endlich sein; boolesche Werte und Zahlstrings sind keine Zahlen. Allgemeine positive Zahlen liegen zwischen 0,000001 und 10.000, nichtnegative zwischen 0 und 10.000. XP/Lichtstaub sind ganze, nichtnegative Zahlen, XP-Multiplikator und Brunnenkosten ganze Zahlen ab 1. Kosten und Schaden dürfen 0 sein; Cooldowns, Reichweiten und wiederholte Angriffsintervalle müssen positiv sein. Multiplikatoren liegen in `[0,1]`, Hüterfächeranzahl ganzzahlig in `[2,64]`, Fächerwinkel in `[0,π]`, Leash mindestens so groß wie Aggro. Diese Authoring-Grenzen sind Schutzgrenzen, keine Balancingziele.
+- Talent-/Relikttexte prüfen Klammern, bekannte numerische Platzhalter und die Pflicht-Tokens `{mana_refund}`, `{healing}` bzw. `{frost_refund}`. `Content.description()` formatiert die Definition; UI pflegt keine eigene Zahl.
+- Räume haben ganzzahlige Koordinaten-/Größenpaare. Auch die größte ±2-Variation muss innerhalb des Rasterrands liegen. Verbindungen benötigen zwei bekannte, verschiedene Raum-IDs; ungerichtete Doppelverbindungen sind ungültig. Der bestehende Geheimzweig bleibt `cistern → secret`.
+- Auf dem Boden der kleinsten möglichen Räume werden die echten Gang-/Beckenregeln verwendet. Spawn, Raumzentren, Interaktionspunkte und alle ±1-Encounter-Verschiebungen müssen mit offenen Toren erreichbar sein; Torpunkte müssen zu ihren Kollisionszellen passen. Fassung und Hüter müssen im erreichbaren Sanctum liegen. Dies ergänzt die bisherigen 100-Seed-Tests für geschlossene/offene Wege; es behauptet keine beliebige neue Topologie oder dreidimensionale Raumprüfung.
+- Discovery-Einträge brauchen nichtleere Titel/Texte und unterstützte IDs. Erinnerungen/Funde müssen einen Journaleintrag besitzen; Quellenbelohnungen eine vorhandene Reliktdefinition.
+
+Fehler nennen Datei, Feldpfad, erwartete Bedingung und erhaltenen Wert. Syntaxfehler nennen Datei und Parserzeile. Der Einstieg zeigt eine unabhängige Fehleransicht, erzeugt keine Sitzung/Region und schreibt keinen Save. Region-Build und Saveprüfung lehnen ungültigen Content ebenfalls ausdrücklich ab. Dies funktioniert in Release-Builds ohne Assertions. Beispiel:
+
+```text
+data/content.json
+enemies.guardian.fan_count
+Expected integer in [2, 64], finite
+Received: 1
+```
 
 ## Generierung
 
@@ -125,6 +175,14 @@ Der bekannte Dateiname `lichtpfad_v1.json` bleibt erhalten. Godots JSON-Zahlen k
 Beschädigte Hauptdateien können auf eine gültige Sicherung zurückfallen. Unbekannte Format-/Generator-/Dungeonversionen werden abgelehnt; hier erfolgt kein stiller Rückfall auf einen älteren Stand. Ältere Builds können Format 3 nicht lesen. Weitere Schemaänderungen brauchen erneut eine explizite Migration oder parallele Generatorversion.
 
 Lebende Gegner starten beim Laden und erneutem Betreten einer Region wieder gesund an ihren Ausgangsorten; laufende Projektile und kurze Effekte werden nicht gespeichert. Abklingzeiten werden zurückgesetzt. Dauerhafte Verluste/Entdeckungen bleiben erhalten. Ein Gebietswechsel gibt kurz 0,8 Sekunden Ankunftsschutz. Tod in der Gruft führt zum Waldlager. Der Hüter ist nach dem Laden zunächst inaktiv und gesund. Seine abgeschlossenen Ergebnisse und das Relikt bleiben erhalten. Dies sind die dokumentierten Grenzen des Prototyps.
+
+### Ressourcenkompatibilität — M04
+
+Format **3** und die gespeicherten Felder bleiben unverändert. Formate 1–3 enthalten absolute LP/MP/AU, aber keinen damaligen Maximalwert. Die frühere feste Save-Obergrenze 100 wird deshalb durch eine stabile Serialisierungsgrenze von 1.000.000 ersetzt (`MAX_STORED_RESOURCE`), unabhängig von aktueller Balance. LP müssen endlich und strikt positiv, MP/AU endlich und nichtnegativ sein. Tote Charaktere bleiben nicht speicherbar. Diese Grenze erlaubt keine Regeneration bis eine Million; dafür gilt ausschließlich die Spielerdefinition.
+
+Ein älterer Stand oberhalb aktueller Maxima wird exakt geladen und mit einem ausdrücklichen Hinweis versehen, auch nach Backup-Recovery. Regeneration, Talent-/Reliktboni und Rast reduzieren vorhandenen Überschuss nicht und vermehren ihn nicht. Ausgaben/Schaden können ihn verbrauchen; unterhalb der neuen Maxima füllen die normalen Regeln wieder auf. Wiederholtes Speichern/Laden erhält diese absoluten Werte. Aktuell sind weiterhin alle drei Maxima 100, daher verändert diese Kompatibilitätsregel keine reguläre Balance des ausgelieferten Prototyps.
+
+Die bestehenden Fortschrittsgrenzen (ganze Werte bis 10.000) und Zustandsabhängigkeiten bleiben erhalten. Eine spätere Änderung der XP-Kurve oder persistenter IDs braucht eine eigene Kompatibilitäts-/Migrationsentscheidung: M04 löst ausdrücklich die Maximalwertkopplung, nicht jede denkbare zukünftige Inhaltsmigration. Frühere ausführbare Builds können höhere Ressourcenwerte weiterhin ablehnen; das ist keine zugesicherte Rückwärtskompatibilität neuer Daten mit alten Programmen.
 
 ## Quellenkampf und Folgen
 
