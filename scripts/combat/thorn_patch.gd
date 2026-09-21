@@ -9,6 +9,8 @@ var damage: float = float(Content.section("enemies").kobold.damage)
 var slow_seconds: float = float(Content.section("enemies").kobold.thorn_slow)
 var interval: float = float(Content.section("enemies").kobold.thorn_interval)
 var peaceful_area: Rect2
+var hit_scope: WeakRef
+var source_id: String
 
 func _ready() -> void:
 	z_index=5
@@ -21,10 +23,16 @@ func _physics_process(delta: float) -> void:
 		return
 	if pulse<=0:
 		pulse=interval
+		var scope := hit_scope.get_ref() as Node if hit_scope != null else null
+		if not is_instance_valid(scope): return
+		# Each already-existing periodic pulse is an explicit new hit instance.
+		var instance: HitInstance = scope.new_hit(&"thorn_pulse",source_id)
 		if is_instance_valid(player) and not peaceful_area.has_point(player.global_position) and player.position.distance_to(global_position)<=radius:
 			var wall := get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(global_position,player.position,1))
-			if wall.is_empty() and player.take_damage(damage):
-				player.hindered=maxf(player.hindered,slow_seconds)
+			if wall.is_empty():
+				var profile := CombatProfiles.hostile_attack(damage,Content.section("enemies").kobold.damage_type,{"slow_seconds":slow_seconds})
+				var result := player.receive_hit(instance,profile)
+				if result.resolved and result.contact: player.hindered=maxf(player.hindered,float(result.secondary.slow_seconds))
 	queue_redraw()
 
 func _draw() -> void:

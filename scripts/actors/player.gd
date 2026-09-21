@@ -24,6 +24,7 @@ var cast_armed: bool = false
 var cast_flash: float = 0
 var staff_light: PointLight2D
 var hindered: float = 0
+var hit_scope: WeakRef
 
 func _ready() -> void:
 	add_to_group("player")
@@ -102,10 +103,22 @@ func try_dash(direction: Vector2) -> bool:
 	return true
 
 func take_damage(amount: float, direction: Vector2 = Vector2.ZERO) -> bool:
-	if vitals.damage(amount):
-		knockback = direction*float(Content.section("player").knockback)
-		return true
-	return false
+	var scope := hit_scope.get_ref() as Node if hit_scope != null else null
+	if not is_instance_valid(scope): return false
+	var result := receive_hit(scope.new_hit(&"direct_damage", ""), CombatProfiles.hostile_attack(amount), direction)
+	return result.resolved and result.contact
+
+func receive_hit(instance: HitInstance, attack: AttackProfile, direction: Vector2 = Vector2.ZERO, defense: DefenseOutcome = null) -> HitResolution:
+	if vitals.hp <= 0 or instance == null: return HitResolution.rejected(&"unavailable_target")
+	# Existing damage/dash immunity is decided here, never by the resolver.
+	if vitals.invulnerable > 0: defense = DefenseOutcome.evade()
+	elif defense == null: defense = DefenseOutcome.hit()
+	var result := instance.resolve(self, attack, CombatStats.from_definition(Content.section("player").defense), defense)
+	if result.resolved and result.contact:
+		# Set transient response before damaged/died signals can rebuild the region.
+		if result.outcome != &"parry": knockback = direction * result.impact
+		vitals.apply_hit(result)
+	return result
 
 func reset_transient() -> void:
 	dash_remaining = 0

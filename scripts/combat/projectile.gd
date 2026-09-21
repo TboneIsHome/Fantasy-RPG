@@ -8,6 +8,7 @@ var remaining: float = float(Content.section("spells").bolt.range)
 var hostile: bool = false
 var elapsed: float = 0
 var source_id: String = ""
+var hit_instance: HitInstance
 
 func _ready() -> void:
 	collision_layer = 0
@@ -20,6 +21,7 @@ func _ready() -> void:
 	z_index = 10
 
 func _physics_process(delta: float) -> void:
+	if is_queued_for_deletion(): return
 	elapsed += delta
 	var distance := speed*delta
 	remaining -= distance

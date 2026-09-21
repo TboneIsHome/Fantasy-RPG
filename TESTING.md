@@ -1,6 +1,51 @@
 # Prüfungen und bekannte Grenzen
 
-## Interaction Foundation M05 — aktueller Nachweis vom 21.09.2026
+## Stats und Trefferauflösung M06 — aktueller Nachweis vom 21.09.2026
+
+**IMPLEMENTED**, automatisiert **TESTED**, insgesamt **PARTIALLY TESTED**. Der finale isolierte Gesamtlauf besteht **931/931 Checks**: alle bisherigen 789 plus 142 neue. Zusätzlich bestehen der echte Linux-Schreibfehler und sechs Release-Stufen. **Native M06-Windows-Ausführung und manueller M06-Spieltest: NOT TESTED.** Stop nach M06. Tims ausdrückliche M06-Freigabe ist kein nachträglicher Nachweis einer M05-Spielprüfung.
+
+[M06 Completion Report](docs/FOUNDATION_M06.md) · [Ergebnisse](qa/m06_results.json) · [Logs](qa/m06_logs/) · [Prüfsummen](qa/m06_reference_manifest.json).
+
+| Prüfgruppe | Tatsächlicher Nachweis |
+| --- | --- |
+| Referenz und Zwischenschritt | Pristiner M05-Commit und anschließend gemeinsame Actor-/Vitals-Annahme jeweils mit allen bisherigen **789/789** Checks geprüft. Referenzarchiv und Hashes vor Änderungen gesichert |
+| `hit_resolution_suite.gd` | **77/77**: Beispiele A–E der Vorgabe, Rundung/Mindestschaden, unabhängiger Impact, passende Resistance, Vulnerability/Immunität, vom Aufrufer gesetzter Block, Parry/Miss/Evade, reine sekundäre Information, unveränderte Inputs, Fehler/NaN/Infinity/Überlauf sowie 28 Content-Prüfungen |
+| `hit_scene_suite.gd` | **58/58**: gleicher Resolver für Player/NPC, Health/Impact-Besitzer, geänderte Definitionen, echte Bolt-/Nova-/Echo-/Frostbonuspfade und effektive Trefferzahlen; Gegnergeschoss, Wolf, Hüter, Dornenpulse und unveränderte einmalige Reliktrückgabe |
+| Kontaktidentität und Lebensdauer | Wiederholung nach abgelaufenem Schadensschutz, Reentranz aus `damaged`/`hit`, mehrere Ziele und neue Attack Actions; Parry/Immunität quittieren ebenfalls; queued/freigegebene/fremde Ziele, echter verzögerter Timer nach Gruft–Wald–Gruft, Load/Unload, genau ein Player und freigegebener alter Combat-Besitzer |
+| `content_startup_probe.gd` | Bisherige **26** plus **7** neue Checks: echte ungültige Defense-Definition über Test-PCK, sichtbarer Feldfehler, keine Welt und kein Save-Schreiben. Insgesamt **33/33** in fünf Prozessen |
+| Unveränderte Daten und Saves | Alle **96** zuvor vorhandenen Zahlen und sämtliche übrigen bisherigen Blattwerte in `content.json` verglichen; nur neue Felder. Andere JSONs, Projekt-/Exportkonfiguration, Save-/Regions-/RunState-Dateien und eingefrorene 0.1/0.2/0.3/0.4-Fixtures per Hash unverändert. Neue Szene speichert tatsächlichen Treffer-HP-Stand in Schema 3 und verwirft nach Load alte Treffer |
+| Release | Windows/Linux exportiert. Linux nativ, Windows-Pack mit Linux-Engine: neuer Marker `EXPORT HIT RESOLUTION PASS` plus alle bisherigen Export-Marker. Gleiche Formel im Release, tatsächliche Actor-Treffer, Duplicate/Travel/Load und Saveprüfung. Zusätzlich alle fünf Fehlerstart-/Cacheproben gegen beide Packs |
+| Paket | EXE ist PE x86_64; ZIP-CRC und EXE-Hash gegen geprüften Export kontrolliert. Anleitung und eigene M06-Prüfliste enthalten |
+
+Der finale Runner umfasst **23 Stufen**: Import, 20 GDScript-Gruppen, Content-Startproben und echten Linux-Dateifehler. Die 931 zählen Assertions einschließlich parametrisierter Fälle, keine Features oder Spielstunden. Wiederholungen im Export zählen nicht erneut zur Summe. Keine neue Grafikaufnahme oder Langzeit-/Performance-Messung; Layout und Assets wurden nicht verändert.
+
+Entwicklungsdiagnosen bleiben nachvollziehbar: Für neue Dictionary-/WeakRef-Ausdrücke waren explizite GDScript-Typen nötig. Ein zwischenzeitlicher Kontaktlauf wurde nach der Regionssuite unterbrochen und gilt nur als **PARTIALLY TESTED**, nicht als vollständiges Gate. Ein neuer Test nahm zunächst fälschlich an, ein abgelaufener Timer belege bereits die verzögerte Baumfreigabe. Jetzt prüft er sofortige Trefferinvalidierung und Freigabe nach zwei tatsächlichen Prozess-Frames getrennt. Die M03-Runtime musste dafür nicht geändert werden. Der abschließende vollständige Lauf und die Exporte liefen seriell; seitdem keine Runtime-/Teständerung.
+
+### M06 reproduzieren
+
+Godot **4.5.1** mit offiziellen passenden Exportvorlagen verwenden. Tests schreiben nur in eigene Profile; gefrorene Fixtures oder persönliche Save-Ordner nicht verändern.
+
+```bash
+XDG_DATA_HOME=/absoluter/testpfad/data XDG_CONFIG_HOME=/absoluter/testpfad/config python3 tools/verify.py /absoluter/pfad/zu/godot
+```
+
+Beide vorhandenen Exportpresets in neue Pfade exportieren, danach `tests/export_smoke.gd` extern mit dem Linux-Build bzw. mit der Linux-Engine über `--main-pack Lichterhain.exe` ausführen. `tools/verify_content_startup.py` prüft zusätzlich beide Packs (Aufrufe im M04-Abschnitt). Erwartete Content-Diagnosen sind nur in den gezielten Startproben erlaubt. Fehlende Abschlussmarker, Scriptfehler oder Timeouts sind Fehler. Nicht gleichzeitig gegen denselben Testordner exportieren und testen.
+
+### M06 unter Windows abnehmen — NOT TESTED
+
+Den bisherigen Ordner `%APPDATA%\Godot\app_userdata\Lichterhain\` separat sichern. `Lichterhain_0.4_M06_Windows.zip` vollständig entpacken, `Spielen/Lichterhain.exe` starten. Format 3 und Benutzerpfad bleiben gleich; Originale außerhalb der Testkopie aufbewahren. Vollständige Anleitung und Buildhash: `START_HIER.txt` im Paket.
+
+1. Vorhandenen Stand fortsetzen: Ressourcen, Funde, Quest, Talente und Relikt prüfen.
+2. Lichtfunke/Frostkreis, Frostbonus, ggf. Widerhall und Gegnerbelohnung in Wald/Gruft spielen. Trefferzahlen, Rückstoß und einmalige Vergabe müssen stimmen.
+3. Wolf, Irrlicht, Dornen und Ausweichen prüfen: Einzelangriffe schaden einmal, Dornen wiederholen sich nur im bisherigen Takt. Bei Quellenherz weiterhin genau eine Manarückgabe pro treffendem Frostkreis, auch gegen mehrere Gegner.
+4. Auf passendem unentschiedenem Teststand Hüterschlag/Fächer, Rückzug und neuen Versuch spielen. Keine neuen Block-/Parry-Eingaben erwarten; diese aktiven Systeme sind nicht Teil von M06.
+5. Mit laufenden Geschossen mehrfach Wald–Gruft–Wald wechseln; kein alter Treffer, kein doppelter Player. Nach Speichern/Neustart aktuellen Zustand kontrollieren.
+6. M05-Interaktionen kurz mitprüfen: Fund, Sickerquelle, Steindurchgang und Quellenfassung. Getrennte Questwege auf separaten Testkopien verwenden.
+7. Ergebnis, Windows-Version und EXE-Hash dokumentieren; Report gemeinsam prüfen. M07 bleibt bis zu eigener Freigabe **PLANNED**.
+
+## Interaction Foundation M05 — historischer Nachweis vom 21.09.2026
+
+**Späterer Nachtrag:** M06 wurde danach ausdrücklich freigegeben. Der folgende M05-Stop ist historisch; die hier nicht gemeldete manuelle Abnahme bleibt offen.
 
 **IMPLEMENTED**, automatisiert **TESTED**, insgesamt **PARTIALLY TESTED**. Der finale isolierte Gesamtlauf besteht **789/789 Checks**: alle bisherigen 707 plus 82 neue. Zusätzlich bestehen der echte Linux-Schreibfehler sowie beide Release-Exporte, Pack-Smokes und Release-Startproben. **Eigener manueller M05-Windows-Spieltest und native M05-EXE-Ausführung: NOT TESTED.** Tims bestätigte Foundation-Abnahme gilt für den vorherigen M04-Stand. Stop nach M05.
 

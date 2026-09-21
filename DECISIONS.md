@@ -34,6 +34,14 @@
 
 ## Foundation-Entscheidungen
 
+M06-Auftrag und Umsetzung am 2026-09-21:
+
+- Tims genehmigte Spezifikation V1.1 erlaubt ausschließlich Stats & Trefferauflösung. Sie präzisiert die frühere grobe M06/M07-Roadmap: M06 berechnet bereits festgestellte Kontakte, M07 definiert später deren Entstehung und aktive Defense-/Timing-Fenster. Die unveränderte Vorgabe liegt unter `docs/M06_STATS_HIT_RESOLUTION_V1_1.md`.
+- Ein reiner Resolver berechnet Damage und Impact separat nach den verbindlichen Formeln. Player und NPCs verwenden denselben Kern; Vitals/Actor behalten Health, bestehende Combat-Adapter behalten Rückstoß, Verlangsamung und Feedback. Keine neue Physik oder aktive Verteidigung.
+- Bestehende Zahlen und Saveformat 3 bleiben erhalten. Neue Protection/Stability sind 0, Resistance-Maps leer. Schadensartenschlüssel sind offen erweiterbar und legen keine endgültige Lore-Taxonomie fest. Genau 100 Resistance ist explizite Damage-Immunität, keine automatische Status-Immunität.
+- Eine transiente HitInstance gehört einer bestehenden Attack Action bzw. einem expliziten Puls. Schwacher regionaler Besitzer, erfasste Generation und Quittierung vor Signals verhindern Wiederholung und Lieferung in neue Regionen; keine globale Registry und keine zweite persistente Wahrheit.
+- 931/931 Checks und beide Release-Packs sind geprüft. M06 bleibt bis zum manuellen Windows-Spieltest PARTIALLY TESTED. Die Freigabe bestätigt keinen zuvor nicht gemeldeten M05-Spieltest. Nach M06 Stop; M07–M10 bleiben geplant.
+
 M05-Auftrag und Umsetzung am 2026-09-21:
 
 - Tim erklärt Foundation M00–M04 samt 707 Checks, manueller Windows-Abnahme und Reportprüfung für abgeschlossen. Die früher dokumentierten Plattformgrenzen bleiben historische Prüfnachweise, keine nachträglich ausgeführten Einzeltests.

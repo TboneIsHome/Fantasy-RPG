@@ -28,6 +28,7 @@ var pathfinder: AStarGrid2D
 var route_timer: float = 0
 var route_next := Vector2.ZERO
 var peaceful_area: Rect2
+var attack_hit: HitInstance
 
 func configure(data: Dictionary, player: MagePlayer, camp_position: Vector2) -> void:
 	id = data.id
@@ -92,6 +93,7 @@ func _physics_process(delta: float) -> void:
 				if kind == "wolf":
 					state = Mode.ATTACK
 					timer = float(definition.lunge_duration)
+					attack_hit = new_hit(&"wolf_lunge")
 				elif kind=="kobold":
 					if clear_shot(attack_target):
 						thorns_requested.emit(attack_target)
@@ -106,7 +108,8 @@ func _physics_process(delta: float) -> void:
 			velocity = attack_direction*float(definition.lunge_speed)*(float(definition.lunge_slow_multiplier) if slowed>0 else 1.0)
 			if distance<float(definition.hit_range) and not attack_connected and clear_shot(target.global_position):
 				attack_connected = true
-				target.take_damage(float(definition.damage),attack_direction)
+				if attack_hit == null: attack_hit = new_hit(&"wolf_lunge")
+				target.receive_hit(attack_hit, CombatProfiles.hostile_attack(float(definition.damage), definition.damage_type), attack_direction)
 			if timer<=0 or is_on_wall():
 				state = Mode.RECOVER
 				timer = float(definition.recovery)
@@ -149,20 +152,34 @@ func approach(point: Vector2) -> Vector2:
 	return global_position.direction_to(route_next)
 
 func take_damage(amount: float, direction: Vector2 = Vector2.ZERO, is_bolt: bool = false) -> bool:
-	if hp<=0:
-		return false
 	var shatter := is_bolt and slowed>0
 	var final_amount := amount+float(Content.section("spells").bolt.shatter_bonus) if shatter else amount
-	hp = maxf(0,hp-final_amount)
-	knockback = direction*float(Content.section("combat").enemy_knockback)
-	hit_stop = float(Content.section("combat").enemy_hit_stop)
-	hit.emit(self,final_amount,shatter)
+	var type_key := StringName(Content.section("spells").bolt.damage_type if is_bolt else Content.section("combat").default_damage_type)
+	var instance := new_hit(&"direct_damage")
+	if instance != null: instance.source_id = "" # Legacy diagnostic call has no known attacker.
+	var result := receive_hit(instance, CombatProfiles.player_attack(final_amount, type_key, {"shatter":shatter}), direction)
+	return result.resolved and result.contact
+
+func new_hit(action: StringName) -> HitInstance:
+	var scope := target.hit_scope.get_ref() as Node if is_instance_valid(target) and target.hit_scope != null else null
+	return scope.new_hit(action, id) if is_instance_valid(scope) else null
+
+func receive_hit(instance: HitInstance, attack: AttackProfile, direction: Vector2 = Vector2.ZERO, defense: DefenseOutcome = null) -> HitResolution:
+	if hp <= 0 or instance == null: return HitResolution.rejected(&"unavailable_target")
+	var result := instance.resolve(self, attack, CombatStats.from_definition(definition.defense), DefenseOutcome.hit() if defense == null else defense)
+	if not result.resolved or not result.contact: return result
+	hp = maxf(0, hp-result.damage)
+	if result.outcome != &"parry":
+		knockback = direction * result.impact
+		if result.impact > 0: hit_stop = float(Content.section("combat").enemy_hit_stop)
+	if result.damage > 0 or result.impact > 0:
+		hit.emit(self, result.damage, bool(result.secondary.get("shatter", false)))
 	if hp<=0:
 		defeated.emit(self)
 		remove_from_group("enemies")
 		collision_layer = 0
 		queue_free()
-	return true
+	return result
 
 func _draw() -> void:
 	if state == Mode.WINDUP:

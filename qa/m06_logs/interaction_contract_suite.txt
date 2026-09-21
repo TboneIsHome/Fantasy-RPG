@@ -1,0 +1,32 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS INTERACTION CONTRACT: One target offers multiple consumer-local intents without a verb enum
+PASS INTERACTION CONTRACT: Discovery neither validates expensive conditions nor mutates state
+PASS INTERACTION CONTRACT: Changed condition between discovery and execution rejects before resolution
+PASS INTERACTION CONTRACT: Valid request resolves through the provider
+PASS INTERACTION CONTRACT: Fresh context carries actor, target, local intent and the actual state owner
+PASS INTERACTION CONTRACT: Execution observes current spatial context and originating generation
+PASS INTERACTION CONTRACT: One confirmed outcome carries several descriptive consequences
+PASS INTERACTION CONTRACT: Target rejects an intent it does not offer
+PASS INTERACTION CONTRACT: Empty intent is never a wildcard
+PASS INTERACTION CONTRACT: Removed offer is checked again before execution
+PASS INTERACTION CONTRACT: Synchronous reentrant request cannot resolve twice
+PASS INTERACTION CONTRACT: New requests after resolution remain allowed; core does not invent cooldowns
+PASS INTERACTION CONTRACT: Null request fails safely
+PASS INTERACTION CONTRACT: Missing current context fails safely
+PASS INTERACTION CONTRACT: Missing actor fails safely
+PASS INTERACTION CONTRACT: Missing target fails safely
+PASS INTERACTION CONTRACT: Generation only belongs to its originating lifecycle
+PASS INTERACTION CONTRACT: Real chest advertises Open through its attached adapter
+PASS INTERACTION CONTRACT: Real chest returns its confirmed item and existing XP reward
+PASS INTERACTION CONTRACT: Domain owner applies reward once; presentation activates the chest
+PASS INTERACTION CONTRACT: Existing discovery dialogue and save checkpoint follow confirmation
+PASS INTERACTION CONTRACT: Repeated request does not issue another reward
+PASS INTERACTION CONTRACT: Consumed target supplies its own unchanged informational prompt
+PASS INTERACTION CONTRACT: Persistent state beats a stale inactive chest representation
+PASS INTERACTION CONTRACT: Target queued during validation is not resolved
+PASS INTERACTION CONTRACT: Requests and adapters do not keep a destroyed target alive
+PASS INTERACTION CONTRACT: Old request cannot affect a replacement vault with the same stable IDs
+PASS INTERACTION CONTRACT: Region deactivation clears cached UI selection
+PASS INTERACTION CONTRACT: Save/load retains the real interaction result with schema 3
+INTERACTION CONTRACT RESULT 29/29

@@ -71,9 +71,10 @@ func _physics_process(delta: float) -> void:
 	icon.modulate=Color("b4dbe0") if slowed>0 else Color.WHITE
 	queue_redraw()
 
-func take_damage(amount: float, direction: Vector2 = Vector2.ZERO, is_bolt: bool = false) -> bool:
-	if not awake: return false
-	return super.take_damage(amount,Vector2.ZERO,is_bolt)
+func receive_hit(instance: HitInstance, attack: AttackProfile, _direction: Vector2 = Vector2.ZERO, defense: DefenseOutcome = null) -> HitResolution:
+	if not awake: return HitResolution.rejected(&"dormant_target")
+	# Preserve the existing rooted guardian response outside the shared resolver.
+	return super.receive_hit(instance, attack, Vector2.ZERO, defense)
 
 func _draw() -> void:
 	if not awake:

@@ -43,11 +43,21 @@ func spend_mana(amount: float) -> bool:
 	return true
 
 func damage(amount: float) -> bool:
+	# Compatibility entry for isolated Vitals callers. Each call is a new contact;
+	# live attacks use an explicit HitInstance before applying this result.
+	var defense := DefenseOutcome.evade() if invulnerable > 0 else DefenseOutcome.hit()
+	var result := HitResolver.resolve(AttackProfile.new(amount,Content.section("combat").default_damage_type), CombatStats.from_definition(Content.section("player").defense), defense)
+	return apply_hit(result)
+
+func apply_hit(result: HitResolution) -> bool:
 	if hp <= 0 or invulnerable > 0:
 		return false
-	hp = maxf(0, hp - maxf(0, amount))
+	if result == null or not result.resolved or not result.contact or result.outcome == &"parry":
+		return false
+	if result.damage <= 0: return true
+	hp = maxf(0, hp - result.damage)
 	invulnerable = float(Content.section("player").damage_invulnerability)
-	damaged.emit(amount)
+	damaged.emit(result.damage)
 	if hp <= 0:
 		died.emit()
 	return true

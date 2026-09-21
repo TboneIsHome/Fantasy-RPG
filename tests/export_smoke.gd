@@ -54,6 +54,20 @@ func verify() -> void:
 	interaction_ok = interaction_ok and not game.execute_interaction(old_request).resolved and game.run.motes == 2 and game.source_story.site.interaction is SourceInteraction
 	print("EXPORT INTERACTION CONTRACT ", "PASS" if interaction_ok else "FAIL")
 	passed = passed and interaction_ok
+	# M06: pure formulas and real actor receipts survive release compilation.
+	var calculated := HitResolver.resolve(AttackProfile.new(40,&"fire",80),CombatStats.new(100,{"fire":25},100),DefenseOutcome.block(0.5,0.25))
+	var release_hit: HitInstance = game.combat.new_hit(&"export_probe")
+	var profile := AttackProfile.new(30,&"untyped",20)
+	var applied: HitResolution = game.player.receive_hit(release_hit,profile,Vector2.RIGHT)
+	game.player.vitals.invulnerable = 0
+	var repeated: HitResolution = game.player.receive_hit(release_hit,profile)
+	var enemy: WildEnemy = get_nodes_in_group("enemies")[0]
+	var enemy_hp := enemy.hp
+	var npc_result := enemy.receive_hit(game.combat.new_hit(&"export_npc"),AttackProfile.new(1,&"untyped",10))
+	var hit_ok: bool = calculated.damage == 8 and calculated.impact == 10 and applied.damage == 30 and game.player.vitals.hp == 70 and repeated.reason == &"duplicate_hit"
+	hit_ok = hit_ok and npc_result.damage == 1 and npc_result.impact == 10 and enemy.hp == enemy_hp-1 and game.save_game() and SaveSystem.read(game.save_path).data.player.hp == 70
+	print("EXPORT HIT RESOLUTION ", "PASS" if hit_ok else "FAIL")
+	passed = passed and hit_ok
 	# M02: compiled state actions retain their replay guards and complete rewards.
 	var checkpoint: Dictionary = game.run.serialize()
 	var replay_ok: bool = not game.run.collect_vault_relic("star_chart") and not game.run.align_source("star") and not game.run.defeat_source_guardian() and game.run.serialize() == checkpoint and SaveSystem.validate(SaveSystem.snapshot(game.run, game.player, game.settings)).is_empty()
@@ -67,6 +81,7 @@ func verify() -> void:
 	game.travel_to("vault")
 	var region_ok: bool = game.regions.generation == origin + 2 and not game.regions.is_current(origin) and not previous.is_inside_tree() and get_nodes_in_group("player").size() == 1 and get_nodes_in_group("enemies").size() == 5 and game.ui.hud.player == game.player and game.source_story.grove.resolution == "restored"
 	region_ok = region_ok and game.execute_interaction(old_request).code == &"stale_region"
+	region_ok = region_ok and game.player.receive_hit(release_hit,profile).reason == &"stale_contact"
 	region_ok = region_ok and game.save_game() and game.load_game() and game.run.region == "vault" and game.run.inventory.equipped == "source_heart"
 	print("EXPORT REGION LIFECYCLE ", "PASS" if region_ok else "FAIL")
 	passed = passed and region_ok

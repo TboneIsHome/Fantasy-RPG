@@ -1,0 +1,92 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS CONTENT: Real bundle loads through the release-safe gate
+CONTENT LOAD MICROSECONDS 10610
+PASS CONTENT: Published bundle is recursively read-only
+PASS CONTENT: JSON float token preserves original Flow text
+PASS CONTENT: JSON float token preserves original Bloom text
+PASS CONTENT: JSON float token preserves original relic text
+PASS CONTENT: Fractional text keeps its actual value
+PASS CONTENT: Pure validation accepts shipped content without mutation
+PASS CONTENT: Reject non-object document 0
+PASS CONTENT: Reject non-object document 1
+PASS CONTENT: Reject non-object document 2
+PASS CONTENT: data/content.json player: Missing
+PASS CONTENT: data/content.json player.hp: Missing
+PASS CONTENT: data/content.json player.hp: Expected number
+PASS CONTENT: data/content.json player.hp: Expected number
+PASS CONTENT: data/content.json player.hp: Expected number
+PASS CONTENT: data/content.json player.hp: Expected number
+PASS CONTENT: data/content.json player.hp: Expected number
+PASS CONTENT: data/content.json player.hp: Expected number
+PASS CONTENT: data/content.json player.hp: Expected number
+PASS CONTENT: data/content.json player.hp: Expected number
+PASS CONTENT: data/content.json player.hp: Expected number
+PASS CONTENT: data/content.json player.mana_regen: Expected number
+PASS CONTENT: data/content.json spells.bolt.cooldown: Expected number
+PASS CONTENT: data/content.json spells.nova.cost: Expected number
+PASS CONTENT: data/content.json spells.nova.slow_multiplier: Expected number
+PASS CONTENT: data/content.json spells.nova.mana_cost: Unknown field
+PASS CONTENT: data/content.json enemies.wolf.mode: Expected one of
+PASS CONTENT: data/content.json enemies.wisp.mode: Expected one of
+PASS CONTENT: data/content.json enemies.guardian.fan_count: Expected integer
+PASS CONTENT: data/content.json enemies.guardian.fan_count: Expected integer
+PASS CONTENT: data/content.json enemies.guardian.fan_count: Expected integer
+PASS CONTENT: data/content.json enemies.guardian.fan_count: Expected integer
+PASS CONTENT: data/content.json enemies.guardian.fan_count: Expected integer
+PASS CONTENT: data/content.json enemies.wolf.leash: Expected leash
+PASS CONTENT: data/content.json enemies.wolf.xp: Expected integer
+PASS CONTENT: data/content.json quest.reward_xp: Expected integer
+PASS CONTENT: data/content.json source_quest.reward_item: Missing relic reference
+PASS CONTENT: data/content.json source_quest.reward_item: Expected ID
+PASS CONTENT: data/content.json source_quest.reward_item: Expected ID
+PASS CONTENT: data/content.json source_quest.reward_item: Expected ID
+PASS CONTENT: data/content.json source_quest.reward_item: Expected ID
+PASS CONTENT: data/content.json source_quest.ore_motes: Expected integer
+PASS CONTENT: data/content.json skills.flow.description: Unknown/non-numeric
+PASS CONTENT: data/content.json skills.bloom.description: Unmatched
+PASS CONTENT: data/content.json skills.flow.description: Missing numeric token
+PASS CONTENT: data/content.json relics.source_heart.description: Missing numeric token
+PASS CONTENT: data/content.json relics.source_heart.frost_refund: Expected number
+PASS CONTENT: data/content.json progression.xp_per_level: Expected integer
+PASS CONTENT: data/content.json world.day_seconds: Expected number
+PASS CONTENT: data/vault.json rooms: Expected array
+PASS CONTENT: data/vault.json rooms[0].id: Expected ID
+PASS CONTENT: data/vault.json rooms[1].id: Duplicate ID
+PASS CONTENT: data/vault.json rooms[0].id: Unsupported persistent
+PASS CONTENT: data/vault.json rooms[0].style: Expected one of
+PASS CONTENT: data/vault.json rooms[0].size: variation must fit
+PASS CONTENT: data/vault.json rooms[0].center: Expected integer pair
+PASS CONTENT: data/vault.json rooms[0].center: Expected integer pair
+PASS CONTENT: data/vault.json rooms[0].center: Expected integer pair
+PASS CONTENT: data/vault.json rooms[0].center: Expected integer pair
+PASS CONTENT: data/vault.json rooms[0].center: Expected integer pair
+PASS CONTENT: data/vault.json rooms[0].center: Expected integer pair
+PASS CONTENT: data/vault.json rooms[0].size: Expected integer pair
+PASS CONTENT: data/vault.json links[0]: Missing room reference
+PASS CONTENT: data/vault.json links[0]: Missing room reference
+PASS CONTENT: data/vault.json links[0]: Expected two
+PASS CONTENT: data/vault.json links[0]: Self/duplicate
+PASS CONTENT: data/vault.json links[1]: Self/duplicate
+PASS CONTENT: data/vault.json links[7]: secret branch
+PASS CONTENT: data/vault.json links: disconnected
+PASS CONTENT: data/vault.json points[0].kind: Expected one of
+PASS CONTENT: data/vault.json points[0].tile: reachable
+PASS CONTENT: data/vault.json points[7].tile: collision cells
+PASS CONTENT: data/vault.json encounters[0].kind: Missing enemy reference
+PASS CONTENT: data/vault.json encounters[0].kind: Expected one of
+PASS CONTENT: data/vault.json encounters[0].tile: spawn jitter
+PASS CONTENT: data/vault.json encounters[1].id: Duplicate ID
+PASS CONTENT: data/vault.json fountain_cost: Expected integer
+PASS CONTENT: data/vault.json memory_xp: Expected integer
+PASS CONTENT: data/vault.json chart_xp: Expected integer
+PASS CONTENT: data/discoveries.json water_memory: Missing
+PASS CONTENT: data/discoveries.json camp.title: non-empty text
+PASS CONTENT: data/discoveries.json camp.text: non-empty text
+PASS CONTENT: data/discoveries.json camp.title: Missing
+PASS CONTENT: data/discoveries.json unused: Unknown field
+PASS CONTENT: Valid balance edits including zero cost and minimum fan count are accepted
+PASS CONTENT: Parse failure reports actual file and line
+PASS CONTENT: Missing file returns diagnostic without publishing content
+PASS CONTENT: Pure invalid test inputs never poison the loaded runtime bundle
+CONTENT VALIDATION RESULT 88/88

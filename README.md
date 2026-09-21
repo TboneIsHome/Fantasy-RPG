@@ -2,9 +2,9 @@
 
 Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelwaldregion und der ersten Quellengruft. Der erste zusammenhängende Spielabschnitt führt bis zum Quellenhüter, zwei Questlösungen und einem ausrüstbaren Relikt. Tim hat die Foundation einschließlich M04 manuell unter Windows bestätigt. Mehrstündige Weltinhalte sind ein späteres Ziel.
 
-**Aktueller Stand: M05 Interaction Foundation.** Ein sitzungsgebundener Interaktionsvertrag trennt Angebot, Anfrage, erneute Prüfung, fachliche Auflösung und Rückmeldung. Sternenkarte/Bernsteinsamen, Sickerquelle, geheimer Steindurchgang und Quellenfassung nutzen ihn. **789/789 automatisierte Checks** bestehen, darunter alle bisherigen 707. Balance, JSON-Definitionen, Saveformat 3 und Regionslebenszyklus bleiben erhalten.
+**Aktueller Stand: M06 Stats & Trefferauflösung.** Spieler und Gegner verwenden eine gemeinsame Berechnung für Damage und Impact. Bestätigte Treffer besitzen eine regionale Instanz und wirken je Ziel höchstens einmal; vorhandene wiederholte Dornenpulse bleiben ausdrücklich getrennte Treffer. Neue Defense-Definitionen sind neutral, die bisherigen Balancezahlen unverändert. **931/931 automatisierte Checks** bestehen, darunter alle bisherigen 789. Saveformat 3, Regionslebenszyklus und M05-Interaktionen bleiben erhalten.
 
-[M05 Completion Report](docs/FOUNDATION_M05.md): **IMPLEMENTED**, automatisiert **TESTED**, insgesamt **PARTIALLY TESTED** bis zum manuellen M05-Windows-Spieltest. Beide Release-Exporte und ihre Spielpakete sind geprüft; die neue Windows-EXE wurde hier nicht nativ ausgeführt. **Stop nach M05.** Die [Foundation v1.0](docs/FOUNDATION_COMPLETION_REPORT.md) ist von Tim abgenommen; die [Creative Design Bible v1.0](docs/CREATIVE_DESIGN_BIBLE_V1.md) bleibt die maßgebliche kreative Referenz. Lichterhain bleibt dauerhaft 2D-isometrisch. Das ursprüngliche 0.4-Release liegt unter `reference/v0.4-original`.
+[M06 Completion Report](docs/FOUNDATION_M06.md): **IMPLEMENTED**, automatisiert **TESTED**, insgesamt **PARTIALLY TESTED** bis zum manuellen M06-Windows-Spieltest. Beide Release-Exporte und ihre Spielpakete sind geprüft; die neue Windows-EXE wurde hier nicht nativ ausgeführt. **Stop nach M06.** Grundlage ist die genehmigte [M06-Spezifikation V1.1](docs/M06_STATS_HIT_RESOLUTION_V1_1.md). Die [Foundation v1.0](docs/FOUNDATION_COMPLETION_REPORT.md) ist von Tim abgenommen; die [Creative Design Bible v1.0](docs/CREATIVE_DESIGN_BIBLE_V1.md) bleibt die maßgebliche kreative Referenz. Lichterhain bleibt dauerhaft 2D-isometrisch. Das ursprüngliche 0.4-Release liegt unter `reference/v0.4-original`.
 
 ## Direkt spielen unter Windows
 
@@ -13,7 +13,7 @@ Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelw
 3. **Neuen Lichtpfad beginnen** wählen. Der voreingestellte Seed eignet sich für die erste Runde.
 4. Mit **WASD** zu Edda nördlich des Lagerfeuers gehen und **E** drücken.
 
-Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen erforderlich. Die beigefügte Anwendung ist ein Windows-x86_64-Export. Vor einem M05-Test den bisherigen Benutzerordner separat sichern; Anleitung und Prüfliste liegen als `START_HIER.txt` bei. Die manuelle Abnahme älterer Builds wird nicht auf diese neue EXE übertragen.
+Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen erforderlich. Die beigefügte Anwendung ist ein Windows-x86_64-Export. Vor einem M06-Test den bisherigen Benutzerordner separat sichern; Anleitung und Prüfliste liegen als `START_HIER.txt` bei. Die manuelle Abnahme älterer Builds wird nicht auf diese neue EXE übertragen.
 
 ## Neu in Version 0.4
 
@@ -84,4 +84,4 @@ GDScript wird verwendet; die .NET-Ausgabe ist nicht notwendig. Das Projekt kommt
 
 Der vollständige Quellcode, die Tests und die Projektdokumentation liegen in [TboneIsHome/Fantasy-RPG](https://github.com/TboneIsHome/Fantasy-RPG). Jede Iteration erhält einen eigenen Commit. Binäre Builds und lokale Godot-Caches gehören nicht in den Quellcode-Stand.
 
-Das aktuelle Windows-Testpaket heißt **Lichterhain_0.4_M05_Windows.zip**. Quellstand und Bericht liegen auf `foundation/m05-interaction`; der Hauptbranch wird dadurch nicht automatisch umgestellt. Vor dem Test den bisherigen Benutzerordner sichern; die Anleitung liegt als `START_HIER.txt` bei. Die früheren Builds bleiben als Referenzen erhalten.
+Das aktuelle Windows-Testpaket heißt **Lichterhain_0.4_M06_Windows.zip**. Quellstand und Bericht liegen auf `foundation/m06-stats-hit-resolution`; der Hauptbranch wird dadurch nicht automatisch umgestellt. Vor dem Test den bisherigen Benutzerordner sichern; die Anleitung liegt als `START_HIER.txt` bei. Die früheren Builds bleiben als Referenzen erhalten.

@@ -1,6 +1,6 @@
 # Technische Architektur
 
-Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation v1.0 und Interaction Foundation M05. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; [M01](docs/FOUNDATION_M01.md) dokumentiert die Save-Absicherung, [M02](docs/FOUNDATION_M02.md) die kontrollierten Fortschrittsaktionen und [M03](docs/FOUNDATION_M03.md) den abgegrenzten Regionslebenszyklus. Der [Foundation Completion Report](docs/FOUNDATION_COMPLETION_REPORT.md) enthält den M00–M04-Abschluss und Tims anschließende Windows-Abnahme; [M05](docs/FOUNDATION_M05.md) dokumentiert die neue Iteration. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
+Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation v1.0, Interaction Foundation M05 und Stats/Trefferauflösung M06. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; [M01](docs/FOUNDATION_M01.md) dokumentiert die Save-Absicherung, [M02](docs/FOUNDATION_M02.md) die kontrollierten Fortschrittsaktionen und [M03](docs/FOUNDATION_M03.md) den abgegrenzten Regionslebenszyklus. Der [Foundation Completion Report](docs/FOUNDATION_COMPLETION_REPORT.md) enthält den M00–M04-Abschluss und Tims anschließende Windows-Abnahme. [M05](docs/FOUNDATION_M05.md) und [M06](docs/FOUNDATION_M06.md) dokumentieren die folgenden Iterationen. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md), das genehmigte M06-Gameplay in die [unveränderte Spezifikation V1.1](docs/M06_STATS_HIT_RESOLUTION_V1_1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
 
 ## Laufzeit
 
@@ -20,6 +20,8 @@ Godot **4.5.1 Standard**, GDScript, Compatibility-Renderer, 60 Physikschritte/Se
 | Eingabe / Figur | `actors/player.gd`, `core/input_setup.gd`: Bewegung, Kamera, Zielrichtung, Eingaben |
 | Attribute | `actors/vitals.gd`: Leben, Mana, Ausdauer, Regeneration und Schadensschutz |
 | Fähigkeiten | `actors/mage_abilities.gd`: Ressourcen und Abklingzeiten; `combat/combat_system.gd`: Effekte und Kombinationen |
+| Trefferrechnung | `combat/attack_profile.gd`, `combat_stats.gd`, `defense_outcome.gd`, `hit_resolver.gd`, `hit_resolution.gd`: reiner gemeinsamer Damage-/Impact-Vertrag; keine HP-Änderung, Treffererkennung oder aktive Verteidigung |
+| Trefferlieferung | `combat/hit_instance.gd`: transiente Identität und einmaliger Kontakt je Ziel; vorhandenes CombatSystem prüft Region/Herkunft. `combat_profiles.gd` verbindet vorhandene Definitionen, Actor/Vitals übernehmen das Ergebnis |
 | Kampf | `combat/projectile.gd`, `combat/feedback.gd`: kontinuierliche Kollisionsbewegung, Partikel und Trefferzahlen |
 | Gegner | `actors/enemy.gd`: explizite Zustandsmaschine mit Ankündigung und Erholung; Werte aus JSON |
 | Welt | `world/world_generator.gd`: reine seed-basierte Erzeugung; `world/world_view.gd`: Darstellung und Kollisionskörper |
@@ -138,6 +140,59 @@ Während einer synchronen Ausführung weist der Core verschachtelte Ausführunge
 Bestätigung bedeutet eine abgeschlossene Änderung im Arbeitsspeicher. Ein anschließend fehlgeschlagener Save macht die Aktion nicht ungeschehen und berechtigt nicht zur erneuten Belohnung. Der bestehende Fehler bleibt sichtbar, der letzte gültige Datenträgerstand bleibt erhalten, und F5 kann denselben Zustand erneut speichern. Schema 3, Generatoren, JSON-Balance, eingefrorene Spielstände und die Save-Implementierung sind unverändert. Der Core speichert weder Requests noch Context/Result.
 
 Bewusst offen bleiben die im genehmigten Proposal genannten UX-Auswahlregeln, verborgene Interaktionsmöglichkeiten, Dauer/Abbruch/Commitment und konkurrierende Actors. M05 entscheidet diese Bereiche nicht vor. Aktuelle Tests und Abnahme: [TESTING.md](TESTING.md); Ergebnis und Risiken: [M05 Completion Report](docs/FOUNDATION_M05.md).
+
+## Stats und Trefferauflösung — M06
+
+**IMPLEMENTED / automatisiert TESTED.** Grundlage ist die genehmigte [Spezifikation V1.1](docs/M06_STATS_HIT_RESOLUTION_V1_1.md). Der reine Resolver beantwortet ausschließlich die Wirkung eines bereits bestimmten Kontakts/Defense-Outcomes. Die bestehenden Strahlen, Flächen, Wolfphasen und Player-Unverwundbarkeit bestimmen weiterhin Kontakt und Ausweichen. M06 erzeugt keine neuen aktiven Block-/Parry-/Dodge-Fenster.
+
+### Daten und Schnittstellen
+
+| Baustein | Tatsächlicher Vertrag |
+| --- | --- |
+| `AttackProfile` | `damage`, `damage_type`, `impact`, optionale `secondary`-Information; keine Actor-, Health-, Timing- oder Flugbahnlogik |
+| `CombatStats` | Snapshot aus `protection`, schadensartspezifischen `resistances` und `stability`; Health bleibt beim Actor/Vitals |
+| `DefenseOutcome` | Vorgegebenes `hit`, `block`, `parry`, `miss` oder `evade`, getrennte `damage_scale`/`impact_scale`. `block()` verlangt beide Werte vom Aufrufer; keine festgelegte Blockbalance |
+| `HitResolver.resolve(attack, stats, defense)` | Reine synchrone Rechnung ohne Nodes, Content-Zugriff, Lebensuhr, HP-Änderung, Signale oder Effekte |
+| `HitResolution` | `resolved`, `contact`, Ablehnungsgrund, Outcome, effektiver Damage/Impact, Damage-Type, Immunität und sekundäre Information. Liefert ein Ergebnis, keinen später erneut auszuführenden Schadensbefehl |
+| `HitInstance.resolve(target, ...)` | Ergänzt transiente Treffer-ID, Aktions-ID, stabile Urheber-ID, Ziel-Instanz-ID und Regiongeneration; prüft den vorhandenen Combat-Besitzer und quittiert je Ziel höchstens einen bestätigten Kontakt |
+| `Player.receive_hit()` / `WildEnemy.receive_hit()` | Prüfen den Actor, liefern dessen aktuellen Defense-Snapshot, verwenden denselben Resolver und übernehmen das bestätigte Ergebnis. Player-HP gehört weiterhin `Vitals.apply_hit()`, Gegner-HP weiterhin dem Gegner |
+
+`resistances` und `secondary` werden kopiert und außen schreibgeschützt; aktuelle sekundäre Nutzdaten sind einfache Werte (`shatter`, `slow_seconds`). Öffentliche GDScript-Felder bilden einen internen Vertrag, keine manipulationssichere API. Verbraucher dürfen Profile/Ergebnisse nicht nachträglich verändern oder ein Ergebnis mehrfach an `Vitals.apply_hit()` liefern. Die abgesicherte Laufzeitoberfläche für Angriffe ist `receive_hit()` mit derselben HitInstance.
+
+### Rechnung und Fehlerausgänge
+
+Mit `P = protection`, `R = passende resistance` und `S = stability` gilt:
+
+```text
+EffectiveDamage = round(rawDamage × damageScale × 100/(100+max(0,P)) × (1-clamp(R,-50,90)/100))
+EffectiveImpact = round(rawImpact × impactScale × 100/(100+max(0,S)))
+```
+
+Genau `R = 100` ist explizite Damage-Immunität und ergibt 0 Damage, unabhängig vom Impact. Sonst bleibt ein positiver Raw Damage bei positivem Scale mindestens 1. Impact hat kein Minimum. `miss`/`evade` bestätigen ein Ergebnis ohne Kontakt, Damage, Impact oder sekundäre Lieferung. `parry` ist ein negierter Kontakt mit beiden Scales 0; widersprüchliche Parry-Scales werden abgewiesen. Eine Gegenreaktion am Angreifer ist nicht implementiert.
+
+Der reine Aufruf weist fehlende Eingaben, leere Schadensart, negative/nicht-endliche Angriffswerte oder Scales, nicht-endliche Defense-Werte, nichtnumerische Resistance, unbekanntes Outcome und nicht-endliche Ergebnisse mit einem Grundcode zurück. Negative Protection/Stability werden in der Rechnung gemäß Spezifikation auf 0 begrenzt; normale Resistance wird auf −50…90 begrenzt, genau 100 separat behandelt. Die Inhaltsvalidierung ist bewusst strenger als diese mathematische Normalisierung.
+
+In `data/content.json` sind `player.defense` und `enemies.*.defense` Pflichtfelder: endliche Protection/Stability im bestehenden technischen Zahlenbereich 0…10.000, Resistance-Dictionary mit endlichen Werten −50…90 oder genau 100. Bool, Zahlstring, NaN/Infinity, 91…99 und ungültige Schlüssel werden abgelehnt. `damage_type` bei Bolt, Nova, Echo und den vier Gegnerdefinitionen sowie `combat.default_damage_type` verwenden `[a-z][a-z0-9_]*`, 1–64 Zeichen. Neue gültige Schlüssel brauchen keinen Eintrag in einem globalen Elementkatalog; eine nicht vorhandene Resistance bedeutet 0. Die Diagnose nennt Datei, Feld und Problem. Fehler stoppen weiterhin einmalig beim Laden vor Weltaufbau/Save-Schreiben.
+
+Ausgeliefert bleiben sämtliche bisherigen Zahlen unverändert. Neue Defense-Werte sind neutral (0/leer/0). `light` für Lichtfunke/Widerhall, `frost` für Frostkreis und `untyped` für bisher untypisierte Angriffe sind technische Schlüssel, keine endgültige Elementar-/Lore-Taxonomie. `CombatProfiles` liest Raw Impact aus den bereits vorhandenen Rückstoßquellen `combat.enemy_knockback` bzw. `player.knockback`; keine neuen unabhängigen Zahlenkopien.
+
+### Reale Verbraucher und einmalige Kontakte
+
+Bolt besitzt eine bei Erzeugung erfasste HitInstance. Der bestehende Frostbonus wird einmal vor Mitigation addiert; Widerhall erzeugt eine eigene benannte Instanz. Nova verwendet eine Instanz für alle getroffenen Ziele. Gegnergeschosse einschließlich Hüterfächer, Wolfslunge und Quellenschlag besitzen jeweils ihre Instanz; jede bereits vorhandene Dornenperiode erzeugt ausdrücklich einen neuen `thorn_pulse`. Die jeweiligen Kontaktregeln und Intervalle bleiben unverändert.
+
+Die Instanz speichert nur eine schwache Referenz auf ihr vorhandenes regionales CombatSystem und numerische Ziel-IDs. Sie besitzt keine globale Registry und hält weder Gegner noch alte Regionen am Leben. `CombatSystem.accepts_hit()` prüft Aktivität, Baumzugehörigkeit, Freigabezustand, Besitzeridentität und die beim Erzeugen erfasste Generation. Getrennte, alte, freigegebene und regionsfremde Ziele werden abgewiesen, auch nach Gruft–Wald–Gruft oder Load. Ein bereits abgefeuertes Geschoss darf nach dem Tod seines Urhebers innerhalb derselben aktiven Region fertig fliegen; seine Herkunft bleibt als String erhalten.
+
+Ein bestätigter Kontakt wird **vor** HP-Änderungen und Signalcallbacks quittiert. Wiederholte oder reentrante Lieferung derselben Instanz wirkt nicht erneut, auch nach Ablauf der Player-Unverwundbarkeit oder Änderung einer Defense. Das gilt ebenfalls für Parry und Immunität. Miss/Evade beanspruchen das Ziel nicht; die bisherigen Projektile/Lungen behalten trotzdem ihre eigene Kontakt-/Verbrauchslogik. Mehrere Ziele sind erlaubt, weitere echte Treffer benötigen eine ausdrücklich neue Instanz.
+
+### Zustandsbesitzer und Grenzen
+
+Vitals/Gegner ändern Health; Actor-Adapter übersetzen Effective Impact in den bisherigen kontrollierten Rückstoß/Hitstop. Der Quellenhüter behält seine bestehende ortsfeste Reaktion und verwendet trotzdem dieselbe Rechnung. Player-Unverwundbarkeit entsteht weiterhin nur aus den bestehenden Dash-/Schadensregeln. Reiner Impact erzeugt keinen erfundenen HP-Schaden oder neuen Schadensschutz. Das ist kein neues Stagger-/Poise-/Physiksystem.
+
+CombatSystem/ThornPatch behalten Frostverlangsamung, Widerhall, Mana-/Heilboni und Feedback. Der Resolver interpretiert sekundäre Information nicht. Damage-Immunität bedeutet weder Status-Immunität noch Verfehlen: Ein bestätigter Frostkontakt kann weiterhin die vorhandene Verlangsamung und einmalige Reliktrückgabe auslösen. Trefferzahlen verwenden den effektiven Damage. Dauerhafte Gegnerbelohnungen bleiben RunState-Aktionen und werden nicht vom Resolver vergeben.
+
+`take_damage()` und isoliertes `Vitals.damage()` bleiben als Kompatibilitätseinstiege erhalten; sie verwenden dieselbe Rechnung, interpretieren aber **jeden Aufruf als neuen Kontakt**. Sie eignen sich nicht zur wiederholten Lieferung einer bereits erfassten Attack Action. Aktuelle Live-Angriffe verwenden die explizite Instanz. Es gibt keinen allgemeinen Signal-Rollback, Thread-/Netzwerkvertrag oder manipulationssicheren Result-Container.
+
+Saveformat 3, RunState und RegionLifecycle bleiben unverändert. Defense-Werte kommen aus Content; Trefferinstanzen, Receipts, CombatStats und Ergebnisse werden nicht gespeichert. Absolute gespeicherte LP/MP/AU bleiben erhalten. Kein zusätzlicher Node-/Frameprozess und keine Prüfung des Content-Bundles pro Treffer; pro Kontakt entstehen nur die benötigten kleinen Eingabe-/Ergebnisobjekte. Ein neuer Performance-Benchmark wird nicht behauptet. Abnahme und Grenzen: [TESTING.md](TESTING.md), [M06 Completion Report](docs/FOUNDATION_M06.md).
 
 ## Inhaltsdaten und Konsistenz — M04
 

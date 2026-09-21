@@ -1,0 +1,56 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS INTERACTION SCENE: Existing fountain offers Rest with its definition-owned cost
+PASS INTERACTION SCENE: Repeated fountain discovery neither spends currency nor restores resources
+PASS INTERACTION SCENE: Resource condition changed after discovery is rechecked before execution
+PASS INTERACTION SCENE: Full actor is rejected without a charge
+PASS INTERACTION SCENE: Execution rechecks distance after the actor moved
+PASS INTERACTION SCENE: Dead actor cannot use the fountain
+PASS INTERACTION SCENE: New obstruction after selection is checked at execution
+PASS INTERACTION SCENE: Real fountain returns both applied consequences
+PASS INTERACTION SCENE: Existing currency signal cannot reenter the interaction while resolution is incomplete
+PASS INTERACTION SCENE: Fountain checkpoint includes both currency and restored resources
+PASS INTERACTION SCENE: Repeated full-health request never charges twice
+PASS INTERACTION SCENE: Repeatable fountain remains usable after later damage
+PASS INTERACTION SCENE: Save failure preserves both confirmed in-memory action and last good file
+PASS INTERACTION SCENE: Save failure does not turn retry into a duplicate charge
+PASS INTERACTION SCENE: Explicit save retry persists the existing result without replaying it
+PASS INTERACTION SCENE: Investigating sealed passage is a valid action with an unchanged-world outcome
+PASS INTERACTION SCENE: An unreadable sign keeps the actual passage closed
+PASS INTERACTION SCENE: Same intent uses newly learned evidence during resolution
+PASS INTERACTION SCENE: Confirmed opening updates persistent state and the real barrier
+PASS INTERACTION SCENE: Existing gate presentation refreshes navigation
+PASS INTERACTION SCENE: Already opened passage is not resolved again
+PASS INTERACTION SCENE: Target supplies the unchanged opened-passage notice
+PASS INTERACTION SCENE: Second existing chest uses the same adapter with its own unchanged reward
+PASS INTERACTION SCENE: Passage and collected reward survive save/load together
+PASS INTERACTION SCENE: Unresolved source offers Inspect through the same contract
+PASS INTERACTION SCENE: Source inspection confirms its checkpoint before opening existing choices
+PASS INTERACTION SCENE: Source inspection retains the existing save checkpoint
+PASS INTERACTION SCENE: Inspecting again remains possible without inventing another discovery reward
+PASS INTERACTION SCENE: Awakened guardian blocks source execution after discovery
+PASS INTERACTION SCENE: Existing tuning dialogue still resolves the quest and relic through their owners
+PASS INTERACTION SCENE: Old Inspect intent does not silently become Rest after an outcome change
+PASS INTERACTION SCENE: Same live source target now offers Rest from persistent state
+PASS INTERACTION SCENE: Garden rest preserves full restoration without a cost
+PASS INTERACTION SCENE: Free garden rest remains repeatable even with full resources
+PASS INTERACTION SCENE: Loaded garden keeps its state-derived offer
+PASS INTERACTION SCENE: Original consumed-source save offers no second harvest
+PASS INTERACTION SCENE: Unharvested combat outcome offers Gather
+PASS INTERACTION SCENE: Actual source ore confirms its one-time flag and unchanged reward
+PASS INTERACTION SCENE: Repeated source request cannot grant ore twice
+PASS INTERACTION SCENE: Consumed source advertises no Gather action and retains its notice
+PASS INTERACTION SCENE: Save/load retains consumed source state and offer suppression
+PASS INTERACTION SCENE: Actual delayed request cannot charge or heal a replacement region
+PASS INTERACTION SCENE: Old requests do not retain the actor or interaction adapter after unload
+PASS INTERACTION SCENE: Interaction wiring leaves one player and current SourceStory references
+PASS INTERACTION SCENE: Real nearby discovery stays on the existing 0.12-second scan, not every frame
+PASS INTERACTION SCENE: Actual HUD and cached request use the target-provided offer
+PASS INTERACTION SCENE: Actual nearby selection captures the source's offered intent
+PASS INTERACTION SCENE: E executes the selected intent; it never turns stale Inspect into an unsolicited Gather
+PASS INTERACTION SCENE: Next regular discovery updates both request and prompt to Gather
+PASS INTERACTION SCENE: Travel clears selection and old feedback cannot open UI in the new region
+PASS INTERACTION SCENE: Detached real target is rejected immediately
+PASS INTERACTION SCENE: Real target queued for deletion is rejected before frame-end
+PASS INTERACTION SCENE: Freed target remains rejected without state changes
+INTERACTION SCENE RESULT 53/53

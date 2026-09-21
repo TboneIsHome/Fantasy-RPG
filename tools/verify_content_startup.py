@@ -13,7 +13,7 @@ engine = str(Path(sys.argv[1]).resolve())
 pack = ["--main-pack", str(Path(sys.argv[2]).resolve())] if len(sys.argv) > 2 else []
 results = []
 with tempfile.TemporaryDirectory(prefix="lichterhain-content-") as temporary:
-    for scenario in ["malformed", "reference", "geometry", "cache"]:
+    for scenario in ["malformed", "reference", "geometry", "cache", "stats"]:
         profile = Path(temporary) / scenario
         env = dict(os.environ, XDG_DATA_HOME=str(profile / "data"), XDG_CONFIG_HOME=str(profile / "config"))
         command = [engine, "--headless", "--audio-driver", "Dummy", "--path", str(project), *pack,

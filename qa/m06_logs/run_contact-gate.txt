@@ -1,0 +1,9 @@
+import FAIL
+SCRIPT ERROR: Parse Error: Cannot infer the type of "data" variable because the value doesn't have a set type.
+SCRIPT ERROR: Parse Error: Cannot infer the type of "echo" variable because the value doesn't have a set type.
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+SCRIPT ERROR: Parse Error: Cannot infer the type of "data" variable because the value doesn't have a set type.
+SCRIPT ERROR: Parse Error: Cannot infer the type of "echo" variable because the value doesn't have a set type.
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+ERROR: Failed to load script "res://scripts/game.gd" with error "Parse error".

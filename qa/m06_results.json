@@ -1,0 +1,301 @@
+{
+  "date": "2026-09-21",
+  "status": "PARTIALLY TESTED",
+  "implemented": "M06 Stats & Hit Resolution",
+  "baseline_commit": "3f3a2317dc056525d8d050f2632ceea4d727e767",
+  "specification": "docs/M06_STATS_HIT_RESOLUTION_V1_1.md",
+  "engine": "4.5.1.stable.official.f62fdbde1",
+  "assertions": {
+    "passed": 931,
+    "total": 931,
+    "existing": 789,
+    "new": 142
+  },
+  "suites": [
+    {
+      "suite": "test_suite",
+      "passed": 50,
+      "checks": 50
+    },
+    {
+      "suite": "ui_smoke",
+      "passed": 14,
+      "checks": 14
+    },
+    {
+      "suite": "save_compatibility",
+      "passed": 8,
+      "checks": 8
+    },
+    {
+      "suite": "dungeon_suite",
+      "passed": 48,
+      "checks": 48
+    },
+    {
+      "suite": "migration_suite",
+      "passed": 12,
+      "checks": 12
+    },
+    {
+      "suite": "source_suite",
+      "passed": 65,
+      "checks": 65
+    },
+    {
+      "suite": "save_io_reproduction",
+      "passed": 8,
+      "checks": 8
+    },
+    {
+      "suite": "save_fault_suite",
+      "passed": 71,
+      "checks": 71
+    },
+    {
+      "suite": "save_scene_smoke",
+      "passed": 14,
+      "checks": 14
+    },
+    {
+      "suite": "state_replay_reproduction",
+      "passed": 3,
+      "checks": 3
+    },
+    {
+      "suite": "state_actions_suite",
+      "passed": 100,
+      "checks": 100
+    },
+    {
+      "suite": "state_actions_scene",
+      "passed": 12,
+      "checks": 12
+    },
+    {
+      "suite": "region_replay_reproduction",
+      "passed": 4,
+      "checks": 4
+    },
+    {
+      "suite": "region_lifecycle_suite",
+      "passed": 95,
+      "checks": 95
+    },
+    {
+      "suite": "content_validation_suite",
+      "passed": 88,
+      "checks": 88
+    },
+    {
+      "suite": "data_consistency_suite",
+      "passed": 89,
+      "checks": 89
+    },
+    {
+      "suite": "interaction_contract_suite",
+      "passed": 29,
+      "checks": 29
+    },
+    {
+      "suite": "interaction_scene_suite",
+      "passed": 53,
+      "checks": 53
+    },
+    {
+      "suite": "hit_resolution_suite",
+      "passed": 77,
+      "checks": 77
+    },
+    {
+      "suite": "hit_scene_suite",
+      "passed": 58,
+      "checks": 58
+    },
+    {
+      "suite": "content_startup",
+      "passed": 33,
+      "checks": 33
+    }
+  ],
+  "gate": [
+    {
+      "stage": "import",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "test_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "ui_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_compatibility",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "dungeon_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "migration_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "source_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_io_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_fault_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_scene_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_scene",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "region_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "region_lifecycle_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "content_validation_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "data_consistency_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "interaction_contract_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "interaction_scene_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "hit_resolution_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "hit_scene_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "content_startup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "real_write_error",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "exports": [
+    {
+      "stage": "export_windows",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "export_linux",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "smoke_linux",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "smoke_windows_pack",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "startup_linux_release",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "startup_windows_pack",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    }
+  ],
+  "native_M06_Windows": "NOT TESTED",
+  "human_M06_playtest": "NOT TESTED",
+  "human_M05_playtest": "NOT TESTED - not independently reported; explicit M06 authorization is not evidence of this test",
+  "new_graphics_capture": "NOT TESTED - no layout or visual asset changes",
+  "new_performance_benchmark": "NOT TESTED - no new frame processes or global registries added",
+  "incremental_regression": "Pristine M05 and shared actor receiver migration each passed existing 789 checks. Final serial gate adds 77 pure/content, 58 scene and 7 content startup checks.",
+  "development_findings": [
+    "First contact import needed explicit Dictionary annotations; two new scene WeakRef variables also needed explicit types. Failed logs retained.",
+    "An intermediate contact gate was interrupted after the region suite; treated as PARTIALLY TESTED, never substituted for the final full gate.",
+    "One new scene test assumed a timer implied deferred deletion had completed. Immediate invalidation already worked. Test now checks two real process frame boundaries before asserting the old weak scope is freed; no lifecycle runtime change."
+  ],
+  "content_preservation": {
+    "all_original_leaf_values_unchanged": true,
+    "original_numeric_values_checked": 96
+  },
+  "package": {
+    "filename": "Lichterhain_0.4_M06_Windows.zip",
+    "bytes": 34052343,
+    "sha256": "ccc84b37ac4caf4bdefd56cd7b438630675d711f1c61d335de1fef39718c2f65",
+    "exe_sha256": "ab36b9e9c0110f30bd6426f120d91a88a811d52ea965f80f8d874dbfc3f4c772",
+    "pe_architecture": "x86_64",
+    "zip_crc": "PASS"
+  },
+  "log_normalization": "ANSI color codes and trailing whitespace removed; messages preserved. run_* are development/export logs, unprefixed suite files are final gate evidence.",
+  "scope": "M06 only. Shared calculation, content-neutral definitions, explicit hit receipts and existing attack adapters. Save schema 3, persistent owners, region lifecycle, timing, balance and M05 contract preserved. No M07 implementation."
+}

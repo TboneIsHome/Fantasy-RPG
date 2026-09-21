@@ -21,8 +21,16 @@ func _exit_tree() -> void:
 	deactivate()
 
 func _ready() -> void:
+	player.hit_scope = weakref(self)
 	effects = CombatFeedback.new()
 	add_child(effects)
+
+func new_hit(action: StringName, source_id: String = "player") -> HitInstance:
+	if not _can_act(): return null
+	return HitInstance.new(self, action, source_id, int(get_parent().generation))
+
+func accepts_hit(instance: HitInstance, target: Node) -> bool:
+	return _can_act() and instance.scope() == self and instance.generation == int(get_parent().generation) and is_instance_valid(target) and not target.is_queued_for_deletion() and target.is_inside_tree() and get_parent().is_ancestor_of(target)
 
 func cast(id: String, origin: Vector2, target: Vector2) -> void:
 	if not _can_act(): return
@@ -34,7 +42,8 @@ func cast(id: String, origin: Vector2, target: Vector2) -> void:
 		projectile.direction = origin.direction_to(target) if origin.distance_to(target)>1 else player.aim
 		projectile.speed = float(data.speed)
 		projectile.remaining = float(data.range)
-		projectile.struck.connect(_bolt_hit)
+		projectile.hit_instance = new_hit(&"bolt")
+		projectile.struck.connect(_bolt_hit.bind(projectile.hit_instance))
 		add_child(projectile)
 	else:
 		var center := origin+(target-origin).limit_length(float(data.range))
@@ -46,10 +55,15 @@ func cast(id: String, origin: Vector2, target: Vector2) -> void:
 		effects.ring(center,float(data.radius),Color("91dfed"))
 		effects.burst(center,Color("b3edeb"),25)
 		var hit_any := false
+		var instance := new_hit(&"nova")
+		var profile := CombatProfiles.player_attack(float(data.damage), data.damage_type, {"slow_seconds":float(data.slow_duration)})
 		for enemy in get_tree().get_nodes_in_group("enemies"):
 			if enemy.global_position.distance_to(center)<=float(data.radius) and _clear_line(center,enemy.global_position):
-				enemy.slowed = float(data.slow_duration)
-				hit_any=enemy.take_damage(float(data.damage),center.direction_to(enemy.global_position)) or hit_any
+				var result: HitResolution = enemy.receive_hit(instance, profile, center.direction_to(enemy.global_position))
+				if result.resolved and result.contact:
+					enemy.slowed = float(result.secondary.slow_seconds)
+					hit_any = true
+		if not _can_act(): return
 		var refund := run.inventory.frost_refund()
 		if hit_any and refund>0:
 			player.vitals.restore_mana(refund)
@@ -62,9 +76,11 @@ func cast(id: String, origin: Vector2, target: Vector2) -> void:
 func _clear_line(from: Vector2, to: Vector2) -> bool:
 	return get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(from,to,1)).is_empty()
 
-func _bolt_hit(body: Node, point: Vector2, direction: Vector2) -> void:
+func _bolt_hit(body: Node, point: Vector2, direction: Vector2, instance: HitInstance = null) -> void:
 	if not _can_act(): return
-	effects.burst(point,Color("c2eecb"),6)
+	# Direct compatibility callers denote a new action; projectile callbacks retain
+	# the identity created at cast time across every possible delivery.
+	if instance == null: instance = new_hit(&"bolt")
 	if body is WildEnemy:
 		var chained: WildEnemy = null
 		if body.slowed>0 and "echo" in run.learned:
@@ -72,10 +88,16 @@ func _bolt_hit(body: Node, point: Vector2, direction: Vector2) -> void:
 				if other != body and other.hp>0 and other.global_position.distance_to(body.global_position)<float(Content.section("skills").echo.chain_range) and _clear_line(body.global_position,other.global_position):
 					if chained==null or other.global_position.distance_to(point)<chained.global_position.distance_to(point):
 						chained = other
-		body.take_damage(float(Content.section("spells").bolt.damage),direction,true)
+		var data: Dictionary = Content.section("spells").bolt
+		var shatter: bool = body.slowed > 0
+		var amount := float(data.damage) + (float(data.shatter_bonus) if shatter else 0.0)
+		var result: HitResolution = body.receive_hit(instance, CombatProfiles.player_attack(amount, data.damage_type, {"shatter":shatter}), direction)
+		if not result.resolved or not result.contact or not _can_act(): return
 		if chained:
 			effects.ring(chained.global_position,15,Color("eae9b3"))
-			chained.take_damage(float(Content.section("skills").echo.chain_damage),direction)
+			var echo: Dictionary = Content.section("skills").echo
+			chained.receive_hit(new_hit(&"echo"), CombatProfiles.player_attack(float(echo.chain_damage), echo.damage_type), direction)
+	effects.burst(point,Color("c2eecb"),6)
 
 func connect_enemy(enemy: WildEnemy) -> void:
 	enemy.defeated.connect(_defeated)
@@ -85,8 +107,10 @@ func connect_enemy(enemy: WildEnemy) -> void:
 		effects.burst(target.global_position+Vector2(0,-9),Color("aed8c5"),8)
 		sound_requested.emit("hit"))
 	var caster_id: String=enemy.id
-	enemy.projectile_requested.connect(func(origin,direction,amount): _enemy_bolt(origin,direction,amount,caster_id))
-	enemy.thorns_requested.connect(_thorns)
+	var damage_type: StringName=enemy.definition.damage_type
+	var action: StringName=enemy.kind + "_projectile"
+	enemy.projectile_requested.connect(func(origin,direction,amount): _enemy_bolt(origin,direction,amount,caster_id,damage_type,action))
+	enemy.thorns_requested.connect(_thorns.bind(caster_id))
 	if enemy is SourceGuardian:
 		enemy.slam_requested.connect(_source_slam)
 
@@ -97,6 +121,7 @@ func _source_slam(point: Vector2, radius: float, amount: float) -> void:
 	impact.player=player
 	impact.radius=radius
 	impact.damage=amount
+	impact.hit_instance=new_hit(&"guardian_slam", SourceQuest.GUARDIAN_ID)
 	add_child(impact)
 	sound_requested.emit("nova")
 
@@ -105,7 +130,7 @@ func clear_guardian_effects() -> void:
 		if child is SourceImpact or (child is MagicProjectile and child.source_id==SourceQuest.GUARDIAN_ID):
 			child.queue_free()
 
-func _thorns(point: Vector2) -> void:
+func _thorns(point: Vector2, source_id: String = "") -> void:
 	if not _can_act(): return
 	var definition: Dictionary=Content.section("enemies").kobold
 	var patch := ThornPatch.new()
@@ -117,10 +142,12 @@ func _thorns(point: Vector2) -> void:
 	patch.slow_seconds=float(definition.thorn_slow)
 	patch.interval=float(definition.thorn_interval)
 	patch.peaceful_area=peaceful_area
+	patch.hit_scope=weakref(self)
+	patch.source_id=source_id
 	add_child(patch)
 	sound_requested.emit("hit")
 
-func _enemy_bolt(origin: Vector2, direction: Vector2, amount: float, source_id: String = "") -> void:
+func _enemy_bolt(origin: Vector2, direction: Vector2, amount: float, source_id: String = "", damage_type: StringName = &"", action: StringName = &"enemy_projectile") -> void:
 	if not _can_act(): return
 	var projectile := MagicProjectile.new()
 	projectile.position = origin
@@ -129,10 +156,14 @@ func _enemy_bolt(origin: Vector2, direction: Vector2, amount: float, source_id: 
 	projectile.remaining = float(Content.section("combat").enemy_projectile_range)
 	projectile.hostile = true
 	projectile.source_id=source_id
+	var instance := new_hit(action,source_id)
+	var profile := CombatProfiles.hostile_attack(amount,damage_type)
+	projectile.hit_instance=instance
 	projectile.struck.connect(func(body,point,heading):
 		if not _can_act(): return
 		if body is MagePlayer and not peaceful_area.has_point(body.global_position):
-			body.take_damage(amount,heading)
+			var result: HitResolution = body.receive_hit(instance,profile,heading)
+			if not result.resolved: return
 		effects.burst(point,Color("e9b192"),7))
 	add_child(projectile)
 

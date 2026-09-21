@@ -2,6 +2,8 @@
 
 Stand: 21.09.2026 · Quellstand 0.4.0 / Interaction Foundation M05 · Godot 4.5.1 · dauerhaft 2D-isometrisch.
 
+**Späterer Nachtrag:** Tim hat anschließend M06 durch die Spezifikation V1.1 ausdrücklich zur Implementierung freigegeben. Dieser Auftrag hebt den damaligen Entwicklungsstop auf; eine eigene M05-Windows-Spielprüfung wurde damit nicht als bestanden gemeldet. Der folgende Bericht bleibt der historische M05-Auslieferungsstand. Aktuelle Iteration: [M06](FOUNDATION_M06.md).
+
 **IMPLEMENTED**, automatisiert **TESTED**, insgesamt **PARTIALLY TESTED** bis zum eigenen manuellen M05-Windows-Spieltest. **789/789 Checks** und beide Release-Exporte samt Pack-Prüfungen bestanden. Windows-Testpaket bereit. **Stop nach M05**; Stats, Waffen, Magie und spätere Systeme wurden nicht begonnen.
 
 ## 1. Ausgangslage und verbindlicher Umfang

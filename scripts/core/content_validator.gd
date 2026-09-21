@@ -81,28 +81,30 @@ func content_rules(data: Variant) -> void:
 	for key in ["player", "spells", "enemies", "skills", "world", "quest", "source_quest", "relics", "progression", "combat"]:
 		sections[key] = "object"
 	if not fields(data, "", sections): return
-	fields(data.player, "player", {"hp":POS,"mana":POS,"stamina":POS,"speed":POS,"dash_name":"text","dash_speed":POS,"dash_duration":POS,"dash_cost":NONNEG,"dash_cooldown":POS,"mana_regen":NONNEG,"stamina_regen":NONNEG,"mana_regen_delay":NONNEG,"damage_invulnerability":NONNEG,"hindered_speed":UNIT,"knockback":NONNEG,"knockback_decay":POS,"respawn_invulnerability":NONNEG})
+	if fields(data.player, "player", {"hp":POS,"mana":POS,"stamina":POS,"speed":POS,"dash_name":"text","dash_speed":POS,"dash_duration":POS,"dash_cost":NONNEG,"dash_cooldown":POS,"mana_regen":NONNEG,"stamina_regen":NONNEG,"mana_regen_delay":NONNEG,"damage_invulnerability":NONNEG,"hindered_speed":UNIT,"knockback":NONNEG,"knockback_decay":POS,"respawn_invulnerability":NONNEG,"defense":"object"}):
+		defense_rules(data.player.defense, "player.defense")
 	fields(data.world, "world", {"day_seconds":POS})
 	fields(data.progression, "progression", {"xp_per_level":[1,10000,true],"enemy_motes":COUNT})
-	fields(data.combat, "combat", {"enemy_projectile_speed":POS,"enemy_projectile_range":POS,"enemy_knockback":NONNEG,"enemy_knockback_decay":POS,"enemy_hit_stop":NONNEG,"camp_safe_radius":NONNEG})
+	fields(data.combat, "combat", {"enemy_projectile_speed":POS,"enemy_projectile_range":POS,"enemy_knockback":NONNEG,"enemy_knockback_decay":POS,"enemy_hit_stop":NONNEG,"camp_safe_radius":NONNEG,"default_damage_type":"id"})
 	if fields(data.quest, "quest", {"id":"id","title":"text","reward":"text","light_xp":COUNT,"reward_xp":COUNT}):
 		enum_value(data.quest.id, "quest.id", ["lights"])
 	if fields(data.spells, "spells", {"bolt":"object","nova":"object"}):
-		fields(data.spells.bolt, "spells.bolt", {"name":"text","cost":NONNEG,"cooldown":POS,"damage":NONNEG,"speed":POS,"range":POS,"shatter_bonus":NONNEG})
-		fields(data.spells.nova, "spells.nova", {"name":"text","cost":NONNEG,"cooldown":POS,"damage":NONNEG,"radius":POS,"range":POS,"slow_duration":NONNEG,"slow_multiplier":UNIT})
+		fields(data.spells.bolt, "spells.bolt", {"name":"text","cost":NONNEG,"cooldown":POS,"damage":NONNEG,"damage_type":"id","speed":POS,"range":POS,"shatter_bonus":NONNEG})
+		fields(data.spells.nova, "spells.nova", {"name":"text","cost":NONNEG,"cooldown":POS,"damage":NONNEG,"damage_type":"id","radius":POS,"range":POS,"slow_duration":NONNEG,"slow_multiplier":UNIT})
 	if fields(data.skills, "skills", {"echo":"object","flow":"object","bloom":"object"}):
-		definition(data.skills.echo, "skills.echo", {"name":"text","description":"text","chain_range":POS,"chain_damage":NONNEG})
+		definition(data.skills.echo, "skills.echo", {"name":"text","description":"text","chain_range":POS,"chain_damage":NONNEG,"damage_type":"id"})
 		definition(data.skills.flow, "skills.flow", {"name":"text","description":"text","mana_refund":NONNEG}, ["mana_refund"])
 		definition(data.skills.bloom, "skills.bloom", {"name":"text","description":"text","healing":NONNEG}, ["healing"])
 	if fields(data.enemies, "enemies", {"wolf":"object","wisp":"object","kobold":"object","guardian":"object"}):
 		for id in data.enemies:
-			var schema := {"name":"text","hp":POS,"speed":NONNEG,"damage":NONNEG,"xp":COUNT,"aggro":POS,"leash":POS,"windup":POS,"recovery":POS,"mode":"id"}
+			var schema := {"name":"text","hp":POS,"speed":NONNEG,"damage":NONNEG,"damage_type":"id","defense":"object","xp":COUNT,"aggro":POS,"leash":POS,"windup":POS,"recovery":POS,"mode":"id"}
 			var modes := {"wolf":"lunge","wisp":"ranged","kobold":"thorns","guardian":"guardian"}
 			if id != "guardian": schema.attack_range = POS
 			if id == "wolf": schema.merge({"lunge_duration":POS,"lunge_speed":POS,"lunge_slow_multiplier":UNIT,"hit_range":POS})
 			if id == "kobold": schema.merge({"thorn_radius":POS,"thorn_duration":POS,"thorn_slow":NONNEG,"thorn_interval":POS})
 			if id == "guardian": schema.merge({"slam_radius":POS,"fan_windup":POS,"fan_damage":NONNEG,"fan_count":[2,64,true],"fan_spread":[0,PI],"awaken_delay":NONNEG})
 			if fields(data.enemies[id], "enemies." + id, schema):
+				defense_rules(data.enemies[id].defense, "enemies." + id + ".defense")
 				enum_value(data.enemies[id].mode, "enemies." + id + ".mode", [modes[id]])
 				if data.enemies[id].leash < data.enemies[id].aggro:
 					fail("enemies." + id + ".leash", "Expected leash >= aggro", data.enemies[id].leash)
@@ -112,6 +114,14 @@ func content_rules(data: Variant) -> void:
 	if fields(data.source_quest, "source_quest", {"reward_xp":COUNT,"reward_item":"id","ore_motes":COUNT}):
 		if not data.relics.has(data.source_quest.reward_item):
 			fail("source_quest.reward_item", "Missing relic reference", data.source_quest.reward_item)
+
+func defense_rules(data: Dictionary, path: String) -> void:
+	if not fields(data, path, {"protection":NONNEG,"stability":NONNEG,"resistances":"object"}): return
+	for key in data.resistances:
+		if not id_valid(key): fail(path + ".resistances." + str(key), "Expected damage type ID [a-z][a-z0-9_]* (1–64 characters)", key)
+		var value: Variant = data.resistances[key]
+		if not number(value, [-50,90]) and not number(value, [100,100]):
+			fail(path + ".resistances." + str(key), "Expected finite resistance in [-50, 90] or explicit immunity 100", value)
 
 func discovery_rules(data: Variant) -> void:
 	file = "data/discoveries.json"

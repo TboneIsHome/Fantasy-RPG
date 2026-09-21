@@ -16,7 +16,12 @@
     "hindered_speed": 0.55,
     "knockback": 65,
     "knockback_decay": 500,
-    "respawn_invulnerability": 1
+    "respawn_invulnerability": 1,
+    "defense": {
+      "protection": 0,
+      "resistances": {},
+      "stability": 0
+    }
   },
   "spells": {
     "bolt": {
@@ -26,7 +31,8 @@
       "damage": 19,
       "speed": 265,
       "range": 235,
-      "shatter_bonus": 10
+      "shatter_bonus": 10,
+      "damage_type": "light"
     },
     "nova": {
       "name": "Frostkreis",
@@ -36,7 +42,8 @@
       "radius": 48,
       "range": 130,
       "slow_duration": 3.5,
-      "slow_multiplier": 0.4
+      "slow_multiplier": 0.4,
+      "damage_type": "frost"
     }
   },
   "enemies": {
@@ -55,7 +62,13 @@
       "lunge_duration": 0.34,
       "lunge_speed": 175,
       "lunge_slow_multiplier": 0.55,
-      "hit_range": 19
+      "hit_range": 19,
+      "defense": {
+        "protection": 0,
+        "resistances": {},
+        "stability": 0
+      },
+      "damage_type": "untyped"
     },
     "wisp": {
       "name": "Irrlicht",
@@ -68,7 +81,13 @@
       "windup": 0.9,
       "recovery": 1.55,
       "mode": "ranged",
-      "attack_range": 112
+      "attack_range": 112,
+      "defense": {
+        "protection": 0,
+        "resistances": {},
+        "stability": 0
+      },
+      "damage_type": "untyped"
     },
     "kobold": {
       "name": "Dornkobold",
@@ -85,7 +104,13 @@
       "thorn_radius": 25,
       "thorn_duration": 2.8,
       "thorn_slow": 0.75,
-      "thorn_interval": 0.9
+      "thorn_interval": 0.9,
+      "defense": {
+        "protection": 0,
+        "resistances": {},
+        "stability": 0
+      },
+      "damage_type": "untyped"
     },
     "guardian": {
       "name": "Gebundener Quellenhüter",
@@ -103,7 +128,13 @@
       "fan_count": 5,
       "fan_spread": 0.72,
       "mode": "guardian",
-      "awaken_delay": 1
+      "awaken_delay": 1,
+      "defense": {
+        "protection": 0,
+        "resistances": {},
+        "stability": 0
+      },
+      "damage_type": "untyped"
     }
   },
   "skills": {
@@ -111,7 +142,8 @@
       "name": "Widerhall",
       "description": "Triff ein verlangsamtes Ziel: Der Lichtfunke springt zu einem zweiten Gegner.",
       "chain_range": 65,
-      "chain_damage": 12
+      "chain_damage": 12,
+      "damage_type": "light"
     },
     "flow": {
       "name": "Fließender Schritt",
@@ -156,6 +188,7 @@
     "enemy_knockback": 80,
     "enemy_knockback_decay": 230,
     "enemy_hit_stop": 0.06,
-    "camp_safe_radius": 110
+    "camp_safe_radius": 110,
+    "default_damage_type": "untyped"
   }
 }

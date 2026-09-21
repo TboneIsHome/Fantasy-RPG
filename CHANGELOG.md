@@ -1,5 +1,13 @@
 # Änderungen
 
+## Gameplay Foundation M06 — 2026-09-21
+
+- Genehmigte Stats-/Trefferauflösungs-Spezifikation V1.1 umgesetzt: gemeinsame reine Rechnung mit getrennter Damage-/Impact-Wirkung, Protection, Resistance, Stability und bereits vorgegebenem DefenseOutcome.
+- Player und Gegner verwenden denselben Resolver. Einmalige regionale HitInstance verhindert doppelte Kontaktlieferung, auch aus reentranten Signalen oder alten Regionen. Bestehende wiederholte Dornenpulse bleiben explizite neue Treffer.
+- Lichtfunke, Frostkreis, Widerhall, Wolfslunge, Gegner-/Hütergeschosse, Quellenschlag und Dornen migriert. Vorhandene Treffererkennung, Timing, Health-Besitzer, Rückstoß-/Slow-/Bonusregeln bleiben bei ihren bisherigen Systemen.
+- Neutrale Defense-Felder und Schadensartenschlüssel in JSON ergänzt und beim Start geprüft. Alle vorher vorhandenen Inhaltswerte, Saveformat 3, Referenzspielstände und RegionLifecycle bleiben erhalten.
+- 931/931 Checks, davon 142 neue; beide Release-Exporte/Packs und Fehlerstart-Proben bestanden. [M06 Completion Report](docs/FOUNDATION_M06.md) und Windows-Testpaket erstellt. Manueller M06-Windows-Spieltest offen: **PARTIALLY TESTED**. Stop vor M07.
+
 ## Gameplay Foundation M05 — 2026-09-21
 
 - Von Tim abgenommene Foundation M00–M04 als Basis erhalten; genehmigten Interaction-Vertrag umgesetzt.

@@ -32,6 +32,10 @@ func verify() -> void:
 		content.rooms[0].center=[2,2]
 		payload=JSON.stringify(content)
 		expected="rooms[0].size"
+	elif scenario == "stats":
+		content.player.defense.resistances={"light":99}
+		payload=JSON.stringify(content)
+		expected="player.defense.resistances.light"
 	elif scenario == "cache":
 		check(Content.ensure_loaded(),"Initial valid load succeeds")
 	var saved := FileAccess.open(SaveSystem.DEFAULT_PATH,FileAccess.WRITE)

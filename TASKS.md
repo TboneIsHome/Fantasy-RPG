@@ -56,7 +56,13 @@
 - [x] M05: reale Funde, Sickerquelle, Steindurchgang und Quellenfassung schrittweise migrieren; fachliche Zustandsbesitzer erhalten.
 - [x] M05: 789/789 Checks, beide Exporte/Packs, unveränderte Referenzspielstände, Windows-Testpaket und Completion Report.
 - [ ] M05: neues Windows-Paket manuell spielen; Ergebnisse und Completion Report gemeinsam prüfen.
-- [ ] Stop nach M05; M06 und weitere Systeme erst nach eigenem genehmigtem Design und neuer Freigabe.
+- [x] M06 durch Stats-/Trefferauflösungs-Spezifikation V1.1 ausdrücklich freigegeben; keine neue Behauptung zur offenen M05-Windows-Abnahme.
+- [x] M06: reinen gemeinsamen Damage-/Impact-Resolver und neutrale geprüfte Defense-Definitionen integrieren; bestehende Zahlen erhalten.
+- [x] M06: reale Angriffe schrittweise über Actor/Vitals anbinden; regionale HitInstance mit einmaligem Kontakt je Ziel und expliziten Dornenpulsen.
+- [x] M06: 931/931 Checks, beide Release-Packs/Startfehler, alte Saves und unveränderte Schema-/Regionsbesitzer prüfen.
+- [x] M06: Windows-Testpaket und Completion Report erstellen, Quellstand und Nachweise auf eigenem Branch sichern.
+- [ ] M06: Windows-Paket manuell spielen und Ergebnis samt Completion Report gemeinsam prüfen.
+- [ ] Stop nach M06; M07 und weitere Systeme erst nach eigenem genehmigtem Design und neuer Freigabe.
 
 Audit, konkrete Dateien und Risiken: [docs/FOUNDATION_M00.md](docs/FOUNDATION_M00.md). Verbindliche Reihenfolge und Abnahme: [ROADMAP.md](ROADMAP.md).
 

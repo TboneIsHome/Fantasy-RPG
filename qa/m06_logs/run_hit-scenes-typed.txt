@@ -1,0 +1,55 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS HIT SCENE: Player and NPC use exactly the same resolution inputs and health result
+PASS HIT SCENE: Existing actor response consumes effective impact independently of damage
+PASS HIT SCENE: Result retains action, attacker, target and regional hit identity without granting skill XP
+PASS HIT SCENE: Repeated contact cannot apply again after the player's protection timer expires
+PASS HIT SCENE: One AoE instance can affect multiple targets but each target only once
+PASS HIT SCENE: A genuinely new attack instance can affect the same target
+PASS HIT SCENE: Receipt is claimed before enemy hit signals can reenter health mutation
+PASS HIT SCENE: Player health signals cannot replay a claimed hit even when immunity is cleared
+PASS HIT SCENE: Confirmed miss causes no normal actor effect
+PASS HIT SCENE: Confirmed evade causes no normal actor effect
+PASS HIT SCENE: Confirmed parry causes no normal actor effect
+PASS HIT SCENE: Actor accepts caller-supplied block scales without a new active block system
+PASS HIT SCENE: Existing dash remains the owner of its activation and cost
+PASS HIT SCENE: Existing dash protection supplies Evade to the resolver and preserves health
+PASS HIT SCENE: Impact-only contact moves through the existing response without inventing health damage
+PASS HIT SCENE: Changed defense definitions are validated before real consumer use
+PASS HIT SCENE: One authored protection/resistance profile changes real Player and NPC damage equally
+PASS HIT SCENE: Authored Stability changes transferred impact while retaining existing response code
+PASS HIT SCENE: Explicit typed damage immunity works on both actor roles and does not negate impact
+PASS HIT SCENE: Negative authored resistance increases damage in the real Player path
+PASS HIT SCENE: Secondary information creates no hidden damage or status executor
+PASS HIT SCENE: Queued target is rejected before any mutation
+PASS HIT SCENE: Hit receipts do not retain freed targets
+PASS HIT SCENE: Contact cannot be applied to a target outside its originating region
+PASS HIT SCENE: Dormant guardian rule stays with the actor and is not a second damage formula
+PASS HIT SCENE: Awake guardian shares resolution while its existing rooted response remains intact
+PASS HIT SCENE: Real projectile retains one cast-time hit identity
+PASS HIT SCENE: Real bolt plus frost bonus and echo preserve 29 / 12 damage
+PASS HIT SCENE: Repeated projectile signal grants neither primary nor chained damage twice
+PASS HIT SCENE: Existing area cast still executes through MageAbilities
+PASS HIT SCENE: Nova resolves both targets once, then existing slow and one relic refund
+PASS HIT SCENE: Existing cooldown remains authoritative; no duplicate hit or refund
+PASS HIT SCENE: Hostile projectile preserves 11 damage / existing 65 response
+PASS HIT SCENE: Hostile projectile cannot hit again even after damage immunity expires
+PASS HIT SCENE: Existing source impact uses a dedicated confirmed-hit instance
+PASS HIT SCENE: Source impact remains single hit even if its delivery is repeated
+PASS HIT SCENE: Existing thorn pulse resolves damage before applying its unchanged slow
+PASS HIT SCENE: Remaining inside a thorn zone does not add an unrequested frame hit
+PASS HIT SCENE: Next explicit thorn pulse owns a new instance and still deals damage
+PASS HIT SCENE: Actual wolf lunge preserves damage and attack source identity
+PASS HIT SCENE: A repeated wolf contact within its same lunge cannot apply twice
+PASS HIT SCENE: A new wolf attack phase creates a new instance under existing AI timing
+PASS HIT SCENE: Existing fired projectile can finish after its caster is freed; no strong actor ownership added
+PASS HIT SCENE: Immediate roundtrip cannot reuse the old hit in a replacement region
+PASS HIT SCENE: Actual delayed hit delivery cannot affect the new region
+FAIL HIT SCENE: Hit instance uses weak scope and leaves one current Player after region teardown
+PASS HIT SCENE: Fresh regional instance still resolves correctly
+PASS HIT SCENE: Existing checkpoint can save health after a resolved contact
+PASS HIT SCENE: Save format remains three with only original actor snapshot fields
+PASS HIT SCENE: Load restores health after combat without persisting hit receipts or defense snapshots
+PASS HIT SCENE: Pre-load hit cannot be reapplied after reloading the same region
+PASS HIT SCENE: Deactivated tree rejects even a still-referenced old target before frame-end free
+HIT SCENE RESULT 51/52

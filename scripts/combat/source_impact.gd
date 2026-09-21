@@ -5,6 +5,7 @@ var radius: float = float(Content.section("enemies").guardian.slam_radius)
 var damage: float = float(Content.section("enemies").guardian.damage)
 var remaining: float = 0.45
 var struck: bool = false
+var hit_instance: HitInstance
 
 func _ready() -> void:
 	z_index=6
@@ -14,7 +15,7 @@ func _physics_process(delta: float) -> void:
 		struck=true
 		if is_instance_valid(player) and player.global_position.distance_to(global_position)<=radius:
 			var wall := get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(global_position,player.global_position,1))
-			if wall.is_empty(): player.take_damage(damage,global_position.direction_to(player.global_position))
+			if wall.is_empty(): player.receive_hit(hit_instance,CombatProfiles.hostile_attack(damage,Content.section("enemies").guardian.damage_type),global_position.direction_to(player.global_position))
 	remaining-=delta
 	if remaining<=0: queue_free()
 	queue_redraw()
