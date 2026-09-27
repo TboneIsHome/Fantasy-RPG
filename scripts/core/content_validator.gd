@@ -48,6 +48,8 @@ func fields(value: Variant, path: String, schema: Dictionary) -> bool:
 			fail(field, "Expected object", item)
 		elif rule == "array" and not item is Array:
 			fail(field, "Expected array", item)
+		elif rule == "bool" and not item is bool:
+			fail(field, "Expected boolean", item)
 		elif rule == "text" and (not item is String or item.strip_edges().is_empty()):
 			fail(field, "Expected non-empty text", item)
 		elif rule == "id" and not id_valid(item):
@@ -78,9 +80,10 @@ func definition(value: Variant, path: String, schema: Dictionary, tokens: Array 
 
 func content_rules(data: Variant) -> void:
 	var sections := {}
-	for key in ["player", "spells", "enemies", "skills", "world", "quest", "source_quest", "relics", "progression", "combat"]:
+	for key in ["player", "spells", "enemies", "skills", "world", "quest", "source_quest", "relics", "progression", "combat", "active_combat"]:
 		sections[key] = "object"
 	if not fields(data, "", sections): return
+	active_combat_rules(data.active_combat)
 	if fields(data.player, "player", {"hp":POS,"mana":POS,"stamina":POS,"speed":POS,"dash_name":"text","dash_speed":POS,"dash_duration":POS,"dash_cost":NONNEG,"dash_cooldown":POS,"mana_regen":NONNEG,"stamina_regen":NONNEG,"mana_regen_delay":NONNEG,"damage_invulnerability":NONNEG,"hindered_speed":UNIT,"knockback":NONNEG,"knockback_decay":POS,"respawn_invulnerability":NONNEG,"defense":"object"}):
 		defense_rules(data.player.defense, "player.defense")
 	fields(data.world, "world", {"day_seconds":POS})
@@ -105,6 +108,8 @@ func content_rules(data: Variant) -> void:
 			if id == "guardian": schema.merge({"slam_radius":POS,"fan_windup":POS,"fan_damage":NONNEG,"fan_count":[2,64,true],"fan_spread":[0,PI],"awaken_delay":NONNEG})
 			if fields(data.enemies[id], "enemies." + id, schema):
 				defense_rules(data.enemies[id].defense, "enemies." + id + ".defense")
+				if id == "kobold" and ceilf(float(data.enemies[id].thorn_duration)/float(data.enemies[id].thorn_interval)) > 512:
+					fail("enemies.kobold.thorn_interval", "Expected at most 512 explicit hit phases", data.enemies[id].thorn_interval)
 				enum_value(data.enemies[id].mode, "enemies." + id + ".mode", [modes[id]])
 				if data.enemies[id].leash < data.enemies[id].aggro:
 					fail("enemies." + id + ".leash", "Expected leash >= aggro", data.enemies[id].leash)
@@ -114,6 +119,15 @@ func content_rules(data: Variant) -> void:
 	if fields(data.source_quest, "source_quest", {"reward_xp":COUNT,"reward_item":"id","ore_motes":COUNT}):
 		if not data.relics.has(data.source_quest.reward_item):
 			fail("source_quest.reward_item", "Missing relic reference", data.source_quest.reward_item)
+
+func active_combat_rules(data: Dictionary) -> void:
+	if not fields(data, "active_combat", {"commit_fraction":UNIT,"instant_window":POS,"defense":"object","reaction":"object","contacts":"object"}): return
+	fields(data.defense,"active_combat.defense",{"block_damage_scale":UNIT,"block_impact_scale":UNIT,"block_movement_scale":UNIT,"facing_dot":[-1,1],"parry_window":POS,"parry_recovery":POS,"counter_window":POS})
+	if fields(data.reaction,"active_combat.reaction",{"interrupt_impact":POS,"stagger_impact":POS,"interrupt_seconds":POS,"stagger_seconds":POS,"recovery_guard":POS,"max_displacement":POS}):
+		if data.reaction.stagger_impact < data.reaction.interrupt_impact: fail("active_combat.reaction.stagger_impact","Expected stagger impact >= interrupt impact",data.reaction.stagger_impact)
+	if fields(data.contacts,"active_combat.contacts",{"direct":"object","projectile":"object","area":"object","ground":"object"}):
+		for id in data.contacts:
+			fields(data.contacts[id],"active_combat.contacts."+id,{"blockable":"bool","parryable":"bool","minimum_dot":[-1,1]})
 
 func defense_rules(data: Dictionary, path: String) -> void:
 	if not fields(data, path, {"protection":NONNEG,"stability":NONNEG,"resistances":"object"}): return

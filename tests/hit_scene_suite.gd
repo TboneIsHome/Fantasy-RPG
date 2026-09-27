@@ -104,7 +104,7 @@ func actor_contract() -> void:
 	check(p.try_dash(Vector2.RIGHT), "Existing dash remains the owner of its activation and cost")
 	var evaded := p.receive_hit(game.combat.new_hit(&"during_dash"),profile,Vector2.RIGHT)
 	check(evaded.outcome == &"evade" and not evaded.contact and p.vitals.hp == 100 and p.knockback == Vector2.ZERO, "Existing dash protection supplies Evade to the resolver and preserves health")
-	p.dash_remaining = 0; p.vitals.refill()
+	p.dash_remaining = 0; p.vitals.refill(); p.active_defense.reset()
 	var notifications: Array[float] = []
 	callback = func(amount): notifications.append(amount)
 	p.vitals.damaged.connect(callback)
@@ -229,15 +229,22 @@ func actual_attacks() -> void:
 	check(p.vitals.hp == 82, "Next explicit thorn pulse owns a new instance and still deals damage")
 	patch.queue_free()
 	p.vitals.refill(); p.hindered = 0
-	var wolf := enemy_at(Vector2(4,0))
-	wolf.state = WildEnemy.Mode.ATTACK; wolf.timer = 0.2
+	a.queue_free(); b.queue_free()
+	await process_frame
+	var wolf := enemy_at(Vector2(0,12))
+	wolf.attack_direction = wolf.global_position.direction_to(p.global_position)
+	wolf.begin_attack()
+	wolf._physics_process(float(wolf.definition.windup))
 	wolf._physics_process(0)
 	check(p.vitals.hp == 87 and wolf.attack_hit != null and wolf.attack_hit.source_id == wolf.id, "Actual wolf lunge preserves damage and attack source identity")
 	p.vitals.invulnerable = 0; wolf.attack_connected = false
 	wolf._physics_process(0)
 	check(p.vitals.hp == 87, "A repeated wolf contact within its same lunge cannot apply twice")
-	wolf.state = WildEnemy.Mode.WINDUP; wolf.timer = 0
-	wolf._physics_process(0)
+	wolf.attack_action.timeline.tick(float(wolf.definition.lunge_duration)+float(wolf.definition.recovery))
+	wolf.position = p.position + Vector2(0,12)
+	wolf.attack_direction = wolf.global_position.direction_to(p.global_position)
+	wolf.begin_attack()
+	wolf._physics_process(float(wolf.definition.windup))
 	wolf._physics_process(0)
 	check(p.vitals.hp == 74, "A new wolf attack phase creates a new instance under existing AI timing")
 	# A fired projectile remains independent of its dead caster, within this region.

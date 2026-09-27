@@ -31,6 +31,10 @@ func awaken() -> bool:
 	return true
 
 func withdraw() -> void:
+	if attack_action != null: attack_action.timeline.interrupt()
+	attack_action=null
+	active_defense.reset()
+	reaction=CombatReaction.new()
 	awake=false
 	remove_from_group("enemies")
 	collision_layer=0
@@ -44,18 +48,24 @@ func _physics_process(delta: float) -> void:
 	if hp<=0: return
 	phase+=delta
 	slowed=maxf(0,slowed-delta)
+	active_defense.tick(delta)
+	reaction.tick(delta)
 	if awake:
 		if not is_instance_valid(target) or target.vitals.hp<=0 or not arena.has_point(target.global_position):
 			withdraw()
 		else:
-			timer-=delta
-			if timer<=0:
+			if attack_action != null:
+				var step := minf(delta,maxf(0,attack_action.timeline.startup-attack_action.timeline.elapsed)) if state==Mode.WINDUP else delta
+				attack_action.tick(step)
+				timer=attack_action.timeline.remaining()
+			else:
+				timer-=delta
+			if not reaction.locked() and (timer<=0 or (state==Mode.WINDUP and attack_action != null and attack_action.timeline.state()==ActionTimeline.State.ACTIVE)):
 				if state==Mode.RECOVER:
-					state=Mode.WINDUP
 					attack_target=target.global_position
 					attack_direction=global_position.direction_to(attack_target)
-					timer=float(definition.windup if attack_index%2==0 else definition.fan_windup)
-				elif state==Mode.WINDUP:
+					begin_attack()
+				elif state==Mode.WINDUP and attack_action != null and attack_action.timeline.state()==ActionTimeline.State.ACTIVE:
 					if attack_index%2==0:
 						slam_requested.emit(attack_target,float(definition.slam_radius),float(definition.damage))
 					else:
@@ -64,12 +74,24 @@ func _physics_process(delta: float) -> void:
 							var spread: float=lerpf(-float(definition.fan_spread),float(definition.fan_spread),float(i)/float(definition.fan_count-1))
 							projectile_requested.emit(origin,origin.direction_to(attack_target).rotated(spread),float(definition.fan_damage))
 					attack_index+=1
+					attack_action.timeline.finish_active()
 					state=Mode.RECOVER
 					timer=float(definition.recovery)
 	icon.texture=SourceArt.texture("guardian",1 if awake and state==Mode.WINDUP and attack_index%2==0 else 2 if awake and state==Mode.WINDUP else 0)
 	icon.position.y=sin(phase*1.7)
 	icon.modulate=Color("b4dbe0") if slowed>0 else Color.WHITE
 	queue_redraw()
+
+func begin_attack() -> bool:
+	var scope := target.hit_scope.get_ref() as Node if is_instance_valid(target) and target.hit_scope != null else null
+	if not awake or not is_instance_valid(scope) or reaction.locked(): return false
+	if attack_action != null and not attack_action.timeline.state() in [ActionTimeline.State.COMPLETED,ActionTimeline.State.INTERRUPTED]: return false
+	var fan := attack_index%2!=0
+	attack_action=scope.new_action(self,&"guardian_fan" if fan else &"guardian_slam_release",ActionProfiles.guardian(definition,fan),ActionProfiles.rules("area"),id)
+	if attack_action==null: return false
+	state=Mode.WINDUP
+	timer=float(definition.fan_windup if fan else definition.windup)
+	return true
 
 func receive_hit(instance: HitInstance, attack: AttackProfile, _direction: Vector2 = Vector2.ZERO, defense: DefenseOutcome = null) -> HitResolution:
 	if not awake: return HitResolution.rejected(&"dormant_target")

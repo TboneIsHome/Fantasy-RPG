@@ -196,9 +196,10 @@ func run_tests() -> void:
 	await frames(45)
 	check(lunger.attack_target==locked_target and game.player.vitals.hp==100,"Moving away from a telegraphed wolf attack avoids the hit")
 	lunger.position=game.player.position+Vector2(4,0)
-	lunger.state=WildEnemy.Mode.ATTACK
-	lunger.timer=0.2
-	lunger.attack_connected=false
+	lunger.attack_action.timeline.interrupt()
+	lunger.attack_direction=lunger.global_position.direction_to(game.player.global_position)
+	lunger.begin_attack()
+	lunger.attack_action.timeline.tick(float(lunger.definition.windup))
 	await frames(2)
 	check(game.player.vitals.hp<100,"Wolf attack damages a player who stays in its path")
 	lunger.queue_free()

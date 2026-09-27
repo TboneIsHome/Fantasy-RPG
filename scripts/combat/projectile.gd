@@ -2,6 +2,7 @@ class_name MagicProjectile
 extends CharacterBody2D
 
 signal struck(body: Node, point: Vector2, direction: Vector2)
+const COLLISION_RADIUS: float = 3.0
 var direction := Vector2.RIGHT
 var speed: float = float(Content.section("spells").bolt.speed)
 var remaining: float = float(Content.section("spells").bolt.range)
@@ -9,21 +10,25 @@ var hostile: bool = false
 var elapsed: float = 0
 var source_id: String = ""
 var hit_instance: HitInstance
+var attack_action: AttackInstance
 
 func _ready() -> void:
 	collision_layer = 0
 	collision_mask = 1 | (2 if hostile else 4)
 	var collision := CollisionShape2D.new()
 	var shape := CircleShape2D.new()
-	shape.radius = 3
+	shape.radius = COLLISION_RADIUS
 	collision.shape = shape
 	add_child(collision)
 	z_index = 10
 
 func _physics_process(delta: float) -> void:
 	if is_queued_for_deletion(): return
+	if attack_action == null or not attack_action.is_current() or attack_action.timeline.state()!=ActionTimeline.State.ACTIVE:
+		queue_free()
+		return
 	elapsed += delta
-	var distance := speed*delta
+	var distance := minf(remaining,speed*delta)
 	remaining -= distance
 	var collision := move_and_collide(direction*distance)
 	if collision:
@@ -31,6 +36,7 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 	elif remaining<=0:
 		queue_free()
+	attack_action.tick(delta)
 	queue_redraw()
 
 func _draw() -> void:

@@ -190,5 +190,48 @@
     "enemy_hit_stop": 0.06,
     "camp_safe_radius": 110,
     "default_damage_type": "untyped"
+  },
+  "active_combat": {
+    "commit_fraction": 0.5,
+    "instant_window": 0.02,
+    "defense": {
+      "block_damage_scale": 0.35,
+      "block_impact_scale": 0.5,
+      "block_movement_scale": 0.55,
+      "facing_dot": 0,
+      "parry_window": 0.12,
+      "parry_recovery": 0.36,
+      "counter_window": 0.45
+    },
+    "reaction": {
+      "interrupt_impact": 90,
+      "stagger_impact": 120,
+      "interrupt_seconds": 0.12,
+      "stagger_seconds": 0.32,
+      "recovery_guard": 0.65,
+      "max_displacement": 160
+    },
+    "contacts": {
+      "direct": {
+        "blockable": true,
+        "parryable": true,
+        "minimum_dot": 0
+      },
+      "projectile": {
+        "blockable": true,
+        "parryable": true,
+        "minimum_dot": -1
+      },
+      "area": {
+        "blockable": true,
+        "parryable": false,
+        "minimum_dot": -1
+      },
+      "ground": {
+        "blockable": false,
+        "parryable": false,
+        "minimum_dot": -1
+      }
+    }
   }
 }

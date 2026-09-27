@@ -107,6 +107,7 @@ func verify() -> void:
 	check(p.try_dash(Vector2.RIGHT) and p.vitals.mana == 49,"Flow applies changed refund exactly once on successful dash")
 	check(not p.try_dash(Vector2.RIGHT) and p.vitals.mana == 49,"Rejected dash does not refund again")
 	p.dash_remaining=0
+	p.active_defense.reset()
 	p.abilities=MageAbilities.new()
 	p.vitals.hp=50; p.vitals.mana=90
 	game.run.inventory.grant("source_heart")

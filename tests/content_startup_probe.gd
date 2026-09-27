@@ -36,6 +36,10 @@ func verify() -> void:
 		content.player.defense.resistances={"light":99}
 		payload=JSON.stringify(content)
 		expected="player.defense.resistances.light"
+	elif scenario == "active_combat":
+		content.active_combat.defense.parry_window=0
+		payload=JSON.stringify(content)
+		expected="active_combat.defense.parry_window"
 	elif scenario == "cache":
 		check(Content.ensure_loaded(),"Initial valid load succeeds")
 	var saved := FileAccess.open(SaveSystem.DEFAULT_PATH,FileAccess.WRITE)

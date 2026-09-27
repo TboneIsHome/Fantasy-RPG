@@ -5,7 +5,7 @@ static func install() -> void:
 	var keys := {
 		"move_left":[KEY_A, KEY_LEFT], "move_right":[KEY_D, KEY_RIGHT],
 		"move_up":[KEY_W, KEY_UP], "move_down":[KEY_S, KEY_DOWN],
-		"dash":[KEY_SPACE], "interact":[KEY_E], "journal":[KEY_TAB],
+		"dash":[KEY_SPACE], "block":[KEY_F], "parry":[KEY_Q], "interact":[KEY_E], "journal":[KEY_TAB],
 		"pause_game":[KEY_ESCAPE], "save_game":[KEY_F5], "load_game":[KEY_F9],
 		"map":[KEY_M], "bolt":[KEY_1], "nova":[KEY_2], "fullscreen":[KEY_F11]
 	}

@@ -25,6 +25,10 @@ var cast_flash: float = 0
 var staff_light: PointLight2D
 var hindered: float = 0
 var hit_scope: WeakRef
+var active_defense := ActiveDefense.new()
+var reaction := CombatReaction.new()
+var attack_action: AttackInstance
+var attack_actions: Array[AttackInstance] = []
 
 func _ready() -> void:
 	add_to_group("player")
@@ -57,10 +61,16 @@ func _physics_process(delta: float) -> void:
 	cast_flash = maxf(0,cast_flash-delta)
 	vitals.tick(delta)
 	abilities.tick(delta)
+	active_defense.tick(delta)
+	reaction.tick(delta)
+	for action in attack_actions.duplicate():
+		action.tick(delta)
+		if action.timeline.state() in [ActionTimeline.State.COMPLETED,ActionTimeline.State.INTERRUPTED]: attack_actions.erase(action)
 	dash_remaining = maxf(0,dash_remaining-delta)
 	shake = maxf(0,shake-delta*15)
 	camera.offset = Vector2(sin(phase*120),cos(phase*99))*shake if shake_enabled else Vector2.ZERO
 	if not input_enabled:
+		active_defense.block(false,aim)
 		velocity = Vector2.ZERO
 		update_visual()
 		return
@@ -72,6 +82,9 @@ func _physics_process(delta: float) -> void:
 		aim = direction.normalized()
 	if Input.is_action_just_pressed("dash"):
 		try_dash(movement if movement.length_squared()>0.01 else last_movement)
+	elif Input.is_action_just_pressed("parry"):
+		try_parry()
+	request_block(Input.is_action_pressed("block"))
 	if not Input.is_action_pressed("bolt") and not Input.is_action_pressed("nova"):
 		cast_armed=true
 	if dash_remaining<=0 and cast_armed:
@@ -80,27 +93,48 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("nova"):
 			request_cast("nova",get_global_mouse_position())
 	velocity = dash_direction*float(Content.section("player").dash_speed) if dash_remaining>0 else movement*float(Content.section("player").speed)*(float(Content.section("player").hindered_speed) if hindered>0 else 1.0)
+	if active_defense.mode == ActiveDefense.Mode.BLOCK: velocity *= float(Content.section("active_combat").defense.block_movement_scale)
+	if reaction.locked(): velocity = Vector2.ZERO
 	velocity += knockback
 	knockback = knockback.move_toward(Vector2.ZERO,float(Content.section("player").knockback_decay)*delta)
 	move_and_slide()
 	update_visual()
 
 func request_cast(id: String, target: Vector2) -> bool:
-	if dash_remaining>0 or not abilities.cast(id,vitals):
+	if reaction.locked() or active_defense.blocks_offense() or dash_remaining>0 or not abilities.cast(id,vitals):
 		return false
 	cast_flash = 0.18
 	cast_requested.emit(id,global_position+Vector2(0,-10),target)
 	return true
 
+func track_action(action: AttackInstance) -> void:
+	attack_action = action
+	attack_actions.append(action)
+
+func interrupt_actions() -> void:
+	for action in attack_actions: action.timeline.interrupt()
+
 func try_dash(direction: Vector2) -> bool:
+	if reaction.locked() or not active_defense.can_start() or not direction.is_finite() or direction.length_squared() < 0.000001: return false
 	if not abilities.dash(vitals):
 		return false
 	dash_direction = direction.normalized()
 	dash_remaining = float(Content.section("player").dash_duration)
+	active_defense.dodge(dash_remaining,maxf(0,float(Content.section("player").dash_cooldown)-dash_remaining))
 	if run and "flow" in run.learned:
 		vitals.restore_mana(float(Content.section("skills").flow.mana_refund))
 	dash_performed.emit()
 	return true
+
+func request_block(held: bool) -> bool:
+	if not held: return active_defense.block(false,aim)
+	if not combat_alive() or reaction.locked(): return false
+	return active_defense.block(true,aim)
+
+func try_parry() -> bool:
+	if not combat_alive() or reaction.locked(): return false
+	var config: Dictionary = Content.section("active_combat").defense
+	return active_defense.parry(float(config.parry_window),float(config.parry_recovery),aim)
 
 func take_damage(amount: float, direction: Vector2 = Vector2.ZERO) -> bool:
 	var scope := hit_scope.get_ref() as Node if hit_scope != null else null
@@ -116,11 +150,43 @@ func receive_hit(instance: HitInstance, attack: AttackProfile, direction: Vector
 	var result := instance.resolve(self, attack, CombatStats.from_definition(Content.section("player").defense), defense)
 	if result.resolved and result.contact:
 		# Set transient response before damaged/died signals can rebuild the region.
-		if result.outcome != &"parry": knockback = direction * result.impact
+		if result.outcome != &"parry":
+			var tier := reaction.apply(result, direction, Content.section("active_combat").reaction)
+			knockback = reaction.displacement
+			if tier != CombatReaction.Kind.NORMAL:
+				interrupt_actions()
+				active_defense.reset()
 		vitals.apply_hit(result)
 	return result
 
+func combat_alive() -> bool:
+	return vitals.hp > 0
+
+func combat_defense(incoming: Vector2, rules: Dictionary) -> DefenseOutcome:
+	return active_defense.outcome(incoming, rules, vitals.invulnerable > 0, Content.section("active_combat").defense)
+
+func confirm_parry() -> void:
+	active_defense.parry_confirmed()
+	defense_feedback(&"parry")
+
+func defense_feedback(kind: StringName) -> void:
+	var scope: Node = hit_scope.get_ref() if hit_scope != null else null
+	if is_instance_valid(scope) and scope._can_act():
+		scope.effects.number(global_position, "Parade" if kind == &"parry" else "Block", Color("b3edeb"))
+
+func parried_action(action: AttackInstance) -> void:
+	if not action in attack_actions or not action.is_current(): return
+	if action.timeline.interrupt():
+		var config: Dictionary = Content.section("active_combat")
+		reaction.counter(float(config.defense.counter_window), float(config.reaction.recovery_guard))
+		active_defense.reset()
+
 func reset_transient() -> void:
+	interrupt_actions()
+	attack_actions.clear()
+	attack_action = null
+	active_defense = ActiveDefense.new()
+	reaction = CombatReaction.new()
 	dash_remaining = 0
 	hindered = 0
 	knockback = Vector2.ZERO

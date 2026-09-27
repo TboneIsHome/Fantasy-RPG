@@ -68,6 +68,30 @@ func verify() -> void:
 	hit_ok = hit_ok and npc_result.damage == 1 and npc_result.impact == 10 and enemy.hp == enemy_hp-1 and game.save_game() and SaveSystem.read(game.save_path).data.player.hp == 70
 	print("EXPORT HIT RESOLUTION ", "PASS" if hit_ok else "FAIL")
 	passed = passed and hit_ok
+	# M07: real active defense, one contact outcome and regional action lifetime.
+	game.player.vitals.refill()
+	game.player.aim=Vector2.RIGHT
+	enemy.position=game.player.position+Vector2(16,0)
+	enemy.set_physics_process(false)
+	var active: AttackInstance=game.combat.new_action(enemy,&"export_active",ActionProfiles.clock(0,1,0.2),ActionProfiles.rules("direct"),enemy.id)
+	var query := ContactContext.new(active,game.player,enemy.position,30,Vector2.LEFT,0).follow(enemy)
+	game.player.request_block(true)
+	var blocked := CombatContact.resolve(active,query,AttackProfile.new(20,&"untyped",20))
+	var active_ok: bool=blocked.confirmed() and blocked.outcome==&"block" and blocked.resolution.damage==7 and game.player.vitals.hp==93
+	game.player.vitals.refill()
+	game.player.request_block(false)
+	active_ok=active_ok and game.player.try_parry()
+	active=game.combat.new_action(enemy,&"export_parry",ActionProfiles.clock(0,1,0.2),ActionProfiles.rules("direct"),enemy.id)
+	enemy.attack_action=active
+	query=ContactContext.new(active,game.player,enemy.position,30,Vector2.LEFT,0).follow(enemy)
+	var parried := CombatContact.resolve(active,query,AttackProfile.new(20,&"untyped",20))
+	active_ok=active_ok and parried.confirmed() and parried.outcome==&"parry" and game.player.vitals.hp==100 and active.timeline.state()==ActionTimeline.State.INTERRUPTED and enemy.reaction.locked()
+	active_ok=active_ok and CombatContact.resolve(active,query,profile).resolution==null
+	game.player.active_defense.reset()
+	game.player.vitals.hp=70
+	var old_action: AttackInstance=game.combat.new_action(game.player,&"export_before_travel",ActionProfiles.clock(0,1,0),ActionProfiles.rules("area"))
+	print("EXPORT ACTIVE COMBAT ","PASS" if active_ok else "FAIL")
+	passed=passed and active_ok
 	# M02: compiled state actions retain their replay guards and complete rewards.
 	var checkpoint: Dictionary = game.run.serialize()
 	var replay_ok: bool = not game.run.collect_vault_relic("star_chart") and not game.run.align_source("star") and not game.run.defeat_source_guardian() and game.run.serialize() == checkpoint and SaveSystem.validate(SaveSystem.snapshot(game.run, game.player, game.settings)).is_empty()
@@ -82,6 +106,7 @@ func verify() -> void:
 	var region_ok: bool = game.regions.generation == origin + 2 and not game.regions.is_current(origin) and not previous.is_inside_tree() and get_nodes_in_group("player").size() == 1 and get_nodes_in_group("enemies").size() == 5 and game.ui.hud.player == game.player and game.source_story.grove.resolution == "restored"
 	region_ok = region_ok and game.execute_interaction(old_request).code == &"stale_region"
 	region_ok = region_ok and game.player.receive_hit(release_hit,profile).reason == &"stale_contact"
+	region_ok = region_ok and not old_action.is_current()
 	region_ok = region_ok and game.save_game() and game.load_game() and game.run.region == "vault" and game.run.inventory.equipped == "source_heart"
 	print("EXPORT REGION LIFECYCLE ", "PASS" if region_ok else "FAIL")
 	passed = passed and region_ok

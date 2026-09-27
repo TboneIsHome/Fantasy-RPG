@@ -29,6 +29,9 @@ var route_timer: float = 0
 var route_next := Vector2.ZERO
 var peaceful_area: Rect2
 var attack_hit: HitInstance
+var attack_action: AttackInstance
+var active_defense := ActiveDefense.new()
+var reaction := CombatReaction.new()
 
 func configure(data: Dictionary, player: MagePlayer, camp_position: Vector2) -> void:
 	id = data.id
@@ -60,7 +63,14 @@ func _physics_process(delta: float) -> void:
 	phase += delta
 	route_timer-=delta
 	slowed = maxf(0,slowed-delta)
-	timer -= delta
+	active_defense.tick(delta)
+	reaction.tick(delta)
+	if attack_action != null:
+		var step := minf(delta,maxf(0,attack_action.timeline.startup-attack_action.timeline.elapsed)) if state==Mode.WINDUP else delta
+		attack_action.tick(step)
+		timer=attack_action.timeline.remaining()
+	else:
+		timer -= delta
 	hit_stop = maxf(0,hit_stop-delta)
 	var distance := global_position.distance_to(target.global_position)
 	var direction := global_position.direction_to(target.global_position)
@@ -68,8 +78,15 @@ func _physics_process(delta: float) -> void:
 	velocity = Vector2.ZERO
 	if target.vitals.hp <= 0 or target_is_safe() or global_position.distance_to(home)>float(definition.leash):
 		if state != Mode.RETURN:
+			if attack_action != null: attack_action.timeline.interrupt()
 			state = Mode.RETURN
-	if hit_stop>0:
+	if reaction.locked():
+		velocity = knockback
+		knockback = knockback.move_toward(Vector2.ZERO,float(Content.section("combat").enemy_knockback_decay)*delta)
+		move_and_slide()
+		queue_redraw()
+		return
+	if hit_stop>0 and reaction.guard_remaining<=0:
 		queue_redraw()
 		return
 	match state:
@@ -79,40 +96,45 @@ func _physics_process(delta: float) -> void:
 		Mode.CHASE:
 			var attack_range: float = float(definition.attack_range)
 			if distance<attack_range and clear_shot(target.global_position):
-				state = Mode.WINDUP
-				timer = float(definition.windup)
 				attack_target = target.global_position
 				attack_direction = direction
+				begin_attack()
 			elif distance>float(definition.leash):
 				state = Mode.RETURN
 			else:
 				velocity = approach(target.global_position)*speed
 		Mode.WINDUP:
-			if timer<=0:
+			if attack_action != null and attack_action.timeline.state()==ActionTimeline.State.ACTIVE:
 				attack_connected = false
 				if kind == "wolf":
 					state = Mode.ATTACK
 					timer = float(definition.lunge_duration)
-					attack_hit = new_hit(&"wolf_lunge")
+					attack_hit = attack_action.hit_for_phase(0)
 				elif kind=="kobold":
 					if clear_shot(attack_target):
 						thorns_requested.emit(attack_target)
+					attack_action.timeline.finish_active()
 					state=Mode.RECOVER
 					timer=float(definition.recovery)
 				else:
 					var origin := global_position+Vector2(0,-8)
 					projectile_requested.emit(origin,origin.direction_to(attack_target),float(definition.damage))
+					attack_action.timeline.finish_active()
 					state = Mode.RECOVER
 					timer = float(definition.recovery)
 		Mode.ATTACK:
 			velocity = attack_direction*float(definition.lunge_speed)*(float(definition.lunge_slow_multiplier) if slowed>0 else 1.0)
-			if distance<float(definition.hit_range) and not attack_connected and clear_shot(target.global_position):
-				attack_connected = true
-				if attack_hit == null: attack_hit = new_hit(&"wolf_lunge")
-				target.receive_hit(attack_hit, CombatProfiles.hostile_attack(float(definition.damage), definition.damage_type), attack_direction)
-			if timer<=0 or is_on_wall():
+			if attack_action != null and not attack_connected:
+				var query := ContactContext.new(attack_action,target,global_position,float(definition.hit_range),attack_direction,float(ActionProfiles.rules("direct").minimum_dot)).follow(self)
+				query.visibility = _contact_line
+				var contact := CombatContact.resolve(attack_action,query,CombatProfiles.hostile_attack(float(definition.damage),definition.damage_type))
+				attack_connected = contact.reason.is_empty() or contact.confirmed()
+				attack_hit = attack_action.hit_for_phase(0)
+			if attack_action == null or attack_action.timeline.state()!=ActionTimeline.State.ACTIVE or is_on_wall():
+				if attack_action != null: attack_action.timeline.finish_active()
 				state = Mode.RECOVER
-				timer = float(definition.recovery)
+				timer = reaction.remaining if reaction.locked() else attack_action.timeline.remaining() if attack_action != null else float(definition.recovery)
+				velocity = Vector2.ZERO
 		Mode.RECOVER:
 			if timer<=0:
 				state = Mode.CHASE
@@ -132,6 +154,20 @@ func _physics_process(delta: float) -> void:
 
 func clear_shot(point: Vector2) -> bool:
 	return get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(global_position,point,1)).is_empty()
+
+func _contact_line(from: Vector2, to: Vector2) -> bool:
+	return get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(from,to,1)).is_empty()
+
+func begin_attack() -> bool:
+	var scope := target.hit_scope.get_ref() as Node if is_instance_valid(target) and target.hit_scope != null else null
+	if not is_instance_valid(scope) or reaction.locked(): return false
+	if attack_action != null and not attack_action.timeline.state() in [ActionTimeline.State.COMPLETED,ActionTimeline.State.INTERRUPTED]: return false
+	attack_action = scope.new_action(self,&"wolf_lunge" if kind=="wolf" else StringName(kind+"_release"),ActionProfiles.enemy(definition,kind),ActionProfiles.rules("direct"),id)
+	if attack_action == null: return false
+	state=Mode.WINDUP
+	timer=float(definition.windup)
+	attack_connected=false
+	return true
 
 func target_is_safe() -> bool:
 	return target.global_position.distance_to(camp)<float(Content.section("combat").camp_safe_radius) or peaceful_area.has_point(target.global_position)
@@ -170,7 +206,13 @@ func receive_hit(instance: HitInstance, attack: AttackProfile, direction: Vector
 	if not result.resolved or not result.contact: return result
 	hp = maxf(0, hp-result.damage)
 	if result.outcome != &"parry":
-		knockback = direction * result.impact
+		var tier := reaction.apply(result,direction,Content.section("active_combat").reaction)
+		knockback = reaction.displacement
+		if tier != CombatReaction.Kind.NORMAL:
+			if attack_action != null: attack_action.timeline.interrupt()
+			state=Mode.RECOVER
+			timer=reaction.remaining
+			active_defense.reset()
 		if result.impact > 0: hit_stop = float(Content.section("combat").enemy_hit_stop)
 	if result.damage > 0 or result.impact > 0:
 		hit.emit(self, result.damage, bool(result.secondary.get("shatter", false)))
@@ -180,6 +222,27 @@ func receive_hit(instance: HitInstance, attack: AttackProfile, direction: Vector
 		collision_layer = 0
 		queue_free()
 	return result
+
+func combat_alive() -> bool:
+	return hp>0 and is_in_group("enemies")
+
+func combat_defense(incoming: Vector2, rules: Dictionary) -> DefenseOutcome:
+	return active_defense.outcome(incoming,rules,false,Content.section("active_combat").defense)
+
+func confirm_parry() -> void:
+	active_defense.parry_confirmed()
+
+func defense_feedback(_kind: StringName) -> void:
+	pass
+
+func parried_action(action: AttackInstance) -> void:
+	if attack_action != action or not action.is_current(): return
+	if action.timeline.interrupt():
+		var config: Dictionary = Content.section("active_combat")
+		reaction.counter(float(config.defense.counter_window),float(config.reaction.recovery_guard))
+		state=Mode.RECOVER
+		timer=reaction.remaining
+		active_defense.reset()
 
 func _draw() -> void:
 	if state == Mode.WINDUP:
