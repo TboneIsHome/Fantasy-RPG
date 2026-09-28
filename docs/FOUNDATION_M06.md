@@ -1,5 +1,7 @@
 # LICHTERHAIN — M06 COMPLETION REPORT
 
+> Nachtrag vor M07: Tim bestätigt den M00–M06-Ausgangsstand als abgeschlossen und den manuellen M06-Windows-Spieltest ausdrücklich. Der folgende Bericht dokumentiert die damalige Auslieferung; frühere offene Einzeltests werden nicht nachträglich erfunden. Aktueller Stand: [M07 Completion Report](FOUNDATION_M07.md).
+
 Stand: 21.09.2026 · Quellstand 0.4.0 / Stats & Trefferauflösung M06 · Godot 4.5.1 · dauerhaft 2D-isometrisch.
 
 **IMPLEMENTED**, automatisiert **TESTED**, insgesamt **PARTIALLY TESTED** bis zum eigenen manuellen Windows-Spieltest. **931/931 Checks**, beide Release-Exporte und ihre Pack-Prüfungen bestanden. Windows-Testpaket bereit. **STOP nach M06**; M07 ist nicht begonnen.

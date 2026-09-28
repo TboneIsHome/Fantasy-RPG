@@ -2,9 +2,9 @@
 
 Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelwaldregion und der ersten Quellengruft. Der erste zusammenhängende Spielabschnitt führt bis zum Quellenhüter, zwei Questlösungen und einem ausrüstbaren Relikt. Tim hat die Foundation einschließlich M04 manuell unter Windows bestätigt. Mehrstündige Weltinhalte sind ein späteres Ziel.
 
-**Aktueller Stand: M06 Stats & Trefferauflösung.** Spieler und Gegner verwenden eine gemeinsame Berechnung für Damage und Impact. Bestätigte Treffer besitzen eine regionale Instanz und wirken je Ziel höchstens einmal; vorhandene wiederholte Dornenpulse bleiben ausdrücklich getrennte Treffer. Neue Defense-Definitionen sind neutral, die bisherigen Balancezahlen unverändert. **931/931 automatisierte Checks** bestehen, darunter alle bisherigen 789. Saveformat 3, Regionslebenszyklus und M05-Interaktionen bleiben erhalten.
+**Aktueller Stand: M07 Active Combat & Defense.** Die bestehenden Angriffe verwenden gemeinsame Action- und Kontaktregeln. Ausweichen, aktiver Block und Parade bestimmen ein eindeutiges Defense Outcome; M06 bleibt alleinige Damage-/Impact-Rechnung. **1.070/1.070 automatisierte Checks** und beide Release-Exporte samt Paketprüfungen bestehen. Bestehende Gameplaywerte, Saveformat 3, Regionsarchitektur und Interaktionen bleiben erhalten.
 
-[M06 Completion Report](docs/FOUNDATION_M06.md): **IMPLEMENTED**, automatisiert **TESTED**, insgesamt **PARTIALLY TESTED** bis zum manuellen M06-Windows-Spieltest. Beide Release-Exporte und ihre Spielpakete sind geprüft; die neue Windows-EXE wurde hier nicht nativ ausgeführt. **Stop nach M06.** Grundlage ist die genehmigte [M06-Spezifikation V1.1](docs/M06_STATS_HIT_RESOLUTION_V1_1.md). Die [Foundation v1.0](docs/FOUNDATION_COMPLETION_REPORT.md) ist von Tim abgenommen; die [Creative Design Bible v1.0](docs/CREATIVE_DESIGN_BIBLE_V1.md) bleibt die maßgebliche kreative Referenz. Lichterhain bleibt dauerhaft 2D-isometrisch. Das ursprüngliche 0.4-Release liegt unter `reference/v0.4-original`.
+[M07 Completion Report](docs/FOUNDATION_M07.md): **IMPLEMENTED / AUTOMATED TESTED**. Der manuelle M07-Windows-Spieltest ist **NOT TESTED** und liegt als Prüfliste bei. Tim hat M00–M06 einschließlich M06-Windows-Spieltest bestätigt; das ersetzt keine Prüfung dieser neuen EXE. **Stop nach M07.** Grundlage: [M07 V1.1](docs/M07_ACTIVE_COMBAT_DEFENSE_V1_1.md), [Foundation v1.0](docs/FOUNDATION_COMPLETION_REPORT.md) und [Creative Design Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md). Lichterhain bleibt 2D-isometrisch; das ursprüngliche Release bleibt unter `reference/v0.4-original` erhalten.
 
 ## Direkt spielen unter Windows
 
@@ -13,7 +13,7 @@ Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelw
 3. **Neuen Lichtpfad beginnen** wählen. Der voreingestellte Seed eignet sich für die erste Runde.
 4. Mit **WASD** zu Edda nördlich des Lagerfeuers gehen und **E** drücken.
 
-Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen erforderlich. Die beigefügte Anwendung ist ein Windows-x86_64-Export. Vor einem M06-Test den bisherigen Benutzerordner separat sichern; Anleitung und Prüfliste liegen als `START_HIER.txt` bei. Die manuelle Abnahme älterer Builds wird nicht auf diese neue EXE übertragen.
+Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen erforderlich. Die beigefügte Anwendung ist ein Windows-x86_64-Export. Vor einem M07-Test den bisherigen Benutzerordner separat sichern; Anleitung und Prüfliste liegen als `START_HIER.txt` bei. Die manuelle Abnahme älterer Builds wird nicht auf diese neue EXE übertragen.
 
 ## Neu in Version 0.4
 
@@ -38,6 +38,8 @@ Es sind keine Godot-Installation, Anmeldung oder Internetverbindung zum Spielen 
 | Linke Maustaste / 1 | Lichtfunke; gedrückt halten ist möglich |
 | Rechte Maustaste / 2 | Frostkreis am Zielpunkt innerhalb der Reichweite |
 | Leertaste | Ausweichen in Bewegungsrichtung; im Stand in die letzte Bewegungsrichtung |
+| F halten | Zur Maus-Ausrichtung blocken; Bewegung reduziert, Zaubern pausiert |
+| Q | Kurze Parade; danach Recovery, kein automatischer Gegenangriff |
 | E | Sprechen, rasten, Hinweise lesen, Funde aufnehmen und Übergänge benutzen |
 | Tab | Journal mit Talenten, Beutel, Entdeckungen und Reliktplatz öffnen/schließen |
 | M | Karte öffnen/schließen |
@@ -84,4 +86,4 @@ GDScript wird verwendet; die .NET-Ausgabe ist nicht notwendig. Das Projekt kommt
 
 Der vollständige Quellcode, die Tests und die Projektdokumentation liegen in [TboneIsHome/Fantasy-RPG](https://github.com/TboneIsHome/Fantasy-RPG). Jede Iteration erhält einen eigenen Commit. Binäre Builds und lokale Godot-Caches gehören nicht in den Quellcode-Stand.
 
-Das aktuelle Windows-Testpaket heißt **Lichterhain_0.4_M06_Windows.zip**. Quellstand und Bericht liegen auf `foundation/m06-stats-hit-resolution`; der Hauptbranch wird dadurch nicht automatisch umgestellt. Vor dem Test den bisherigen Benutzerordner sichern; die Anleitung liegt als `START_HIER.txt` bei. Die früheren Builds bleiben als Referenzen erhalten.
+Das aktuelle Windows-Testpaket heißt **Lichterhain_0.4_M07_Windows.zip**. Quellstand und Bericht liegen auf `foundation/m07-active-combat`; der Hauptbranch wird dadurch nicht automatisch umgestellt. Vor dem Test den bisherigen Benutzerordner sichern; die Anleitung liegt als `START_HIER.txt` bei. Die früheren Builds bleiben als Referenzen erhalten.

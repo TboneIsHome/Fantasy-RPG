@@ -94,3 +94,11 @@ Historischer Nachtrag 2026-09-15 (M00):
 ## Noch nicht endgültig entschieden
 
 Die ausdrücklichen offenen Designbereiche werden zentral in Abschnitt 21 der [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md) gepflegt. Neue verbindliche Details werden erst nach Tims Bestätigung ergänzt. Der aktuelle Magier und die milde Rückkehr zum Lager sind Prototyp-Regeln; sie legen weder starre Klassen noch die endgültige Progression fest.
+
+| 2026-09-28 | M07 besitzt Kontakt/Defense/Reaction; M06 bleibt bytegleich | Genehmigte M07 V1.1; keine konkurrierende numerische Trefferrechnung |
+| 2026-09-28 | Lokale RefCounted-Verträge, bestehender regionaler CombatSystem als Factory | Keine neue globale Lebensdauer oder Registry; RegionLifecycle bleibt unverändert |
+| 2026-09-28 | Released Payload darf Castertod überleben, niemals ihre Region | Bestehendes Verhalten erhalten und alte Signale/Parries nicht auf neue Actions umleiten |
+| 2026-09-28 | Neue Defense-/Reaction-Zahlen stehen in geprüften JSON-Definitionen | Vorläufiges Foundation-Tuning gemäß M07 §28; alle bisherigen Werte unverändert |
+| 2026-09-28 | F hält Block, Q startet Parry; Leertaste bleibt Dodge | Zwei kleine echte Bedienpfade; keine Layout-/Asset- oder globale Eingabe-Neuentwicklung |
+| 2026-09-28 | M07-Reaktion sperrt begrenzt und erhält danach ein Kontrollfenster | Keine endlose Verlängerung durch Treffer/Hitstop; keine zusätzliche Poise-Statistik |
+| 2026-09-28 | Abschlussnachweise nach Wiederherstellung vollständig neu erzeugen | Frühere lokale M07-Logs gingen bei automatischer Bereinigung verloren; kein erfundener Testnachweis |

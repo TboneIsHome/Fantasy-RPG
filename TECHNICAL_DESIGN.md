@@ -1,6 +1,6 @@
 # Technische Architektur
 
-Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation v1.0, Interaction Foundation M05 und Stats/Trefferauflösung M06. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; [M01](docs/FOUNDATION_M01.md) dokumentiert die Save-Absicherung, [M02](docs/FOUNDATION_M02.md) die kontrollierten Fortschrittsaktionen und [M03](docs/FOUNDATION_M03.md) den abgegrenzten Regionslebenszyklus. Der [Foundation Completion Report](docs/FOUNDATION_COMPLETION_REPORT.md) enthält den M00–M04-Abschluss und Tims anschließende Windows-Abnahme. [M05](docs/FOUNDATION_M05.md) und [M06](docs/FOUNDATION_M06.md) dokumentieren die folgenden Iterationen. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md), das genehmigte M06-Gameplay in die [unveränderte Spezifikation V1.1](docs/M06_STATS_HIT_RESOLUTION_V1_1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
+Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation v1.0, Interaction Foundation M05 sowie Stats/Trefferauflösung M06 und Active Combat/Defense M07. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; [M01](docs/FOUNDATION_M01.md) dokumentiert die Save-Absicherung, [M02](docs/FOUNDATION_M02.md) die kontrollierten Fortschrittsaktionen und [M03](docs/FOUNDATION_M03.md) den abgegrenzten Regionslebenszyklus. Der [Foundation Completion Report](docs/FOUNDATION_COMPLETION_REPORT.md) enthält den M00–M04-Abschluss und Tims anschließende Windows-Abnahme. [M05](docs/FOUNDATION_M05.md) und [M06](docs/FOUNDATION_M06.md) dokumentieren die folgenden Iterationen. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md), das genehmigte M06-Gameplay in die [unveränderte Spezifikation V1.1](docs/M06_STATS_HIT_RESOLUTION_V1_1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
 
 ## Laufzeit
 
@@ -143,7 +143,7 @@ Bewusst offen bleiben die im genehmigten Proposal genannten UX-Auswahlregeln, ve
 
 ## Stats und Trefferauflösung — M06
 
-**IMPLEMENTED / automatisiert TESTED.** Grundlage ist die genehmigte [Spezifikation V1.1](docs/M06_STATS_HIT_RESOLUTION_V1_1.md). Der reine Resolver beantwortet ausschließlich die Wirkung eines bereits bestimmten Kontakts/Defense-Outcomes. Die bestehenden Strahlen, Flächen, Wolfphasen und Player-Unverwundbarkeit bestimmen weiterhin Kontakt und Ausweichen. M06 erzeugt keine neuen aktiven Block-/Parry-/Dodge-Fenster.
+**IMPLEMENTED / automatisiert TESTED.** Grundlage ist die genehmigte [Spezifikation V1.1](docs/M06_STATS_HIT_RESOLUTION_V1_1.md). Der reine Resolver beantwortet ausschließlich die Wirkung eines bereits bestimmten Kontakts/Defense-Outcomes. M07 prüft heute die von den bestehenden Geometrie-Adaptern gelieferten Kontakte und entscheidet die aktive Defense. Der M06-Vertrag und seine Formeln bleiben unverändert.
 
 ### Daten und Schnittstellen
 
@@ -178,7 +178,7 @@ Ausgeliefert bleiben sämtliche bisherigen Zahlen unverändert. Neue Defense-Wer
 
 ### Reale Verbraucher und einmalige Kontakte
 
-Bolt besitzt eine bei Erzeugung erfasste HitInstance. Der bestehende Frostbonus wird einmal vor Mitigation addiert; Widerhall erzeugt eine eigene benannte Instanz. Nova verwendet eine Instanz für alle getroffenen Ziele. Gegnergeschosse einschließlich Hüterfächer, Wolfslunge und Quellenschlag besitzen jeweils ihre Instanz; jede bereits vorhandene Dornenperiode erzeugt ausdrücklich einen neuen `thorn_pulse`. Die jeweiligen Kontaktregeln und Intervalle bleiben unverändert.
+Bolt besitzt eine bei Erzeugung erfasste HitInstance. Der bestehende Frostbonus wird einmal vor Mitigation addiert; Widerhall erzeugt eine eigene benannte Instanz. Nova verwendet eine Instanz für alle getroffenen Ziele. Gegnergeschosse einschließlich Hüterfächer, Wolfslunge und Quellenschlag besitzen jeweils ihre Instanz; jede bereits vorhandene Dornenperiode erzeugt ausdrücklich einen neuen `thorn_pulse`. M07 koordiniert diese Instanzen je expliziter Active-Phase; die bestehenden Intervalle, Reichweiten und Schadenswerte bleiben erhalten.
 
 Die Instanz speichert nur eine schwache Referenz auf ihr vorhandenes regionales CombatSystem und numerische Ziel-IDs. Sie besitzt keine globale Registry und hält weder Gegner noch alte Regionen am Leben. `CombatSystem.accepts_hit()` prüft Aktivität, Baumzugehörigkeit, Freigabezustand, Besitzeridentität und die beim Erzeugen erfasste Generation. Getrennte, alte, freigegebene und regionsfremde Ziele werden abgewiesen, auch nach Gruft–Wald–Gruft oder Load. Ein bereits abgefeuertes Geschoss darf nach dem Tod seines Urhebers innerhalb derselben aktiven Region fertig fliegen; seine Herkunft bleibt als String erhalten.
 
@@ -186,13 +186,55 @@ Ein bestätigter Kontakt wird **vor** HP-Änderungen und Signalcallbacks quittie
 
 ### Zustandsbesitzer und Grenzen
 
-Vitals/Gegner ändern Health; Actor-Adapter übersetzen Effective Impact in den bisherigen kontrollierten Rückstoß/Hitstop. Der Quellenhüter behält seine bestehende ortsfeste Reaktion und verwendet trotzdem dieselbe Rechnung. Player-Unverwundbarkeit entsteht weiterhin nur aus den bestehenden Dash-/Schadensregeln. Reiner Impact erzeugt keinen erfundenen HP-Schaden oder neuen Schadensschutz. Das ist kein neues Stagger-/Poise-/Physiksystem.
+Vitals/Gegner ändern Health. Die M07-Actor-Adapter interpretieren Effective Impact mit CombatReaction; der Quellenhüter bleibt ortsfest. Vorhandener Dash-/Schadensschutz und die aktive Defense werden vor Live-Treffern geprüft. Reiner Impact erzeugt keinen erfundenen HP-Schaden oder neuen Schadensschutz. M07 fügt keine zweite Stability-/Poise-Statistik hinzu.
 
 CombatSystem/ThornPatch behalten Frostverlangsamung, Widerhall, Mana-/Heilboni und Feedback. Der Resolver interpretiert sekundäre Information nicht. Damage-Immunität bedeutet weder Status-Immunität noch Verfehlen: Ein bestätigter Frostkontakt kann weiterhin die vorhandene Verlangsamung und einmalige Reliktrückgabe auslösen. Trefferzahlen verwenden den effektiven Damage. Dauerhafte Gegnerbelohnungen bleiben RunState-Aktionen und werden nicht vom Resolver vergeben.
 
 `take_damage()` und isoliertes `Vitals.damage()` bleiben als Kompatibilitätseinstiege erhalten; sie verwenden dieselbe Rechnung, interpretieren aber **jeden Aufruf als neuen Kontakt**. Sie eignen sich nicht zur wiederholten Lieferung einer bereits erfassten Attack Action. Aktuelle Live-Angriffe verwenden die explizite Instanz. Es gibt keinen allgemeinen Signal-Rollback, Thread-/Netzwerkvertrag oder manipulationssicheren Result-Container.
 
 Saveformat 3, RunState und RegionLifecycle bleiben unverändert. Defense-Werte kommen aus Content; Trefferinstanzen, Receipts, CombatStats und Ergebnisse werden nicht gespeichert. Absolute gespeicherte LP/MP/AU bleiben erhalten. Kein zusätzlicher Node-/Frameprozess und keine Prüfung des Content-Bundles pro Treffer; pro Kontakt entstehen nur die benötigten kleinen Eingabe-/Ergebnisobjekte. Ein neuer Performance-Benchmark wird nicht behauptet. Abnahme und Grenzen: [TESTING.md](TESTING.md), [M06 Completion Report](docs/FOUNDATION_M06.md).
+
+## Active Combat und Defense — M07
+
+**IMPLEMENTED / AUTOMATED TESTED.** Grundlage: [M07 V1.1](docs/M07_ACTIVE_COMBAT_DEFENSE_V1_1.md). M07 bestimmt gültigen Kontakt und genau ein Defense Outcome; M06 bestimmt dessen numerische Wirkung. Miss/Evade führen im Live-M07-Pfad nicht zu einem Resolver-Aufruf. Es gibt keine Accuracy-Würfe, Registry, Autoloads oder Eventbusse.
+
+### Vertrag und lokale Besitzer
+
+| Vertrag | Zuständigkeit |
+| --- | --- |
+| `ActionTimeline(preparation, commitment, phases, after)` | Reine lokale Zeit: Intent, Startup, Commit, Active, Recovery, Completed/Interrupted. Halb offene Phasen mit `start` und `duration`; kein Animationszustand bestimmt den Kontakt. `start`, `tick`, `cancel` vor Commit, `interrupt`, `finish_active`, `phase_index`, `remaining`. Ungültige/überlappende/nicht-endliche Fenster werden abgewiesen. |
+| `CombatSystem.new_action(actor, id, clock, rules, source_id)` | Lokale Factory im bereits vorhandenen regionalen CombatSystem; startet eine gültige Timeline. Kein zusätzlicher Manager. |
+| `AttackInstance` | Schwacher Actor-/Scope-/Payloadbezug und erfasste Generation; hält Timeline, Herkunft, Block-/Parry-Eignung und höchstens eine aktuelle `HitInstance` je expliziter Phase. `is_current()` prüft die Lebensdauer, getrennt von der Timeline-Phase. |
+| `ContactContext(action, target, center, radius, heading, facing_dot)` | Erfasst Hit-Phase und schwaches Ziel. `follow(node)` bindet den Ursprung an eine lebende Instanz; alternativ fester Einschlag-/Flächenpunkt. Aktuelle Position, Reichweite, Richtung, endliche Geometrie und optionale reine `visibility`-Abfrage werden unmittelbar vor Lieferung geprüft. |
+| `CombatContact.resolve(action, context, profile)` | Einziger Live-Übergang: Lebensdauer → Phase → Geometrie → Actor-Defense → bestehendes `receive_hit`/M06 → bestätigtes Ergebnis. Ergebnis: `outcome`, Ablehnungs-`reason`, optionales M06-`resolution`; `confirmed()` bedeutet aufgelöster Kontakt. |
+| Actor-Schnittstelle | `combat_alive`, `combat_defense`, `receive_hit`, `confirm_parry`, `parried_action`, `defense_feedback`. Player/Vitals und WildEnemy bleiben Health-Owner. Die bestehenden Actor-Adapter verarbeiten das M06-Ergebnis vor eigenen Signalen. |
+| `ActiveDefense` | Ein lokaler Zustand: Normal, Dodge, Block, Parry oder Recovery. Bestehender Schadensschutz/Dodge → Evade; sonst geeigneter frontaler Parry, geeigneter frontaler Block, sonst Hit. Keine additive Schutzmischung. |
+| `CombatReaction` | Interpretiert bereits durch M06/Stability geminderten Impact: Normal, Interrupt, Stagger; begrenzte Verschiebung. Keine zweite Mitigation. Timer und anschließender Guard verhindern erneute/verlängerte Kontrollsperren; Health-Schaden bleibt möglich. |
+| `ActionProfiles` | Kleine Adapter für die heutigen Definitionen; spätere Waffen/Abilities liefern eigene Timeline, Kontaktgeometrie und M06-Profile. Keine Waffen-/Magie-Foundation in M07. |
+
+Player tickt seine aktiven Actions, Defense und Reaction in seinem bestehenden Physics-Prozess. Gegner tickt seine Action am vorhandenen KI-Ablauf; die alten Mode-/Timer-Felder stellen diese Zustände für Telegraphing dar. Projektile und explizite Pulse besitzen nach Freigabe ihre eigene lokale Action. Kein zusätzlicher Prozess-Node und kein globales Durchsuchen aller Actors pro Frame.
+
+### Tatsächlich migrierte Angriffe
+
+Lichtfunke einschließlich einmaligem Frostbonus und separat bestätigtem Widerhall, Frostkreis mit mehreren Zielen und einmaliger Reliktrückgabe, Wolfslunge, Irrlicht-/Hüterprojektile, Hüterschlag und Dornenpulse verwenden `CombatContact`. Normale Instant-Zauber behalten ihren sofortigen Release; ihre vorhandenen Cooldowns liefern Recovery, MageAbilities behält Ressourcen und Wiederbenutzung. Gegner verwenden bestehende Windup-/Lunge-/Recovery-Werte. Beim Active-Ende endet auch die Lungenbewegung.
+
+Geometrie bleibt beim Verbraucher: bestehende Strahlen/Kreise, eingefrorene Lungenrichtung, aktuelle Target-Position. Der Projektiladapter verwendet tatsächlichen Projektil-/Zielradius plus Godot-`safe_margin`; nur die normale numerische Approximation gleicht Rundungsfehler aus. Keine unsichtbare Accuracy-Korrektur. Neue Geometrieformen brauchen später eigene kleine Adapter.
+
+`HitInstance` quittiert weiterhin vor HP-Mutation/Signalen. Mehrere Ziele pro Phase sind erlaubt, Wiederholung desselben Ziels nicht. Weitere Treffer brauchen ausdrücklich neue Phasen; die vorhandenen Dornenintervalle definieren diese. Große Simulationsschritte holen ausgelassene Pulse nicht als Schadenssalve nach.
+
+### Aktive Defense und Reaktion
+
+**F halten** blockt zur Maus-Ausrichtung, reduziert Bewegung und verhindert gleichzeitiges Zaubern. **Q** startet eine kurze Parade; ein früher/ungeeigneter Versuch bietet keinen Ersatzblock. Erfolg verbraucht das Fenster, geht in Recovery und kann die noch zugehörige Angreifer-Action unterbrechen. Kein automatischer Gegenangriff und keine Parry-Schadensformel. **Leertaste** behält Bewegung, Kosten und vorhandene Dauer des Ausweichens. Während seiner Wiederbenutzungs-Recovery gibt es keinen weiteren Dodge-Schutz. Gleichzeitig gedrückte Requests werden deterministisch behandelt (Dodge vor Parry; gehaltenes Block darf diese nicht überschreiben).
+
+M06 erhält ausschließlich `DefenseOutcome` mit den bestehenden Block-Skalierungsfeldern. Actor/Movement setzt Reaction-Zustand und begrenzten Rückstoß um; VFX, Zahlen, „Block“/„Parade“, Sound und Camera bleiben bestehende Präsentation. Der Stagger-Guard verhindert auch, dass wiederholter Gegner-Hitstop das zugesagte Kontrollfenster verdeckt. Der ortsfeste Hüter erhält weiter keine Ortsverschiebung.
+
+### Lebensdauer, Daten und Grenzen
+
+Release bindet eine Payload ausdrücklich an ihre Instanz. Sie kann den Tod ihres Casters innerhalb derselben Region überleben. Ein Parry darf nur die zugehörige, noch aktuelle Angreifer-Action beeinflussen; ein altes Geschoss unterbricht keinen späteren Angriff. Deactivate/Travel/Load/Unload invalidieren den Scope sofort; Generation und schwache Referenzen verhindern Kontakte in neue/alte entfernte Regionen. Keine M07-Daten werden gespeichert, keine Schemaänderung.
+
+Die neue geprüfte JSON-Sektion `active_combat` besitzt Commitment-Anteil, Instant-Fenster, Defense-, Reaction- und Contact-Regeln. Neue Tuningwerte sind vorläufige Foundation-Werte gemäß Spezifikation §28, keine endgültige Waffenbalance. Alle bisherigen 137 Content-Blattwerte (davon 106 Zahlen) bleiben identisch. Validierung beim Laden: Pflichtfelder, echte Bool-Eignung, endliche Zahlen; Skalierungen/Commit-Anteil 0…1, Facing −1…1, positive Dauern/Schwellen/Maximalverschiebung im bestehenden Bereich; Stagger-Schwelle ≥ Interrupt-Schwelle. Dornen sind auf höchstens 512 explizite Phasen begrenzt. Fehler melden Datei/Feld/Problem und stoppen vor Weltaufbau/Save-Schreiben.
+
+`take_damage`, `Vitals.damage`, `_bolt_hit` sowie direkte `_enemy_bolt`/`_source_slam`/`_thorns`-Aufrufe ohne Parent bleiben klar begrenzte Diagnose-/Kompatibilitätseinstiege. Sie bedeuten einen **neuen** Kontakt bzw. eine neue Freigabe und dürfen keine erfasste Live-Action umgehen. Live-KI-Signale liefern ihre bestehende Parent-Action; Live-Projektile behalten ihre Action. Keine Netzwerk-/Thread-/Anticheat-Garantie, allgemeine Condition-Engine, Defense-KI oder Animationstechnologie. Testumfang und Windows-Abnahme: [TESTING.md](TESTING.md).
 
 ## Inhaltsdaten und Konsistenz — M04
 

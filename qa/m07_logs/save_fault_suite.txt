@@ -1,0 +1,74 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS SAVE FAULT: Temporary write failure leaves both existing saves untouched
+PASS SAVE FAULT: Temporary flush failure leaves both existing saves untouched
+PASS SAVE FAULT: Temporary short_success failure leaves both existing saves untouched
+PASS SAVE FAULT: Temporary wrong_success failure leaves both existing saves untouched
+PASS SAVE FAULT: Temporary unreadable failure leaves both existing saves untouched
+PASS SAVE FAULT: Backup copy failure stops before rotating valid files
+PASS SAVE FAULT: Backup short_copy failure stops before rotating valid files
+PASS SAVE FAULT: Backup rename failure preserves the latest main; target removed=false
+PASS SAVE FAULT: Main rename failure keeps the latest save loadable; target removed=false
+PASS SAVE FAULT: Retry after failed main replacement succeeds without consuming recovery
+PASS SAVE FAULT: Recovery commit failure preserves the valid format-3 backup; target removed=false
+PASS SAVE FAULT: Backup rename failure preserves the latest main; target removed=true
+PASS SAVE FAULT: Main rename failure keeps the latest save loadable; target removed=true
+PASS SAVE FAULT: Retry after failed main replacement succeeds without consuming recovery
+PASS SAVE FAULT: Recovery commit failure preserves the valid format-3 backup; target removed=true
+PASS SAVE FAULT: Real backup rename blocked by a nonempty directory leaves main intact
+PASS SAVE FAULT: Real main rename failure leaves backup recoverable
+PASS SAVE FAULT: Failed first save never claims a previous backup exists
+PASS SAVE FAULT: Retry creates the first readable save
+PASS SAVE FAULT: v01_save.json: migration copy failure preserves the raw original
+PASS SAVE FAULT: v01_save.json: migration retry creates a complete permanent original
+PASS SAVE FAULT: v01_save.json: migration short_copy failure preserves the raw original
+PASS SAVE FAULT: v01_save.json: migration retry creates a complete permanent original
+PASS SAVE FAULT: v01_save.json: migration rename failure preserves the raw original
+PASS SAVE FAULT: v01_save.json: migration retry creates a complete permanent original
+PASS SAVE FAULT: v01_save.json: migration retains exact originals; recovered=false
+PASS SAVE FAULT: v01_save.json: later save leaves permanent original unchanged
+PASS SAVE FAULT: v01_save.json: migration retains exact originals; recovered=true
+PASS SAVE FAULT: v01_save.json: later save leaves permanent original unchanged
+PASS SAVE FAULT: v02_completed_save.json: migration copy failure preserves the raw original
+PASS SAVE FAULT: v02_completed_save.json: migration retry creates a complete permanent original
+PASS SAVE FAULT: v02_completed_save.json: migration short_copy failure preserves the raw original
+PASS SAVE FAULT: v02_completed_save.json: migration retry creates a complete permanent original
+PASS SAVE FAULT: v02_completed_save.json: migration rename failure preserves the raw original
+PASS SAVE FAULT: v02_completed_save.json: migration retry creates a complete permanent original
+PASS SAVE FAULT: v02_completed_save.json: migration retains exact originals; recovered=false
+PASS SAVE FAULT: v02_completed_save.json: later save leaves permanent original unchanged
+PASS SAVE FAULT: v02_completed_save.json: migration retains exact originals; recovered=true
+PASS SAVE FAULT: v02_completed_save.json: later save leaves permanent original unchanged
+PASS SAVE FAULT: v03_completed_save.json: migration copy failure preserves the raw original
+PASS SAVE FAULT: v03_completed_save.json: migration retry creates a complete permanent original
+PASS SAVE FAULT: v03_completed_save.json: migration short_copy failure preserves the raw original
+PASS SAVE FAULT: v03_completed_save.json: migration retry creates a complete permanent original
+PASS SAVE FAULT: v03_completed_save.json: migration rename failure preserves the raw original
+PASS SAVE FAULT: v03_completed_save.json: migration retry creates a complete permanent original
+PASS SAVE FAULT: v03_completed_save.json: migration retains exact originals; recovered=false
+PASS SAVE FAULT: v03_completed_save.json: later save leaves permanent original unchanged
+PASS SAVE FAULT: v03_completed_save.json: migration retains exact originals; recovered=true
+PASS SAVE FAULT: v03_completed_save.json: later save leaves permanent original unchanged
+PASS SAVE FAULT: Existing damaged migration original is reported and never overwritten
+PASS SAVE FAULT: Missing run cannot overwrite either save
+PASS SAVE FAULT: Missing player cannot overwrite either save
+PASS SAVE FAULT: Missing settings cannot overwrite either save
+PASS SAVE FAULT: Missing save_version cannot overwrite either save
+PASS SAVE FAULT: An oversized serialized save is rejected before overwriting the readable main
+PASS SAVE FAULT: Corrupt or incomplete data is rejected: 
+PASS SAVE FAULT: Corrupt or incomplete data is rejected: { damaged json
+PASS SAVE FAULT: Corrupt or incomplete data is rejected: []
+PASS SAVE FAULT: Corrupt or incomplete data is rejected: {"save_version":3}
+PASS SAVE FAULT: Future save_version never silently falls back
+PASS SAVE FAULT: Future generator_version never silently falls back
+PASS SAVE FAULT: Future dungeon_version never silently falls back
+PASS SAVE FAULT: v04_alignment_started.json: full format-3 state survives load/save/load
+PASS SAVE FAULT: v04_restored_equipped.json: full format-3 state survives load/save/load
+PASS SAVE FAULT: v04_broken_ore_unequipped.json: full format-3 state survives load/save/load
+PASS SAVE FAULT: Frozen fixture unchanged: v01_save.json
+PASS SAVE FAULT: Frozen fixture unchanged: v02_completed_save.json
+PASS SAVE FAULT: Frozen fixture unchanged: v03_completed_save.json
+PASS SAVE FAULT: Frozen fixture unchanged: v04_alignment_started.json
+PASS SAVE FAULT: Frozen fixture unchanged: v04_restored_equipped.json
+PASS SAVE FAULT: Frozen fixture unchanged: v04_broken_ore_unequipped.json
+SAVE FAULT RESULT 71/71

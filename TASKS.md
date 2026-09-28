@@ -61,8 +61,13 @@
 - [x] M06: reale Angriffe schrittweise über Actor/Vitals anbinden; regionale HitInstance mit einmaligem Kontakt je Ziel und expliziten Dornenpulsen.
 - [x] M06: 931/931 Checks, beide Release-Packs/Startfehler, alte Saves und unveränderte Schema-/Regionsbesitzer prüfen.
 - [x] M06: Windows-Testpaket und Completion Report erstellen, Quellstand und Nachweise auf eigenem Branch sichern.
-- [ ] M06: Windows-Paket manuell spielen und Ergebnis samt Completion Report gemeinsam prüfen.
-- [ ] Stop nach M06; M07 und weitere Systeme erst nach eigenem genehmigtem Design und neuer Freigabe.
+- [x] M06: manueller Windows-Spieltest von Tim ausdrücklich bestätigt.
+- [x] M07 durch V1.1 und Implementation Prompt ausdrücklich freigegeben.
+- [x] M07: lokale Action-/Contact-/Defense-/Reaction-Verträge und reale Angriffe migriert.
+- [x] M07: 1.070 Checks und sechs Release-Gates bestanden; bestehende 931 Checks erhalten.
+- [x] M07: Completion Report, Windows-Testpaket und GitHub-Nachweise erstellen.
+- [ ] M07: manueller Windows-Spieltest und gemeinsame Abnahme.
+- [ ] Stop nach M07. M08 oder weitere Systeme erst nach neuer Freigabe.
 
 Audit, konkrete Dateien und Risiken: [docs/FOUNDATION_M00.md](docs/FOUNDATION_M00.md). Verbindliche Reihenfolge und Abnahme: [ROADMAP.md](ROADMAP.md).
 

@@ -1,0 +1,15 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS STATE SCENE: Investigation checkpoint saved before completing the quest
+PASS STATE SCENE: Scene observer receives one complete save-valid quest result
+PASS STATE SCENE: World presentation follows the confirmed in-memory outcome
+PASS STATE SCENE: Failed autosave preserves the previous checkpoint and its error feedback
+PASS STATE SCENE: Repeated requests after a save failure cannot duplicate or replace the reward
+PASS STATE SCENE: Explicit retry durably saves the same completed result
+PASS STATE SCENE: Reload retains the exact single reward and equipment
+PASS STATE SCENE: Replayed completion after reload is rejected
+PASS STATE SCENE: Unharvested combat outcome saved as a disposable test checkpoint
+PASS STATE SCENE: Ore and dust commit together while the failed save stays visible
+PASS STATE SCENE: Repeated harvest after failed autosave grants no extra dust
+PASS STATE SCENE: Retry and reload preserve exactly one ore reward
+STATE SCENE RESULT 12/12

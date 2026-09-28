@@ -1,5 +1,13 @@
 # Änderungen
 
+## Gameplay Foundation M07 — 2026-09-28
+
+- Gemeinsamer lokaler Action-/Kontaktvertrag für sämtliche vorhandenen Angriffspfade; M06-Rechnung unverändert. Explizite Hit-Phasen, regionale Generation und schwache Actor-/Payloadbezüge.
+- F: aktiver Block, Q: Parade; vorhandener Dodge angebunden. Deterministische Outcomes, kontrollierte Reaktion und Schutz gegen verlängerte Stagger-Ketten. Keine neue Defense-KI oder Waffen-/Magiesysteme.
+- 1.070/1.070 Checks, 25 Regressionstufen und sechs Release-Gates bestanden. Alte Saves, geschützte Verträge und ursprüngliche Gameplaywerte erhalten.
+- Lokale Arbeitsstände wurden automatisch bereinigt; aus dem GitHub-Zwischenstand wiederhergestellt und am 28.09. vollständig neu geprüft. Nur die neuen Protokolle gelten als Abschlussnachweis.
+- [M07 Completion Report](docs/FOUNDATION_M07.md), Windows-Testpaket und Prüfliste. Manueller M07-Windows-Test offen; Stop vor M08. M06-Windows-Test wurde zuvor vom Nutzer bestätigt.
+
 ## Gameplay Foundation M06 — 2026-09-21
 
 - Genehmigte Stats-/Trefferauflösungs-Spezifikation V1.1 umgesetzt: gemeinsame reine Rechnung mit getrennter Damage-/Impact-Wirkung, Protection, Resistance, Stability und bereits vorgegebenem DefenseOutcome.

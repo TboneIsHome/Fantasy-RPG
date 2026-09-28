@@ -1,0 +1,92 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS DATA: Altered definitions remain valid before consumer checks
+PASS DATA: New region player starts at all three configured maxima
+PASS DATA: Actual HUD meters use the same changed maxima
+PASS DATA: Refill and full-resource interaction check share maxima
+PASS DATA: Regeneration caps at changed maxima
+PASS DATA: bolt spends changed cost and starts changed cooldown
+PASS DATA: bolt HUD cooldown uses definition
+PASS DATA: bolt HUD affordability follows changed cost
+PASS DATA: bolt gameplay rejects the same insufficient resource
+PASS DATA: nova spends changed cost and starts changed cooldown
+PASS DATA: nova HUD cooldown uses definition
+PASS DATA: nova HUD affordability follows changed cost
+PASS DATA: nova gameplay rejects the same insufficient resource
+PASS DATA: dash spends changed cost and starts changed cooldown
+PASS DATA: dash HUD cooldown uses definition
+PASS DATA: dash HUD affordability follows changed cost
+PASS DATA: dash gameplay rejects the same insufficient resource
+PASS DATA: Flow applies changed refund exactly once on successful dash
+PASS DATA: Rejected dash does not refund again
+PASS DATA: Enemy spawn and displayed health denominator share changed definition
+PASS DATA: Real Frostkreis request with changed definition succeeds
+PASS DATA: Multi-target Frostkreis applies one changed relic refund and one changed heal
+PASS DATA: Both targets take changed spell damage
+PASS DATA: Cooldown refusal applies no duplicate heal/refund
+PASS DATA: Changed bolt, shatter and echo each apply exactly once
+PASS DATA: Missed Frostkreis grants no relic refund
+PASS DATA: Actual player projectile uses changed speed/range
+PASS DATA: Actual enemy projectile uses shared changed definition
+PASS DATA: Actual journal labels derive talent numbers and XP curve
+PASS DATA: Actual equipment description derives relic refund
+PASS DATA: Light light_0 uses definition
+PASS DATA: Light light_0 cannot be awarded twice
+PASS DATA: Light light_1 uses definition
+PASS DATA: Light light_1 cannot be awarded twice
+PASS DATA: Light light_2 uses definition
+PASS DATA: Light light_2 cannot be awarded twice
+PASS DATA: Main quest reward uses definition
+PASS DATA: Main quest reward cannot be awarded twice
+PASS DATA: Enemy XP uses definition
+PASS DATA: Enemy XP cannot be awarded twice
+PASS DATA: Enemy light-dust reward comes from definition once
+PASS DATA: Memory XP uses definition
+PASS DATA: Memory XP cannot be awarded twice
+PASS DATA: Chart XP uses definition
+PASS DATA: Chart XP cannot be awarded twice
+PASS DATA: Seed XP uses definition
+PASS DATA: Seed XP cannot be awarded twice
+PASS DATA: Source outcome XP uses definition
+PASS DATA: Source outcome XP cannot be awarded twice
+PASS DATA: One source relic gives one configured refund
+PASS DATA: Changed ore reward is issued only once
+PASS DATA: Level threshold uses configured XP multiplier
+PASS DATA: Save validation shares the XP curve
+PASS DATA: Full changed maxima do not charge fountain cost
+PASS DATA: Fountain uses changed cost and restores changed maximum above 100
+PASS DATA: Changed high maxima persist in unchanged schema 3
+PASS DATA: Actual source completion dialogue uses current reward/refund
+PASS DATA: Lower maxima are valid content, independent of archived resources
+PASS DATA: v01_save remains valid and exact below original maxima
+PASS DATA: v01_save restores absolute resources without clamp
+PASS DATA: v01_save original bytes are untouched
+PASS DATA: v02_completed_save remains valid and exact below original maxima
+PASS DATA: v02_completed_save restores absolute resources without clamp
+PASS DATA: v02_completed_save original bytes are untouched
+PASS DATA: v03_completed_save remains valid and exact below original maxima
+PASS DATA: v03_completed_save restores absolute resources without clamp
+PASS DATA: v03_completed_save original bytes are untouched
+PASS DATA: v04_alignment_started remains valid and exact below original maxima
+PASS DATA: v04_alignment_started restores absolute resources without clamp
+PASS DATA: v04_alignment_started original bytes are untouched
+PASS DATA: v04_restored_equipped remains valid and exact below original maxima
+PASS DATA: v04_restored_equipped restores absolute resources without clamp
+PASS DATA: v04_restored_equipped original bytes are untouched
+PASS DATA: v04_broken_ore_unequipped remains valid and exact below original maxima
+PASS DATA: v04_broken_ore_unequipped restores absolute resources without clamp
+PASS DATA: v04_broken_ore_unequipped original bytes are untouched
+PASS DATA: Schema 3 preserves earlier higher maxima within serialization envelope
+PASS DATA: Over-cap restore is explicit and keeps save version 3
+PASS DATA: Tick, rest and bonuses neither erase nor increase inherited excess
+PASS DATA: Repeated save/load retains excess exactly
+PASS DATA: Save rejects invalid resource nan
+PASS DATA: Save rejects invalid resource inf
+PASS DATA: Save rejects invalid resource -1
+PASS DATA: Save rejects invalid resource 1000001.0
+PASS DATA: Dead player remains unsaveable
+PASS DATA: Finite positive fractional HP is compatible with numeric definitions
+PASS DATA: Regeneration resumes at new limit after resources have been spent
+PASS DATA: Backup recovery retains the over-cap notice
+PASS DATA: Recovery still preserves the exact valid higher-resource backup
+DATA CONSISTENCY RESULT 89/89

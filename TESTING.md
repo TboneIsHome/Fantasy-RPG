@@ -1,6 +1,55 @@
 # Prüfungen und bekannte Grenzen
 
-## Stats und Trefferauflösung M06 — aktueller Nachweis vom 21.09.2026
+## Active Combat & Defense M07 — Nachweis vom 28.09.2026
+
+**IMPLEMENTED / AUTOMATED TESTED. MANUAL WINDOWS TESTED: nein / NOT TESTED.** Tim hat den M06-Windows-Spieltest bestätigt; die neue M07-EXE benötigt ihre eigene Abnahme. Nach automatischer Bereinigung wurde der Code aus dem GitHub-Zwischenstand wiederhergestellt. Alle nachfolgend genannten Prüfungen wurden auf dem wiederhergestellten Stand erneut ausgeführt; frühere verlorene M07-Logs werden nicht als Nachweis verwendet.
+
+**1.070/1.070 Checks:** bisherige 931 unverändert erhalten, dazu 65 reine M07-Prüfungen, 67 M07-Szenenprüfungen und sieben neue Prüfungen des echten Fehlerstarts. Die Zahl zählt Assertions einschließlich parametrisierter Fälle, keine Features. Wiederholungen in Exporten zählen nicht erneut.
+
+[M07 Completion Report](docs/FOUNDATION_M07.md) · [Ergebnisse](qa/m07_results.json) · [Logs](qa/m07_logs/) · [Prüfsummen](qa/m07_reference_manifest.json).
+
+| Bereich | Tatsächlich geprüft |
+| --- | --- |
+| Action Lifecycle | Intent, Startup, Commit, Active, Recovery, Completed, Interrupted; vorzeitiger Abbruch, keine freie Aufhebung nach Commit; überlappende/leere/ungültige Fenster, zeitliche Lücken, volle Spell-Recovery |
+| Kontakt | Bewegter Actor und Target, Reichweite, Facing, frische Sichtprüfung, ungültige/nicht-endliche Geometrie, falsches Timing, vorher erfasste Phase, queued/freigegebene/regionsfremde Actors |
+| Defense | Tatsächliche Input-Actions F/Q, reduzierte Blockbewegung, Hit, frontaler/rear/non-blockable Kontakt, erfolgreicher und gescheiterter Parry, konsumiertes Fenster, exklusiver Zustand, Dodge-Kosten, tatsächliche Bewegung, Schutzende |
+| Numerische Grenze | Miss/Evade ohne M06-Ergebnis; bestätigter Kontakt mit originalem M06-Result; Block-Skalierung und Stability nur durch M06; reentrante Signale und Receipts |
+| Phasen / Verbraucher | Ein Ziel einmal je Phase, ausdrücklich neue Phase, AoE je Ziel; reale Bolt-/Hostile-Projectile-/Thorn-/Wolfpfade; bisherige Nova/Echo/Guardian-Tests bleiben grün |
+| Reaktionen | Normal/Interrupt/Stagger, Player-/NPC-Unterbrechung, begrenzte Verschiebung, keine Timerverlängerung, tatsächliche Kontrolle nach Recovery trotz Hitstop, Stability ändert Resultat |
+| Region / Save | Timer und Projectile-Callback nach Gruft–Wald–Gruft, schwache Referenzen, ein Player, Save während Action/Parry, Load/Unload, transiente States fehlen im Format 3; gesamte Legacy-Fixture-/Migration-/Backup-Regression |
+| Release | Windows- und Linux-Release exportiert; nativer Linux-Release und Windows-Pack mit Godot unter Linux: M01–M07-Spiel-Smoke plus ungültige Inhaltsdaten vor Weltaufbau/Save-Schreiben |
+
+Der lokale Runner hat **25 Stufen**: Import, 22 GDScript-Gruppen, Startproben und echten Linux-Dateischreibfehler. Alle sechs Release-Stufen bestehen. Der Export-Smoke prüft Block → M06 (7 Damage / 10 Impact), Parry mit Unterbrechung, Wiederholung und alte Generation, zusätzlich alle vorherigen Export-Gates. Die unveränderten 25 geschützten Referenzdateien und 137 alten Content-Blattwerte (106 Zahlen) wurden gegen M06 geprüft.
+
+### M07 reproduzieren
+
+Godot **4.5.1** und die offiziellen Windows-/Linux-Release-Templates verwenden. Befehle im Projektverzeichnis; dafür einen separaten Test-Benutzerordner verwenden. Unter Linux kann dies über `XDG_DATA_HOME` und `XDG_CONFIG_HOME` geschehen.
+
+```bash
+python tools/verify.py /absoluter/pfad/Godot_v4.5.1-stable_linux.x86_64
+python tools/verify_exports.py /absoluter/pfad/Godot_v4.5.1-stable_linux.x86_64 /absoluter/pfad/export-check
+```
+
+Der erste Runner schreibt `test-output/verification.json` und Logs; der zweite schreibt `export_results.json`, beide Binärdateien und sechs Logs ins Zielverzeichnis. Scriptfehler, Timeout und fehlende Abschlussmarker verhindern Erfolg, auch wenn Godot selbst Exitcode 0 liefert. Die erwarteten Content-Diagnosen werden ausschließlich in den gezielten Fehlerstart-Proben akzeptiert. Tests verwenden eigene Save-Pfade; der Startfehlertest verwendet isolierte Profile.
+
+### M07 unter Windows abnehmen — NOT TESTED
+
+1. Lichterhain schließen. `%APPDATA%\Godot\app_userdata\Lichterhain\` separat sichern, bevor die Test-EXE gestartet wird. `Lichterhain_0.4_M07_Windows.zip` vollständig entpacken und `Spielen/Lichterhain.exe` starten. Dateiprüfsumme und Testnotizen stehen in `START_HIER.txt`. Alte Saves außerhalb der Testkopie aufbewahren.
+2. Eine Kopie des bisherigen M06-Spielstands laden; zusätzlich einen neuen Lichtpfad beginnen. LP/MP/AU, Queststand, Journal, Karte, Talente, Quelle/Relikt und Save/Load stichprobenartig prüfen.
+3. Im Wald gegen Wolf/Irrlicht: normaler Treffer, klarer räumlicher Fehlschlag und Leertasten-Ausweichen. Ein gültiger Dodge soll bewegen und kurz schützen, anschließend wieder verwundbar sein. Kosten/Regeneration wie zuvor.
+4. **F halten**, zum Angreifer zielen: Blockmeldung, weniger Schaden/Impact, reduzierte Bewegung, kein gleichzeitiger Zauber. Loslassen stellt Bewegung/Zaubern wieder her. Angriff von hinten darf den frontalen Block umgehen.
+5. **Q kurz vor Kontakt**: „Parade“, kein normaler Treffer, gegnerische Gelegenheit unterbrochen; kein automatischer Gegenangriff. Zu frühes Q muss nach dem engen Fenster wieder verwundbar sein. F/Q/Leertaste rasch kombinieren: kein Dauerschutz oder festhängender Zustand.
+6. Lichtfunke, Frostkreis, Frostbonus und gegebenenfalls Widerhall/Reliktrückgabe prüfen. Ein einzelnes lange überlappendes Projektil darf nicht mehrfach treffen. Dornen dürfen nur ihre getrennten Pulse auslösen; dauerndes F schützt nicht vor dem Bodenfeld.
+7. In der Gruft auf einer geeigneten unentschiedenen Save-Kopie den Hüter durch Kampf aktivieren: Telegraphing, Schlag, Fächer, Rückzug und erneuter Versuch. Die Quellen-Questregeln und beide bisherigen Lösungswege bleiben unverändert. Bereits gelöste Quellen benötigen dafür einen separaten Teststand.
+8. Während Projektile unterwegs sind Wald–Gruft–Wald wechseln; mehrfach zügig zurückreisen. Keine alten Treffer/Effekte im neuen Gebiet, genau ein Player, keine zusätzlichen Gegner. Speichern, F9 laden, Tod/Rückkehr testen; kein gespeicherter Block/Parry/Stagger.
+9. Windows-Version, EXE-SHA256, verwendeten Save/Seed, Beobachtung und reproduzierbare Schritte notieren. Bericht gemeinsam prüfen. **Stop vor M08.**
+
+Interrupt/Stagger oberhalb der bisherigen Impactwerte sind an realen Actors automatisiert geprüft. Der aktuelle Content liefert überwiegend Normal-Reaktionen; M07 fügt keinen schweren Demo-Angriff nur für einen manuellen Stagger-Test hinzu. Keine neue Aufnahme, visuelle Abnahme, Langzeitmessung, Controllerprüfung, Performance-Benchmark oder native Windows-Dateifehlerinjektion wird behauptet.
+
+
+## Stats und Trefferauflösung M06 — historischer Nachweis vom 21.09.2026
+
+> Nachtrag: Tim hat den manuellen M06-Windows-Spieltest vor M07 ausdrücklich bestätigt. Die folgenden Angaben beschreiben den damaligen Lieferstand; aktuelle Abnahme siehe M07 oben.
 
 **IMPLEMENTED**, automatisiert **TESTED**, insgesamt **PARTIALLY TESTED**. Der finale isolierte Gesamtlauf besteht **931/931 Checks**: alle bisherigen 789 plus 142 neue. Zusätzlich bestehen der echte Linux-Schreibfehler und sechs Release-Stufen. **Native M06-Windows-Ausführung und manueller M06-Spieltest: NOT TESTED.** Stop nach M06. Tims ausdrückliche M06-Freigabe ist kein nachträglicher Nachweis einer M05-Spielprüfung.
 

@@ -1,5 +1,7 @@
 # LICHTERHAIN — M05 COMPLETION REPORT
 
+> Nachtrag vor M07: Tim bestätigt den M00–M06-Ausgangsstand als abgeschlossen und den manuellen M06-Windows-Spieltest ausdrücklich. Der folgende Bericht dokumentiert die damalige Auslieferung; frühere offene Einzeltests werden nicht nachträglich erfunden. Aktueller Stand: [M07 Completion Report](FOUNDATION_M07.md).
+
 Stand: 21.09.2026 · Quellstand 0.4.0 / Interaction Foundation M05 · Godot 4.5.1 · dauerhaft 2D-isometrisch.
 
 **Späterer Nachtrag:** Tim hat anschließend M06 durch die Spezifikation V1.1 ausdrücklich zur Implementierung freigegeben. Dieser Auftrag hebt den damaligen Entwicklungsstop auf; eine eigene M05-Windows-Spielprüfung wurde damit nicht als bestanden gemeldet. Der folgende Bericht bleibt der historische M05-Auslieferungsstand. Aktuelle Iteration: [M06](FOUNDATION_M06.md).

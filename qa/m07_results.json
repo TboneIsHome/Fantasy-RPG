@@ -1,0 +1,209 @@
+{
+  "date": "2026-09-28",
+  "status": "IMPLEMENTED / AUTOMATED TESTED",
+  "checks_passed": 1070,
+  "checks_total": 1070,
+  "previous_checks_retained": 931,
+  "new_checks": 139,
+  "check_groups": {
+    "test_suite": 50,
+    "ui_smoke": 14,
+    "save_compatibility": 8,
+    "dungeon_suite": 48,
+    "migration_suite": 12,
+    "source_suite": 65,
+    "save_io_reproduction": 8,
+    "save_fault_suite": 71,
+    "save_scene_smoke": 14,
+    "state_replay_reproduction": 3,
+    "state_actions_suite": 100,
+    "state_actions_scene": 12,
+    "region_replay_reproduction": 4,
+    "region_lifecycle_suite": 95,
+    "content_validation_suite": 88,
+    "data_consistency_suite": 89,
+    "interaction_contract_suite": 29,
+    "interaction_scene_suite": 53,
+    "hit_resolution_suite": 77,
+    "hit_scene_suite": 58,
+    "active_combat_suite": 65,
+    "active_combat_scene_suite": 67,
+    "content_startup": 40
+  },
+  "regression_stages": [
+    {
+      "stage": "import",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "test_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "ui_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_compatibility",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "dungeon_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "migration_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "source_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_io_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_fault_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_scene_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_scene",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "region_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "region_lifecycle_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "content_validation_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "data_consistency_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "interaction_contract_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "interaction_scene_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "hit_resolution_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "hit_scene_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "active_combat_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "active_combat_scene_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "content_startup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "real_write_error",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "release_stages": [
+    {
+      "stage": "windows_export",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "linux_export",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "linux_release_smoke",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "windows_pack_smoke",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "linux_release_startup",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "windows_pack_startup",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    }
+  ],
+  "native_linux_release_smoke": "PASSED",
+  "windows_pack_under_linux": "PASSED",
+  "manual_windows_tested": false,
+  "manual_windows_status": "NOT TESTED",
+  "performance_benchmark": "NOT TESTED",
+  "package_verified": true,
+  "protected_baseline_files_unchanged": 25,
+  "original_content_leaves_unchanged": 137,
+  "original_content_numbers_unchanged": 106,
+  "recovery": "Restored from GitHub M07 checkpoint. These gates were executed anew on 2026-09-28; previous lost M07 logs are not evidence.",
+  "stop": "M07 only; M08 not started"
+}

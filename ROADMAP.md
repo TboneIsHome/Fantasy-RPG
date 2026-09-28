@@ -1,6 +1,6 @@
 # Roadmap
 
-Stand: 2026-09-21, spielbarer Quellstand 0.4.0 / Gameplay Foundation M06. Tim hat Foundation M00–M04 einschließlich manueller Windows-Abnahme bestätigt, danach M05 und anschließend ausdrücklich die [M06-Spezifikation V1.1](docs/M06_STATS_HIT_RESOLUTION_V1_1.md) freigegeben. Die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md) besitzt das langfristige Spielerlebnis. Aktuell priorisiert Tim robuste Kernsysteme und eine kleine, erweiterbare Weltsimulation. Größe und Systemtiefe werden schrittweise geprüft; der aktuelle Prototyp erfüllt die langfristige Vision noch nicht.
+Stand: 2026-09-28, Quellstand 0.4.0 / Gameplay Foundation M07. Tim bestätigt M00–M06 als abgeschlossen und den manuellen M06-Windows-Spieltest ausdrücklich. Nur die [M07-Spezifikation V1.1](docs/M07_ACTIVE_COMBAT_DEFENSE_V1_1.md) ist zur Implementierung freigegeben. Die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md) besitzt weiterhin das Spielerlebnis; technische Änderungen dürfen sie nicht still umdeuten.
 
 ## Verbindliche nächste Reihenfolge
 
@@ -11,12 +11,13 @@ Stand: 2026-09-21, spielbarer Quellstand 0.4.0 / Gameplay Foundation M06. Tim ha
 | **M02 — Zustandsänderungen** | Dauerhafte Fortschrittsaktionen und vollständige Belohnungen beim fachlichen Besitzer bündeln | **COMPLETE** laut Tim; zusätzlicher manueller Windows-Spieltest ausdrücklich bestätigt. 405 automatisierte Checks und historische Nachweise: [Bericht](docs/FOUNDATION_M02.md). Keine nachträgliche Behauptung einzelner nicht protokollierter Windows-Dateifehlertests. |
 | **M03 — Regionslebenszyklus** | Build/Activate/Deactivate/Unload/Travel aus der Sitzung heraus klar abgrenzen | **COMPLETE / TESTED** laut Tim; manueller Windows-Test vor M04 ausdrücklich bestätigt. 504/504 historische Checks. [M03 Completion Report mit Nachtrag](docs/FOUNDATION_M03.md). |
 | **M04 — Inhaltsdaten** | Bestehende JSON-Quellen validieren und Regeln mit Gameplay, HUD und Saveprüfung verbinden | **COMPLETE / TESTED** laut Tim einschließlich manueller Windows-Abnahme und Reportprüfung vor M05. 707/707 Checks. [Foundation Completion Report mit Nachtrag](docs/FOUNDATION_COMPLETION_REPORT.md). |
-| **M05 — Interaction Foundation** | Kleiner Vertrag, getrennte Discovery/Execution, frische Validierung und bestätigte Folgen; bestehende reale Verbraucher anbinden | **IMPLEMENTED**, automatisiert **TESTED**, insgesamt **PARTIALLY TESTED**. 789/789 Checks, beide Exporte/Packs und Windows-Testpaket fertig. Eigener manueller M05-Windows-Test **NOT TESTED**. [M05 Completion Report](docs/FOUNDATION_M05.md). |
-| **M06 — Stats & Trefferauflösung** | Gemeinsame Damage-/Impact-Rechnung, neutrale geprüfte Defense-Definitionen und einmalige Kontaktlieferung für bestehende Angriffe | **IMPLEMENTED**, automatisiert **TESTED**, insgesamt **PARTIALLY TESTED**. 931/931 Checks, beide Exporte/Packs und Windows-Testpaket. Manueller M06-Windows-Test **NOT TESTED**. [M06 Completion Report](docs/FOUNDATION_M06.md). |
+| **M05 — Interaction Foundation** | Kleiner Vertrag mit Discovery, frischer Execution und bestätigten Folgen | **COMPLETE** im vom Nutzer bestätigten M00–M06-Ausgangsstand; 789 historische Checks. Kein nachträglich erfundenes Einzeltestprotokoll. [Bericht](docs/FOUNDATION_M05.md). |
+| **M06 — Stats & Trefferauflösung** | Gemeinsame numerische Damage-/Impact-Auflösung und HitInstance | **COMPLETE**, 931 historische Checks; manueller Windows-Spieltest von Tim vor M07 ausdrücklich bestätigt. [Bericht](docs/FOUNDATION_M06.md). |
+| **M07 — Active Combat & Defense** | Action Lifecycle, Kontakt, Dodge/Block/Parry, explizite Phasen und kontrollierte Reaktion | **IMPLEMENTED / AUTOMATED TESTED**: 1.070/1.070 Checks, sechs Release-Gates. **MANUAL WINDOWS: NOT TESTED**. [Completion Report](docs/FOUNDATION_M07.md). |
 
 Nach jedem Umbauschritt: relevante neue Prüfungen, gesamte bestehende Regression, Savegame-Prüfungen, Exportprüfung und dokumentierte manuelle Smoke-Runde. Eine offene Plattformprüfung wird offen ausgewiesen. Keine parallelen Umbauten unabhängiger Kernsysteme und kein Save-Reset als Abkürzung.
 
-**Aktueller Stop:** M06-Windows-Spieltest und M06 Completion Report gemeinsam prüfen. Die ausdrückliche M06-Freigabe hebt den früheren M05-Entwicklungsstop auf, belegt aber keinen nachträglichen M05-Spieltest. M07 und spätere Systeme sind nicht begonnen und brauchen jeweils ein genehmigtes Design sowie eine neue Implementierungsfreigabe.
+**Aktueller Stop:** M07-Bericht und Windows-Testpaket gemeinsam prüfen. M08 und alle weiteren Systeme bleiben **PLANNED** und benötigen eine neue Freigabe.
 
 ## Bisherige spielbare Referenzen
 
@@ -33,7 +34,6 @@ Das unveränderte 0.4-Release liegt auf `reference/v0.4-original`. M00 baut dara
 
 | Geplante Richtung | Status / Grenze |
 | --- | --- |
-| M07 aktive Combat Foundation | **PLANNED**; gemäß M06 V1.1 später Kontaktentstehung, aktive Defense-/Timing-Fenster und Combat-Reaktionen definieren; keine zweite Damage-Rechnung |
 | M08 Weapon Foundation | **PLANNED**; kein vorgezogenes Waffenarsenal |
 | M09 Magic Foundation | **PLANNED**; bestehende Fähigkeiten bis dahin erhalten |
 | M10 Status Effects | **PLANNED**; konkrete Anforderungen und Abhängigkeiten zuerst prüfen |
