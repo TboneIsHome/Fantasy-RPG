@@ -1,5 +1,7 @@
 # M07 COMPLETION REPORT
 
+**Abnahme-Nachtrag 2026-09-29:** Tim hat den manuellen M07-Windows-Spieltest ohne gefundene Fehler bestätigt. M07 ist abgeschlossen (MANUAL WINDOWS TESTED: PASSED, Nutzerangabe). Die folgenden ursprünglichen Prüfnachweise bleiben historisch unverändert.
+
 **Lichterhain — Active Combat & Defense Foundation**
 Stand: 28.09.2026 · Godot 4.5.1 · dauerhaft 2D-isometrisch
 Grundlage: unveränderte [M07 V1.1](M07_ACTIVE_COMBAT_DEFENSE_V1_1.md), [Creative Bible](CREATIVE_DESIGN_BIBLE_V1.md), abgeschlossener M06-Stand `fa887982a023f4fcdb3d3ad933796c0d3ec54748`.
