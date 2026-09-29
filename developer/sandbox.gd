@@ -321,7 +321,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 func _physics_process(_delta: float) -> void:
 	if not is_instance_valid(session) or not session.is_current(session.generation): return
-	var enabled: bool = not busy and not session.paused and arena.get_global_rect().has_point(get_global_mouse_position()) and not get_viewport().gui_get_focus_owner() is LineEdit
+	var enabled: bool = not busy and not session.paused and session.fixture.player.combat_alive() and arena.get_global_rect().has_point(get_global_mouse_position()) and not get_viewport().gui_get_focus_owner() is LineEdit
 	session.fixture.player.input_enabled = enabled
 	if not enabled: session.fixture.player.cast_armed = false
 

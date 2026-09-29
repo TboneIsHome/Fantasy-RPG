@@ -18,6 +18,7 @@ for script in ['test_suite', 'ui_smoke', 'save_compatibility', 'dungeon_suite', 
                'interaction_contract_suite', 'interaction_scene_suite',
                'hit_resolution_suite', 'hit_scene_suite', 'active_combat_suite', 'active_combat_scene_suite']:
     stages.append((script, ['--script', f'res://tests/{script}.gd']))
+stages.append(('sandbox', []))
 stages.append(('content_startup', []))
 if sys.platform == 'linux':
     stages.append(('real_write_error', []))
@@ -25,7 +26,9 @@ else:
     print('NOT TESTED: Linux-only real RLIMIT_FSIZE write probe; portable fault suite still runs.', flush=True)
 results = []
 for name, args in stages:
-    if name == 'content_startup':
+    if name == 'sandbox':
+        command = [sys.executable, str(project / 'tools/verify_sandbox.py'), str(engine)]
+    elif name == 'content_startup':
         command = [sys.executable, str(project / 'tools/verify_content_startup.py'), str(engine)]
     else:
         command = ([sys.executable, str(project / 'tools/reproduce_save_write_error.py'), str(engine)]
@@ -39,6 +42,7 @@ for name, args in stages:
         run = subprocess.CompletedProcess(command, 124, partial + '\nFAIL: Stage timed out after 120 seconds.\n')
     (output / f'{name}.log').write_text(run.stdout)
     errors = [line for line in run.stdout.splitlines() if 'ERROR:' in line or line.startswith('FAIL')]
+    if name == 'sandbox' and 'SANDBOX ISOLATION PASS' not in run.stdout: errors.append('Missing sandbox completion')
     if name == 'content_startup':
         errors = [line for line in errors if not line.startswith(('ERROR: data/', 'ERROR: res://data/'))]
         if 'CONTENT STARTUP SUMMARY ' not in run.stdout: errors.append('Missing content startup completion')

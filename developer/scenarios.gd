@@ -2,6 +2,7 @@ extends RefCounted
 ## Reproducible fixtures, not alternative combat rules. All contacts go to M07.
 var session: Node
 var checks: Array[Dictionary] = []
+var records: Array = []
 
 func check(condition: bool, title: String) -> void:
 	checks.append({"passed":condition,"check":title})
@@ -10,6 +11,7 @@ func check(condition: bool, title: String) -> void:
 func run(id: String, owner: Node) -> Dictionary:
 	session = owner
 	checks = []
+	records = []
 	if not session.catalog.data.scenarios.has(id): return {"id":id,"passed":false,"checks":[],"error":"Unknown scenario"}
 	fresh()
 	session.telemetry.scenario = id
@@ -30,12 +32,13 @@ func run(id: String, owner: Node) -> Dictionary:
 		"A12": await waves()
 	var passed := true
 	for entry in checks: passed = passed and entry.passed
-	var result := {"id":id,"passed":passed,"checks":checks.duplicate(true),"mode":"controlled fixture / actual M07-M06","generation":session.generation}
+	var result := {"id":id,"passed":passed,"checks":checks.duplicate(true),"mode":"controlled fixture / actual M07-M06","generation":session.generation,"events":records+session.telemetry.events.duplicate(true)}
 	session.last_scenario = result
 	return result
 
 func fresh(enemy: String = "dummy") -> void:
 	var scenario: String = session.telemetry.scenario if session.telemetry != null else "manual"
+	if not checks.is_empty(): records.append_array(session.telemetry.events.duplicate(true))
 	session.reset("mage",enemy,true,{})
 	session.set_paused(true)
 	session.telemetry.scenario = scenario

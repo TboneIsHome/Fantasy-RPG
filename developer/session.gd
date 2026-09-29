@@ -27,7 +27,7 @@ func initialize(world_mount: Node = null) -> bool:
 	return reset()
 
 func is_current(origin: int) -> bool:
-	return origin == generation and is_instance_valid(fixture) and fixture.combat._can_act()
+	return origin == generation and is_instance_valid(fixture) and is_instance_valid(fixture.combat) and fixture.combat._can_act()
 
 func reset(profile: String = "", enemy: String = "", with_target: bool = true, overrides: Dictionary = {}) -> bool:
 	if resetting or catalog.data.is_empty(): return false
@@ -39,6 +39,7 @@ func reset(profile: String = "", enemy: String = "", with_target: bool = true, o
 	waves.stop()
 	unload()
 	generation += 1
+	waves = Waves.new(self)
 	player_preset = profile
 	enemy_preset = enemy
 	start_overrides = settings.duplicate(true)
@@ -127,6 +128,9 @@ func defense(id: String, direction: Vector2 = Vector2.RIGHT) -> bool:
 	return accepted
 
 func start_probe() -> AttackInstance:
+	if probe_action != null:
+		probe_action.timeline.interrupt()
+		fixture.player.attack_actions.erase(probe_action)
 	var data: Dictionary = catalog.data.probe
 	probe_action = fixture.combat.new_action(fixture.player,&"sandbox_probe",ActionProfiles.clock(data.startup,data.active,data.recovery),ActionProfiles.rules("direct"))
 	fixture.player.track_action(probe_action)
