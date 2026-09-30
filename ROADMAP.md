@@ -1,6 +1,6 @@
 # Roadmap
 
-Stand: 2026-09-28, Quellstand 0.4.0 / Gameplay Foundation M07. Tim bestätigt M00–M06 als abgeschlossen und den manuellen M06-Windows-Spieltest ausdrücklich. Nur die [M07-Spezifikation V1.1](docs/M07_ACTIVE_COMBAT_DEFENSE_V1_1.md) ist zur Implementierung freigegeben. Die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md) besitzt weiterhin das Spielerlebnis; technische Änderungen dürfen sie nicht still umdeuten.
+Stand: 2026-09-30. Tim hat M07 einschließlich manuellem Windows-Spieltest ohne gefundene Fehler abgenommen. Aktueller Auftrag: ausschließlich [Developer Sandbox Foundation](docs/DEVELOPER_SANDBOX_WORK_ORDER_V1.md). Creative Bible und [Future Systems Blueprint](docs/FUTURE_SYSTEMS_BLUEPRINT_V1.md) bleiben Leitplanken; keine späteren Systeme werden vorgezogen.
 
 ## Verbindliche nächste Reihenfolge
 
@@ -13,11 +13,12 @@ Stand: 2026-09-28, Quellstand 0.4.0 / Gameplay Foundation M07. Tim bestätigt M0
 | **M04 — Inhaltsdaten** | Bestehende JSON-Quellen validieren und Regeln mit Gameplay, HUD und Saveprüfung verbinden | **COMPLETE / TESTED** laut Tim einschließlich manueller Windows-Abnahme und Reportprüfung vor M05. 707/707 Checks. [Foundation Completion Report mit Nachtrag](docs/FOUNDATION_COMPLETION_REPORT.md). |
 | **M05 — Interaction Foundation** | Kleiner Vertrag mit Discovery, frischer Execution und bestätigten Folgen | **COMPLETE** im vom Nutzer bestätigten M00–M06-Ausgangsstand; 789 historische Checks. Kein nachträglich erfundenes Einzeltestprotokoll. [Bericht](docs/FOUNDATION_M05.md). |
 | **M06 — Stats & Trefferauflösung** | Gemeinsame numerische Damage-/Impact-Auflösung und HitInstance | **COMPLETE**, 931 historische Checks; manueller Windows-Spieltest von Tim vor M07 ausdrücklich bestätigt. [Bericht](docs/FOUNDATION_M06.md). |
-| **M07 — Active Combat & Defense** | Action Lifecycle, Kontakt, Dodge/Block/Parry, explizite Phasen und kontrollierte Reaktion | **IMPLEMENTED / AUTOMATED TESTED**: 1.070/1.070 Checks, sechs Release-Gates. **MANUAL WINDOWS: NOT TESTED**. [Completion Report](docs/FOUNDATION_M07.md). |
+| **M07 — Active Combat & Defense** | Action Lifecycle, Kontakt, Dodge/Block/Parry, explizite Phasen und kontrollierte Reaktion | **COMPLETE**: 1.070 historische Checks und Release-Gates; Tim bestätigt den manuellen Windows-Spieltest ohne gefundene Fehler. [Completion Report](docs/FOUNDATION_M07.md). |
+| **Developer Sandbox Foundation** | Lokale Arena, Presets, echte Combat-Controls, Wellen, Diagnose und A01–A12 | **IMPLEMENTED**, Abschlussprüfung siehe [Completion Report](docs/DEVELOPER_SANDBOX_COMPLETION_REPORT.md). **MANUAL WINDOWS: NOT TESTED**. |
 
 Nach jedem Umbauschritt: relevante neue Prüfungen, gesamte bestehende Regression, Savegame-Prüfungen, Exportprüfung und dokumentierte manuelle Smoke-Runde. Eine offene Plattformprüfung wird offen ausgewiesen. Keine parallelen Umbauten unabhängiger Kernsysteme und kein Save-Reset als Abkürzung.
 
-**Aktueller Stop:** M07-Bericht und Windows-Testpaket gemeinsam prüfen. M08 und alle weiteren Systeme bleiben **PLANNED** und benötigen eine neue Freigabe.
+**Aktueller Stop:** Sandbox-Bericht und separates Developer-Windows-Paket gemeinsam prüfen; eigener manueller Sandbox-Test steht aus. M08 und alle weiteren Systeme bleiben **PLANNED** und benötigen eine neue Freigabe.
 
 ## Bisherige spielbare Referenzen
 

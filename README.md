@@ -2,9 +2,11 @@
 
 Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelwaldregion und der ersten Quellengruft. Der erste zusammenhängende Spielabschnitt führt bis zum Quellenhüter, zwei Questlösungen und einem ausrüstbaren Relikt. Tim hat die Foundation einschließlich M04 manuell unter Windows bestätigt. Mehrstündige Weltinhalte sind ein späteres Ziel.
 
-**Aktueller Stand: M07 Active Combat & Defense.** Die bestehenden Angriffe verwenden gemeinsame Action- und Kontaktregeln. Ausweichen, aktiver Block und Parade bestimmen ein eindeutiges Defense Outcome; M06 bleibt alleinige Damage-/Impact-Rechnung. **1.070/1.070 automatisierte Checks** und beide Release-Exporte samt Paketprüfungen bestehen. Bestehende Gameplaywerte, Saveformat 3, Regionsarchitektur und Interaktionen bleiben erhalten.
+**Aktueller Entwicklungsschritt: Developer Sandbox Foundation.** M07 ist einschließlich Tims erfolgreichem Windows-Spieltest abgeschlossen. Die separate Sandbox bietet Arena, Presets, echte Combat-/Defense-Tests, Diagnose, zwölf wiederholbare Szenarien und drei begrenzte Wellen. Produktionsspiel und Saveformat bleiben erhalten.
 
-[M07 Completion Report](docs/FOUNDATION_M07.md): **IMPLEMENTED / AUTOMATED TESTED**. Der manuelle M07-Windows-Spieltest ist **NOT TESTED** und liegt als Prüfliste bei. Tim hat M00–M06 einschließlich M06-Windows-Spieltest bestätigt; das ersetzt keine Prüfung dieser neuen EXE. **Stop nach M07.** Grundlage: [M07 V1.1](docs/M07_ACTIVE_COMBAT_DEFENSE_V1_1.md), [Foundation v1.0](docs/FOUNDATION_COMPLETION_REPORT.md) und [Creative Design Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md). Lichterhain bleibt 2D-isometrisch; das ursprüngliche Release bleibt unter `reference/v0.4-original` erhalten.
+[Sandbox Completion Report](docs/DEVELOPER_SANDBOX_COMPLETION_REPORT.md) · [Windows-Prüfliste](docs/SANDBOX_WINDOWS_TEST.md). Eigener Sandbox-Windows-Test: **NOT TESTED**. Stop vor M08; neue Waffen/Magie/Statussysteme brauchen eine neue Freigabe.
+
+**Sandbox starten:** `Lichterhain_DeveloperSandbox_Windows.zip` entpacken und `Lichterhain_DeveloperSandbox.exe` öffnen. Im Editor `developer/sandbox.tscn` mit F6 starten. Die normale F5-Startszene bleibt das Spiel. Sandbox-Quelle: Branch `foundation/developer-sandbox`. Die folgenden Spielanleitungen beziehen sich weiterhin auf den normalen Prototypen.
 
 ## Direkt spielen unter Windows
 

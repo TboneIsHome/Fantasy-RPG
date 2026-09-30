@@ -1,5 +1,14 @@
 # Änderungen
 
+## Developer Sandbox Foundation
+
+- M07-Windows-Abnahme durch Tim dokumentiert.
+- Getrenntes Combat-Labor mit lokalen Presets, Actors, Reset/Generation, tatsächlichen M06/M07-Kontakten, Defense, Wellen und begrenzter Diagnose.
+- Zwölf reproduzierbare Szenarien, isolierte Save-Sentinels und gerenderte Bedienprüfung.
+- Separater Developer-Export; Ausschluss aus Produktions-Packs, keine Änderungen an Produktionscode oder Balance.
+- M08–M10 bleiben ungeöffnet.
+
+
 ## Gameplay Foundation M07 — 2026-09-28
 
 - Gemeinsamer lokaler Action-/Kontaktvertrag für sämtliche vorhandenen Angriffspfade; M06-Rechnung unverändert. Explizite Hit-Phasen, regionale Generation und schwache Actor-/Payloadbezüge.

@@ -1,5 +1,19 @@
 # Prüfungen und bekannte Grenzen
 
+## Developer Sandbox — Prüfablauf
+
+M07 ist nach Tims erfolgreichem Windows-Spieltest abgeschlossen. Die neue Sandbox benötigt eine eigene Abnahme. Aktueller Abschlussstatus und konkrete Zahlen: [Completion Report](docs/DEVELOPER_SANDBOX_COMPLETION_REPORT.md).
+
+- `python3 tools/verify.py /absoluter/pfad/godot`: vollständige Foundation plus isolierte Sandbox-Prüfung.
+- `python3 tools/verify_sandbox.py /absoluter/pfad/godot`: eigener temporärer Benutzerbereich, unveränderte Produktions-Save-Sentinels, A01–A12, Preset-/Datenfehler, Controls, Reset, Report und Freigabe alter Actors.
+- `godot --path . --script res://tests/sandbox_visual_smoke.gd`: grafische Sitzung; gerenderte UI, Eingabe/Fokus, F-Block, keine Zauber über Controls, Diagnose, Szenario-Runner, Wellen und Reset. Bilder/Ergebnis unter test-output. Kein manueller Spieltest.
+- `python3 tools/verify_exports.py GODOT AUSGABE`: bestehende sechs Produktions-Gates plus Sandbox-Ausschluss aus beiden Packs. Offizielle Godot-4.5.1-Templates benötigt.
+- `python3 tools/export_sandbox.py GODOT AUSGABE`: isolierte Staging-Kopie, Windows-/Linux-Export, vollständige Sandbox-Suite gegen Linux-Release und Windows-Pack unter Linux. Export-Smokes verwenden ein leeres Ressourcenverzeichnis; Quellcode-Fallback wird ausgeschlossen.
+
+Die Suite ist nur über ihren isolierenden Runner auszuführen. Reguläre Save-Dateien werden nicht verändert; der Runner erzeugt ausschließlich temporäre Sentinels aus eingefrorenen Fixtures. Wiederholte Checks in Exporten zählen nicht erneut zur Regression. A01–A12 sind kontrollierte Fixture-Tests echter Contracts; sie ersetzen weder freien Combat noch die [Windows-Runde](docs/SANDBOX_WINDOWS_TEST.md).
+
+
+
 ## Active Combat & Defense M07 — Nachweis vom 28.09.2026
 
 **IMPLEMENTED / AUTOMATED TESTED. MANUAL WINDOWS TESTED: nein / NOT TESTED.** Tim hat den M06-Windows-Spieltest bestätigt; die neue M07-EXE benötigt ihre eigene Abnahme. Nach automatischer Bereinigung wurde der Code aus dem GitHub-Zwischenstand wiederhergestellt. Alle nachfolgend genannten Prüfungen wurden auf dem wiederhergestellten Stand erneut ausgeführt; frühere verlorene M07-Logs werden nicht als Nachweis verwendet.

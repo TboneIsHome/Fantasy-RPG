@@ -20,15 +20,21 @@ output.mkdir(parents=True, exist_ok=True)
 windows = output / 'Lichterhain.exe'
 linux = output / 'Lichterhain.x86_64'
 base = ['--headless', '--audio-driver', 'Dummy', '--path', str(project)]
+runtime_root = output / 'empty-pack-root'
+runtime_root.mkdir(exist_ok=True)
+runtime_base = ['--headless', '--audio-driver', 'Dummy', '--path', str(runtime_root)]
+boundary = str(project / 'tests/sandbox_export_boundary.gd')
 smoke = str(project / 'tests/export_smoke.gd')
 startup = str(project / 'tools/verify_content_startup.py')
 stages = [
     ('windows_export', [str(engine), *base, '--export-release', 'Windows Desktop', str(windows)]),
     ('linux_export', [str(engine), *base, '--export-release', 'Linux Desktop', str(linux)]),
-    ('linux_release_smoke', [str(linux), *base, '--script', smoke]),
-    ('windows_pack_smoke', [str(engine), *base, '--main-pack', str(windows), '--script', smoke]),
+    ('linux_release_smoke', [str(linux), *runtime_base, '--script', smoke]),
+    ('windows_pack_smoke', [str(engine), *runtime_base, '--main-pack', str(windows), '--script', smoke]),
     ('linux_release_startup', [sys.executable, startup, str(linux)]),
     ('windows_pack_startup', [sys.executable, startup, str(engine), str(windows)]),
+    ('linux_sandbox_exclusion', [str(linux), *runtime_base, '--script', boundary]),
+    ('windows_sandbox_exclusion', [str(engine), *runtime_base, '--main-pack', str(windows), '--script', boundary]),
 ]
 markers = ['EXPORT DATA CONSISTENCY PASS', 'EXPORT INTERACTION CONTRACT PASS',
            'EXPORT HIT RESOLUTION PASS', 'EXPORT ACTIVE COMBAT PASS',
@@ -50,6 +56,7 @@ for name, command in stages:
         if 'CONTENT STARTUP SUMMARY ' not in run.stdout: errors.append('Missing startup completion')
     if name.endswith('_smoke'):
         errors += ['Missing ' + marker for marker in markers if marker not in run.stdout]
+    if name.endswith('_exclusion') and 'SANDBOX PRODUCTION EXCLUSION PASS' not in run.stdout: errors.append('Missing sandbox exclusion proof')
     if name.endswith('_export'):
         destination = windows if name == 'windows_export' else linux
         if not destination.is_file() or destination.stat().st_size < 1000000: errors.append('No release binary')

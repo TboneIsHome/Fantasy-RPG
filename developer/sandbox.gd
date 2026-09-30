@@ -19,6 +19,7 @@ var diagnostic: RichTextLabel
 var history: RichTextLabel
 var status: Label
 var profile_note: Label
+var live_summary: Label
 var busy := false
 var refresh := 0.0
 
@@ -82,12 +83,14 @@ func build_ui() -> void:
 	arena.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	arena.stretch = true
 	arena.stretch_shrink = 2
+	arena.gui_input.connect(arena_input)
 	left.add_child(arena)
 	viewport = SubViewport.new()
 	viewport.size = Vector2i(410,260)
 	viewport.world_2d = World2D.new()
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	arena.add_child(viewport)
+	live_summary = label(left,"",14)
 	var attack_row := row(left)
 	attacks = select(attack_row)
 	button(attack_row,"Auf Ziel zaubern",cast_selected)
@@ -319,6 +322,14 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_P: toggle_pause()
 		KEY_R: enemy_attack()
 
+func arena_input(event: InputEvent) -> void:
+	if not event is InputEventMouseButton or not event.pressed: return
+	var focused := get_viewport().gui_get_focus_owner()
+	if focused == null: return
+	focused.release_focus()
+	if is_instance_valid(session) and session.is_current(session.generation):
+		session.fixture.player.cast_armed = false
+
 func _physics_process(_delta: float) -> void:
 	if not is_instance_valid(session) or not session.is_current(session.generation): return
 	var enabled: bool = not busy and not session.paused and session.fixture.player.combat_alive() and arena.get_global_rect().has_point(get_global_mouse_position()) and not get_viewport().gui_get_focus_owner() is LineEdit
@@ -332,7 +343,13 @@ func _process(delta: float) -> void:
 	pause_button.text = "Weiter  P" if session.paused else "Pause  P"
 	var state: Dictionary = session.snapshot()
 	var p: Dictionary = state.player
-	diagnostic.text = "[b]Generation %d · %d Gegner · Welle %d[/b]\nLP %.1f · MP %.1f · AU %.1f\nPosition %s · Blick %s\nDefense %s (%.3f s) · Reaction %s\nPlayer-Action %s\nZiel %s\nProbe %s" % [state.generation,state.enemies,state.wave.index,p.hp,p.mana,p.stamina,p.position,p.aim,p.defense,p.defense_remaining,p.reaction,JSON.stringify(p.action),JSON.stringify(state.target),JSON.stringify(state.probe)]
+	var target: Dictionary = state.target
+	live_summary.text = "LP %.0f · MP %.0f · AU %.0f   |   %s   |   Ziel %s   |   %d Gegner" % [p.hp,p.mana,p.stamina,p.defense,"–" if target.is_empty() else "%.0f LP" % target.hp,state.enemies]
+	diagnostic.text = "[b]Generation %d · Welle %d[/b]\nLP %.1f · MP %.1f · AU %.1f\nPosition %s · Blick %s\nDefense %s (%.3f s)\nReaction %s\nCooldowns: Funke %.2f / Frost %.2f / Dodge %.2f\n\n[b]Player-Action[/b]\n%s\n\n[b]Ziel[/b]\n%s\n\n[b]Kontaktprobe[/b]\n%s" % [state.generation,state.wave.index,p.hp,p.mana,p.stamina,p.position,p.aim,p.defense,p.defense_remaining,p.reaction,p.cooldowns.bolt,p.cooldowns.nova,p.cooldowns.dash,action_text(p.action),"Kein lebendes Ziel" if target.is_empty() else "%s · ID %s\nHP %.1f · Abstand %.1f\nPosition %s\nDefense %s · Reaction %s\n%s" % [target.preset,target.id,target.hp,target.distance,target.position,target.defense,target.reaction,action_text(target.action)],action_text(state.probe)]
 	var lines: PackedStringArray = []
 	for item in session.telemetry.events.slice(-6): lines.append(JSON.stringify(item))
 	history.text = "\n\n".join(lines)
+
+func action_text(data: Dictionary) -> String:
+	if data.is_empty(): return "Keine Action"
+	return "%s · %s · %.3f s\nInstanz %s · Generation %d" % [data.id,data.phase,data.time,data.instance,data.generation]

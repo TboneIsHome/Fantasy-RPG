@@ -26,7 +26,9 @@ with tempfile.TemporaryDirectory(prefix='lichterhain-sandbox-') as temporary:
             path = root / ('lichtpfad_v1.json' + suffix)
             path.write_bytes((project / 'tests/fixtures/v04_restored_equipped.json').read_bytes())
             sentinels[str(path)] = hashlib.sha256(path.read_bytes()).hexdigest()
-    command = [str(engine), '--headless', '--audio-driver', 'Dummy', '--path', str(project), '--script', str(project / 'tests/sandbox_suite.gd')]
+    runtime_root = temporary / 'empty-pack-root' if environment.get('LICHTERHAIN_SANDBOX_EXPORT') == '1' else project
+    runtime_root.mkdir(exist_ok=True)
+    command = [str(engine), '--headless', '--audio-driver', 'Dummy', '--path', str(runtime_root), '--script', str(project / 'tests/sandbox_suite.gd')]
     if len(sys.argv) > 2: command[1:1] = ['--main-pack', str(Path(sys.argv[2]).resolve())]
     try:
         run = subprocess.run(command, env=environment, capture_output=True, text=True, timeout=120)

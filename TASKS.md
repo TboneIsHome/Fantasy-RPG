@@ -66,8 +66,11 @@
 - [x] M07: lokale Action-/Contact-/Defense-/Reaction-Verträge und reale Angriffe migriert.
 - [x] M07: 1.070 Checks und sechs Release-Gates bestanden; bestehende 931 Checks erhalten.
 - [x] M07: Completion Report, Windows-Testpaket und GitHub-Nachweise erstellen.
-- [ ] M07: manueller Windows-Spieltest und gemeinsame Abnahme.
-- [ ] Stop nach M07. M08 oder weitere Systeme erst nach neuer Freigabe.
+- [x] M07: Tim bestätigt den manuellen Windows-Spieltest ohne gefundene Fehler.
+- [x] Sandbox: Arena, Presets, echte Combat-Controls, Wellen, Diagnose und A01–A12.
+- [ ] Sandbox: Abschlussnachweise und Developer-Paket liefern.
+- [ ] Sandbox: eigener manueller Windows-Spieltest durch Tim und gemeinsame Abnahme.
+- [ ] Stop nach Sandbox; M08 erst nach neuer Freigabe.
 
 Audit, konkrete Dateien und Risiken: [docs/FOUNDATION_M00.md](docs/FOUNDATION_M00.md). Verbindliche Reihenfolge und Abnahme: [ROADMAP.md](ROADMAP.md).
 

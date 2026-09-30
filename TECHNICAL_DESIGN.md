@@ -2,6 +2,33 @@
 
 Diese Beschreibung gehört zum tatsächlichen 0.4-Code mit Foundation v1.0, Interaction Foundation M05 sowie Stats/Trefferauflösung M06 und Active Combat/Defense M07. Der [M00-Abgleich](docs/FOUNDATION_M00.md) bleibt die historische Architekturaufnahme; [M01](docs/FOUNDATION_M01.md) dokumentiert die Save-Absicherung, [M02](docs/FOUNDATION_M02.md) die kontrollierten Fortschrittsaktionen und [M03](docs/FOUNDATION_M03.md) den abgegrenzten Regionslebenszyklus. Der [Foundation Completion Report](docs/FOUNDATION_COMPLETION_REPORT.md) enthält den M00–M04-Abschluss und Tims anschließende Windows-Abnahme. [M05](docs/FOUNDATION_M05.md) und [M06](docs/FOUNDATION_M06.md) dokumentieren die folgenden Iterationen. Kreative Ziele gehören in die [Design-Bible](docs/CREATIVE_DESIGN_BIBLE_V1.md), das genehmigte M06-Gameplay in die [unveränderte Spezifikation V1.1](docs/M06_STATS_HIT_RESOLUTION_V1_1.md). Erweiterungen sind nur dort implementiert, wo dies ausdrücklich beschrieben ist.
 
+## Developer Sandbox Foundation
+
+Die getrennte Szene `developer/sandbox.tscn` ergänzt die Questwelt als Labor. Sie startet weder `game.gd` noch SaveSystem. Produktionscode, Daten, Assets, Saveformat 3 und die M05/M06/M07-Verträge bleiben unverändert. Im Editor Szene mit F6 starten; im Developer-Export direkt die eigene EXE.
+
+| Lokaler Besitzer | Implementierte Zuständigkeit |
+| --- | --- |
+| `developer/session.gd` | Startprofile, Reset, Pause, monotone Generation, explizite Entwickleranfragen |
+| `developer/fixture.gd` | Spezialisierte RegionInstance mit Arena, transientem RunState und echten MagePlayer/WildEnemy/CombatSystem-Instanzen; vorhandene activate/deactivate-/Scope-Grenzen |
+| `catalog.gd` + `presets.json` | Einmal beim Start validierte, danach rekursiv schreibgeschützte Testdaten: drei Player- und sechs Enemy-Presets, Bolt/Nova, A01–A12, drei Wellen |
+| `waves.gd` | Endliche Wave-Folge, Wartezeit und Abschlusszahl; schwacher Session-Bezug plus erfasste Generation |
+| `observed_player.gd`, `observed_enemy.gd` | Unveränderte Weitergabe an super; kopieren echte Defense-/M06-Ergebnisse. Passiver Dummy bzw. einzelner Angriff sind lokale KI-Teststeuerung |
+| `telemetry.gd` | Maximal 96 Live-Ereignisse ohne Actor-Referenzen; Preset, Zeit, Generation, Target/Attack/Hit-ID, Phase, Outcome, Damage/Impact und Reaction |
+| `scenarios.gd` | Reproduzierbare Fixtures A01–A12, die vorhandene Contact-/M06-/Actor-Pfade ausführen; Unterfälle behalten ihre Diagnose im Szenarioergebnis |
+| `sandbox.gd` | Labor-Controls und Anzeige zehnmal/Sekunde; Gameplay hängt nicht von der Anzeige ab |
+
+**Reset:** Wellen stoppen → alte Fixture deaktivieren (Combat-Scope sofort ungültig) → Baum entfernen/freigeben → Generation erhöhen → frische Fixture, Wellen und Telemetrie → Presets → aktivieren. Alte Actions/Callbacks scheitern an den unveränderten regionalen Guards. Der normale RegionLifecycle wird nicht ersetzt. Es entsteht genau ein neuer Player.
+
+**Pause und Zeit:** Nur die Fixture-Verarbeitung wird angehalten. CollisionObjects bleiben für kontrollierte Physikproben aktiv (`DISABLE_MODE_KEEP_ACTIVE`). `advance_probe()` bewegt ausgewählte Probe-/Defense-/Reaction-/Vitals-Uhren, keine Körper und keine vollständige Welt. Freies Spielen nutzt normale Physik; die Sandbox ist keine allgemeine Einzelschritt-Engine. Eingaben gelten in der Arena; das Verlassen eines Zahlenfeldes per Arena-Klick löst keinen Zauber aus.
+
+**Daten:** Nahdistanz bedeutet vor M08 den vorhandenen Magier mit aktiver Abwehr, keine neue Spielerwaffe. Fern-/Magieprofile verwenden vorhandene Fähigkeiten/Talente. Enemy-Testwerte ändern ausschließlich private Definitionskopien. Keine Mutation des globalen Content-Caches, keine freien globalen Player-Stats. Maximal acht lebende Gegner; drei endliche Wellen. Testwerte sind keine Produktionsbalance.
+
+**Diagnose:** Freie Kämpfe protokollieren echte Defense und Actor-/M06-Auflösung. Vollständige Ablehnungsgründe stehen in der ausdrücklich bezeichneten Kontaktprobe und den Szenarien zur Verfügung. Die bestehenden Live-Adapter melden nicht jeden Miss; die Sandbox erfindet keine Ereignisse und ergänzt keinen Core-Eventbus.
+
+**Save-/Export-Isolation:** Der optionale Buttonbericht schreibt nur `user://developer_sandbox/last_report.json`. Keine SaveSystem-Aufrufe. `tools/export_sandbox.py` erstellt eine Staging-Kopie mit eigener Startszene, 1280×720-UI und Benutzerordner `Lichterhain_DeveloperSandbox`. Das originale `project.godot` bleibt bytegleich. Produktions-Presets schließen `developer/*` aus. Paket-Smokes verwenden ein leeres Ressourcenverzeichnis, damit lose Quelldateien keine fehlenden Pack-Inhalte verdecken.
+
+**Erweiterung:** Künftige genehmigte Weapon-/Magic-/Status-Verbraucher können über Presets, Controls und zusätzliche Szenarien eingebunden werden. Ihre Contracts werden jetzt nicht definiert. Blueprint-Welt-Deltas, Umweltreaktionen und Simulation bleiben zukünftige Leitplanken. Kein globaler Manager, keine Registry, keine zweite Formel.
+
 ## Laufzeit
 
 Godot **4.5.1 Standard**, GDScript, Compatibility-Renderer, 60 Physikschritte/Sekunde. Keine Add-ons, externen Bibliotheken, Online-Abfragen oder Laufzeit-KI. Der Editor ist nur zur Weiterentwicklung nötig; Exporte laufen eigenständig.

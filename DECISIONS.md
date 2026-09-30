@@ -102,3 +102,12 @@ Die ausdrücklichen offenen Designbereiche werden zentral in Abschnitt 21 der [D
 | 2026-09-28 | F hält Block, Q startet Parry; Leertaste bleibt Dodge | Zwei kleine echte Bedienpfade; keine Layout-/Asset- oder globale Eingabe-Neuentwicklung |
 | 2026-09-28 | M07-Reaktion sperrt begrenzt und erhält danach ein Kontrollfenster | Keine endlose Verlängerung durch Treffer/Hitstop; keine zusätzliche Poise-Statistik |
 | 2026-09-28 | Abschlussnachweise nach Wiederherstellung vollständig neu erzeugen | Frühere lokale M07-Logs gingen bei automatischer Bereinigung verloren; kein erfundener Testnachweis |
+
+## Developer Sandbox — 2026-09-30
+
+- Tim nimmt M07 nach fehlerfreiem Windows-Spieltest ab und beauftragt das Labor vor M08 nach Work Order/Blueprint V1.0.
+- Lokale RegionInstance-Fixture und unveränderte Actors/M06/M07. Keine neuen Core-Contracts, globalen Besitzer oder zweiten Formeln.
+- Nahdistanztest bleibt bis M08 Magier/Abwehr. Testdaten ändern nur private Enemy-Kopien; kein Produktionsbalancing.
+- Beobachtung echter Defense-/M06-Ergebnisse; vollständige Miss-Gründe nur in Kontaktproben. Kein nachgebildetes Live-Combat-Protokoll.
+- Eigener Developer-Export/App-Benutzerordner; Produktions-Packs schließen Sandbox aus. Pack-Smokes laufen ohne Quellcode-Fallback aus leerem Verzeichnis.
+- Eigene manuelle Windows-Abnahme nach Lieferung; Stop vor M08.
