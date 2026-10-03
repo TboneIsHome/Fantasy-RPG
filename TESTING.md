@@ -2,6 +2,8 @@
 
 ## Developer Sandbox — Prüfablauf
 
+**Paketlieferung 03.10.2026:** Neun Binärteile mit höchstens 4 MiB; Windows-Joiner per `copy /b`. Vollständiges Original und lokale Zusammensetzung extrahiert, CRC/Datei-Hashes geprüft und beide ZIPs byteweise identisch. [Paketnachweis](qa/sandbox_split_package_results.json). Keine Runtime-Änderung und keine erneute Behauptung einer Gameplay-Regression für diesen reinen Lieferschritt. Native Ausführung der BAT: **NOT TESTED**.
+
 M07 ist nach Tims erfolgreichem Windows-Spieltest abgeschlossen. Die neue Sandbox benötigt eine eigene Abnahme. Aktueller Abschlussstatus und konkrete Zahlen: [Completion Report](docs/DEVELOPER_SANDBOX_COMPLETION_REPORT.md).
 
 **Abschlussnachweis vom 30.09.2026:** **1.186/1.186** Checks in 26 Stufen, davon 116 neue Sandbox-Checks. Die unveränderte ausgelieferte Windows-EXE besteht zusätzlich **118/118** Pack-Checks mit der Linux-Engine. Vollständige Regression und Pack-Logs wurden nach der Arbeitsbereichsbereinigung erneut erzeugt. **Sandbox MANUAL WINDOWS: NOT TESTED.**

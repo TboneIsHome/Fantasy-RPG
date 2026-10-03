@@ -6,7 +6,7 @@ Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelw
 
 [Sandbox Completion Report](docs/DEVELOPER_SANDBOX_COMPLETION_REPORT.md) · [Windows-Prüfliste](docs/SANDBOX_WINDOWS_TEST.md). Eigener Sandbox-Windows-Test: **NOT TESTED**. Stop vor M08; neue Waffen/Magie/Statussysteme brauchen eine neue Freigabe.
 
-**Sandbox starten:** `Lichterhain_DeveloperSandbox_Windows.zip` entpacken und `Lichterhain_DeveloperSandbox.exe` öffnen. Im Editor `developer/sandbox.tscn` mit F6 starten. Die normale F5-Startszene bleibt das Spiel. Sandbox-Quelle: Branch `foundation/developer-sandbox`. Die folgenden Spielanleitungen beziehen sich weiterhin auf den normalen Prototypen.
+**Sandbox starten:** Alle neun `.zip.part001`–`.zip.part009` und `JOIN_WINDOWS_PACKAGE.bat` in denselben Ordner laden. Die BAT starten; nach erfolgreicher Größen-/SHA-256-Prüfung `Lichterhain_DeveloperSandbox_Windows_full.zip` entpacken und `Lichterhain_DeveloperSandbox.exe` öffnen. Die äußere `START_HIER.txt` erklärt den Ablauf. Im Editor `developer/sandbox.tscn` mit F6 starten. Die normale F5-Startszene bleibt das Spiel. Sandbox-Quelle: Branch `foundation/developer-sandbox`. Die folgenden Spielanleitungen beziehen sich weiterhin auf den normalen Prototypen.
 
 ## Direkt spielen unter Windows
 

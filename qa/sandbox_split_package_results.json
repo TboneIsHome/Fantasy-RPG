@@ -1,0 +1,131 @@
+{
+  "date": "2026-10-03",
+  "scope": "Package delivery only",
+  "full_zip": "Lichterhain_DeveloperSandbox_Windows.zip",
+  "rejoined_zip": "Lichterhain_DeveloperSandbox_Windows_full.zip",
+  "full_size_bytes": 34128883,
+  "full_sha256": "699245a36f6710e7c05c87f4ddc4ce506008f654c40b553c0fee8aaf6a580d13",
+  "maximum_artifact_bytes": 4194304,
+  "parts": [
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part001",
+      "size_bytes": 4194304,
+      "sha256": "7ba836504a4f613bd8b48e2a87646c06cd216ecbdfc30203835d46342c724e05"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part002",
+      "size_bytes": 4194304,
+      "sha256": "4531bc204163d46dfdc23ff21f7d3f277c1aa3a8f77d50920e592574f4714202"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part003",
+      "size_bytes": 4194304,
+      "sha256": "c3f3d34cd73cba4b6355412a9582e5cf3c8db4cfe508a8f6ef5d63e643356cdc"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part004",
+      "size_bytes": 4194304,
+      "sha256": "2ce1a26e7c9d820e7e123128bcd5bf55c50cc52a1eaf07c754036700974bd21a"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part005",
+      "size_bytes": 4194304,
+      "sha256": "c6ca63c23cc468b8f79c5abbcc7fc02ce89ae200a6d59335ef1edb9972c8b8db"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part006",
+      "size_bytes": 4194304,
+      "sha256": "2bb5fe330c8998df5157747d7ed91c18fcffe23351e01489d2b09be9e22271f7"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part007",
+      "size_bytes": 4194304,
+      "sha256": "5f619b18e66e9cbe6d9d19bbbcc009aaab8f8bb0010b8bee1d9897af79fa90bf"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part008",
+      "size_bytes": 4194304,
+      "sha256": "0d4d5f1bff2f3a9adf7797aa0951767657c926477882a6ece47a6e08acca3947"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part009",
+      "size_bytes": 574451,
+      "sha256": "b09ad2292374351e5867693e73eddbda353f586d44e5edeb8a55ac0b24ddd900"
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "JOIN_WINDOWS_PACKAGE.bat",
+      "size_bytes": 4377,
+      "sha256": "8958acaa91690925a14940f59685cebf86e54f1eaba1d3b00d237edf89f3ee85"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part001",
+      "size_bytes": 4194304,
+      "sha256": "7ba836504a4f613bd8b48e2a87646c06cd216ecbdfc30203835d46342c724e05"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part002",
+      "size_bytes": 4194304,
+      "sha256": "4531bc204163d46dfdc23ff21f7d3f277c1aa3a8f77d50920e592574f4714202"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part003",
+      "size_bytes": 4194304,
+      "sha256": "c3f3d34cd73cba4b6355412a9582e5cf3c8db4cfe508a8f6ef5d63e643356cdc"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part004",
+      "size_bytes": 4194304,
+      "sha256": "2ce1a26e7c9d820e7e123128bcd5bf55c50cc52a1eaf07c754036700974bd21a"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part005",
+      "size_bytes": 4194304,
+      "sha256": "c6ca63c23cc468b8f79c5abbcc7fc02ce89ae200a6d59335ef1edb9972c8b8db"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part006",
+      "size_bytes": 4194304,
+      "sha256": "2bb5fe330c8998df5157747d7ed91c18fcffe23351e01489d2b09be9e22271f7"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part007",
+      "size_bytes": 4194304,
+      "sha256": "5f619b18e66e9cbe6d9d19bbbcc009aaab8f8bb0010b8bee1d9897af79fa90bf"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part008",
+      "size_bytes": 4194304,
+      "sha256": "0d4d5f1bff2f3a9adf7797aa0951767657c926477882a6ece47a6e08acca3947"
+    },
+    {
+      "file": "Lichterhain_DeveloperSandbox_Windows.zip.part009",
+      "size_bytes": 574451,
+      "sha256": "b09ad2292374351e5867693e73eddbda353f586d44e5edeb8a55ac0b24ddd900"
+    },
+    {
+      "file": "SHA256SUMS.txt",
+      "size_bytes": 1331,
+      "sha256": "c9802d44f89d78fc49f1599133d9415ec5388ac1c9a2bbff628e9eec5fdad639"
+    },
+    {
+      "file": "START_HIER.txt",
+      "size_bytes": 2301,
+      "sha256": "ac80f433e1b946bf84274bf31ca9d549689b443a8138100bf30672b5e7655f28"
+    }
+  ],
+  "parts_count": 9,
+  "original_zip_crc": "PASS",
+  "original_fully_extracted_files": 9,
+  "original_manifest_files_verified": 8,
+  "rejoined_zip_crc": "PASS",
+  "rejoined_fully_extracted_files": 9,
+  "all_extracted_bytes_equal": true,
+  "zip_byte_for_byte_equal": true,
+  "copy_order_from_actual_bat_verified": true,
+  "bat_native_windows_tested": false,
+  "sandbox_manual_windows_tested": false,
+  "runtime_code_changed": false,
+  "m08_started": false
+}

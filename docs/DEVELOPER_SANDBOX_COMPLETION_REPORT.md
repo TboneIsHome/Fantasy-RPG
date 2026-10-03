@@ -74,9 +74,28 @@ Nachweise: [Gesamtergebnis](../qa/sandbox_results.json), [Szenarien mit tatsäch
 
 **Nachweisaufbewahrung:** Die automatische Arbeitsbereichsbereinigung entfernte vor der endgültigen GitHub-Sicherung lokale Detailprotokolle. Quellstand und dieses Windows-Paket waren bereits dauerhaft gesichert. Regression und die unveränderte Windows-EXE wurden anschließend erneut geprüft; ihre vollständigen Protokolle liegen unter `qa/sandbox_logs/`. Die zuvor tatsächlich bestandenen Produktions-/Developer-Export-Gates und 16 gerenderten Checks sind aus den aufgezeichneten Tool-Ergebnissen und `BUILD_INFO.json` übernommen und in den zugehörigen JSONs ausdrücklich als früherer Lauf gekennzeichnet. Deren vollständige Export-/Render-Logs sind nicht mehr vorhanden; drei zuvor hochgeladene Bilder sind erhalten. Der Paketinhalt und seine Prüfsumme bleiben unverändert.
 
-## Übergabe
+## Übergabe — Binärteile vom 03.10.2026
 
-`Lichterhain_DeveloperSandbox_Windows.zip` vollständig entpacken und `Lichterhain_DeveloperSandbox.exe` starten. Godot muss nicht installiert sein. `START_HIER.txt` erklärt die Controls; `WINDOWS_TEST.md` führt durch die eigene Sandbox-Abnahme. Das Archiv startet direkt im Entwicklerlabor. Bestehende Spielstände werden nicht importiert.
+Ausgeliefert werden **neun Binärteile** des unveränderten, bereits geprüften `Lichterhain_DeveloperSandbox_Windows.zip`: `.part001` bis `.part009`. Die Teile 001–008 sind jeweils **4.194.304 Bytes (4 MiB)** groß; Teil 009 hat **574.451 Bytes**. Auch jede Begleitdatei bleibt unter dieser Obergrenze. Die Teile sind keine einzeln entpackbaren ZIP-Archive.
+
+1. Alle neun Teile und `JOIN_WINDOWS_PACKAGE.bat` in denselben Ordner herunterladen; Namen/Endungen beibehalten.
+2. `JOIN_WINDOWS_PACKAGE.bat` starten. Sie prüft die Teilgrößen, verbindet die Dateien in expliziter Reihenfolge mit `copy /b` und kontrolliert Gesamtgröße und SHA-256 mit Windows PowerShell.
+3. Nach der Erfolgsmeldung `Lichterhain_DeveloperSandbox_Windows_full.zip` vollständig entpacken.
+4. `Lichterhain_DeveloperSandbox.exe` starten und `WINDOWS_TEST.md` im entpackten Paket durchgehen.
+
+Die äußere `START_HIER.txt` erklärt diese Schritte. `SHA256SUMS.txt` enthält Hashes für die vollständige ZIP, alle Teile, die BAT und die Anleitung. Eine bereits vorhandene fertige ZIP wird geprüft und nicht überschrieben; bei fehlenden/beschädigten Teilen wird keine neue ZIP als erfolgreich freigegeben. Windows PowerShell wird für die Hashprüfung benötigt; Godot muss nicht installiert sein.
+
+**Vollständige ZIP:** 34.128.883 Bytes. **SHA-256:**
+
+```text
+699245a36f6710e7c05c87f4ddc4ce506008f654c40b553c0fee8aaf6a580d13
+```
+
+**AUTOMATED TESTED am 03.10.2026:** Original-ZIP vollständig extrahiert (9 Dateien), ZIP-CRC und sämtliche 8 in `BUILD_INFO.json` aufgeführten Datei-Hashes geprüft. Die Reihenfolge wurde aus der tatsächlichen `copy /b`-Zeile übernommen und lokal binär zusammengesetzt: byteweise identisch, gleiche SHA-256, erneut vollständig extrahiert, alle extrahierten Bytes identisch. Größen und Hashes der auszuliefernden Artefakte stehen im [Paketnachweis](../qa/sandbox_split_package_results.json).
+
+**BAT unter nativem Windows: NOT TESTED.** Die BAT wurde statisch geprüft; die lokale Binärzusammensetzung wurde unter Linux verifiziert. Das ist keine native Ausführung von `cmd.exe` oder PowerShell. Auch die manuelle Sandbox-Windows-Abnahme steht weiterhin aus.
+
+Die ZIP bleibt einschließlich ihres ursprünglichen Build-Berichts bytegleich zur geprüften Referenz. Dieser externe Completion Report dokumentiert den aktualisierten Liefermechanismus. Diese Paketlieferung ändert weder Runtime-Code, Sandbox-Logik, M07 noch Produktionsdateien. Das Archiv startet weiterhin direkt im Entwicklerlabor; normale Spielstände werden nicht importiert.
 
 Der Diagnosebericht wird nur auf ausdrücklichen Buttondruck unter `%APPDATA%\Lichterhain_DeveloperSandbox\developer_sandbox\last_report.json` gespeichert. Für eine Fehlermeldung Szenario/Preset, Schritte, tatsächliches Ergebnis und nach Möglichkeit diesen Bericht angeben.
 
