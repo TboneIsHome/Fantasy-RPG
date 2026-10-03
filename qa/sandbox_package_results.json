@@ -1,0 +1,27 @@
+{
+  "date": "2026-09-30",
+  "tested_source_commit": "5bd7554bafb34c8e0ea4872fd91aa89ad6f10e63",
+  "package": "Lichterhain_DeveloperSandbox_Windows.zip",
+  "size_bytes": 34128883,
+  "sha256": "699245a36f6710e7c05c87f4ddc4ce506008f654c40b553c0fee8aaf6a580d13",
+  "zip_crc_passed": true,
+  "exe_matches_tested_export": true,
+  "pe_x86_64_verified": true,
+  "exe": {
+    "size_bytes": 97073024,
+    "sha256": "30beb071ad40900502dfe7bc3600435388be0e6f0a37ed78d6b172e5fc5988d1"
+  },
+  "entries": [
+    "BUILD_INFO.json",
+    "COMPLETION_REPORT.md",
+    "CREDITS.md",
+    "Lichterhain_DeveloperSandbox.exe",
+    "START_HIER.txt",
+    "WINDOWS_TEST.md",
+    "licenses/DEJAVU_FONT_LICENSE.txt",
+    "licenses/GODOT_COPYRIGHT.txt",
+    "licenses/GODOT_LICENSE.txt"
+  ],
+  "manual_windows_tested": false,
+  "manual_windows_status": "NOT TESTED"
+}

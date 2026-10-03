@@ -6,6 +6,7 @@
 - Getrenntes Combat-Labor mit lokalen Presets, Actors, Reset/Generation, tatsächlichen M06/M07-Kontakten, Defense, Wellen und begrenzter Diagnose.
 - Zwölf reproduzierbare Szenarien, isolierte Save-Sentinels und gerenderte Bedienprüfung.
 - Separater Developer-Export; Ausschluss aus Produktions-Packs, keine Änderungen an Produktionscode oder Balance.
+- Abschluss am 30.09.2026: 1.186/1.186 Checks, getrennte Exporte und Windows-Testpaket. Nach erneuter Bereinigung Regression und unveränderte Windows-EXE nochmals geprüft; Herkunft älterer Render-/Exportnachweise offengelegt. Manueller Sandbox-Windows-Test bleibt offen.
 - M08–M10 bleiben ungeöffnet.
 
 

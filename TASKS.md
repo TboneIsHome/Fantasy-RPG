@@ -68,7 +68,7 @@
 - [x] M07: Completion Report, Windows-Testpaket und GitHub-Nachweise erstellen.
 - [x] M07: Tim bestätigt den manuellen Windows-Spieltest ohne gefundene Fehler.
 - [x] Sandbox: Arena, Presets, echte Combat-Controls, Wellen, Diagnose und A01–A12.
-- [ ] Sandbox: Abschlussnachweise und Developer-Paket liefern.
+- [x] Sandbox: Completion Report, Testnachweise und geprüftes Developer-Windows-Paket bereitstellen.
 - [ ] Sandbox: eigener manueller Windows-Spieltest durch Tim und gemeinsame Abnahme.
 - [ ] Stop nach Sandbox; M08 erst nach neuer Freigabe.
 

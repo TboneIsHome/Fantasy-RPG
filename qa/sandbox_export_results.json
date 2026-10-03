@@ -1,0 +1,128 @@
+{
+  "tested_source_commit": "5bd7554bafb34c8e0ea4872fd91aa89ad6f10e63",
+  "date": "2026-09-30",
+  "evidence": "Actual earlier execution, retained in conversation tool output and package BUILD_INFO.json. Full earlier export logs were pruned before the final repository upload; these gates have not been rerun during evidence recovery. The exact delivered Windows EXE is tested again separately.",
+  "exports": {
+    "production": {
+      "stages": [
+        {
+          "stage": "windows_export",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        },
+        {
+          "stage": "linux_export",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        },
+        {
+          "stage": "linux_release_smoke",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        },
+        {
+          "stage": "windows_pack_smoke",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        },
+        {
+          "stage": "linux_release_startup",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        },
+        {
+          "stage": "windows_pack_startup",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        },
+        {
+          "stage": "linux_sandbox_exclusion",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        },
+        {
+          "stage": "windows_sandbox_exclusion",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        }
+      ],
+      "native_windows_tested": false,
+      "binaries": {
+        "Lichterhain.exe": {
+          "size_bytes": 97023440,
+          "sha256": "6f7153e75a4a6eee381c860feba77c9f96fa24cbb540827b33a397010a4c3283"
+        },
+        "Lichterhain.x86_64": {
+          "size_bytes": 70456704,
+          "sha256": "126e960d01293d278746c83c10c17ca64f788bcd55e8ee1107d43c2bde5b7847"
+        }
+      }
+    },
+    "developer": {
+      "stages": [
+        {
+          "stage": "import",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        },
+        {
+          "stage": "windows_export",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        },
+        {
+          "stage": "linux_export",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        },
+        {
+          "stage": "linux_sandbox",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        },
+        {
+          "stage": "windows_sandbox_pack",
+          "passed": true,
+          "exit_code": 0,
+          "errors": []
+        }
+      ],
+      "native_windows_tested": false,
+      "binaries": {
+        "Lichterhain_DeveloperSandbox.exe": {
+          "size_bytes": 97073024,
+          "sha256": "30beb071ad40900502dfe7bc3600435388be0e6f0a37ed78d6b172e5fc5988d1"
+        },
+        "Lichterhain_DeveloperSandbox.x86_64": {
+          "size_bytes": 70506096,
+          "sha256": "3f55f1767cf99173934e055b42958a1a7cf8c7eff582b93841bd8a75cf854b66"
+        }
+      }
+    }
+  },
+  "developer_suites": {
+    "linux_sandbox": {
+      "checks": 118,
+      "failures": [],
+      "native_windows_tested": false
+    },
+    "windows_sandbox_pack": {
+      "checks": 118,
+      "failures": [],
+      "native_windows_tested": false
+    }
+  },
+  "native_windows_tested": false
+}

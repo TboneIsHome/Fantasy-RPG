@@ -4,6 +4,12 @@
 
 M07 ist nach Tims erfolgreichem Windows-Spieltest abgeschlossen. Die neue Sandbox benötigt eine eigene Abnahme. Aktueller Abschlussstatus und konkrete Zahlen: [Completion Report](docs/DEVELOPER_SANDBOX_COMPLETION_REPORT.md).
 
+**Abschlussnachweis vom 30.09.2026:** **1.186/1.186** Checks in 26 Stufen, davon 116 neue Sandbox-Checks. Die unveränderte ausgelieferte Windows-EXE besteht zusätzlich **118/118** Pack-Checks mit der Linux-Engine. Vollständige Regression und Pack-Logs wurden nach der Arbeitsbereichsbereinigung erneut erzeugt. **Sandbox MANUAL WINDOWS: NOT TESTED.**
+
+Zuvor tatsächlich bestanden: 16 gerenderte Bedienprüfungen, 8 Produktions- und 5 Developer-Export-Gates. Deren vollständige Rohlogs gingen bei der Bereinigung verloren; Ergebnis, Herkunft und Grenzen sind in den JSON-Nachweisen ausdrücklich dokumentiert. Drei der vier visuell geprüften Bilder sind erhalten. 139 geschützte Produktions-/Fixture-Dateien bleiben bytegleich zu M07.
+
+[Ergebnisse](qa/sandbox_results.json) · [Exporte](qa/sandbox_export_results.json) · [Isolation](qa/sandbox_isolation.json) · [Logs und Herkunft](qa/sandbox_logs/README.md) · [Bilder](qa/sandbox_images/) · [Referenzen](qa/sandbox_reference_manifest.json) · [Paketprüfung](qa/sandbox_package_results.json).
+
 - `python3 tools/verify.py /absoluter/pfad/godot`: vollständige Foundation plus isolierte Sandbox-Prüfung.
 - `python3 tools/verify_sandbox.py /absoluter/pfad/godot`: eigener temporärer Benutzerbereich, unveränderte Produktions-Save-Sentinels, A01–A12, Preset-/Datenfehler, Controls, Reset, Report und Freigabe alter Actors.
 - `godot --path . --script res://tests/sandbox_visual_smoke.gd`: grafische Sitzung; gerenderte UI, Eingabe/Fokus, F-Block, keine Zauber über Controls, Diagnose, Szenario-Runner, Wellen und Reset. Bilder/Ergebnis unter test-output. Kein manueller Spieltest.
@@ -15,6 +21,8 @@ Die Suite ist nur über ihren isolierenden Runner auszuführen. Reguläre Save-D
 
 
 ## Active Combat & Defense M07 — Nachweis vom 28.09.2026
+
+> Abnahmenachtrag: Tim hat danach den manuellen M07-Windows-Spieltest ohne gefundene Fehler bestätigt. M07 ist abgeschlossen. Die folgenden Angaben beschreiben den damaligen Lieferstand; die Sandbox benötigt eine eigene Abnahme.
 
 **IMPLEMENTED / AUTOMATED TESTED. MANUAL WINDOWS TESTED: nein / NOT TESTED.** Tim hat den M06-Windows-Spieltest bestätigt; die neue M07-EXE benötigt ihre eigene Abnahme. Nach automatischer Bereinigung wurde der Code aus dem GitHub-Zwischenstand wiederhergestellt. Alle nachfolgend genannten Prüfungen wurden auf dem wiederhergestellten Stand erneut ausgeführt; frühere verlorene M07-Logs werden nicht als Nachweis verwendet.
 

@@ -1,0 +1,70 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS ACTIVE SCENE: Startup never reaches M06
+PASS ACTIVE SCENE: Commit alone is not a contact window
+PASS ACTIVE SCENE: Captured pre-active query does not become valid later
+PASS ACTIVE SCENE: Target moving away is revalidated at contact
+PASS ACTIVE SCENE: Actor moving away changes the live query origin
+PASS ACTIVE SCENE: Wrong facing remains a miss without accuracy roll
+PASS ACTIVE SCENE: Fresh obstruction rejects contact
+PASS ACTIVE SCENE: Valid contact uses M06 and actor-owned health
+PASS ACTIVE SCENE: Confirmed result retains M06 source and generation
+PASS ACTIVE SCENE: Same target is claimed once per phase
+PASS ACTIVE SCENE: Recovery cannot deliver a contact
+PASS ACTIVE SCENE: Completed action cannot deliver a contact
+PASS ACTIVE SCENE: Interrupted action cannot deliver a contact
+PASS ACTIVE SCENE: Explicit next phase creates a new M06 receipt
+PASS ACTIVE SCENE: One AoE phase can independently hit multiple targets
+PASS ACTIVE SCENE: AoE cannot replay a target within its phase
+PASS ACTIVE SCENE: Queued target is rejected
+PASS ACTIVE SCENE: Query does not retain freed targets
+PASS ACTIVE SCENE: Target outside the originating region is invalid
+PASS ACTIVE SCENE: Reentrant hit signals cannot double-apply confirmed damage
+PASS ACTIVE SCENE: Queued attacker invalidates unreleased actions
+PASS ACTIVE SCENE: Nonfinite spatial context is rejected
+PASS ACTIVE SCENE: Actual held input activates Block and reduces movement
+PASS ACTIVE SCENE: Input release ends the stance
+PASS ACTIVE SCENE: Actual Q action opens the Parry window
+PASS ACTIVE SCENE: Defensive actions are bound in the current input setup
+PASS ACTIVE SCENE: Block cannot freely attack at the same time
+PASS ACTIVE SCENE: Block passes authored scales to M06, retaining damage and impact
+PASS ACTIVE SCENE: Confirmed block reaches existing presentation
+PASS ACTIVE SCENE: Rear hit bypasses the held block
+PASS ACTIVE SCENE: Active Parry rejects defense stacking and refresh requests
+PASS ACTIVE SCENE: Parry interrupts the current attacker and creates a counter opportunity
+PASS ACTIVE SCENE: Confirmed parry is presented then consumed
+PASS ACTIVE SCENE: Consumed parry grants no protection against another contact
+PASS ACTIVE SCENE: Mistimed parry remains exposed with offensive recovery
+PASS ACTIVE SCENE: Recovery returns to normal control
+PASS ACTIVE SCENE: Dodge preserves the existing resource cost
+PASS ACTIVE SCENE: Dodge rejects contact before invoking M06
+PASS ACTIVE SCENE: Dodge produces actual position change
+PASS ACTIVE SCENE: Protection expires; dodge is not a permanent miss state
+PASS ACTIVE SCENE: Ground pulse eligibility cannot inherit an unrelated Block
+PASS ACTIVE SCENE: Normal contact retains controlled actor response
+PASS ACTIVE SCENE: Effective impact interrupts player action and temporarily denies defense
+PASS ACTIVE SCENE: Stronger effective impact creates bounded Stagger
+PASS ACTIVE SCENE: Repeated real hits still apply damage but cannot prolong stagger
+PASS ACTIVE SCENE: Player regains an actual defensive opportunity after reaction
+PASS ACTIVE SCENE: Authored Stability changes live reaction through M06 exactly once
+PASS ACTIVE SCENE: NPC consumes the same effective impact and interrupts its current action
+PASS ACTIVE SCENE: Presentation hit stop cannot steal the post-stagger AI control window
+PASS ACTIVE SCENE: Released bolt has its own action while caster recovers
+PASS ACTIVE SCENE: Repeated live projectile signal applies one existing 19-damage hit
+PASS ACTIVE SCENE: Parrying a real hostile projectile invalidates payload and current source action
+PASS ACTIVE SCENE: Parrying an older projectile cannot interrupt the caster's newer action
+PASS ACTIVE SCENE: Explicitly released projectile can finish after caster death in the same region
+PASS ACTIVE SCENE: Existing ground attack enters its first explicit phase
+PASS ACTIVE SCENE: Continuous ground overlap does not deliver frame damage
+PASS ACTIVE SCENE: Next authored pulse receives a distinct M06 instance
+PASS ACTIVE SCENE: Wolf ends lunge movement at Active end, not Recovery end
+PASS ACTIVE SCENE: Rapid roundtrip invalidates the old generation
+PASS ACTIVE SCENE: Stale projectile callback cannot touch the replacement player
+PASS ACTIVE SCENE: Actual delayed action is discarded after region change
+PASS ACTIVE SCENE: Weak context releases the old actor and leaves one player
+PASS ACTIVE SCENE: Existing save works while defense and an action are active
+PASS ACTIVE SCENE: Schema 3 contains no transient combat state
+PASS ACTIVE SCENE: Load restores existing persistent data with fresh combat state
+PASS ACTIVE SCENE: Pre-load action cannot be reused after same-region reconstruction
+PASS ACTIVE SCENE: Deactivation invalidates actions before deferred tree destruction
+ACTIVE COMBAT SCENE RESULT 67/67

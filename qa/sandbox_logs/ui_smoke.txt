@@ -1,0 +1,19 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS UI: Title menu fits inside 640 x 360
+PASS UI: Start button opens a playable game
+PASS UI: TAB opens the readable journal
+PASS UI: TAB closes the journal even after a button has focus
+PASS UI: M opens the map and pauses
+PASS UI: ESC closes the map
+PASS UI: ESC opens the pause menu within the viewport
+PASS UI: Continue button resumes the world
+PASS UI: Edda dialogue fits the viewport
+PASS UI: Dialogue button accepts the exploration objective
+PASS UI: Journal still fits with the relic description
+PASS UI: Discovery tab remains paused and fits with every lore entry
+PASS UI: Last discovery is reachable by scrolling
+PASS UI: TAB closes the scrolled discovery tab
+UI RESULT: 14/14
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2514)

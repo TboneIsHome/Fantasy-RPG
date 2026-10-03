@@ -1,0 +1,183 @@
+{
+  "date": "2026-09-30",
+  "status": "IMPLEMENTED / AUTOMATED TESTED",
+  "tested_source_commit": "5bd7554bafb34c8e0ea4872fd91aa89ad6f10e63",
+  "m07_baseline_commit": "3b8ce33d6a3c48545636cbd61fa368f81a23494c",
+  "checks_passed": 1186,
+  "checks_total": 1186,
+  "previous_checks_retained": 1070,
+  "new_checks": 116,
+  "check_groups": {
+    "test_suite": 50,
+    "ui_smoke": 14,
+    "save_compatibility": 8,
+    "dungeon_suite": 48,
+    "migration_suite": 12,
+    "source_suite": 65,
+    "save_io_reproduction": 8,
+    "save_fault_suite": 71,
+    "save_scene_smoke": 14,
+    "state_replay_reproduction": 3,
+    "state_actions_suite": 100,
+    "state_actions_scene": 12,
+    "region_replay_reproduction": 4,
+    "region_lifecycle_suite": 95,
+    "content_validation_suite": 88,
+    "data_consistency_suite": 89,
+    "interaction_contract_suite": 29,
+    "interaction_scene_suite": 53,
+    "hit_resolution_suite": 77,
+    "hit_scene_suite": 58,
+    "active_combat_suite": 65,
+    "active_combat_scene_suite": 67,
+    "content_startup": 40,
+    "sandbox_suite": 116
+  },
+  "regression_stages": [
+    {
+      "stage": "import",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "test_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "ui_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_compatibility",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "dungeon_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "migration_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "source_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_io_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_fault_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "save_scene_smoke",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "state_actions_scene",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "region_replay_reproduction",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "region_lifecycle_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "content_validation_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "data_consistency_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "interaction_contract_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "interaction_scene_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "hit_resolution_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "hit_scene_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "active_combat_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "active_combat_scene_suite",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "sandbox",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "content_startup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "real_write_error",
+      "passed": true,
+      "exit_code": 0
+    }
+  ],
+  "regression_evidence": "Executed again after workspace pruning to retain complete raw logs; unchanged source.",
+  "rendered_ui_checks": 16,
+  "production_export_gates": 8,
+  "developer_export_gates": 5,
+  "earlier_gate_evidence": "See sandbox_visual_results.json and sandbox_export_results.json for retention limits.",
+  "delivered_windows_pack_checks": 118,
+  "delivered_windows_pack_reverified": true,
+  "export_checks_counted_again_in_regression": false,
+  "manual_windows_tested": false,
+  "manual_windows_status": "NOT TESTED",
+  "production_source_files_unchanged": 139,
+  "production_save_sentinels_unchanged": true,
+  "performance_benchmark": "NOT TESTED",
+  "long_play_session": "NOT TESTED",
+  "stop": "Developer Sandbox only; M08 not started"
+}

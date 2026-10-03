@@ -1,0 +1,15 @@
+{
+  "date": "2026-09-30",
+  "tested_source_commit": "5bd7554bafb34c8e0ea4872fd91aa89ad6f10e63",
+  "checks": 16,
+  "failures": [],
+  "native_windows_tested": false,
+  "environment": "Godot 4.5.1 / Linux / Xvfb / Mesa llvmpipe / 1280x720",
+  "evidence": "Actual earlier rendered run. Four captures inspected. Full render log and fourth capture were pruned; three already uploaded Git blobs are retained. No new rendered run claimed.",
+  "captures": [
+    "qa/sandbox_images/sandbox_arena.png",
+    "qa/sandbox_images/sandbox_diagnostics.png",
+    "qa/sandbox_images/sandbox_history.png"
+  ],
+  "capture_not_retained": "sandbox_scenarios.png"
+}

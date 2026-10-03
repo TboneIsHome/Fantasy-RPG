@@ -1,0 +1,68 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS ACTIVE COMBAT: Intent exists before start
+PASS ACTIVE COMBAT: Startup has no contact
+PASS ACTIVE COMBAT: Action cannot restart
+PASS ACTIVE COMBAT: Commit prevents free cancellation
+PASS ACTIVE COMBAT: Active begins at authored boundary
+PASS ACTIVE COMBAT: Active end is exclusive
+PASS ACTIVE COMBAT: Completed is terminal
+PASS ACTIVE COMBAT: Explicit pre-commit cancellation
+PASS ACTIVE COMBAT: Confirmed interrupt ends Active
+PASS ACTIVE COMBAT: Interrupted action never resumes
+PASS ACTIVE COMBAT: Explicit phase gap has no contact
+PASS ACTIVE COMBAT: New hit phase has its own index
+PASS ACTIVE COMBAT: Release ends Active and retains Recovery
+PASS ACTIVE COMBAT: Invalid time cannot advance or rewind
+PASS ACTIVE COMBAT: Malformed action windows rejected
+PASS ACTIVE COMBAT: Malformed action windows rejected
+PASS ACTIVE COMBAT: Malformed action windows rejected
+PASS ACTIVE COMBAT: Malformed action windows rejected
+PASS ACTIVE COMBAT: Malformed action windows rejected
+PASS ACTIVE COMBAT: Malformed action windows rejected
+PASS ACTIVE COMBAT: Malformed action windows rejected
+PASS ACTIVE COMBAT: Spell retains its full existing cooldown as Recovery
+PASS ACTIVE COMBAT: Normal yields Hit deterministically
+PASS ACTIVE COMBAT: Block is an active stance
+PASS ACTIVE COMBAT: Block only supplies M06 scales
+PASS ACTIVE COMBAT: Rear attack bypasses frontal block
+PASS ACTIVE COMBAT: Non-blockable area remains Hit
+PASS ACTIVE COMBAT: Parry replaces Block
+PASS ACTIVE COMBAT: Conflicting inputs cannot stack or refresh defense
+PASS ACTIVE COMBAT: Correct timing yields exactly Parry
+PASS ACTIVE COMBAT: Ineligible Parry grants no fallback Block
+PASS ACTIVE COMBAT: Failed Parry exposes actor during Recovery
+PASS ACTIVE COMBAT: Parry Recovery restores controls
+PASS ACTIVE COMBAT: Successful Parry is consumed without auto-counter
+PASS ACTIVE COMBAT: Dodge yields Evade
+PASS ACTIVE COMBAT: Dodge protection ends before reactivation recovery
+PASS ACTIVE COMBAT: Existing protection wins without stacking
+PASS ACTIVE COMBAT: Release ends Block
+PASS ACTIVE COMBAT: Existing normal impact retains displacement
+PASS ACTIVE COMBAT: M06 effective impact drives Stagger
+PASS ACTIVE COMBAT: Repeated impact cannot prolong Stagger
+PASS ACTIVE COMBAT: Recovery guard prevents immediate stagger loop
+PASS ACTIVE COMBAT: Stability is applied once by M06
+PASS ACTIVE COMBAT: Intermediate impact produces Interrupt
+PASS ACTIVE COMBAT: Counter opportunity is bounded
+PASS ACTIVE COMBAT: Counter cannot refresh its guard
+PASS ACTIVE COMBAT: Displacement is bounded
+PASS ACTIVE COMBAT: Existing thorn duration defines four phases
+PASS ACTIVE COMBAT: Zero intervals and runaway phase counts rejected
+PASS ACTIVE COMBAT: Shipped M07 content passes validation
+PASS ACTIVE COMBAT: Invalid field reports actual path: block_damage_scale
+PASS ACTIVE COMBAT: Invalid field reports actual path: block_impact_scale
+PASS ACTIVE COMBAT: Invalid field reports actual path: block_movement_scale
+PASS ACTIVE COMBAT: Invalid field reports actual path: parry_window
+PASS ACTIVE COMBAT: Invalid field reports actual path: parry_window
+PASS ACTIVE COMBAT: Invalid field reports actual path: counter_window
+PASS ACTIVE COMBAT: Invalid field reports actual path: facing_dot
+PASS ACTIVE COMBAT: Invalid field reports actual path: interrupt_impact
+PASS ACTIVE COMBAT: Invalid field reports actual path: stagger_impact
+PASS ACTIVE COMBAT: Invalid field reports actual path: max_displacement
+PASS ACTIVE COMBAT: Invalid field reports actual path: recovery_guard
+PASS ACTIVE COMBAT: Eligibility requires a boolean
+PASS ACTIVE COMBAT: Eligibility requires a boolean
+PASS ACTIVE COMBAT: Eligibility requires a boolean
+PASS ACTIVE COMBAT: Missing window has no hardcoded fallback
+ACTIVE COMBAT RESULT 65/65
