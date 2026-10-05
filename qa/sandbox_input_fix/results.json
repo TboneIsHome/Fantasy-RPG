@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-05",
+  "source_commit": "056d537adb3eda058a4927ee8f9c3cf0168c2da0",
+  "engine": "4.5.1.stable.official.f62fdbde1",
+  "regression": {
+    "checks": 1190,
+    "stages": 26,
+    "passed": true
+  },
+  "sandbox_checks": 120,
+  "release_sandbox_checks_per_pack": 122,
+  "rendered_windows_pack_checks": 34,
+  "production_export_gates": 8,
+  "developer_export_gates": 5,
+  "protected_production_files_unchanged": 139,
+  "manual_windows_fix_tested": false,
+  "m08_started": false,
+  "code_sha256": {
+    "developer/sandbox.gd": "91b32d8f6f86ea5e8b98ca63d262bc138f164bfd44a333cdc695afe5508e812d",
+    "tests/sandbox_suite.gd": "811208e555283c205fa0c8ef68fbed1ff8404209f0426199b6b21643dd806c8a",
+    "tests/sandbox_visual_smoke.gd": "54c888a529e824183b61aa0805f9b6d1af2642ae4f83282f6e601b910fb2d61f"
+  },
+  "old_pack_sha256": "30beb071ad40900502dfe7bc3600435388be0e6f0a37ed78d6b172e5fc5988d1"
+}

@@ -1,0 +1,11 @@
+{
+  "captures": [
+    "/workspace/scratch/c028e2fe5cfb/input-fix-validation/new-pack-ui/sandbox_arena.png",
+    "/workspace/scratch/c028e2fe5cfb/input-fix-validation/new-pack-ui/sandbox_diagnostics.png",
+    "/workspace/scratch/c028e2fe5cfb/input-fix-validation/new-pack-ui/sandbox_history.png",
+    "/workspace/scratch/c028e2fe5cfb/input-fix-validation/new-pack-ui/sandbox_scenarios.png"
+  ],
+  "checks": 34,
+  "failures": [],
+  "native_windows_tested": false
+}

@@ -1,0 +1,40 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS SANDBOX VISUAL: Playable arena retains usable viewport
+PASS SANDBOX VISUAL: Status is inside the 1280x720 window
+PASS SANDBOX VISUAL: Rendered screenshot: arena
+PASS SANDBOX VISUAL: Arena click exits value editing without firing a spell
+PASS SANDBOX VISUAL: Arena pointer enables real movement input
+PASS SANDBOX VISUAL: Held F reaches real player defense
+PASS SANDBOX VISUAL: Pointer over controls prevents accidental cast
+FAIL SANDBOX VISUAL: Mouse binding casts exactly once: bolt
+FAIL SANDBOX VISUAL: Mouse cast uses existing mana cost: bolt
+FAIL SANDBOX VISUAL: Mouse cast creates real M07 action: bolt
+FAIL SANDBOX VISUAL: Mouse cast reaches M06 resolution and target health: bolt
+FAIL SANDBOX VISUAL: Mouse release does not duplicate action: bolt
+FAIL SANDBOX VISUAL: Mouse binding casts exactly once: nova
+FAIL SANDBOX VISUAL: Mouse cast uses existing mana cost: nova
+FAIL SANDBOX VISUAL: Mouse cast creates real M07 action: nova
+FAIL SANDBOX VISUAL: Mouse cast reaches M06 resolution and target health: nova
+FAIL SANDBOX VISUAL: Mouse release does not duplicate action: nova
+PASS SANDBOX VISUAL: Held RMB remains edge-triggered even after cooldown reset
+PASS SANDBOX VISUAL: Releasing and pressing RMB permits the next cast
+PASS SANDBOX VISUAL: Leaving numeric edit consumes only the focus click: 1
+FAIL SANDBOX VISUAL: Next mouse press casts after numeric edit: 1
+PASS SANDBOX VISUAL: Leaving numeric edit consumes only the focus click: 2
+PASS SANDBOX VISUAL: Next mouse press casts after numeric edit: 2
+PASS SANDBOX VISUAL: Paused arena rejects mouse cast
+PASS SANDBOX VISUAL: RMB over controls cannot cast into arena
+PASS SANDBOX VISUAL: Diagnostics show actual phase and contact event
+PASS SANDBOX VISUAL: Rendered screenshot: diagnostics
+PASS SANDBOX VISUAL: Rendered screenshot: history
+PASS SANDBOX VISUAL: Rendered scenario runner completes A01–A12
+PASS SANDBOX VISUAL: Scenario completion is explicit and paused
+PASS SANDBOX VISUAL: Rendered screenshot: scenarios
+PASS SANDBOX VISUAL: Live wave starts in rendered arena
+PASS SANDBOX VISUAL: Wave Stop pauses the current encounter
+PASS SANDBOX VISUAL: UI Reset returns to selected full preset
+SANDBOX VISUAL RESULT 23/34

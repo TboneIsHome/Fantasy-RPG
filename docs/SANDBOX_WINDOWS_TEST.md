@@ -1,10 +1,21 @@
 # Developer Sandbox — Windows-Prüfliste
 
-**MANUAL WINDOWS TESTED: NOT TESTED.** Dieser Test betrifft die neue Sandbox. M07 selbst ist von Tim bereits abgenommen.
+**Neuer Mausfix: MANUAL WINDOWS TESTED — NOT TESTED.** Tim hat den Eingabefehler im vorherigen Sandbox-Build unter Windows gefunden. Diese Prüfliste betrifft das korrigierte Paket vom 05.10.2026. M07 selbst ist bereits abgenommen.
+
+## Gezielter Nachtest des Mausfixes
+
+1. `Lichterhain_DeveloperSandbox_InputFix_Windows.zip` in einen neuen Ordner entpacken und die dortige EXE starten.
+2. Maus in die Arena bewegen. **Linke Maustaste / 1 = Lichtfunke**, **rechte Maustaste / 2 = Frostkreis** — genau wie in der Produktion. Jeweils auf den Dummy zielen: Zauber, Mana-Kosten und sinkende Ziel-HP prüfen.
+3. Eine Auswahl im Dropdown „Angriff“ treffen, Maus zurück in die Arena bewegen und rechts klicken. Der erste Klick soll Frostkreis auslösen. Das Dropdown bestimmt nur den Button „Auf Ziel zaubern“, nicht die Maustastenbelegung.
+4. Mehrmals links klicken und rechts mit Loslassen erneut klicken; Cooldowns abwarten oder „Spieler auffüllen + Cooldowns zurücksetzen“ verwenden. Halten von RMB löst keine automatische Wiederholung aus.
+5. Ein Zahlenfeld bearbeiten. Der erste Arena-Klick beendet nur die Bearbeitung; nach Loslassen muss der nächste Klick wieder zaubern. Mit beiden Maustasten prüfen.
+6. Über dem Bedienfeld und während Pause dürfen die Maustasten keinen Zauber auslösen. Danach fortsetzen und erneut beide Zauber prüfen.
+
+Die automatische Prüfung deckt diese Fokus-/Combat-Pfade ab; die native Windows-Eingabe wird mit dieser Runde abgenommen.
 
 ## Start
 
-1. `Lichterhain_DeveloperSandbox_Windows.zip` vollständig entpacken.
+1. `Lichterhain_DeveloperSandbox_InputFix_Windows.zip` vollständig entpacken.
 2. `Lichterhain_DeveloperSandbox.exe` öffnen. Die Arena mit Magier, Dummy und Testleiste soll direkt erscheinen. Keine Godot-Installation nötig.
 3. Maus in die Arena bewegen: WASD/Pfeiltasten bewegen, Maus zielt, linke/rechte Maustaste oder 1/2 zaubern. Leertaste: Dodge. F halten: Block. Q: Parry. R: einzelner Gegnerangriff. P: Pause/Weiter. F2: vollständiger Reset.
 4. Zahlen rechts ändern und „Übernehmen / Reset“ wählen. Nach Bearbeitung eines Zahlenfelds einmal in die Arena klicken; dieser Fokuswechsel soll keinen Zauber auslösen.

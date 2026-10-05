@@ -2,6 +2,14 @@
 
 ## Developer Sandbox — Prüfablauf
 
+**Maus-/Fokusfix 05.10.2026:** **1.190/1.190 Checks in 26 Stufen**, davon **120 Sandbox-Checks**. Release-Sandbox-Suite jeweils **122/122** (zwei zusätzliche Export-/Benutzerordner-Prüfungen), **34/34** gerenderte Bedienprüfungen des neuen Windows-Packs mit Linux/X11/Mesa, **8/8 Produktions- und 5/5 Developer-Export-Gates**. Rohprotokolle und Prüfsummen: [qa/sandbox_input_fix](qa/sandbox_input_fix). Der frühere Windows-Test von Tim meldete den Fehler; der native Windows-Nachtest des neuen Fixes ist **NOT TESTED**.
+
+Die neue Fokusprüfung schlägt gegen das unveränderte alte Windows-Pack gezielt fehl (**121/122**, ausschließlich Selector-Fokus); die erweiterte gerenderte Prüfung zeigt dort **23/34**. Dieselben Tests bestehen mit dem Fix. Echte `InputEventMouseButton`-Ereignisse prüfen LMB/Lichtfunke und RMB/Frostkreis, Kosten, M07-Action, M06-/Ziel-HP, Freigabe/Wiederholung, gehaltene RMB, Selector-Fokus, beidseitigen Zahlenfeld-Ausstieg, Pause und Maus über Controls. Die Produktionsbelegung bleibt unverändert.
+
+Für einen Pack-Lauf der gerenderten Suite ein leeres Arbeitsverzeichnis und einen beschreibbaren absoluten Ergebnisordner verwenden: `LICHTERHAIN_SANDBOX_VISUAL_OUTPUT=/absoluter/ergebnisordner godot --path /leeres/verzeichnis --main-pack /paket/Lichterhain_DeveloperSandbox.exe --script /quellprojekt/tests/sandbox_visual_smoke.gd`. Das benötigt eine grafische Sitzung, etwa X11/Xvfb unter Linux; es ist kein nativer Windows-Test. Ohne Variable nutzt der Quelllauf weiterhin `res://test-output`.
+
+Die folgenden Nachweise vom 30.09./03.10. dokumentieren den historischen Stand vor dieser Korrektur.
+
 **Paketlieferung 03.10.2026:** Neun Binärteile mit höchstens 4 MiB; Windows-Joiner per `copy /b`. Vollständiges Original und lokale Zusammensetzung extrahiert, CRC/Datei-Hashes geprüft und beide ZIPs byteweise identisch. [Paketnachweis](qa/sandbox_split_package_results.json). Keine Runtime-Änderung und keine erneute Behauptung einer Gameplay-Regression für diesen reinen Lieferschritt. Native Ausführung der BAT: **NOT TESTED**.
 
 M07 ist nach Tims erfolgreichem Windows-Spieltest abgeschlossen. Die neue Sandbox benötigt eine eigene Abnahme. Aktueller Abschlussstatus und konkrete Zahlen: [Completion Report](docs/DEVELOPER_SANDBOX_COMPLETION_REPORT.md).

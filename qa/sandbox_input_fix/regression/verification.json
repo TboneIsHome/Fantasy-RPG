@@ -1,0 +1,132 @@
+[
+  {
+    "stage": "import",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "test_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "ui_smoke",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "save_compatibility",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "dungeon_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "migration_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "source_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "save_io_reproduction",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "save_fault_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "save_scene_smoke",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "state_replay_reproduction",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "state_actions_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "state_actions_scene",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "region_replay_reproduction",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "region_lifecycle_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "content_validation_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "data_consistency_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "interaction_contract_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "interaction_scene_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "hit_resolution_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "hit_scene_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "active_combat_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "active_combat_scene_suite",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "sandbox",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "content_startup",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "stage": "real_write_error",
+    "passed": true,
+    "exit_code": 0
+  }
+]

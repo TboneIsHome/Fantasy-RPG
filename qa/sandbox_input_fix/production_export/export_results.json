@@ -1,0 +1,63 @@
+{
+  "stages": [
+    {
+      "stage": "windows_export",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "linux_export",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "linux_release_smoke",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "windows_pack_smoke",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "linux_release_startup",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "windows_pack_startup",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "linux_sandbox_exclusion",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "stage": "windows_sandbox_exclusion",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    }
+  ],
+  "native_windows_tested": false,
+  "binaries": {
+    "Lichterhain.exe": {
+      "size_bytes": 97023600,
+      "sha256": "b46dd2d3b7ed4eaf106774ac595b876b4c2820e53847a5601ef560d4c5f09222"
+    },
+    "Lichterhain.x86_64": {
+      "size_bytes": 70456672,
+      "sha256": "cf75faeabd6454133bb3832443025a81ebb458ce485f960ec96b966088edb869"
+    }
+  }
+}

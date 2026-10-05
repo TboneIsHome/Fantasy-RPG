@@ -1,0 +1,22 @@
+{
+  "file": "Lichterhain_DeveloperSandbox_InputFix_Windows.zip",
+  "size_bytes": 34124752,
+  "sha256": "104f59a3eb1300f83cb710d9713af02a5b2862fb83615c6ea174eeedb967b37c",
+  "complete_zip": true,
+  "crc_passed": true,
+  "all_files_fully_extracted": true,
+  "all_extracted_bytes_identical": true,
+  "build_manifest_verified": true,
+  "entries": [
+    "BUILD_INFO.json",
+    "INPUT_FIX_REPORT.txt",
+    "Lichterhain_DeveloperSandbox.exe",
+    "START_HIER.txt",
+    "TEST_RESULTS.json",
+    "WINDOWS_NACHTEST.md",
+    "licenses/DEJAVU_FONT_LICENSE.txt",
+    "licenses/GODOT_COPYRIGHT.txt",
+    "licenses/GODOT_LICENSE.txt"
+  ],
+  "exe_sha256": "97bc93c099eeb864513242ec3021cccfda05af666b497870b68d64c911032de7"
+}

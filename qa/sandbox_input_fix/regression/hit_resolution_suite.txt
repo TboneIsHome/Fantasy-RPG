@@ -1,0 +1,80 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS: Approved example A: ordinary contact has independent 30 damage / 20 impact
+PASS: Approved example B: Protection 100 halves damage, never impact
+PASS: Approved example C: fire-style mitigation rounds 8.33 to 8
+PASS: Approved example D: minus 25 resistance means 50 damage
+PASS: Approved example E: Stability 200 leaves 27 impact
+PASS: Protection diminishing returns at 0
+PASS: Protection diminishing returns at 50
+PASS: Protection diminishing returns at 100
+PASS: Protection diminishing returns at 200
+PASS: Resistance percentage at 0
+PASS: Resistance percentage at 25
+PASS: Resistance percentage at 50
+PASS: Resistance percentage at 90
+PASS: Resistance percentage at -25
+PASS: Resistance percentage at -50
+PASS: Runtime formula normalizes negative protection/stability to zero
+PASS: Normal resistance formula clamps outliers to minus 50 / plus 90
+PASS: Normal extreme mitigation keeps minimum damage but has no minimum impact
+PASS: Positive sub-unit raw damage still has minimum one
+PASS: Zero raw damage is not raised to one and can carry impact
+PASS: Damage-only profile has no invented impact
+PASS: Explicit 100 resistance negates damage without erasing contact or impact
+PASS: Caller supplied block scales combine independently with mitigation
+PASS: Full damage negation can retain impact and is not an immunity stat
+PASS: Positive block scale obeys minimum damage; zero impact scale does not
+PASS: Confirmed parry has contact but no normal effect on the defender
+PASS: miss skips damage / impact / effect delivery
+PASS: evade skips damage / impact / effect delivery
+PASS: Damage type selects its matching resistance
+PASS: Same target can resist one type and be vulnerable to another
+PASS: Unlisted damage type has neutral resistance without a global catalog
+PASS: Secondary information is copied and transported; no effects or fake damage executed
+PASS: Pure calculation leaves attack and defense inputs unchanged
+PASS: Missing required input fails closed
+PASS: Invalid raw damage/impact rejected: -1.0
+PASS: Invalid raw damage/impact rejected: nan
+PASS: Invalid raw damage/impact rejected: inf
+PASS: Invalid raw damage/impact rejected: -inf
+PASS: Non-finite defenses rejected: nan
+PASS: Non-finite defenses rejected: inf
+PASS: Non-finite defenses rejected: -inf
+PASS: Invalid defense scales rejected: -1.0
+PASS: Invalid defense scales rejected: nan
+PASS: Invalid defense scales rejected: inf
+PASS: Unknown confirmed defense outcome rejected
+PASS: Contradictory parry scales fail closed instead of applying normal damage
+PASS: Missing damage type rejected
+PASS: Invalid resistance data is not silently converted
+PASS: Unrepresentable arithmetic result fails closed
+PASS: Real defense definitions load once and are recursively read-only
+PASS: Valid authored defenses support vulnerability, immunity and extensible type keys
+PASS: Shipped actor defense is neutral, preserving existing damage / impact
+PASS: Shipped actor defense is neutral, preserving existing damage / impact
+PASS: Shipped actor defense is neutral, preserving existing damage / impact
+PASS: Shipped actor defense is neutral, preserving existing damage / impact
+PASS: Shipped actor defense is neutral, preserving existing damage / impact
+PASS: Definition error identifies file, field and cause: player.defense = <null>
+PASS: Definition error identifies file, field and cause: player.defense = {  }
+PASS: Definition error identifies file, field and cause: player.defense.protection = -1
+PASS: Definition error identifies file, field and cause: player.defense.protection = nan
+PASS: Definition error identifies file, field and cause: player.defense.stability = inf
+PASS: Definition error identifies file, field and cause: player.defense.stability = true
+PASS: Definition error identifies file, field and cause: player.defense.resistances = []
+PASS: Definition error identifies file, field and cause: player.defense.resistances = { "fire": 91 }
+PASS: Definition error identifies file, field and cause: player.defense.resistances = { "fire": 99 }
+PASS: Definition error identifies file, field and cause: player.defense.resistances = { "fire": 101 }
+PASS: Definition error identifies file, field and cause: player.defense.resistances = { "fire": -51 }
+PASS: Definition error identifies file, field and cause: player.defense.resistances = { "fire": nan }
+PASS: Definition error identifies file, field and cause: player.defense.resistances = { "fire": true }
+PASS: Definition error identifies file, field and cause: player.defense.resistances = { "fire": "50" }
+PASS: Definition error identifies file, field and cause: player.defense.resistances = { "Bad key": 50 }
+PASS: Definition error identifies file, field and cause: player.defense.resistances = { "": 50 }
+PASS: Definition error identifies file, field and cause: enemies.guardian.defense.stability = -1
+PASS: Definition error identifies file, field and cause: spells.bolt.damage_type = 
+PASS: Definition error identifies file, field and cause: spells.nova.damage_type = 17
+PASS: Definition error identifies file, field and cause: skills.echo.damage_type = bad-type
+PASS: Definition error identifies file, field and cause: enemies.wisp.damage_type = false
+HIT RESOLUTION RESULT 77/77

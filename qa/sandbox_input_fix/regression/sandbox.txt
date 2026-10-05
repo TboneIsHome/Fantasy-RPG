@@ -1,0 +1,124 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS SANDBOX: Actual sandbox scene initializes
+PASS SANDBOX: Arena has no quest-world generation dependency
+PASS SANDBOX: Start uses transient preset, not sentinel production save
+PASS SANDBOX: Validated presets are recursively immutable
+PASS SANDBOX: Missing section rejected: players
+PASS SANDBOX: Missing section rejected: enemies
+PASS SANDBOX: Missing section rejected: probe
+PASS SANDBOX: Missing section rejected: scenarios
+PASS SANDBOX: Missing section rejected: actions
+PASS SANDBOX: Missing section rejected: waves
+PASS SANDBOX: Invalid health rejected: <null>
+PASS SANDBOX: Invalid health rejected: 100
+PASS SANDBOX: Invalid health rejected: true
+PASS SANDBOX: Invalid health rejected: nan
+PASS SANDBOX: Invalid health rejected: inf
+PASS SANDBOX: Invalid health rejected: -1
+PASS SANDBOX: Invalid health rejected: 10001
+PASS SANDBOX: Catalog path diagnostic: kind
+PASS SANDBOX: Catalog path diagnostic: skill
+PASS SANDBOX: Catalog path diagnostic: wave_reference
+PASS SANDBOX: Catalog path diagnostic: wave_count
+PASS SANDBOX: Catalog path diagnostic: action
+PASS SANDBOX: Catalog path diagnostic: distance
+PASS SANDBOX: Catalog path diagnostic: scenario
+PASS SANDBOX: Catalog path diagnostic: probe
+PASS SANDBOX: Catalog path diagnostic: max_enemies
+PASS SANDBOX: A01 Startup rejects contact
+PASS SANDBOX: A01 Commit is not Active
+PASS SANDBOX: A01 Active contact returns actual M06 damage
+PASS SANDBOX: A01 One target once per hit phase
+PASS SANDBOX: A01 Recovery rejects contact
+PASS SANDBOX: A01 Action completes
+PASS SANDBOX: A02 Target moved out of range
+PASS SANDBOX: A02 Origin follows moving actor
+PASS SANDBOX: A02 Wrong facing misses deterministically
+PASS SANDBOX: A02 Adapter-provided obstruction is checked
+PASS SANDBOX: A02 Correct range and facing hit
+PASS SANDBOX: A03 Existing Dodge accepts direction
+PASS SANDBOX: A03 Protection rejects contact before M06
+PASS SANDBOX: A03 Dodge moves the actual CharacterBody
+PASS SANDBOX: A03 Expired protection permits a new hit
+PASS SANDBOX: A04 Held Block uses real reduced movement
+PASS SANDBOX: A04 M06 applies Block: 7 damage, 10 impact for test profile 20/20
+PASS SANDBOX: A04 Block prevents free simultaneous offense
+PASS SANDBOX: A04 Rear contact bypasses front Block
+PASS SANDBOX: A05 Early Parry expires before contact
+PASS SANDBOX: A05 No defense stacking during Parry
+PASS SANDBOX: A05 On-time Parry interrupts attacker without counterattack
+PASS SANDBOX: A05 Counter opportunity and Parry recovery use real states
+PASS SANDBOX: A05 Late Parry cannot undo confirmed damage
+PASS SANDBOX: A06 Mage profile uses actual existing talents
+PASS SANDBOX: A06 Mage blocks an eligible melee contact
+PASS SANDBOX: A06 Mage parries actual hostile projectile adapter
+PASS SANDBOX: A06 Mage casts existing frost area with real cost and slow information
+PASS SANDBOX: A07 Released payload survives caster in same generation
+PASS SANDBOX: A07 Repeated projectile callback cannot apply twice
+PASS SANDBOX: A07 Payload does not retain freed caster
+PASS SANDBOX: A08 Live Frostkreis hits two targets once each
+PASS SANDBOX: A08 Persistent overlap cannot repeat current phase
+PASS SANDBOX: A08 Explicit next hit phase owns new receipt
+PASS SANDBOX: A09 Actual effective impact 65 produces NORMAL
+PASS SANDBOX: A09 Actual effective impact 100 produces INTERRUPT
+PASS SANDBOX: A09 Actual effective impact 130 produces STAGGER
+PASS SANDBOX: A09 Repeated impacts do not prolong stagger
+PASS SANDBOX: A09 Recovery preserves a controlled response opportunity
+PASS SANDBOX: A09 Stability influences reaction through M06 exactly once
+PASS SANDBOX: A10 Before Commit a cancellation is allowed
+PASS SANDBOX: A10 After Commit free cancellation is denied
+PASS SANDBOX: A10 Valid interruption still ends committed action
+PASS SANDBOX: A10 Interrupted action cannot deliver contact
+PASS SANDBOX: A11 Reset invalidates old generation immediately
+PASS SANDBOX: A11 Old projectile cannot damage replacement player
+PASS SANDBOX: A11 Real delayed callback rejects stale scope
+PASS SANDBOX: A11 Old actors freed, exactly one current player
+PASS SANDBOX: A11 Rapid resets do not duplicate enemies
+PASS SANDBOX: A12 Wave 1 spawns exactly its definition
+PASS SANDBOX: A12 Defeated wave actor cannot receive repeated contact
+PASS SANDBOX: A12 Wave 2 spawns exactly its definition
+PASS SANDBOX: A12 Defeated wave actor cannot receive repeated contact
+PASS SANDBOX: A12 Defeated wave actor cannot receive repeated contact
+PASS SANDBOX: A12 Wave 3 spawns exactly its definition
+PASS SANDBOX: A12 Defeated wave actor cannot receive repeated contact
+PASS SANDBOX: A12 Defeated wave actor cannot receive repeated contact
+PASS SANDBOX: A12 Defeated wave actor cannot receive repeated contact
+PASS SANDBOX: A12 Finite wave sequence completes and stops
+PASS SANDBOX: A12 No surviving wave duplicates
+PASS SANDBOX: Supported player preset: close_defense
+PASS SANDBOX: Supported player preset: ranged
+PASS SANDBOX: Supported player preset: mage
+PASS SANDBOX: Supported enemy preset: dummy
+PASS SANDBOX: Supported enemy preset: protected
+PASS SANDBOX: Supported enemy preset: stable
+PASS SANDBOX: Supported enemy preset: wolf
+PASS SANDBOX: Supported enemy preset: wisp
+PASS SANDBOX: Supported enemy preset: kobold
+PASS SANDBOX: Invalid reset leaves current fixture intact
+PASS SANDBOX: Invalid spawn/reference rejected
+PASS SANDBOX: Invalid overrides do not start a fixture
+PASS SANDBOX: Private enemy override reaches actual actor definition
+PASS SANDBOX: Replacing probe does not retain paused old actions
+PASS SANDBOX: Reset restores selected override/resources/cooldowns
+PASS SANDBOX: Reset clears payloads and complete wave state
+PASS SANDBOX: Reset frees old player without duplicates
+PASS SANDBOX: Invalid diagnosis controls rejected
+PASS SANDBOX: Position/facing control affects real actors
+PASS SANDBOX: Single attack control starts real enemy lifecycle
+PASS SANDBOX: Enemy cap bounds manual spawning
+PASS SANDBOX: Wave stop prevents progression and pauses actors
+PASS SANDBOX: UI spawn control targets local fixture
+PASS SANDBOX: UI probe buttons execute actual contact
+PASS SANDBOX: Diagnostic report has dedicated path and valid JSON
+PASS SANDBOX: Diagnostic history is bounded
+PASS SANDBOX: Production save/load inputs do not enter game session
+PASS SANDBOX: Returning from selector focus preserves mouse cast
+PASS SANDBOX: Leaving value editing suppresses the focus click
+PASS SANDBOX: Arena click without editor focus preserves mouse cast
+PASS SANDBOX: Mouse release does not perform focus handoff
+PASS SANDBOX: Test presets never mutate production definitions
+PASS SANDBOX: Original production entry remains loadable
+PASS SANDBOX: Closing sandbox releases all actors
+SANDBOX RESULT 120/120
+SANDBOX ISOLATION PASS

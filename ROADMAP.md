@@ -1,6 +1,6 @@
 # Roadmap
 
-Stand: 2026-09-30. Tim hat M07 einschließlich manuellem Windows-Spieltest ohne gefundene Fehler abgenommen. Aktueller Auftrag: ausschließlich [Developer Sandbox Foundation](docs/DEVELOPER_SANDBOX_WORK_ORDER_V1.md). Creative Bible und [Future Systems Blueprint](docs/FUTURE_SYSTEMS_BLUEPRINT_V1.md) bleiben Leitplanken; keine späteren Systeme werden vorgezogen.
+Stand: 2026-10-05. Tim hat M07 einschließlich manuellem Windows-Spieltest ohne gefundene Fehler abgenommen. Aktueller Auftrag: ausschließlich der gemeldete Maus-/Fokusfehler der [Developer Sandbox](docs/DEVELOPER_SANDBOX_WORK_ORDER_V1.md). Creative Bible und [Future Systems Blueprint](docs/FUTURE_SYSTEMS_BLUEPRINT_V1.md) bleiben Leitplanken; keine späteren Systeme werden vorgezogen.
 
 ## Verbindliche nächste Reihenfolge
 
@@ -14,11 +14,11 @@ Stand: 2026-09-30. Tim hat M07 einschließlich manuellem Windows-Spieltest ohne 
 | **M05 — Interaction Foundation** | Kleiner Vertrag mit Discovery, frischer Execution und bestätigten Folgen | **COMPLETE** im vom Nutzer bestätigten M00–M06-Ausgangsstand; 789 historische Checks. Kein nachträglich erfundenes Einzeltestprotokoll. [Bericht](docs/FOUNDATION_M05.md). |
 | **M06 — Stats & Trefferauflösung** | Gemeinsame numerische Damage-/Impact-Auflösung und HitInstance | **COMPLETE**, 931 historische Checks; manueller Windows-Spieltest von Tim vor M07 ausdrücklich bestätigt. [Bericht](docs/FOUNDATION_M06.md). |
 | **M07 — Active Combat & Defense** | Action Lifecycle, Kontakt, Dodge/Block/Parry, explizite Phasen und kontrollierte Reaktion | **COMPLETE**: 1.070 historische Checks und Release-Gates; Tim bestätigt den manuellen Windows-Spieltest ohne gefundene Fehler. [Completion Report](docs/FOUNDATION_M07.md). |
-| **Developer Sandbox Foundation** | Lokale Arena, Presets, echte Combat-Controls, Wellen, Diagnose und A01–A12 | **IMPLEMENTED / AUTOMATED TESTED**: 1.186 Checks, 16 gerenderte Bedienprüfungen und getrennte Exporte; Nachweisgrenzen siehe [Completion Report](docs/DEVELOPER_SANDBOX_COMPLETION_REPORT.md). **MANUAL WINDOWS: NOT TESTED**. |
+| **Developer Sandbox Foundation** | Lokale Arena, Presets, echte Combat-Controls, Wellen, Diagnose und A01–A12; gezielte Maus-/Fokuskorrektur | **IMPLEMENTED / AUTOMATED TESTED**: 1.190 Checks, 34 gerenderte Bedienprüfungen und getrennte Exporte; siehe [Completion Report mit Bugfix-Nachtrag](docs/DEVELOPER_SANDBOX_COMPLETION_REPORT.md). Tim hat im alten Windows-Build den Eingabefehler gefunden. **Neuer Fix: MANUAL WINDOWS NOT TESTED**. |
 
 Nach jedem Umbauschritt: relevante neue Prüfungen, gesamte bestehende Regression, Savegame-Prüfungen, Exportprüfung und dokumentierte manuelle Smoke-Runde. Eine offene Plattformprüfung wird offen ausgewiesen. Keine parallelen Umbauten unabhängiger Kernsysteme und kein Save-Reset als Abkürzung.
 
-**Aktueller Stop:** Sandbox-Bericht und separates Developer-Windows-Paket gemeinsam prüfen; eigener manueller Sandbox-Test steht aus. M08 und alle weiteren Systeme bleiben **PLANNED** und benötigen eine neue Freigabe.
+**Aktueller Stop:** Mausfix-Bericht und neues Developer-Windows-Paket gemeinsam prüfen; Windows-Nachtest des Fixes steht aus. M08 und alle weiteren Systeme bleiben **PLANNED** und benötigen eine neue Freigabe.
 
 ## Bisherige spielbare Referenzen
 

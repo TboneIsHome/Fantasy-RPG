@@ -1,0 +1,23 @@
+{
+  "captures": [
+    "/workspace/scratch/c028e2fe5cfb/input-fix-validation/old-pack-ui/sandbox_arena.png",
+    "/workspace/scratch/c028e2fe5cfb/input-fix-validation/old-pack-ui/sandbox_diagnostics.png",
+    "/workspace/scratch/c028e2fe5cfb/input-fix-validation/old-pack-ui/sandbox_history.png",
+    "/workspace/scratch/c028e2fe5cfb/input-fix-validation/old-pack-ui/sandbox_scenarios.png"
+  ],
+  "checks": 34,
+  "failures": [
+    "Mouse binding casts exactly once: bolt",
+    "Mouse cast uses existing mana cost: bolt",
+    "Mouse cast creates real M07 action: bolt",
+    "Mouse cast reaches M06 resolution and target health: bolt",
+    "Mouse release does not duplicate action: bolt",
+    "Mouse binding casts exactly once: nova",
+    "Mouse cast uses existing mana cost: nova",
+    "Mouse cast creates real M07 action: nova",
+    "Mouse cast reaches M06 resolution and target health: nova",
+    "Mouse release does not duplicate action: nova",
+    "Next mouse press casts after numeric edit: 1"
+  ],
+  "native_windows_tested": false
+}

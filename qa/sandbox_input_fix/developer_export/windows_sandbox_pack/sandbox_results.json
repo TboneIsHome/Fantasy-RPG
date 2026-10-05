@@ -1,0 +1,3700 @@
+{
+  "checks": 122,
+  "failures": [],
+  "native_windows_tested": false,
+  "scenarios": [
+    {
+      "checks": [
+        {
+          "check": "Startup rejects contact",
+          "passed": true
+        },
+        {
+          "check": "Commit is not Active",
+          "passed": true
+        },
+        {
+          "check": "Active contact returns actual M06 damage",
+          "passed": true
+        },
+        {
+          "check": "One target once per hit phase",
+          "passed": true
+        },
+        {
+          "check": "Recovery rejects contact",
+          "passed": true
+        },
+        {
+          "check": "Action completes",
+          "passed": true
+        }
+      ],
+      "events": [
+        {
+          "event": "reset",
+          "generation": 2,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 2,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 92727675527,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 2,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "target": 92727675527,
+          "time": 0.0
+        },
+        {
+          "attack_instance": -9223371943523120646,
+          "definition": {
+            "active": 0.25,
+            "damage": 20.0,
+            "impact": 65.0,
+            "range": 42.0,
+            "recovery": 0.35,
+            "startup": 0.4
+          },
+          "event": "developer_probe_start",
+          "generation": 2,
+          "player_preset": "mage",
+          "scenario": "A01",
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_probe",
+          "action_generation": 2,
+          "attack_instance": -9223371943523120646,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 2,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "STARTUP",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "inactive_phase",
+          "scenario": "A01",
+          "target": 92727675527,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Startup rejects contact",
+          "event": "scenario_check",
+          "generation": 2,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A01",
+          "time": 0.0
+        },
+        {
+          "event": "developer_clock_step",
+          "generation": 2,
+          "movement": false,
+          "player_preset": "mage",
+          "scenario": "A01",
+          "seconds": 0.2,
+          "time": 0.2
+        },
+        {
+          "action": "sandbox_probe",
+          "action_generation": 2,
+          "attack_instance": -9223371943523120646,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 2,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "COMMIT",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "inactive_phase",
+          "scenario": "A01",
+          "target": 92727675527,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.2
+        },
+        {
+          "check": "Commit is not Active",
+          "event": "scenario_check",
+          "generation": 2,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A01",
+          "time": 0.2
+        },
+        {
+          "event": "developer_clock_step",
+          "generation": 2,
+          "movement": false,
+          "player_preset": "mage",
+          "scenario": "A01",
+          "seconds": 0.2,
+          "time": 0.4
+        },
+        {
+          "event": "live_defense",
+          "generation": 2,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A01",
+          "target": 92727675527,
+          "time": 0.4
+        },
+        {
+          "action": "sandbox_probe",
+          "confirmed": true,
+          "damage": 20.0,
+          "event": "live_resolution",
+          "generation": 2,
+          "hit_id": -9223371943204353532,
+          "impact": 65.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A01",
+          "target": 92727675527,
+          "time": 0.4
+        },
+        {
+          "action": "sandbox_probe",
+          "action_generation": 2,
+          "attack_instance": -9223371943523120646,
+          "confirmed": true,
+          "damage": 20.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 2,
+          "hit_id": -9223371943204353532,
+          "impact": 65.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A01",
+          "target": 92727675527,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.4
+        },
+        {
+          "check": "Active contact returns actual M06 damage",
+          "event": "scenario_check",
+          "generation": 2,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A01",
+          "time": 0.4
+        },
+        {
+          "event": "live_defense",
+          "generation": 2,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A01",
+          "target": 92727675527,
+          "time": 0.4
+        },
+        {
+          "action": "sandbox_probe",
+          "confirmed": false,
+          "damage": 0.0,
+          "event": "live_resolution",
+          "generation": 2,
+          "hit_id": 0,
+          "impact": 0.0,
+          "outcome": "",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "duplicate_hit",
+          "scenario": "A01",
+          "target": 92727675527,
+          "time": 0.4
+        },
+        {
+          "action": "sandbox_probe",
+          "action_generation": 2,
+          "attack_instance": -9223371943523120646,
+          "confirmed": false,
+          "damage": 0.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 2,
+          "hit_id": 0,
+          "impact": 0.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "duplicate_hit",
+          "scenario": "A01",
+          "target": 92727675527,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.4
+        },
+        {
+          "check": "One target once per hit phase",
+          "event": "scenario_check",
+          "generation": 2,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A01",
+          "time": 0.4
+        },
+        {
+          "action": "sandbox_probe",
+          "action_generation": 2,
+          "attack_instance": -9223371943523120646,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 2,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "RECOVERY",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "inactive_phase",
+          "scenario": "A01",
+          "target": 92727675527,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.4
+        },
+        {
+          "check": "Recovery rejects contact",
+          "event": "scenario_check",
+          "generation": 2,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A01",
+          "time": 0.4
+        },
+        {
+          "event": "developer_clock_step",
+          "generation": 2,
+          "movement": false,
+          "player_preset": "mage",
+          "scenario": "A01",
+          "seconds": 0.5,
+          "time": 0.9
+        },
+        {
+          "check": "Action completes",
+          "event": "scenario_check",
+          "generation": 2,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A01",
+          "time": 0.9
+        }
+      ],
+      "generation": 2,
+      "id": "A01",
+      "mode": "controlled fixture / actual M07-M06",
+      "passed": true
+    },
+    {
+      "checks": [
+        {
+          "check": "Target moved out of range",
+          "passed": true
+        },
+        {
+          "check": "Origin follows moving actor",
+          "passed": true
+        },
+        {
+          "check": "Wrong facing misses deterministically",
+          "passed": true
+        },
+        {
+          "check": "Adapter-provided obstruction is checked",
+          "passed": true
+        },
+        {
+          "check": "Correct range and facing hit",
+          "passed": true
+        }
+      ],
+      "events": [
+        {
+          "event": "reset",
+          "generation": 3,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 3,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 94589946401,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 3,
+          "player_preset": "mage",
+          "scenario": "A01",
+          "target": 94589946401,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 3,
+          "attack_instance": -9223371941660849673,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 3,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "out_of_range",
+          "scenario": "A02",
+          "target": 94589946401,
+          "target_position": "(524.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Target moved out of range",
+          "event": "scenario_check",
+          "generation": 3,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A02",
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 3,
+          "attack_instance": -9223371941660849673,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 3,
+          "origin": "(300.0, 290.0)",
+          "outcome": "miss",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "out_of_range",
+          "scenario": "A02",
+          "target": 94589946401,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Origin follows moving actor",
+          "event": "scenario_check",
+          "generation": 3,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A02",
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 3,
+          "attack_instance": -9223371941660849673,
+          "confirmed": false,
+          "direction": "(-1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 3,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "wrong_direction",
+          "scenario": "A02",
+          "target": 94589946401,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Wrong facing misses deterministically",
+          "event": "scenario_check",
+          "generation": 3,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A02",
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 3,
+          "attack_instance": -9223371941660849673,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 3,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "obstructed",
+          "scenario": "A02",
+          "target": 94589946401,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Adapter-provided obstruction is checked",
+          "event": "scenario_check",
+          "generation": 3,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A02",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 3,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A02",
+          "target": 94589946401,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 20.0,
+          "event": "live_resolution",
+          "generation": 3,
+          "hit_id": -9223371941274973700,
+          "impact": 20.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A02",
+          "target": 94589946401,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 3,
+          "attack_instance": -9223371941660849673,
+          "confirmed": true,
+          "damage": 20.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 3,
+          "hit_id": -9223371941274973700,
+          "impact": 20.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A02",
+          "target": 94589946401,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Correct range and facing hit",
+          "event": "scenario_check",
+          "generation": 3,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A02",
+          "time": 0.0
+        }
+      ],
+      "generation": 3,
+      "id": "A02",
+      "mode": "controlled fixture / actual M07-M06",
+      "passed": true
+    },
+    {
+      "checks": [
+        {
+          "check": "Existing Dodge accepts direction",
+          "passed": true
+        },
+        {
+          "check": "Protection rejects contact before M06",
+          "passed": true
+        },
+        {
+          "check": "Dodge moves the actual CharacterBody",
+          "passed": true
+        },
+        {
+          "check": "Expired protection permits a new hit",
+          "passed": true
+        }
+      ],
+      "events": [
+        {
+          "event": "reset",
+          "generation": 4,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 4,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 96284445306,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 4,
+          "player_preset": "mage",
+          "scenario": "A02",
+          "target": 96284445306,
+          "time": 0.0
+        },
+        {
+          "check": "Existing Dodge accepts direction",
+          "event": "scenario_check",
+          "generation": 4,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A03",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 4,
+          "incoming": "(24.0, 0.0)",
+          "outcome": "evade",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "preset": "mage",
+          "scenario": "A03",
+          "target": 95831460455,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 4,
+          "attack_instance": -9223371940369003931,
+          "confirmed": false,
+          "direction": "(-1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 4,
+          "origin": "(424.0, 290.0)",
+          "outcome": "evade",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A03",
+          "target": 95831460455,
+          "target_position": "(400.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Protection rejects contact before M06",
+          "event": "scenario_check",
+          "generation": 4,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A03",
+          "time": 0.0
+        },
+        {
+          "check": "Dodge moves the actual CharacterBody",
+          "event": "scenario_check",
+          "generation": 4,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A03",
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 4,
+          "player_preset": "mage",
+          "scenario": "A03",
+          "target": 96284445306,
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 4,
+          "incoming": "(24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(400.0, 293.5577)",
+          "preset": "mage",
+          "scenario": "A03",
+          "target": 95831460455,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 20.0,
+          "event": "live_resolution",
+          "generation": 4,
+          "hit_id": -9223371939999905107,
+          "impact": 20.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(400.0, 293.5577)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A03",
+          "target": 95831460455,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 4,
+          "attack_instance": -9223371940150900215,
+          "confirmed": true,
+          "damage": 20.0,
+          "direction": "(-1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 4,
+          "hit_id": -9223371939999905107,
+          "impact": 20.0,
+          "origin": "(424.0, 293.5577)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A03",
+          "target": 95831460455,
+          "target_position": "(400.0, 293.5577)",
+          "time": 0.0
+        },
+        {
+          "check": "Expired protection permits a new hit",
+          "event": "scenario_check",
+          "generation": 4,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A03",
+          "time": 0.0
+        }
+      ],
+      "generation": 4,
+      "id": "A03",
+      "mode": "controlled fixture / actual M07-M06",
+      "passed": true
+    },
+    {
+      "checks": [
+        {
+          "check": "Held Block uses real reduced movement",
+          "passed": true
+        },
+        {
+          "check": "M06 applies Block: 7 damage, 10 impact for test profile 20/20",
+          "passed": true
+        },
+        {
+          "check": "Block prevents free simultaneous offense",
+          "passed": true
+        },
+        {
+          "check": "Rear contact bypasses front Block",
+          "passed": true
+        }
+      ],
+      "events": [
+        {
+          "event": "reset",
+          "generation": 5,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 5,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 97559513632,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 5,
+          "player_preset": "mage",
+          "scenario": "A03",
+          "target": 97559513632,
+          "time": 0.0
+        },
+        {
+          "check": "Held Block uses real reduced movement",
+          "event": "scenario_check",
+          "generation": 5,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A04",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 5,
+          "incoming": "(24.0, -0.339539)",
+          "outcome": "block",
+          "player_preset": "mage",
+          "position": "(400.0, 290.3395)",
+          "preset": "mage",
+          "scenario": "A04",
+          "target": 97106528770,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 7.0,
+          "event": "live_resolution",
+          "generation": 5,
+          "hit_id": -9223371938942940552,
+          "impact": 10.0,
+          "outcome": "block",
+          "player_preset": "mage",
+          "position": "(400.0, 290.3395)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A04",
+          "target": 97106528770,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 5,
+          "attack_instance": -9223371939093935616,
+          "confirmed": true,
+          "damage": 7.0,
+          "direction": "(-1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 5,
+          "hit_id": -9223371938942940552,
+          "impact": 10.0,
+          "origin": "(424.0, 290.0)",
+          "outcome": "block",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A04",
+          "target": 97106528770,
+          "target_position": "(400.0, 290.3395)",
+          "time": 0.0
+        },
+        {
+          "check": "M06 applies Block: 7 damage, 10 impact for test profile 20/20",
+          "event": "scenario_check",
+          "generation": 5,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A04",
+          "time": 0.0
+        },
+        {
+          "check": "Block prevents free simultaneous offense",
+          "event": "scenario_check",
+          "generation": 5,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A04",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 5,
+          "incoming": "(24.0, -0.339539)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(400.0, 290.3395)",
+          "preset": "mage",
+          "scenario": "A04",
+          "target": 97106528770,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 20.0,
+          "event": "live_resolution",
+          "generation": 5,
+          "hit_id": -9223371938691282303,
+          "impact": 20.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(400.0, 290.3395)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A04",
+          "target": 97106528770,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 5,
+          "attack_instance": -9223371938842277380,
+          "confirmed": true,
+          "damage": 20.0,
+          "direction": "(-1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 5,
+          "hit_id": -9223371938691282303,
+          "impact": 20.0,
+          "origin": "(424.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A04",
+          "target": 97106528770,
+          "target_position": "(400.0, 290.3395)",
+          "time": 0.0
+        },
+        {
+          "check": "Rear contact bypasses front Block",
+          "event": "scenario_check",
+          "generation": 5,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A04",
+          "time": 0.0
+        }
+      ],
+      "generation": 5,
+      "id": "A04",
+      "mode": "controlled fixture / actual M07-M06",
+      "passed": true
+    },
+    {
+      "checks": [
+        {
+          "check": "Early Parry expires before contact",
+          "passed": true
+        },
+        {
+          "check": "No defense stacking during Parry",
+          "passed": true
+        },
+        {
+          "check": "On-time Parry interrupts attacker without counterattack",
+          "passed": true
+        },
+        {
+          "check": "Counter opportunity and Parry recovery use real states",
+          "passed": true
+        },
+        {
+          "check": "Late Parry cannot undo confirmed damage",
+          "passed": true
+        }
+      ],
+      "events": [
+        {
+          "event": "reset",
+          "generation": 6,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 6,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 98868136584,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 6,
+          "player_preset": "mage",
+          "scenario": "A04",
+          "target": 98868136584,
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 6,
+          "incoming": "(24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "preset": "mage",
+          "scenario": "A05",
+          "target": 98415151729,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 20.0,
+          "event": "live_resolution",
+          "generation": 6,
+          "hit_id": -9223371937634317789,
+          "impact": 20.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A05",
+          "target": 98415151729,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 6,
+          "attack_instance": -9223371937785312663,
+          "confirmed": true,
+          "damage": 20.0,
+          "direction": "(-1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 6,
+          "hit_id": -9223371937634317789,
+          "impact": 20.0,
+          "origin": "(424.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A05",
+          "target": 98415151729,
+          "target_position": "(400.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Early Parry expires before contact",
+          "event": "scenario_check",
+          "generation": 6,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A05",
+          "time": 0.0
+        },
+        {
+          "event": "reset",
+          "generation": 7,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 7,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 99908323865,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 7,
+          "player_preset": "mage",
+          "scenario": "A05",
+          "target": 99908323865,
+          "time": 0.0
+        },
+        {
+          "check": "No defense stacking during Parry",
+          "event": "scenario_check",
+          "generation": 7,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A05",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 7,
+          "incoming": "(24.0, 0.0)",
+          "outcome": "parry",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "preset": "mage",
+          "scenario": "A05",
+          "target": 99455339023,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 0.0,
+          "event": "live_resolution",
+          "generation": 7,
+          "hit_id": -9223371936644461897,
+          "impact": 0.0,
+          "outcome": "parry",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A05",
+          "target": 99455339023,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 7,
+          "attack_instance": -9223371936795456880,
+          "confirmed": true,
+          "damage": 0.0,
+          "direction": "(-1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 7,
+          "hit_id": -9223371936644461897,
+          "impact": 0.0,
+          "origin": "(424.0, 290.0)",
+          "outcome": "parry",
+          "phase": "INTERRUPTED",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A05",
+          "target": 99455339023,
+          "target_position": "(400.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "On-time Parry interrupts attacker without counterattack",
+          "event": "scenario_check",
+          "generation": 7,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A05",
+          "time": 0.0
+        },
+        {
+          "check": "Counter opportunity and Parry recovery use real states",
+          "event": "scenario_check",
+          "generation": 7,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A05",
+          "time": 0.0
+        },
+        {
+          "event": "reset",
+          "generation": 8,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 8,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 100898179800,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 8,
+          "player_preset": "mage",
+          "scenario": "A05",
+          "target": 100898179800,
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 8,
+          "incoming": "(24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "preset": "mage",
+          "scenario": "A05",
+          "target": 100445194941,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 20.0,
+          "event": "live_resolution",
+          "generation": 8,
+          "hit_id": -9223371935654606103,
+          "impact": 20.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A05",
+          "target": 100445194941,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 8,
+          "attack_instance": -9223371935805601055,
+          "confirmed": true,
+          "damage": 20.0,
+          "direction": "(-1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 8,
+          "hit_id": -9223371935654606103,
+          "impact": 20.0,
+          "origin": "(424.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A05",
+          "target": 100445194941,
+          "target_position": "(400.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Late Parry cannot undo confirmed damage",
+          "event": "scenario_check",
+          "generation": 8,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A05",
+          "time": 0.0
+        }
+      ],
+      "generation": 8,
+      "id": "A05",
+      "mode": "controlled fixture / actual M07-M06",
+      "passed": true
+    },
+    {
+      "checks": [
+        {
+          "check": "Mage profile uses actual existing talents",
+          "passed": true
+        },
+        {
+          "check": "Mage blocks an eligible melee contact",
+          "passed": true
+        },
+        {
+          "check": "Mage parries actual hostile projectile adapter",
+          "passed": true
+        },
+        {
+          "check": "Mage casts existing frost area with real cost and slow information",
+          "passed": true
+        }
+      ],
+      "events": [
+        {
+          "event": "reset",
+          "generation": 9,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 9,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 101904812806,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 9,
+          "player_preset": "mage",
+          "scenario": "A05",
+          "target": 101904812806,
+          "time": 0.0
+        },
+        {
+          "check": "Mage profile uses actual existing talents",
+          "event": "scenario_check",
+          "generation": 9,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A06",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 9,
+          "incoming": "(24.0, 0.0)",
+          "outcome": "block",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "preset": "mage",
+          "scenario": "A06",
+          "target": 101451827942,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 7.0,
+          "event": "live_resolution",
+          "generation": 9,
+          "hit_id": -9223371934597641536,
+          "impact": 10.0,
+          "outcome": "block",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A06",
+          "target": 101451827942,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 9,
+          "attack_instance": -9223371934748636635,
+          "confirmed": true,
+          "damage": 7.0,
+          "direction": "(-1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 9,
+          "hit_id": -9223371934597641536,
+          "impact": 10.0,
+          "origin": "(424.0, 290.0)",
+          "outcome": "block",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A06",
+          "target": 101451827942,
+          "target_position": "(400.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Mage blocks an eligible melee contact",
+          "event": "scenario_check",
+          "generation": 9,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A06",
+          "time": 0.0
+        },
+        {
+          "event": "reset",
+          "generation": 10,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 10,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 102945000145,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 10,
+          "player_preset": "mage",
+          "scenario": "A06",
+          "target": 102945000145,
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 10,
+          "incoming": "(1.0, 0.0)",
+          "outcome": "parry",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "preset": "mage",
+          "scenario": "A06",
+          "target": 102492015294,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_ranged",
+          "confirmed": true,
+          "damage": 0.0,
+          "event": "live_resolution",
+          "generation": 10,
+          "hit_id": -9223371933557454166,
+          "impact": 0.0,
+          "outcome": "parry",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A06",
+          "target": 102492015294,
+          "time": 0.0
+        },
+        {
+          "check": "Mage parries actual hostile projectile adapter",
+          "event": "scenario_check",
+          "generation": 10,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A06",
+          "time": 0.0
+        },
+        {
+          "event": "reset",
+          "generation": 11,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 11,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 104052296206,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 11,
+          "player_preset": "mage",
+          "scenario": "A06",
+          "target": 104052296206,
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 11,
+          "incoming": "(0.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A06",
+          "target": 104052296206,
+          "time": 0.0
+        },
+        {
+          "action": "nova_cast",
+          "confirmed": true,
+          "damage": 16.0,
+          "event": "live_resolution",
+          "generation": 11,
+          "hit_id": -9223371932500489555,
+          "impact": 80.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A06",
+          "target": 104052296206,
+          "time": 0.0
+        },
+        {
+          "accepted": true,
+          "action": "nova",
+          "event": "cast_request",
+          "generation": 11,
+          "player_preset": "mage",
+          "scenario": "A06",
+          "time": 0.0
+        },
+        {
+          "check": "Mage casts existing frost area with real cost and slow information",
+          "event": "scenario_check",
+          "generation": 11,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A06",
+          "time": 0.0
+        }
+      ],
+      "generation": 11,
+      "id": "A06",
+      "mode": "controlled fixture / actual M07-M06",
+      "passed": true
+    },
+    {
+      "checks": [
+        {
+          "check": "Released payload survives caster in same generation",
+          "passed": true
+        },
+        {
+          "check": "Repeated projectile callback cannot apply twice",
+          "passed": true
+        },
+        {
+          "check": "Payload does not retain freed caster",
+          "passed": true
+        }
+      ],
+      "events": [
+        {
+          "event": "reset",
+          "generation": 12,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 12,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 105058929283,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 12,
+          "player_preset": "mage",
+          "scenario": "A06",
+          "target": 105058929283,
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 12,
+          "incoming": "(1.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "preset": "mage",
+          "scenario": "A07",
+          "target": 104605944458,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_released",
+          "confirmed": true,
+          "damage": 13.0,
+          "event": "live_resolution",
+          "generation": 12,
+          "hit_id": -9223371931393193360,
+          "impact": 65.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A07",
+          "target": 104605944458,
+          "time": 0.0
+        },
+        {
+          "check": "Released payload survives caster in same generation",
+          "event": "scenario_check",
+          "generation": 12,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A07",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 12,
+          "incoming": "(1.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "preset": "mage",
+          "scenario": "A07",
+          "target": 104605944458,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_released",
+          "confirmed": false,
+          "damage": 0.0,
+          "event": "live_resolution",
+          "generation": 12,
+          "hit_id": 0,
+          "impact": 0.0,
+          "outcome": "",
+          "player_preset": "mage",
+          "position": "(400.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "duplicate_hit",
+          "scenario": "A07",
+          "target": 104605944458,
+          "time": 0.0
+        },
+        {
+          "check": "Repeated projectile callback cannot apply twice",
+          "event": "scenario_check",
+          "generation": 12,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A07",
+          "time": 0.0
+        },
+        {
+          "check": "Payload does not retain freed caster",
+          "event": "scenario_check",
+          "generation": 12,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A07",
+          "time": 0.0
+        }
+      ],
+      "generation": 12,
+      "id": "A07",
+      "mode": "controlled fixture / actual M07-M06",
+      "passed": true
+    },
+    {
+      "checks": [
+        {
+          "check": "Live Frostkreis hits two targets once each",
+          "passed": true
+        },
+        {
+          "check": "Persistent overlap cannot repeat current phase",
+          "passed": true
+        },
+        {
+          "check": "Explicit next hit phase owns new receipt",
+          "passed": true
+        }
+      ],
+      "events": [
+        {
+          "event": "reset",
+          "generation": 13,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 13,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 106384329239,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 13,
+          "player_preset": "mage",
+          "scenario": "A07",
+          "target": 106384329239,
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 13,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(424.0, 306.0)",
+          "preset": "dummy",
+          "scenario": "A08",
+          "target": 106568878870,
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 13,
+          "incoming": "(0.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A08",
+          "target": 106384329239,
+          "time": 0.0
+        },
+        {
+          "action": "nova_cast",
+          "confirmed": true,
+          "damage": 16.0,
+          "event": "live_resolution",
+          "generation": 13,
+          "hit_id": -9223371929983907187,
+          "impact": 80.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A08",
+          "target": 106384329239,
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 13,
+          "incoming": "(0.0, -16.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 306.0)",
+          "preset": "dummy",
+          "scenario": "A08",
+          "target": 106568878870,
+          "time": 0.0
+        },
+        {
+          "action": "nova_cast",
+          "confirmed": true,
+          "damage": 16.0,
+          "event": "live_resolution",
+          "generation": 13,
+          "hit_id": -9223371929983907187,
+          "impact": 80.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 306.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A08",
+          "target": 106568878870,
+          "time": 0.0
+        },
+        {
+          "check": "Live Frostkreis hits two targets once each",
+          "event": "scenario_check",
+          "generation": 13,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A08",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 13,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A08",
+          "target": 106384329239,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 20.0,
+          "event": "live_resolution",
+          "generation": 13,
+          "hit_id": -9223371929614808450,
+          "impact": 20.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A08",
+          "target": 106384329239,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 13,
+          "attack_instance": -9223371929765803481,
+          "confirmed": true,
+          "damage": 20.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 13,
+          "hit_id": -9223371929614808450,
+          "impact": 20.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A08",
+          "target": 106384329239,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 13,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A08",
+          "target": 106384329239,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": false,
+          "damage": 0.0,
+          "event": "live_resolution",
+          "generation": 13,
+          "hit_id": 0,
+          "impact": 0.0,
+          "outcome": "",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "duplicate_hit",
+          "scenario": "A08",
+          "target": 106384329239,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 13,
+          "attack_instance": -9223371929765803481,
+          "confirmed": false,
+          "damage": 0.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 13,
+          "hit_id": 0,
+          "impact": 0.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "duplicate_hit",
+          "scenario": "A08",
+          "target": 106384329239,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Persistent overlap cannot repeat current phase",
+          "event": "scenario_check",
+          "generation": 13,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A08",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 13,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A08",
+          "target": 106384329239,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 20.0,
+          "event": "live_resolution",
+          "generation": 13,
+          "hit_id": -9223371929279264253,
+          "impact": 20.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A08",
+          "target": 106384329239,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 13,
+          "attack_instance": -9223371929765803481,
+          "confirmed": true,
+          "damage": 20.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 13,
+          "hit_id": -9223371929279264253,
+          "impact": 20.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A08",
+          "target": 106384329239,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Explicit next hit phase owns new receipt",
+          "event": "scenario_check",
+          "generation": 13,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A08",
+          "time": 0.0
+        }
+      ],
+      "generation": 13,
+      "id": "A08",
+      "mode": "controlled fixture / actual M07-M06",
+      "passed": true
+    },
+    {
+      "checks": [
+        {
+          "check": "Actual effective impact 65 produces NORMAL",
+          "passed": true
+        },
+        {
+          "check": "Actual effective impact 100 produces INTERRUPT",
+          "passed": true
+        },
+        {
+          "check": "Actual effective impact 130 produces STAGGER",
+          "passed": true
+        },
+        {
+          "check": "Repeated impacts do not prolong stagger",
+          "passed": true
+        },
+        {
+          "check": "Recovery preserves a controlled response opportunity",
+          "passed": true
+        },
+        {
+          "check": "Stability influences reaction through M06 exactly once",
+          "passed": true
+        }
+      ],
+      "events": [
+        {
+          "event": "reset",
+          "generation": 14,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 14,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 14,
+          "player_preset": "mage",
+          "scenario": "A08",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 14,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1.0,
+          "event": "live_resolution",
+          "generation": 14,
+          "hit_id": -9223371927819646323,
+          "impact": 65.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 14,
+          "attack_instance": -9223371927970641286,
+          "confirmed": true,
+          "damage": 1.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 14,
+          "hit_id": -9223371927819646323,
+          "impact": 65.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Actual effective impact 65 produces NORMAL",
+          "event": "scenario_check",
+          "generation": 14,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A09",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 14,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1.0,
+          "event": "live_resolution",
+          "generation": 14,
+          "hit_id": -9223371927567987948,
+          "impact": 100.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "INTERRUPT",
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 14,
+          "attack_instance": -9223371927718983027,
+          "confirmed": true,
+          "damage": 1.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 14,
+          "hit_id": -9223371927567987948,
+          "impact": 100.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Actual effective impact 100 produces INTERRUPT",
+          "event": "scenario_check",
+          "generation": 14,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A09",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 14,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1.0,
+          "event": "live_resolution",
+          "generation": 14,
+          "hit_id": -9223371927316329711,
+          "impact": 130.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "STAGGER",
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 14,
+          "attack_instance": -9223371927467324652,
+          "confirmed": true,
+          "damage": 1.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 14,
+          "hit_id": -9223371927316329711,
+          "impact": 130.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Actual effective impact 130 produces STAGGER",
+          "event": "scenario_check",
+          "generation": 14,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A09",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 14,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1.0,
+          "event": "live_resolution",
+          "generation": 14,
+          "hit_id": -9223371927064671601,
+          "impact": 130.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "STAGGER",
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 14,
+          "attack_instance": -9223371927215666660,
+          "confirmed": true,
+          "damage": 1.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 14,
+          "hit_id": -9223371927064671601,
+          "impact": 130.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 14,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1.0,
+          "event": "live_resolution",
+          "generation": 14,
+          "hit_id": -9223371926813013366,
+          "impact": 130.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "STAGGER",
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 14,
+          "attack_instance": -9223371926964008305,
+          "confirmed": true,
+          "damage": 1.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 14,
+          "hit_id": -9223371926813013366,
+          "impact": 130.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 14,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1.0,
+          "event": "live_resolution",
+          "generation": 14,
+          "hit_id": -9223371926561354988,
+          "impact": 130.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "STAGGER",
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 14,
+          "attack_instance": -9223371926712350070,
+          "confirmed": true,
+          "damage": 1.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 14,
+          "hit_id": -9223371926561354988,
+          "impact": 130.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 14,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1.0,
+          "event": "live_resolution",
+          "generation": 14,
+          "hit_id": -9223371926309696835,
+          "impact": 130.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "STAGGER",
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 14,
+          "attack_instance": -9223371926460691692,
+          "confirmed": true,
+          "damage": 1.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 14,
+          "hit_id": -9223371926309696835,
+          "impact": 130.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 14,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1.0,
+          "event": "live_resolution",
+          "generation": 14,
+          "hit_id": -9223371926058038512,
+          "impact": 130.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "STAGGER",
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 14,
+          "attack_instance": -9223371926209033539,
+          "confirmed": true,
+          "damage": 1.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 14,
+          "hit_id": -9223371926058038512,
+          "impact": 130.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 14,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1.0,
+          "event": "live_resolution",
+          "generation": 14,
+          "hit_id": -9223371925806380267,
+          "impact": 130.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "STAGGER",
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 14,
+          "attack_instance": -9223371925957375216,
+          "confirmed": true,
+          "damage": 1.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 14,
+          "hit_id": -9223371925806380267,
+          "impact": 130.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 14,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1.0,
+          "event": "live_resolution",
+          "generation": 14,
+          "hit_id": -9223371925554722276,
+          "impact": 130.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "STAGGER",
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 14,
+          "attack_instance": -9223371925705716971,
+          "confirmed": true,
+          "damage": 1.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 14,
+          "hit_id": -9223371925554722276,
+          "impact": 130.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 14,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1.0,
+          "event": "live_resolution",
+          "generation": 14,
+          "hit_id": -9223371925303063921,
+          "impact": 130.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "STAGGER",
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 14,
+          "attack_instance": -9223371925454058980,
+          "confirmed": true,
+          "damage": 1.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 14,
+          "hit_id": -9223371925303063921,
+          "impact": 130.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A09",
+          "target": 108280154728,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Repeated impacts do not prolong stagger",
+          "event": "scenario_check",
+          "generation": 14,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A09",
+          "time": 0.0
+        },
+        {
+          "check": "Recovery preserves a controlled response opportunity",
+          "event": "scenario_check",
+          "generation": 14,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A09",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 14,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "stable",
+          "scenario": "A09",
+          "target": 111635597852,
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 14,
+          "incoming": "(-24.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "preset": "stable",
+          "scenario": "A09",
+          "target": 111635597852,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1.0,
+          "event": "live_resolution",
+          "generation": 14,
+          "hit_id": -9223371924917188052,
+          "impact": 65.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(424.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A09",
+          "target": 111635597852,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 14,
+          "attack_instance": -9223371925068183006,
+          "confirmed": true,
+          "damage": 1.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 14,
+          "hit_id": -9223371924917188052,
+          "impact": 65.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "",
+          "scenario": "A09",
+          "target": 111635597852,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Stability influences reaction through M06 exactly once",
+          "event": "scenario_check",
+          "generation": 14,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A09",
+          "time": 0.0
+        }
+      ],
+      "generation": 14,
+      "id": "A09",
+      "mode": "controlled fixture / actual M07-M06",
+      "passed": true
+    },
+    {
+      "checks": [
+        {
+          "check": "Before Commit a cancellation is allowed",
+          "passed": true
+        },
+        {
+          "check": "After Commit free cancellation is denied",
+          "passed": true
+        },
+        {
+          "check": "Valid interruption still ends committed action",
+          "passed": true
+        },
+        {
+          "check": "Interrupted action cannot deliver contact",
+          "passed": true
+        }
+      ],
+      "events": [
+        {
+          "event": "reset",
+          "generation": 15,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 15,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 112642230904,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 15,
+          "player_preset": "mage",
+          "scenario": "A09",
+          "target": 112642230904,
+          "time": 0.0
+        },
+        {
+          "check": "Before Commit a cancellation is allowed",
+          "event": "scenario_check",
+          "generation": 15,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A10",
+          "time": 0.0
+        },
+        {
+          "check": "After Commit free cancellation is denied",
+          "event": "scenario_check",
+          "generation": 15,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A10",
+          "time": 0.0
+        },
+        {
+          "check": "Valid interruption still ends committed action",
+          "event": "scenario_check",
+          "generation": 15,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A10",
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 15,
+          "attack_instance": -9223371923944109392,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 15,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "INTERRUPTED",
+          "player_preset": "mage",
+          "range": 42.0,
+          "reason": "inactive_phase",
+          "scenario": "A10",
+          "target": 112642230904,
+          "target_position": "(424.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Interrupted action cannot deliver contact",
+          "event": "scenario_check",
+          "generation": 15,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A10",
+          "time": 0.0
+        }
+      ],
+      "generation": 15,
+      "id": "A10",
+      "mode": "controlled fixture / actual M07-M06",
+      "passed": true
+    },
+    {
+      "checks": [
+        {
+          "check": "Reset invalidates old generation immediately",
+          "passed": true
+        },
+        {
+          "check": "Old projectile cannot damage replacement player",
+          "passed": true
+        },
+        {
+          "check": "Real delayed callback rejects stale scope",
+          "passed": true
+        },
+        {
+          "check": "Old actors freed, exactly one current player",
+          "passed": true
+        },
+        {
+          "check": "Rapid resets do not duplicate enemies",
+          "passed": true
+        }
+      ],
+      "events": [
+        {
+          "event": "reset",
+          "generation": 17,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 17,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 114772937238,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 17,
+          "player_preset": "mage",
+          "scenario": "A11",
+          "target": 114772937238,
+          "time": 0.0
+        },
+        {
+          "check": "Reset invalidates old generation immediately",
+          "event": "scenario_check",
+          "generation": 17,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A11",
+          "time": 0.0
+        },
+        {
+          "check": "Old projectile cannot damage replacement player",
+          "event": "scenario_check",
+          "generation": 17,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A11",
+          "time": 0.0
+        },
+        {
+          "event": "reset",
+          "generation": 18,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 18,
+          "overrides": {
+
+          },
+          "player_preset": "mage",
+          "position": "(485.0, 290.0)",
+          "preset": "dummy",
+          "scenario": "manual",
+          "target": 115511134920,
+          "time": 0.0
+        },
+        {
+          "angle": 0.0,
+          "distance": 24.0,
+          "event": "developer_position",
+          "facing": 0.0,
+          "generation": 18,
+          "player_preset": "mage",
+          "scenario": "A11",
+          "target": 115511134920,
+          "time": 0.0
+        },
+        {
+          "check": "Real delayed callback rejects stale scope",
+          "event": "scenario_check",
+          "generation": 18,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A11",
+          "time": 0.0
+        },
+        {
+          "check": "Old actors freed, exactly one current player",
+          "event": "scenario_check",
+          "generation": 18,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A11",
+          "time": 0.0
+        },
+        {
+          "check": "Rapid resets do not duplicate enemies",
+          "event": "scenario_check",
+          "generation": 18,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A11",
+          "time": 0.0
+        }
+      ],
+      "generation": 18,
+      "id": "A11",
+      "mode": "controlled fixture / actual M07-M06",
+      "passed": true
+    },
+    {
+      "checks": [
+        {
+          "check": "Wave 1 spawns exactly its definition",
+          "passed": true
+        },
+        {
+          "check": "Defeated wave actor cannot receive repeated contact",
+          "passed": true
+        },
+        {
+          "check": "Wave 2 spawns exactly its definition",
+          "passed": true
+        },
+        {
+          "check": "Defeated wave actor cannot receive repeated contact",
+          "passed": true
+        },
+        {
+          "check": "Defeated wave actor cannot receive repeated contact",
+          "passed": true
+        },
+        {
+          "check": "Wave 3 spawns exactly its definition",
+          "passed": true
+        },
+        {
+          "check": "Defeated wave actor cannot receive repeated contact",
+          "passed": true
+        },
+        {
+          "check": "Defeated wave actor cannot receive repeated contact",
+          "passed": true
+        },
+        {
+          "check": "Defeated wave actor cannot receive repeated contact",
+          "passed": true
+        },
+        {
+          "check": "Finite wave sequence completes and stops",
+          "passed": true
+        },
+        {
+          "check": "No surviving wave duplicates",
+          "passed": true
+        }
+      ],
+      "events": [
+        {
+          "event": "reset",
+          "generation": 20,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "seed": "SANDBOX_FIXED",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 20,
+          "overrides": {
+            "damage_scale": 1.0,
+            "hp": 52.0
+          },
+          "player_preset": "mage",
+          "position": "(525.0, 250.0)",
+          "preset": "wolf",
+          "scenario": "manual",
+          "target": 117541177871,
+          "time": 0.0
+        },
+        {
+          "definition": {
+            "damage_scale": 1.0,
+            "enemies": [
+              "wolf"
+            ],
+            "hp_scale": 1.0
+          },
+          "event": "wave",
+          "generation": 20,
+          "index": 1,
+          "player_preset": "mage",
+          "scenario": "manual",
+          "time": 0.0
+        },
+        {
+          "check": "Wave 1 spawns exactly its definition",
+          "event": "scenario_check",
+          "generation": 20,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 20,
+          "incoming": "(-125.0, 40.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(525.0, 250.0)",
+          "preset": "wolf",
+          "scenario": "A12",
+          "target": 117541177871,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1000.0,
+          "event": "live_resolution",
+          "generation": 20,
+          "hit_id": -9223371918978053493,
+          "impact": 0.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(525.0, 250.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A12",
+          "target": 117541177871,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 20,
+          "attack_instance": -9223371919129048555,
+          "confirmed": true,
+          "damage": 1000.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 20,
+          "hit_id": -9223371918978053493,
+          "impact": 0.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 500.0,
+          "reason": "",
+          "scenario": "A12",
+          "target": 117541177871,
+          "target_position": "(525.0, 250.0)",
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 20,
+          "attack_instance": -9223371919129048555,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 20,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 500.0,
+          "reason": "invalid_target",
+          "scenario": "A12",
+          "target": 117541177871,
+          "target_position": "(525.0, 250.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Defeated wave actor cannot receive repeated contact",
+          "event": "scenario_check",
+          "generation": 20,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 20,
+          "overrides": {
+            "damage_scale": 1.1,
+            "hp": 59.8
+          },
+          "player_preset": "mage",
+          "position": "(525.0, 250.0)",
+          "preset": "wolf",
+          "scenario": "A12",
+          "target": 118061271567,
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 20,
+          "overrides": {
+            "damage_scale": 1.1,
+            "hp": 43.7
+          },
+          "player_preset": "mage",
+          "position": "(525.0, 290.0)",
+          "preset": "wisp",
+          "scenario": "A12",
+          "target": 118195489488,
+          "time": 0.0
+        },
+        {
+          "definition": {
+            "damage_scale": 1.1,
+            "enemies": [
+              "wolf",
+              "wisp"
+            ],
+            "hp_scale": 1.15
+          },
+          "event": "wave",
+          "generation": 20,
+          "index": 2,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        },
+        {
+          "check": "Wave 2 spawns exactly its definition",
+          "event": "scenario_check",
+          "generation": 20,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 20,
+          "incoming": "(-125.0, 40.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(525.0, 250.0)",
+          "preset": "wolf",
+          "scenario": "A12",
+          "target": 118061271567,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1000.0,
+          "event": "live_resolution",
+          "generation": 20,
+          "hit_id": -9223371918290187560,
+          "impact": 0.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(525.0, 250.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A12",
+          "target": 118061271567,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 20,
+          "attack_instance": -9223371918441182597,
+          "confirmed": true,
+          "damage": 1000.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 20,
+          "hit_id": -9223371918290187560,
+          "impact": 0.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 500.0,
+          "reason": "",
+          "scenario": "A12",
+          "target": 118061271567,
+          "target_position": "(525.0, 250.0)",
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 20,
+          "attack_instance": -9223371918441182597,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 20,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 500.0,
+          "reason": "invalid_target",
+          "scenario": "A12",
+          "target": 118061271567,
+          "target_position": "(525.0, 250.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Defeated wave actor cannot receive repeated contact",
+          "event": "scenario_check",
+          "generation": 20,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 20,
+          "incoming": "(-125.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(525.0, 290.0)",
+          "preset": "wisp",
+          "scenario": "A12",
+          "target": 118195489488,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1000.0,
+          "event": "live_resolution",
+          "generation": 20,
+          "hit_id": -9223371918290187560,
+          "impact": 0.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(525.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A12",
+          "target": 118195489488,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 20,
+          "attack_instance": -9223371918441182597,
+          "confirmed": true,
+          "damage": 1000.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 20,
+          "hit_id": -9223371918290187560,
+          "impact": 0.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 500.0,
+          "reason": "",
+          "scenario": "A12",
+          "target": 118195489488,
+          "target_position": "(525.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 20,
+          "attack_instance": -9223371918441182597,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 20,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 500.0,
+          "reason": "invalid_target",
+          "scenario": "A12",
+          "target": 118195489488,
+          "target_position": "(525.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Defeated wave actor cannot receive repeated contact",
+          "event": "scenario_check",
+          "generation": 20,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 20,
+          "overrides": {
+            "damage_scale": 1.2,
+            "hp": 67.6
+          },
+          "player_preset": "mage",
+          "position": "(525.0, 250.0)",
+          "preset": "wolf",
+          "scenario": "A12",
+          "target": 118984018640,
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 20,
+          "overrides": {
+            "damage_scale": 1.2,
+            "hp": 49.4
+          },
+          "player_preset": "mage",
+          "position": "(525.0, 290.0)",
+          "preset": "wisp",
+          "scenario": "A12",
+          "target": 119118236156,
+          "time": 0.0
+        },
+        {
+          "event": "spawn",
+          "generation": 20,
+          "overrides": {
+            "damage_scale": 1.2,
+            "hp": 80.6
+          },
+          "player_preset": "mage",
+          "position": "(525.0, 330.0)",
+          "preset": "kobold",
+          "scenario": "A12",
+          "target": 119269231382,
+          "time": 0.0
+        },
+        {
+          "definition": {
+            "damage_scale": 1.2,
+            "enemies": [
+              "wolf",
+              "wisp",
+              "kobold"
+            ],
+            "hp_scale": 1.3
+          },
+          "event": "wave",
+          "generation": 20,
+          "index": 3,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        },
+        {
+          "check": "Wave 3 spawns exactly its definition",
+          "event": "scenario_check",
+          "generation": 20,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 20,
+          "incoming": "(-125.0, 40.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(525.0, 250.0)",
+          "preset": "wolf",
+          "scenario": "A12",
+          "target": 118984018640,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1000.0,
+          "event": "live_resolution",
+          "generation": 20,
+          "hit_id": -9223371917233222997,
+          "impact": 0.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(525.0, 250.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A12",
+          "target": 118984018640,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 20,
+          "attack_instance": -9223371917384218090,
+          "confirmed": true,
+          "damage": 1000.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 20,
+          "hit_id": -9223371917233222997,
+          "impact": 0.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 500.0,
+          "reason": "",
+          "scenario": "A12",
+          "target": 118984018640,
+          "target_position": "(525.0, 250.0)",
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 20,
+          "attack_instance": -9223371917384218090,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 20,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 500.0,
+          "reason": "invalid_target",
+          "scenario": "A12",
+          "target": 118984018640,
+          "target_position": "(525.0, 250.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Defeated wave actor cannot receive repeated contact",
+          "event": "scenario_check",
+          "generation": 20,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 20,
+          "incoming": "(-125.0, 0.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(525.0, 290.0)",
+          "preset": "wisp",
+          "scenario": "A12",
+          "target": 119118236156,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1000.0,
+          "event": "live_resolution",
+          "generation": 20,
+          "hit_id": -9223371917233222997,
+          "impact": 0.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(525.0, 290.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A12",
+          "target": 119118236156,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 20,
+          "attack_instance": -9223371917384218090,
+          "confirmed": true,
+          "damage": 1000.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 20,
+          "hit_id": -9223371917233222997,
+          "impact": 0.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 500.0,
+          "reason": "",
+          "scenario": "A12",
+          "target": 119118236156,
+          "target_position": "(525.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 20,
+          "attack_instance": -9223371917384218090,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 20,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 500.0,
+          "reason": "invalid_target",
+          "scenario": "A12",
+          "target": 119118236156,
+          "target_position": "(525.0, 290.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Defeated wave actor cannot receive repeated contact",
+          "event": "scenario_check",
+          "generation": 20,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        },
+        {
+          "event": "live_defense",
+          "generation": 20,
+          "incoming": "(-125.0, -40.0)",
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(525.0, 330.0)",
+          "preset": "kobold",
+          "scenario": "A12",
+          "target": 119269231382,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "confirmed": true,
+          "damage": 1000.0,
+          "event": "live_resolution",
+          "generation": 20,
+          "hit_id": -9223371917233222997,
+          "impact": 0.0,
+          "outcome": "hit",
+          "player_preset": "mage",
+          "position": "(525.0, 330.0)",
+          "reaction": "NORMAL",
+          "reason": "",
+          "scenario": "A12",
+          "target": 119269231382,
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 20,
+          "attack_instance": -9223371917384218090,
+          "confirmed": true,
+          "damage": 1000.0,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 20,
+          "hit_id": -9223371917233222997,
+          "impact": 0.0,
+          "origin": "(400.0, 290.0)",
+          "outcome": "hit",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 500.0,
+          "reason": "",
+          "scenario": "A12",
+          "target": 119269231382,
+          "target_position": "(525.0, 330.0)",
+          "time": 0.0
+        },
+        {
+          "action": "sandbox_fixture",
+          "action_generation": 20,
+          "attack_instance": -9223371917384218090,
+          "confirmed": false,
+          "direction": "(1.0, 0.0)",
+          "event": "contact_probe",
+          "generation": 20,
+          "origin": "(400.0, 290.0)",
+          "outcome": "miss",
+          "phase": "ACTIVE",
+          "player_preset": "mage",
+          "range": 500.0,
+          "reason": "invalid_target",
+          "scenario": "A12",
+          "target": 119269231382,
+          "target_position": "(525.0, 330.0)",
+          "time": 0.0
+        },
+        {
+          "check": "Defeated wave actor cannot receive repeated contact",
+          "event": "scenario_check",
+          "generation": 20,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        },
+        {
+          "check": "Finite wave sequence completes and stops",
+          "event": "scenario_check",
+          "generation": 20,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        },
+        {
+          "check": "No surviving wave duplicates",
+          "event": "scenario_check",
+          "generation": 20,
+          "passed": true,
+          "player_preset": "mage",
+          "scenario": "A12",
+          "time": 0.0
+        }
+      ],
+      "generation": 20,
+      "id": "A12",
+      "mode": "controlled fixture / actual M07-M06",
+      "passed": true
+    }
+  ]
+}
