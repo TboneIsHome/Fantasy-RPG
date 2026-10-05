@@ -83,6 +83,8 @@ func build_ui() -> void:
 	arena.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	arena.stretch = true
 	arena.stretch_shrink = 2
+	# Keep the previous editor focus visible to arena_input; the arena is not an editor.
+	arena.focus_mode = Control.FOCUS_NONE
 	arena.gui_input.connect(arena_input)
 	left.add_child(arena)
 	viewport = SubViewport.new()
@@ -326,8 +328,9 @@ func arena_input(event: InputEvent) -> void:
 	if not event is InputEventMouseButton or not event.pressed: return
 	var focused := get_viewport().gui_get_focus_owner()
 	if focused == null: return
+	var editing := focused is LineEdit
 	focused.release_focus()
-	if is_instance_valid(session) and session.is_current(session.generation):
+	if editing and is_instance_valid(session) and session.is_current(session.generation):
 		session.fixture.player.cast_armed = false
 
 func _physics_process(_delta: float) -> void:

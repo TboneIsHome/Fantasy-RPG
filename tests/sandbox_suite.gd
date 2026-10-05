@@ -37,6 +37,7 @@ func verify() -> void:
 		results.append(result)
 		for entry in result.checks: check(entry.passed,id+" "+entry.check)
 	await controls_and_reset()
+	focus_handoff()
 	check(JSON.stringify(Content.all())==original and Content.section("player").is_read_only(),"Test presets never mutate production definitions")
 	check(ResourceLoader.load("res://scenes/game.tscn") != null,"Original production entry remains loadable")
 	ui.queue_free()
@@ -74,6 +75,28 @@ func validate_catalog() -> void:
 			"max_enemies": broken.max_enemies = "bad"
 		var errors := Catalog.validate(broken)
 		check(not errors.is_empty() and errors[0].begins_with(Catalog.PATH),"Catalog path diagnostic: "+case)
+
+func focus_handoff() -> void:
+	var p: MagePlayer = session.fixture.player
+	var event := InputEventMouseButton.new()
+	event.button_index = MOUSE_BUTTON_RIGHT
+	event.pressed = true
+	ui.attacks.grab_focus()
+	p.cast_armed = true
+	ui.arena_input(event)
+	check(p.cast_armed and root.gui_get_focus_owner()==null,"Returning from selector focus preserves mouse cast")
+	ui.hp.get_line_edit().grab_focus()
+	p.cast_armed = true
+	ui.arena_input(event)
+	check(not p.cast_armed and root.gui_get_focus_owner()==null,"Leaving value editing suppresses the focus click")
+	p.cast_armed = true
+	ui.arena_input(event)
+	check(p.cast_armed,"Arena click without editor focus preserves mouse cast")
+	ui.hp.get_line_edit().grab_focus()
+	event.pressed = false
+	ui.arena_input(event)
+	check(p.cast_armed and root.gui_get_focus_owner()==ui.hp.get_line_edit(),"Mouse release does not perform focus handoff")
+	ui.hp.get_line_edit().release_focus()
 
 func controls_and_reset() -> void:
 	for profile in session.catalog.data.players:
