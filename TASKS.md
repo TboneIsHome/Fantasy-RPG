@@ -69,8 +69,12 @@
 - [x] M07: Tim bestätigt den manuellen Windows-Spieltest ohne gefundene Fehler.
 - [x] Sandbox: Arena, Presets, echte Combat-Controls, Wellen, Diagnose und A01–A12.
 - [x] Sandbox: Completion Report, Testnachweise und geprüftes Developer-Windows-Paket bereitstellen.
-- [ ] Sandbox: eigener manueller Windows-Spieltest durch Tim und gemeinsame Abnahme.
-- [ ] Stop nach Sandbox; M08 erst nach neuer Freigabe.
+- [x] Sandbox: Tim bestätigt am 05.10.2026 den erfolgreichen Windows-Nachtest des Mausfixes.
+- [x] M08: ausdrückliche Freigabe und Implementation Prompt V1.0 erhalten.
+- [x] M08: technische Vorprüfung der bestehenden Anschlüsse dokumentiert.
+- [ ] M08: separat referenzierte Gameplay Specification V1.0 einlesen und Vorprüfung abschließen.
+- [ ] M08: Profile, fünf erste Archetypen, weitere Familien/Dual-Wield und Sandbox-Vergleiche inkrementell implementieren.
+- [ ] M08: Tests, Exporte, Identity Audit und Completion Report; danach STOP vor M09.
 
 Audit, konkrete Dateien und Risiken: [docs/FOUNDATION_M00.md](docs/FOUNDATION_M00.md). Verbindliche Reihenfolge und Abnahme: [ROADMAP.md](ROADMAP.md).
 

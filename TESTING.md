@@ -2,6 +2,8 @@
 
 ## Developer Sandbox — Prüfablauf
 
+**Abnahmenachtrag 05.10.2026:** Tim bestätigt den erfolgreichen manuellen Windows-Nachtest des Mausfix-Pakets. **MANUAL WINDOWS TESTED — PASSED laut Nutzer.** Die folgenden NOT-TESTED-Angaben dokumentieren den damaligen Lieferzeitpunkt. M08 ist freigegeben, aber noch nicht implementiert oder getestet; [Vorprüfung](docs/M08_ARCHITECTURE_REVIEW.md). Für diese Dokumentationsaktualisierung wurde keine Gameplay-Regression erneut ausgeführt.
+
 **Maus-/Fokusfix 05.10.2026:** **1.190/1.190 Checks in 26 Stufen**, davon **120 Sandbox-Checks**. Release-Sandbox-Suite jeweils **122/122** (zwei zusätzliche Export-/Benutzerordner-Prüfungen), **34/34** gerenderte Bedienprüfungen des neuen Windows-Packs mit Linux/X11/Mesa, **8/8 Produktions- und 5/5 Developer-Export-Gates**. Rohprotokolle und Prüfsummen: [qa/sandbox_input_fix](qa/sandbox_input_fix). Der frühere Windows-Test von Tim meldete den Fehler; der native Windows-Nachtest des neuen Fixes ist **NOT TESTED**.
 
 Die neue Fokusprüfung schlägt gegen das unveränderte alte Windows-Pack gezielt fehl (**121/122**, ausschließlich Selector-Fokus); die erweiterte gerenderte Prüfung zeigt dort **23/34**. Dieselben Tests bestehen mit dem Fix. Echte `InputEventMouseButton`-Ereignisse prüfen LMB/Lichtfunke und RMB/Frostkreis, Kosten, M07-Action, M06-/Ziel-HP, Freigabe/Wiederholung, gehaltene RMB, Selector-Fokus, beidseitigen Zahlenfeld-Ausstieg, Pause und Maus über Controls. Die Produktionsbelegung bleibt unverändert.

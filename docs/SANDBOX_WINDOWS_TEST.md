@@ -1,5 +1,7 @@
 # Developer Sandbox — Windows-Prüfliste
 
+> **Abgenommen am 05.10.2026:** Tim bestätigt den erfolgreichen Windows-Nachtest dieses Mausfix-Builds. Die folgende Prüfliste bleibt als historische Liefer-/Reproduktionsanleitung erhalten; ihre damaligen NOT-TESTED-Vermerke wurden durch diese Nutzerabnahme ergänzt.
+
 **Neuer Mausfix: MANUAL WINDOWS TESTED — NOT TESTED.** Tim hat den Eingabefehler im vorherigen Sandbox-Build unter Windows gefunden. Diese Prüfliste betrifft das korrigierte Paket vom 05.10.2026. M07 selbst ist bereits abgenommen.
 
 ## Gezielter Nachtest des Mausfixes

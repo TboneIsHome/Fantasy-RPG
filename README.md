@@ -2,11 +2,11 @@
 
 Ein offline spielbares Fantasy-RPG mit einem Magier, einer seed-basierten Pixelwaldregion und der ersten Quellengruft. Der erste zusammenhängende Spielabschnitt führt bis zum Quellenhüter, zwei Questlösungen und einem ausrüstbaren Relikt. Tim hat die Foundation einschließlich M04 manuell unter Windows bestätigt. Mehrstündige Weltinhalte sind ein späteres Ziel.
 
-**Aktueller Entwicklungsschritt: Developer Sandbox Foundation.** M07 ist einschließlich Tims erfolgreichem Windows-Spieltest abgeschlossen. Die separate Sandbox bietet Arena, Presets, echte Combat-/Defense-Tests, Diagnose, zwölf wiederholbare Szenarien und drei begrenzte Wellen. Produktionsspiel und Saveformat bleiben erhalten.
+**Aktueller Entwicklungsschritt: M08 Weapon Foundation — Architekturvorprüfung.** M07 und die Developer Sandbox einschließlich Mausfix sind von Tim unter Windows abgenommen. M08 ist freigegeben; der abschließende Abgleich wartet auf die separat benannte Gameplay-Spezifikation V1.0. [Vorprüfung und offene Eingabe](docs/M08_ARCHITECTURE_REVIEW.md). Die separate Sandbox bietet Arena, Presets, echte Combat-/Defense-Tests, Diagnose, zwölf wiederholbare Szenarien und drei begrenzte Wellen. Produktionsspiel und Saveformat bleiben erhalten.
 
-[Sandbox Completion Report](docs/DEVELOPER_SANDBOX_COMPLETION_REPORT.md) · [Windows-Prüfliste](docs/SANDBOX_WINDOWS_TEST.md). Eigener Sandbox-Windows-Test: **NOT TESTED**. Stop vor M08; neue Waffen/Magie/Statussysteme brauchen eine neue Freigabe.
+[Sandbox Completion Report](docs/DEVELOPER_SANDBOX_COMPLETION_REPORT.md) · [Windows-Prüfliste](docs/SANDBOX_WINDOWS_TEST.md). Sandbox-Windows-Nachtest: **PASSED laut Tim am 05.10.2026**. M08 ist freigegeben, M09/M10 bleiben spätere Milestones.
 
-**Sandbox starten:** Alle neun `.zip.part001`–`.zip.part009` und `JOIN_WINDOWS_PACKAGE.bat` in denselben Ordner laden. Die BAT starten; nach erfolgreicher Größen-/SHA-256-Prüfung `Lichterhain_DeveloperSandbox_Windows_full.zip` entpacken und `Lichterhain_DeveloperSandbox.exe` öffnen. Die äußere `START_HIER.txt` erklärt den Ablauf. Im Editor `developer/sandbox.tscn` mit F6 starten. Die normale F5-Startszene bleibt das Spiel. Sandbox-Quelle: Branch `foundation/developer-sandbox`. Die folgenden Spielanleitungen beziehen sich weiterhin auf den normalen Prototypen.
+**Sandbox starten:** Das vollständige `Lichterhain_DeveloperSandbox_InputFix_Windows.zip` entpacken und `Lichterhain_DeveloperSandbox.exe` öffnen. `START_HIER.txt` erklärt den Ablauf. Dies ist der von Tim abgenommene Mausfix-Stand, noch kein M08-Build. Im Editor `developer/sandbox.tscn` mit F6 starten. Die normale F5-Startszene bleibt das Spiel. Sandbox-Quelle: Branch `foundation/developer-sandbox`. Die folgenden Spielanleitungen beziehen sich weiterhin auf den normalen Prototypen.
 
 ## Direkt spielen unter Windows
 

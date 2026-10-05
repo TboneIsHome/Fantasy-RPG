@@ -1,5 +1,7 @@
 # DEVELOPER SANDBOX FOUNDATION — COMPLETION REPORT
 
+> **Abnahme 05.10.2026:** Tim bestätigt den erfolgreichen Windows-Nachtest des Mausfixes. Die Sandbox ist damit abgenommen (**MANUAL WINDOWS TESTED — PASSED laut Nutzer**). Die nachfolgenden offenen Windows-Vermerke beschreiben den historischen Lieferzeitpunkt. M08 wurde anschließend ausdrücklich freigegeben; die [Architekturvorprüfung](M08_ARCHITECTURE_REVIEW.md) dokumentiert den nächsten Schritt.
+
 ## Nachtrag 05.10.2026 — Maus-/Fokusfix
 
 **IMPLEMENTED / AUTOMATED TESTED. Neuer Windows-Fix: MANUAL WINDOWS TESTED — NOT TESTED.** Tim hat den Eingabefehler im vorherigen Windows-Build gefunden. M07 bleibt abgenommen; M08 bleibt gesperrt.
