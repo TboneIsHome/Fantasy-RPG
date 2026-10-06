@@ -11,6 +11,7 @@ var commit_at: float
 var recovery: float
 var windows: Array = []
 var active_end: float = 0
+var hold_before_active: bool = false
 
 func _init(preparation: float, commitment: float, phases: Array, after: float) -> void:
 	startup = preparation
@@ -36,9 +37,18 @@ func start() -> bool:
 func tick(delta: float) -> void:
 	if not started or interrupted or not is_finite(delta) or delta < 0: return
 	elapsed = minf(active_end + recovery, elapsed + delta)
+	if hold_before_active: elapsed = minf(startup, elapsed)
+
+func awaiting_release() -> bool:
+	return hold_before_active and started and not interrupted and elapsed >= startup
+
+func release_hold() -> bool:
+	if not awaiting_release(): return false
+	hold_before_active = false
+	return true
 
 func phase_index() -> int:
-	if not valid or not started or interrupted: return -1
+	if not valid or not started or interrupted or hold_before_active: return -1
 	for index in windows.size():
 		var window: Dictionary = windows[index]
 		if elapsed >= float(window.start) and elapsed < float(window.start) + float(window.duration): return index

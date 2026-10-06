@@ -4,6 +4,7 @@ extends RefCounted
 static var _cache: Dictionary = {}
 static var _vault: Dictionary = {}
 static var _discoveries: Dictionary = {}
+static var _weapons: Dictionary = {}
 static var _attempted: bool = false
 static var _errors: Array[String] = []
 
@@ -22,12 +23,13 @@ static func ensure_loaded() -> bool:
 		return _errors.is_empty()
 	_attempted = true
 	var documents: Array = []
-	for path in ["res://data/content.json", "res://data/vault.json", "res://data/discoveries.json"]:
+	for path in ["res://data/content.json", "res://data/vault.json", "res://data/discoveries.json", "res://data/weapons.json"]:
 		var result := read_json(path)
 		_errors.append_array(result.errors)
 		documents.append(result.get("data"))
 	if _errors.is_empty():
 		_errors = ContentValidator.validate_bundle(documents[0], documents[1], documents[2])
+		_errors.append_array(WeaponValidator.validate(documents[3]))
 	if not _errors.is_empty():
 		push_error(error_text())
 		return false
@@ -36,6 +38,7 @@ static func ensure_loaded() -> bool:
 	_cache = documents[0]
 	_vault = documents[1]
 	_discoveries = documents[2]
+	_weapons = documents[3]
 	return true
 
 static func error_text() -> String:
@@ -55,6 +58,10 @@ static func vault() -> Dictionary:
 static func discoveries() -> Dictionary:
 	ensure_loaded()
 	return _discoveries
+
+static func weapons() -> Dictionary:
+	ensure_loaded()
+	return _weapons
 
 static func description(definition: Dictionary) -> String:
 	# Numeric text tokens are validated against fields in this very definition.

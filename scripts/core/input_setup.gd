@@ -7,7 +7,9 @@ static func install() -> void:
 		"move_up":[KEY_W, KEY_UP], "move_down":[KEY_S, KEY_DOWN],
 		"dash":[KEY_SPACE], "block":[KEY_F], "parry":[KEY_Q], "interact":[KEY_E], "journal":[KEY_TAB],
 		"pause_game":[KEY_ESCAPE], "save_game":[KEY_F5], "load_game":[KEY_F9],
-		"map":[KEY_M], "bolt":[KEY_1], "nova":[KEY_2], "fullscreen":[KEY_F11]
+		"map":[KEY_M], "bolt":[KEY_1], "nova":[KEY_2], "fullscreen":[KEY_F11],
+		"weapon_primary":[KEY_J], "weapon_heavy":[KEY_K], "weapon_secondary":[KEY_L],
+		"weapon_off":[KEY_U], "weapon_combined":[KEY_I], "weapon_follow":[KEY_O], "weapon_cancel":[KEY_X]
 	}
 	for action in keys:
 		if InputMap.has_action(action):

@@ -78,3 +78,17 @@ Diese Punkte sind Integrationsrisiken, keine bereits festgestellten unlösbaren 
 6. Vollständige Regression, Legacy-Saves, Reset/Region/Unload, alte Projektile/Callbacks, echte Inputpfade, Produktions-/Sandbox-Exportgrenzen und Windows-Testpaket. Completion Report erst nach tatsächlicher Implementierung und Prüfung; STOP vor M09.
 
 **Aktueller Prüfstatus:** Code-/Dokumentanalyse durchgeführt. M08-Implementierung **PLANNED**, M08-Tests/Exporte **NOT TESTED**. Die 1.190 Checks und 34 gerenderten Prüfungen im bisherigen Sandbox-Bericht sind belegte Ergebnisse des vorherigen Stands, kein neuer M08-Testlauf. Für diese reine Dokumentationsvorprüfung wurde keine erneute Gameplay-Regression behauptet.
+
+## Abgeschlossener Spezifikationsabgleich — 06.10.2026
+
+Das separat nachgereichte Original liegt unverändert in `M08_WEAPON_SPECIFICATION_V1.md`. Tims ausdrückliche M08-Freigabe gilt trotz des ursprünglichen PROPOSAL-Dokumentkopfs. Keine neue Freigabe erforderlich. Kein Konflikt mit M06, M07, Sandbox oder Blueprint festgestellt.
+
+Umsetzung: immutable JSON-Profile über Content; actor-lokale WeaponActions; bestehende AttackInstance/HitInstance, CombatContact und Actor-Health. ContactContext bekommt optionale gemeinsame Korridor-/Sweep-Geometrie, ActionTimeline ein optionales Halten vor dem Active-Fenster für Draw/Aim. Defaults bleiben unverändert. Diese beiden rückwärtskompatiblen M07-Erweiterungen sind notwendige Parameteranschlüsse, keine neue Timeline oder Kontaktauflösung.
+
+Bow: Eingabe beginnt Draw; Aim hält am Ende des Startup ohne Kontakt. Loslassen gibt das Active-Fenster frei; frühes Loslassen nach Commit wartet bis zum Ende des Draw. Abbruch vor Commit ist möglich, bestätigter Interrupt weiterhin jederzeit nach M07. Folgeaktionen starten erst nach regulärer Recovery, keine Verkürzung/Combo-Boni.
+
+Neue Eingaben J/K/L/U/I/O/X für Primary/Heavy/Alternative/Off-Hand/Combined/Follow-up/Cancel verwenden denselben Playerpfad in jedem Kontext. LMB/1 und RMB/2 behalten Lichtfunke und Frostkreis. Keine Sandbox-Neubelegung derselben Eingabe.
+
+Alle Waffenwerte sind relationales Testtuning, keine finale Balance. Speer-Nahbereich, Bow-Defense und Defense-Unterschiede bleiben ausdrücklich vorläufige Vergleichsprofile gemäß OQ02–OQ06. OQ01 endgültige Taxonomie, OQ07 physische Tags, OQ08 Stamina und OQ09 produktiver Waffenwechsel bleiben offen/außerhalb des Scopes. Sandbox-Auswahl ersetzt die gesamte Fixture; sie definiert keine Equipment-Wechselregel und kann keine Commitment-Abkürzung im selben Kampf erzeugen.
+
+Prüfreihenfolge: erste fünf Archetypen plus Contract-/Scene-Tests; danach übrige Familien und Dual-Wield; anschließend Sandbox-Input/Visual-Prüfung, Identitätsmatrix, gesamte Regression und beide Exportarten. M06, SaveSystem/Format, RunState, RegionLifecycle und Interaction bleiben unverändert.

@@ -10,6 +10,17 @@ var point: Vector2
 var visibility: Callable
 var _origin: WeakRef
 var _target: WeakRef
+var geometry: Dictionary = {}
+var sweep_previous: float = 0
+var sweep_current: float = 0
+
+func shaped(definition: Dictionary, action: AttackInstance, previous_time: float) -> ContactContext:
+	geometry = definition
+	if definition.get("shape") == "sweep" and phase >= 0:
+		var window: Dictionary = action.timeline.windows[phase]
+		sweep_previous = clampf((previous_time-float(window.start))/float(window.duration),0,1)
+		sweep_current = clampf((action.timeline.elapsed-float(window.start))/float(window.duration),0,1)
+	return self
 
 func _init(action: AttackInstance, target_node: Node2D, center: Vector2, radius: float, heading: Vector2 = Vector2.ZERO, facing_dot: float = -1) -> void:
 	phase = action.timeline.phase_index()
@@ -45,6 +56,26 @@ func spatial_error() -> StringName:
 	if offset.length() > reach and not is_equal_approx(offset.length(),reach): return &"out_of_range"
 	if minimum_dot > -1 and offset.length_squared() > 0.000001:
 		if direction.length_squared() < 0.000001 or direction.normalized().dot(offset.normalized()) < minimum_dot: return &"wrong_direction"
+	var shape_error := _shape_error(offset)
+	if not shape_error.is_empty(): return shape_error
 	if not visibility.is_null():
 		if not visibility.is_valid() or not visibility.call(center, target().global_position): return &"obstructed"
+	return &""
+
+func _shape_error(offset: Vector2) -> StringName:
+	if geometry.is_empty(): return &""
+	if direction.length_squared() < 0.000001: return &"invalid_geometry"
+	var local := offset.rotated(-direction.angle())
+	match geometry.get("shape"):
+		"narrow", "forward":
+			if local.x < float(geometry.minimum_reach): return &"inside_minimum_reach"
+			if absf(local.y) > float(geometry.half_width): return &"outside_shape"
+		"wide":
+			if absf(local.angle()) > float(geometry.half_angle): return &"outside_shape"
+		"sweep":
+			var before := lerpf(float(geometry.from_angle),float(geometry.to_angle),sweep_previous)
+			var now := lerpf(float(geometry.from_angle),float(geometry.to_angle),sweep_current)
+			if local.angle() < minf(before,now)-float(geometry.half_angle) or local.angle() > maxf(before,now)+float(geometry.half_angle): return &"outside_shape"
+		"projectile": pass
+		_: return &"invalid_geometry"
 	return &""

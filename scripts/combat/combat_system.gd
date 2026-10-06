@@ -35,9 +35,9 @@ func new_action(actor: Node2D, id: StringName, clock: ActionTimeline, rules: Dic
 	clock.start()
 	return action
 
-func released_action(carrier: Node2D, parent: AttackInstance, id: StringName, clock: ActionTimeline, geometry: String, source: String) -> AttackInstance:
+func released_action(carrier: Node2D, parent: AttackInstance, id: StringName, clock: ActionTimeline, geometry: String, source: String, rules: Dictionary = {}) -> AttackInstance:
 	var actor := parent.actor() if parent != null else player
-	var action := new_action(actor,id,clock,ActionProfiles.rules(geometry),source)
+	var action := new_action(actor,id,clock,ActionProfiles.rules(geometry) if rules.is_empty() else rules,source)
 	if action == null: return null
 	action.parent_action=parent
 	action.release_to(carrier)

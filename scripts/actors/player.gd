@@ -29,6 +29,27 @@ var active_defense := ActiveDefense.new()
 var reaction := CombatReaction.new()
 var attack_action: AttackInstance
 var attack_actions: Array[AttackInstance] = []
+var weapons: WeaponActions
+var weapon_view: Node2D
+var weapon_input_armed: bool = false
+
+func configure_weapons(main: String, off: String = "") -> bool:
+	for action in attack_actions:
+		if action.is_current() and action.timeline.state() not in [ActionTimeline.State.COMPLETED,ActionTimeline.State.INTERRUPTED]: return false
+	var adapter := WeaponActions.new(self)
+	if not adapter.configure(main,off): return false
+	weapons = adapter
+	if not is_instance_valid(weapon_view):
+		weapon_view = WeaponView.new()
+		add_child(weapon_view)
+	weapon_input_armed = false
+	return true
+
+func weapon_request(slot: String = "primary", hand: String = "main") -> bool:
+	return weapons != null and weapons.request(slot,hand)
+
+func defense_config() -> Dictionary:
+	return weapons.defense_config() if weapons != null else Content.section("active_combat").defense
 
 func _ready() -> void:
 	add_to_group("player")
@@ -72,6 +93,8 @@ func _physics_process(delta: float) -> void:
 	if not input_enabled:
 		active_defense.block(false,aim)
 		velocity = Vector2.ZERO
+		weapon_input_armed = false
+		if weapons != null: weapons.update(delta)
 		update_visual()
 		return
 	var movement := Input.get_vector("move_left","move_right","move_up","move_down")
@@ -85,6 +108,7 @@ func _physics_process(delta: float) -> void:
 	elif Input.is_action_just_pressed("parry"):
 		try_parry()
 	request_block(Input.is_action_pressed("block"))
+	_weapon_input()
 	if not Input.is_action_pressed("bolt") and not Input.is_action_pressed("nova"):
 		cast_armed=true
 	if dash_remaining<=0 and cast_armed:
@@ -93,14 +117,31 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("nova"):
 			request_cast("nova",get_global_mouse_position())
 	velocity = dash_direction*float(Content.section("player").dash_speed) if dash_remaining>0 else movement*float(Content.section("player").speed)*(float(Content.section("player").hindered_speed) if hindered>0 else 1.0)
-	if active_defense.mode == ActiveDefense.Mode.BLOCK: velocity *= float(Content.section("active_combat").defense.block_movement_scale)
+	if dash_remaining>0 and weapons != null: velocity *= float(defense_config().dodge_speed_scale)
+	elif weapons != null: velocity = weapons.movement(velocity)
+	if active_defense.mode == ActiveDefense.Mode.BLOCK: velocity *= float(defense_config().block_movement_scale)
 	if reaction.locked(): velocity = Vector2.ZERO
 	velocity += knockback
 	knockback = knockback.move_toward(Vector2.ZERO,float(Content.section("player").knockback_decay)*delta)
 	move_and_slide()
+	if weapons != null: weapons.update(delta)
 	update_visual()
 
+func _weapon_input() -> void:
+	if weapons == null: return
+	var held := false
+	for key in ["weapon_primary","weapon_heavy","weapon_secondary","weapon_off","weapon_combined","weapon_follow"]:
+		held = held or Input.is_action_pressed(key)
+	if not held: weapon_input_armed = true
+	if Input.is_action_just_pressed("weapon_cancel"): weapons.cancel()
+	if weapon_input_armed:
+		for slot in ["primary","heavy","secondary","combined","follow"]:
+			if Input.is_action_just_pressed("weapon_"+slot): weapon_request("follow_up" if slot=="follow" else slot)
+		if Input.is_action_just_pressed("weapon_off"): weapon_request("primary","off")
+	if Input.is_action_just_released("weapon_primary") or Input.is_action_just_released("weapon_heavy"): weapons.request_release()
+
 func request_cast(id: String, target: Vector2) -> bool:
+	if weapons != null and weapons.busy(): return false
 	if reaction.locked() or active_defense.blocks_offense() or dash_remaining>0 or not abilities.cast(id,vitals):
 		return false
 	cast_flash = 0.18
@@ -115,9 +156,11 @@ func interrupt_actions() -> void:
 	for action in attack_actions: action.timeline.interrupt()
 
 func try_dash(direction: Vector2) -> bool:
+	if weapons != null and not weapons.allows_defense(): return false
 	if reaction.locked() or not active_defense.can_start() or not direction.is_finite() or direction.length_squared() < 0.000001: return false
 	if not abilities.dash(vitals):
 		return false
+	if weapons != null: weapons.cancel()
 	dash_direction = direction.normalized()
 	dash_remaining = float(Content.section("player").dash_duration)
 	active_defense.dodge(dash_remaining,maxf(0,float(Content.section("player").dash_cooldown)-dash_remaining))
@@ -129,12 +172,18 @@ func try_dash(direction: Vector2) -> bool:
 func request_block(held: bool) -> bool:
 	if not held: return active_defense.block(false,aim)
 	if not combat_alive() or reaction.locked(): return false
-	return active_defense.block(true,aim)
+	if weapons != null and (not defense_config().block or not weapons.allows_defense()): return false
+	var accepted := active_defense.block(true,aim)
+	if accepted and weapons != null: weapons.cancel()
+	return accepted
 
 func try_parry() -> bool:
 	if not combat_alive() or reaction.locked(): return false
-	var config: Dictionary = Content.section("active_combat").defense
-	return active_defense.parry(float(config.parry_window),float(config.parry_recovery),aim)
+	if weapons != null and (not defense_config().parry or not weapons.allows_defense()): return false
+	var config := defense_config()
+	var accepted := active_defense.parry(float(config.parry_window),float(config.parry_recovery),aim)
+	if accepted and weapons != null: weapons.cancel()
+	return accepted
 
 func take_damage(amount: float, direction: Vector2 = Vector2.ZERO) -> bool:
 	var scope := hit_scope.get_ref() as Node if hit_scope != null else null
@@ -163,7 +212,7 @@ func combat_alive() -> bool:
 	return vitals.hp > 0
 
 func combat_defense(incoming: Vector2, rules: Dictionary) -> DefenseOutcome:
-	return active_defense.outcome(incoming, rules, vitals.invulnerable > 0, Content.section("active_combat").defense)
+	return active_defense.outcome(incoming, rules, vitals.invulnerable > 0, defense_config())
 
 func confirm_parry() -> void:
 	active_defense.parry_confirmed()
@@ -185,6 +234,10 @@ func reset_transient() -> void:
 	interrupt_actions()
 	attack_actions.clear()
 	attack_action = null
+	if weapons != null:
+		weapons.current = null
+		weapons.last_completed = ""
+	weapon_input_armed = false
 	active_defense = ActiveDefense.new()
 	reaction = CombatReaction.new()
 	dash_remaining = 0
