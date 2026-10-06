@@ -1,6 +1,7 @@
 extends Control
 const Session = preload("res://developer/session.gd")
 const Scenarios = preload("res://developer/scenarios.gd")
+const WeaponPanel = preload("res://developer/weapon_panel.gd")
 var session: Node
 var arena: SubViewportContainer
 var viewport: SubViewport
@@ -22,6 +23,7 @@ var profile_note: Label
 var live_summary: Label
 var busy := false
 var refresh := 0.0
+var weapon_panel: VBoxContainer
 
 func _ready() -> void:
 	get_window().content_scale_size = Vector2i(1280,720)
@@ -40,6 +42,7 @@ func _ready() -> void:
 	for id in session.catalog.data.actions: option(attacks,id,Content.section("spells")[id].name)
 	for id in session.catalog.data.scenarios: option(scenarios,id,id+" · "+session.catalog.data.scenarios[id])
 	players.select(2)
+	weapon_panel.populate()
 	preset_fields()
 	say("Bereit · Maus in die Arena zum Spielen. Rechts Presets und reproduzierbare Tests.")
 
@@ -70,7 +73,7 @@ func build_ui() -> void:
 	heading.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	button(header,"Reset  F2",reset_selected)
 	pause_button = button(header,"Pause  P",toggle_pause)
-	label(page,"M07 Combat-Labor  ·  echte M06/M07-Pfade  ·  keine Spielstände  ·  Testwerte sind keine Spielbalance",14)
+	label(page,"M08 Waffen + M07 Combat-Labor  ·  gemeinsame M06/M07-Pfade  ·  keine Spielstände  ·  vorläufiges Tuning",14)
 	var body := HBoxContainer.new()
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	body.add_theme_constant_override("separation",14)
@@ -148,6 +151,10 @@ func build_ui() -> void:
 	label(inspect,"Live: Defense und M06-Ergebnis. Vollständige Kontaktablehnungen: nur gezielte Probe / Szenario.",13)
 	history = rich(inspect)
 	button(inspect,"Diagnosebericht speichern",save_report)
+	var weapons_tab := scroll_tab(tabs,"Waffen")
+	weapon_panel=WeaponPanel.new()
+	weapons_tab.add_child(weapon_panel)
+	weapon_panel.build(self)
 	status = label(page,"Lade Sandbox …",14)
 	status.custom_minimum_size.y = 32
 
@@ -246,6 +253,7 @@ func overrides() -> Dictionary:
 func reset_selected() -> void:
 	if not available(): return
 	session.reset(selected(players),selected(enemies),true,overrides())
+	weapon_panel.restore_choice()
 	angle.value = 0
 	facing.value = 0
 	distance.value = session.catalog.data.players[selected(players)].distance
@@ -343,6 +351,7 @@ func _process(delta: float) -> void:
 	refresh += delta
 	if refresh < 0.1 or not is_instance_valid(session) or not session.is_current(session.generation): return
 	refresh = 0
+	weapon_panel.refresh()
 	pause_button.text = "Weiter  P" if session.paused else "Pause  P"
 	var state: Dictionary = session.snapshot()
 	var p: Dictionary = state.player

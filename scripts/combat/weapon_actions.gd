@@ -172,13 +172,7 @@ func _release_projectile() -> void:
 	var hit := profile()
 	var payload := scope.released_action(arrow,current,current.action_id,ActionProfiles.clock(0,arrow.remaining/arrow.speed,0),"projectile",current.source_id,definition.defense)
 	arrow.attack_action = payload
-	arrow.struck.connect(_projectile_contact.bind(payload,hit))
+	arrow.struck.connect(scope.resolve_projectile_profile.bind(payload,hit))
 	scope.add_child(arrow)
 	arrow.hit_instance = payload.hit_for_phase(0)
 	current.timeline.finish_active()
-
-func _projectile_contact(body: Node, point: Vector2, direction: Vector2, action: AttackInstance, hit: AttackProfile) -> void:
-	if not action.is_current() or not body is WildEnemy: return
-	var query: ContactContext = action.scope().projectile_context(action,body,point,direction)
-	var result := CombatContact.resolve(action,query,hit)
-	contact_resolved.emit(action,query,result)

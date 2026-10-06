@@ -21,5 +21,5 @@ func resolution(actor: Node2D, instance: HitInstance, result: HitResolution) -> 
 func contact(action: AttackInstance, query: ContactContext, result: CombatContact) -> void:
 	var target := query.target()
 	var detail := {"attack_instance":action.get_instance_id(),"action":str(action.action_id),"action_generation":action.generation,"phase":ActionTimeline.State.keys()[action.timeline.state()],"target":target.get_instance_id() if is_instance_valid(target) else 0,"origin":str(query.origin()),"target_position":str(target.global_position) if is_instance_valid(target) else "freed","range":query.reach,"direction":str(query.direction),"confirmed":result.confirmed(),"outcome":str(result.outcome),"reason":str(result.reason)}
-	if result.resolution != null: detail.merge({"damage":result.resolution.damage,"impact":result.resolution.impact,"hit_id":result.resolution.hit_id})
+	if result.resolution != null: detail.merge({"damage":result.resolution.damage,"impact":result.resolution.impact,"hit_id":result.resolution.hit_id,"secondary":result.resolution.secondary})
 	record("contact_probe",detail)

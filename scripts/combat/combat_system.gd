@@ -3,6 +3,7 @@ extends Node2D
 
 signal sound_requested(id: String)
 signal enemy_defeated
+signal profile_contact_resolved(action: AttackInstance, context: ContactContext, result: CombatContact)
 var player: MagePlayer
 var run: RunState
 var effects: CombatFeedback
@@ -113,6 +114,13 @@ func projectile_context(action: AttackInstance, body: Node2D, point: Vector2, he
 	var query := ContactContext.new(action,body,point,reach,heading)
 	query.visibility=_clear_line
 	return query
+
+func resolve_projectile_profile(body: Node, point: Vector2, direction: Vector2, action: AttackInstance, profile: AttackProfile) -> void:
+	# Delivery belongs to the regional scope, not the actor's replaceable loadout.
+	if not _can_act() or action == null or not action.is_current() or not body is Node2D: return
+	var query := projectile_context(action,body,point,direction)
+	var result := CombatContact.resolve(action,query,profile)
+	profile_contact_resolved.emit(action,query,result)
 
 func _resolve_bolt_contact(body: Node, point: Vector2, direction: Vector2, action: AttackInstance) -> void:
 	if not _can_act(): return

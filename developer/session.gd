@@ -4,6 +4,7 @@ const Catalog = preload("res://developer/catalog.gd")
 const Fixture = preload("res://developer/fixture.gd")
 const Telemetry = preload("res://developer/telemetry.gd")
 const Waves = preload("res://developer/waves.gd")
+const WeaponTrials = preload("res://developer/weapon_trials.gd")
 var catalog := Catalog.new()
 var fixture: RegionInstance
 var telemetry: RefCounted
@@ -18,6 +19,8 @@ var resetting := false
 var last_error := ""
 var last_scenario: Dictionary = {}
 var probe_action: AttackInstance
+var weapon_case: String = ""
+var target_motion: String = ""
 
 func initialize(world_mount: Node = null) -> bool:
 	if not Content.ensure_loaded(): last_error = Content.error_text(); return false
@@ -51,10 +54,23 @@ func reset(profile: String = "", enemy: String = "", with_target: bool = true, o
 	fixture.configure(profile,catalog.data,generation,telemetry)
 	if with_target: spawn(enemy,Fixture.START+Vector2(catalog.data.players[profile].distance,0),settings)
 	probe_action = null
+	weapon_case = ""
+	target_motion = ""
 	last_scenario = {}
 	set_paused(false)
 	resetting = false
 	return true
+
+func select_weapon_case(id: String) -> bool:
+	if not WeaponTrials.CASES.has(id): return false
+	if not reset("close_defense","dummy"): return false
+	return WeaponTrials.attach(self,id)
+
+func weapon_request(slot: String, hand: String = "main") -> bool:
+	if not is_current(generation): return false
+	var accepted := fixture.player.weapon_request(slot,hand)
+	telemetry.record("weapon_request",{"slot":slot,"hand":hand,"accepted":accepted})
+	return accepted
 
 func unload() -> void:
 	probe_action = null
@@ -175,6 +191,13 @@ func _physics_process(delta: float) -> void:
 	if not paused and is_current(generation):
 		telemetry.elapsed += delta
 		waves.tick(delta)
+		var target: WildEnemy = fixture.target()
+		if target != null and not target_motion.is_empty() and not target.reaction.locked():
+			var direction := fixture.player.position.direction_to(target.position)
+			if target_motion=="approach": direction = -direction
+			elif target_motion=="side": direction = direction.orthogonal()
+			target.position = (target.position+direction*float(target.definition.speed)*delta).clamp(Fixture.BOUNDS.position+Vector2(16,16),Fixture.BOUNDS.end-Vector2(16,16))
+			target.home=target.position
 
 func action_info(action: AttackInstance) -> Dictionary:
 	if action == null: return {}
@@ -187,7 +210,7 @@ func snapshot() -> Dictionary:
 	return {"generation":generation,"paused":paused,"profile":player_preset,"enemies":fixture.enemies().size(),"player":{"id":p.get_instance_id(),"position":str(p.global_position),"aim":str(p.aim),"hp":p.vitals.hp,"mana":p.vitals.mana,"stamina":p.vitals.stamina,"cooldowns":p.abilities.cooldowns.duplicate(),"defense":ActiveDefense.Mode.keys()[p.active_defense.mode],"defense_remaining":p.active_defense.remaining,"reaction":CombatReaction.Kind.keys()[p.reaction.kind],"action":action_info(p.attack_action)},"target":{} if target == null else {"id":target.get_instance_id(),"preset":target.get_meta("sandbox_preset"),"hp":target.hp,"distance":p.global_position.distance_to(target.global_position),"position":str(target.global_position),"defense":ActiveDefense.Mode.keys()[target.active_defense.mode],"reaction":CombatReaction.Kind.keys()[target.reaction.kind],"action":action_info(target.attack_action)},"probe":action_info(probe_action),"wave":{"running":waves.running,"index":waves.index+1,"completed":waves.completed}}
 
 func report() -> Dictionary:
-	return {"version":1,"snapshot":snapshot(),"scenario_result":last_scenario.duplicate(true),"events":telemetry.events.duplicate(true)}
+	return {"version":1,"weapon_case":weapon_case,"target_motion":target_motion,"snapshot":snapshot(),"scenario_result":last_scenario.duplicate(true),"events":telemetry.events.duplicate(true)}
 
 func write_report() -> String:
 	var directory := "user://developer_sandbox"

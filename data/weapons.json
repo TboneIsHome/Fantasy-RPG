@@ -66,6 +66,58 @@
         "primary": "bow_primary",
         "heavy": "bow_heavy"
       }
+    },
+    "greatsword": {
+      "name": "Zweihandschwert",
+      "identity": "Lange Bögen · vorausschauende Raumkontrolle",
+      "family": "two_handed_blade",
+      "handedness": "two",
+      "dual_compatible": false,
+      "delivery": "contact",
+      "defense": "greatsword",
+      "portfolio": {
+        "primary": "greatsword_primary",
+        "heavy": "greatsword_heavy"
+      }
+    },
+    "axe": {
+      "name": "Streitaxt",
+      "identity": "Offensiver Schritt · wuchtiger enger Winkel",
+      "family": "one_handed_axe",
+      "handedness": "one",
+      "dual_compatible": true,
+      "delivery": "contact",
+      "defense": "axe",
+      "portfolio": {
+        "primary": "axe_primary",
+        "heavy": "axe_heavy"
+      }
+    },
+    "greataxe": {
+      "name": "Kriegsaxt",
+      "identity": "Breite offensive Wirkung · teure Fehler",
+      "family": "two_handed_axe",
+      "handedness": "two",
+      "dual_compatible": false,
+      "delivery": "contact",
+      "defense": "greataxe",
+      "portfolio": {
+        "primary": "greataxe_primary",
+        "heavy": "greataxe_heavy"
+      }
+    },
+    "mace": {
+      "name": "Streitkolben",
+      "identity": "Kontrollierte Wucht · robuste Abwehr",
+      "family": "one_handed_blunt",
+      "handedness": "one",
+      "dual_compatible": true,
+      "delivery": "contact",
+      "defense": "mace",
+      "portfolio": {
+        "primary": "mace_primary",
+        "heavy": "mace_heavy"
+      }
     }
   },
   "actions": {
@@ -514,6 +566,420 @@
       },
       "follow_ups": [],
       "projectile_speed": 250
+    },
+    "greatsword_primary": {
+      "purpose": "Weiter durchgezogener Bogen",
+      "delivery": "contact",
+      "startup": 0.42,
+      "commit": 0.17,
+      "recovery": 0.56,
+      "phases": [
+        {
+          "start": 0.42,
+          "duration": 0.32,
+          "hand": "action"
+        }
+      ],
+      "geometry": {
+        "shape": "sweep",
+        "reach": 60,
+        "from_angle": -1.15,
+        "to_angle": 1.15,
+        "half_angle": 0.22
+      },
+      "movement": {
+        "startup": 0.55,
+        "active": 0.3,
+        "recovery": 0.5,
+        "forward_speed": 0,
+        "turn_rate": 0.7
+      },
+      "hit": {
+        "damage": 26,
+        "damage_type": "untyped",
+        "impact": 108
+      },
+      "defense": {
+        "blockable": true,
+        "parryable": true
+      },
+      "follow_ups": []
+    },
+    "greatsword_heavy": {
+      "purpose": "Breiter gebundener Raumabschluss",
+      "delivery": "contact",
+      "startup": 0.67,
+      "commit": 0.23,
+      "recovery": 0.85,
+      "phases": [
+        {
+          "start": 0.67,
+          "duration": 0.36,
+          "hand": "action"
+        }
+      ],
+      "geometry": {
+        "shape": "wide",
+        "reach": 64,
+        "half_angle": 1.25
+      },
+      "movement": {
+        "startup": 0.3,
+        "active": 0.15,
+        "recovery": 0.3,
+        "forward_speed": 0,
+        "turn_rate": 0
+      },
+      "hit": {
+        "damage": 34,
+        "damage_type": "untyped",
+        "impact": 140
+      },
+      "defense": {
+        "blockable": true,
+        "parryable": true
+      },
+      "follow_ups": []
+    },
+    "axe_primary": {
+      "purpose": "Wuchtiger Vorwärtshieb mit Druck",
+      "delivery": "contact",
+      "startup": 0.32,
+      "commit": 0.14,
+      "recovery": 0.41,
+      "phases": [
+        {
+          "start": 0.32,
+          "duration": 0.2,
+          "hand": "action"
+        }
+      ],
+      "geometry": {
+        "shape": "wide",
+        "reach": 35,
+        "half_angle": 0.55
+      },
+      "movement": {
+        "startup": 0.65,
+        "active": 0.35,
+        "recovery": 0.6,
+        "forward_speed": 28,
+        "turn_rate": 1.5
+      },
+      "hit": {
+        "damage": 23,
+        "damage_type": "untyped",
+        "impact": 103
+      },
+      "defense": {
+        "blockable": true,
+        "parryable": true
+      },
+      "follow_ups": []
+    },
+    "axe_heavy": {
+      "purpose": "Gezielter langer Axtschlag",
+      "delivery": "contact",
+      "startup": 0.51,
+      "commit": 0.18,
+      "recovery": 0.61,
+      "phases": [
+        {
+          "start": 0.51,
+          "duration": 0.22,
+          "hand": "action"
+        }
+      ],
+      "geometry": {
+        "shape": "narrow",
+        "reach": 40,
+        "half_width": 9,
+        "minimum_reach": 0
+      },
+      "movement": {
+        "startup": 0.4,
+        "active": 0.15,
+        "recovery": 0.4,
+        "forward_speed": 32,
+        "turn_rate": 0
+      },
+      "hit": {
+        "damage": 30,
+        "damage_type": "untyped",
+        "impact": 128
+      },
+      "defense": {
+        "blockable": true,
+        "parryable": true
+      },
+      "follow_ups": []
+    },
+    "greataxe_primary": {
+      "purpose": "Massive seitliche Raumkontrolle",
+      "delivery": "contact",
+      "startup": 0.57,
+      "commit": 0.2,
+      "recovery": 0.78,
+      "phases": [
+        {
+          "start": 0.57,
+          "duration": 0.37,
+          "hand": "action"
+        }
+      ],
+      "geometry": {
+        "shape": "sweep",
+        "reach": 55,
+        "from_angle": -1.3,
+        "to_angle": 1.3,
+        "half_angle": 0.25
+      },
+      "movement": {
+        "startup": 0.35,
+        "active": 0.15,
+        "recovery": 0.3,
+        "forward_speed": 0,
+        "turn_rate": 0.2
+      },
+      "hit": {
+        "damage": 30,
+        "damage_type": "untyped",
+        "impact": 143
+      },
+      "defense": {
+        "blockable": true,
+        "parryable": true
+      },
+      "follow_ups": []
+    },
+    "greataxe_heavy": {
+      "purpose": "Breiter riskanter Abschlussschlag",
+      "delivery": "contact",
+      "startup": 0.8,
+      "commit": 0.26,
+      "recovery": 1.0,
+      "phases": [
+        {
+          "start": 0.8,
+          "duration": 0.4,
+          "hand": "action"
+        }
+      ],
+      "geometry": {
+        "shape": "wide",
+        "reach": 59,
+        "half_angle": 1.35
+      },
+      "movement": {
+        "startup": 0.2,
+        "active": 0.05,
+        "recovery": 0.2,
+        "forward_speed": 18,
+        "turn_rate": 0
+      },
+      "hit": {
+        "damage": 40,
+        "damage_type": "untyped",
+        "impact": 170
+      },
+      "defense": {
+        "blockable": true,
+        "parryable": true
+      },
+      "follow_ups": []
+    },
+    "mace_primary": {
+      "purpose": "Kontrollierter kurzer Wuchthieb",
+      "delivery": "contact",
+      "startup": 0.36,
+      "commit": 0.17,
+      "recovery": 0.43,
+      "phases": [
+        {
+          "start": 0.36,
+          "duration": 0.2,
+          "hand": "action"
+        }
+      ],
+      "geometry": {
+        "shape": "wide",
+        "reach": 36,
+        "half_angle": 0.48
+      },
+      "movement": {
+        "startup": 0.6,
+        "active": 0.4,
+        "recovery": 0.55,
+        "forward_speed": 0,
+        "turn_rate": 1.8
+      },
+      "hit": {
+        "damage": 21,
+        "damage_type": "untyped",
+        "impact": 110
+      },
+      "defense": {
+        "blockable": true,
+        "parryable": true
+      },
+      "follow_ups": []
+    },
+    "mace_heavy": {
+      "purpose": "Kurzer Gruppenbogen",
+      "delivery": "contact",
+      "startup": 0.55,
+      "commit": 0.21,
+      "recovery": 0.64,
+      "phases": [
+        {
+          "start": 0.55,
+          "duration": 0.3,
+          "hand": "action"
+        }
+      ],
+      "geometry": {
+        "shape": "sweep",
+        "reach": 40,
+        "from_angle": -0.8,
+        "to_angle": 0.8,
+        "half_angle": 0.25
+      },
+      "movement": {
+        "startup": 0.4,
+        "active": 0.2,
+        "recovery": 0.4,
+        "forward_speed": 0,
+        "turn_rate": 0.5
+      },
+      "hit": {
+        "damage": 28,
+        "damage_type": "untyped",
+        "impact": 135
+      },
+      "defense": {
+        "blockable": true,
+        "parryable": true
+      },
+      "follow_ups": []
+    },
+    "dual_swords": {
+      "purpose": "Zwei explizite Winkelphasen",
+      "delivery": "contact",
+      "startup": 0.27,
+      "commit": 0.12,
+      "recovery": 0.4,
+      "phases": [
+        {
+          "start": 0.27,
+          "duration": 0.16,
+          "hand": "main"
+        },
+        {
+          "start": 0.48,
+          "duration": 0.16,
+          "hand": "off"
+        }
+      ],
+      "geometry": {
+        "shape": "wide",
+        "reach": 38,
+        "half_angle": 0.65
+      },
+      "movement": {
+        "startup": 0.7,
+        "active": 0.5,
+        "recovery": 0.65,
+        "forward_speed": 0,
+        "turn_rate": 4
+      },
+      "hit": {
+        "damage": 13,
+        "damage_type": "untyped",
+        "impact": 55
+      },
+      "defense": {
+        "blockable": true,
+        "parryable": true
+      },
+      "follow_ups": []
+    },
+    "sword_dagger": {
+      "purpose": "Ein kombinierter Nahstoß, keine Addition",
+      "delivery": "contact",
+      "startup": 0.24,
+      "commit": 0.12,
+      "recovery": 0.35,
+      "phases": [
+        {
+          "start": 0.24,
+          "duration": 0.16,
+          "hand": "both"
+        }
+      ],
+      "geometry": {
+        "shape": "narrow",
+        "reach": 25,
+        "half_width": 7,
+        "minimum_reach": 0
+      },
+      "movement": {
+        "startup": 0.8,
+        "active": 0.65,
+        "recovery": 0.8,
+        "forward_speed": 0,
+        "turn_rate": 6
+      },
+      "hit": {
+        "damage": 20,
+        "damage_type": "untyped",
+        "impact": 65
+      },
+      "defense": {
+        "blockable": true,
+        "parryable": true
+      },
+      "follow_ups": []
+    },
+    "dual_axes": {
+      "purpose": "Zwei explizite gebundene Hiebe",
+      "delivery": "contact",
+      "startup": 0.43,
+      "commit": 0.17,
+      "recovery": 0.65,
+      "phases": [
+        {
+          "start": 0.43,
+          "duration": 0.18,
+          "hand": "main"
+        },
+        {
+          "start": 0.71,
+          "duration": 0.18,
+          "hand": "off"
+        }
+      ],
+      "geometry": {
+        "shape": "wide",
+        "reach": 34,
+        "half_angle": 0.65
+      },
+      "movement": {
+        "startup": 0.5,
+        "active": 0.2,
+        "recovery": 0.4,
+        "forward_speed": 20,
+        "turn_rate": 1
+      },
+      "hit": {
+        "damage": 18,
+        "damage_type": "untyped",
+        "impact": 100
+      },
+      "defense": {
+        "blockable": true,
+        "parryable": true
+      },
+      "follow_ups": []
     }
   },
   "defenses": {
@@ -582,8 +1048,68 @@
       "parry_window": 0.09,
       "parry_recovery": 0.4,
       "dodge_speed_scale": 1
+    },
+    "greatsword": {
+      "block": true,
+      "parry": true,
+      "block_damage_scale": 0.4,
+      "block_impact_scale": 0.55,
+      "block_movement_scale": 0.35,
+      "facing_dot": 0,
+      "parry_window": 0.11,
+      "parry_recovery": 0.48,
+      "dodge_speed_scale": 0.85
+    },
+    "axe": {
+      "block": true,
+      "parry": true,
+      "block_damage_scale": 0.5,
+      "block_impact_scale": 0.65,
+      "block_movement_scale": 0.48,
+      "facing_dot": 0,
+      "parry_window": 0.09,
+      "parry_recovery": 0.43,
+      "dodge_speed_scale": 0.9
+    },
+    "greataxe": {
+      "block": true,
+      "parry": true,
+      "block_damage_scale": 0.55,
+      "block_impact_scale": 0.7,
+      "block_movement_scale": 0.3,
+      "facing_dot": 0,
+      "parry_window": 0.08,
+      "parry_recovery": 0.6,
+      "dodge_speed_scale": 0.8
+    },
+    "mace": {
+      "block": true,
+      "parry": true,
+      "block_damage_scale": 0.3,
+      "block_impact_scale": 0.4,
+      "block_movement_scale": 0.4,
+      "facing_dot": 0,
+      "parry_window": 0.11,
+      "parry_recovery": 0.42,
+      "dodge_speed_scale": 0.85
     }
   },
-  "pairings": {},
+  "pairings": {
+    "sword_sword": {
+      "main": "sword",
+      "off": "sword",
+      "combined": "dual_swords"
+    },
+    "sword_dagger": {
+      "main": "sword",
+      "off": "dagger",
+      "combined": "sword_dagger"
+    },
+    "axe_axe": {
+      "main": "axe",
+      "off": "axe",
+      "combined": "dual_axes"
+    }
+  },
   "dual_defense": "dual"
 }
